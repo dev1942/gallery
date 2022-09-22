@@ -1,0 +1,80 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:otobucks/controllers/home_screen_controller.dart';
+import 'package:otobucks/page/drawer_custom.dart';
+
+import '../global/app_colors.dart';
+import '../global/app_views.dart';
+import '../global/enum.dart';
+import '../widgets/bottom_bar.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  var controller = Get.put(HomeScreenController());
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
+  @override
+  void initState() {
+    controller.getAccountName();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<HomeScreenController>(builder: (value) {
+      return WillPopScope(
+          onWillPop: controller.onWillPop,
+          child: LayoutBuilder(builder: (context, BoxConstraints constraints) {
+            return Scaffold(
+                key: scaffoldKey,
+                backgroundColor: AppColors.colorWhite,
+                appBar: AppViews.initAppBar(
+                  icon: constraints.maxWidth < 600
+                      ? null
+                      : const Icon(Icons.keyboard_arrow_left),
+                  mContext: context,
+                  centerTitle: controller.currentPageType == PageType.home ||
+                          controller.currentPageType == PageType.home2
+                      ? true
+                      : false,
+                  strTitle: controller.currentPageType == PageType.home ||
+                          controller.currentPageType == PageType.home2
+                      ? controller.strTitle.tr + controller.firstName
+                      : controller.strTitle.tr,
+                  isShowNotification: true,
+                  isShowSOS: true,
+                  menuTap: () {
+                    if (controller.currentPageType == PageType.home ||
+                        controller.currentPageType == PageType.home2) {
+                      scaffoldKey.currentState!.openDrawer();
+                    } else {
+                      controller.callback(PageType.home);
+                    }
+                  },
+                ),
+                resizeToAvoidBottomInset: false,
+                drawer: constraints.maxWidth > 600 ? null : drawer(context),
+                body: constraints.maxWidth > 600
+                    ? Row(
+                        children: [
+                          Expanded(flex: 1, child: drawer(context)),
+                          Expanded(
+                            flex: 2,
+                            child: value.currentPage,
+                          )
+                        ],
+                      )
+                    : value.currentPage,
+                bottomNavigationBar: BottomBar(
+                    indexM: value.indexM,
+                    onTap: (int index) => value.onChangeBottomBar(index)));
+          }));
+    });
+  }
+}

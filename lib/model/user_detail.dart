@@ -1,0 +1,18 @@
+class UserDetail {
+  String id;
+  String firstName;
+  String lastName;
+  String avatar;
+  String mobile;
+  String email;
+  String accessToken;
+
+  UserDetail(
+      {required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.avatar,
+      required this.mobile,
+      required this.email,
+      required this.accessToken});
+}
