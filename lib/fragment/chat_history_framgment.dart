@@ -230,16 +230,20 @@ class ChatHistoryFragmentState extends State<ChatHistoryFragment> {
                           ],
                         ),
                       ),
-                      onTap: () {
+                      onTap: () async {
                         roomModel.unReadMessages = 0;
                         setState(() {});
-                        Navigator.push(
+                        var _isSubmitted = await Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ChatDetailScreen(
                                       roomUser: user!,
                                       roomId: roomModel.myRoomModelId,
                                     )));
+
+                        if (_isSubmitted) {
+                          await controller.getRooms();
+                        }
                       },
                     );
                   },

@@ -27,6 +27,8 @@ class ChatDetailScreen extends StatefulWidget {
 
 class ChatDetailScreenState extends State<ChatDetailScreen> {
   var controller = Get.put(ChatDetailController());
+  var _isSubmitted = false;
+
   @override
   void dispose() {
     controller.disableEmoji();
@@ -67,7 +69,7 @@ class ChatDetailScreenState extends State<ChatDetailScreen> {
                   children: [
                     IconButton(
                         onPressed: () {
-                          Navigator.of(context).pop(true);
+                          Navigator.of(context).pop(_isSubmitted);
                         },
                         icon: Icon(
                           Icons.keyboard_arrow_left_rounded,
@@ -203,8 +205,12 @@ class ChatDetailScreenState extends State<ChatDetailScreen> {
                                     BorderRadius.circular(AppDimens.dimens_20),
                                 child: value.showSendButton
                                     ? InkWell(
-                                        onTap: () =>
-                                            value.sendMessage(widget.roomId),
+                                        onTap: () {
+                                          setState(() {
+                                            _isSubmitted = true;
+                                          });
+                                          value.sendMessage(widget.roomId);
+                                        },
                                         child: SizedBox(
                                           width: AppDimens.dimens_40,
                                           height: AppDimens.dimens_40,
