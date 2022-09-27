@@ -106,7 +106,7 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
                   index: value.intTabPosition,
                   children: List.generate(
                       controller.alCategory.length,
-                      (index) => Visibility(
+                      (index) =>   Visibility(
                             child: getRespectiveTabs(
                                 controller.alCategory[index].title),
                             maintainState: false,

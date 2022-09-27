@@ -51,5 +51,5 @@ class AccessoriesSubCatController extends GetxController {
       showSearch = true;
       update();
     }
-  }
+  } 
 }

@@ -173,7 +173,7 @@ class HomeScreenController extends GetxController {
       case PageType.logout:
         break;
       case PageType.cart:
-        Global.inProgressAlert(Get.overlayContext!);
+        // Global.inProgressAlert(Get.overlayContext!);
         navigationPage = const CartScreen();
         strTitle = 'Cart';
         indexM = 2;

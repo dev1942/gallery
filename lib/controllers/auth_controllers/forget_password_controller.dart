@@ -100,6 +100,15 @@ class ForgotPasswordController extends GetxController {
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
     }
+    if (password.length < 8) {
+      Global.showToastAlert(
+          context: context,
+          strTitle: "",
+          strMsg: AppAlert.ALERT_PASSWORD_LESS,
+          toastType: TOAST_TYPE.toastError);
+      FocusScope.of(context).requestFocus(mFocusNodeEmail);
+      return false;
+    }
     if (password != againPassword) {
       Global.showToastAlert(
           context: context,
@@ -107,6 +116,15 @@ class ForgotPasswordController extends GetxController {
           strMsg: AppAlert.ALERT_PASSWORD_NOT_MATCH,
           toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
+      return false;
+    }
+    if (!Global.checkNull(code.text)) {
+      Global.showToastAlert(
+          context: context,
+          strTitle: "",
+          strMsg: AppAlert.ALERT_ENTER_CODE,
+          toastType: TOAST_TYPE.toastError);
+      FocusScope.of(context).requestFocus(mFocusNodeCode);
       return false;
     }
     if (!Global.checkNull(code.text)) {

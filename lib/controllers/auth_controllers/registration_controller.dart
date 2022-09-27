@@ -136,6 +136,14 @@ class RegistrationScreenController extends GetxController {
           toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodePassword);
       return false;
+    } else if (strPassword.length < 8) {
+      Global.showToastAlert(
+          context: context,
+          strTitle: "",
+          strMsg: AppAlert.ALERT_PASSWORD_LESS,
+          toastType: TOAST_TYPE.toastError);
+      FocusScope.of(context).requestFocus(mFocusNodePassword);
+      return false;
     }
     return true;
   }

@@ -549,6 +549,8 @@ class AppAlert {
       "Please enter confirm password.";
   static const String ALERT_PASSWORD_NOT_MATCH =
       "Please check password and confirm password are not matched.";
+  static const String ALERT_PASSWORD_LESS =
+      "Enter Password with 8 or more character";
   static const String ALERT_ACCEPT_TERMS =
       "Please accept Terms and Conditions..";
   static const String ALERT_ENTER_CODE = "Please Enter Code";

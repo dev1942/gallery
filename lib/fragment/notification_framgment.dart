@@ -232,14 +232,16 @@ class NotificationFragmentState extends State<NotificationFragment> {
       return;
     }
 
-    setState(() {
-      if (connectionStatus) {
-        //mShowData = ShowData.SHOW_DATA;
-        getNotifications();
-      } else {
-        Global.showNoInternetDialog(context);
-      }
-    });
+    print(connectionStatus);
+
+    // setState(() {
+    //   if (connectionStatus) {
+    //mShowData = ShowData.SHOW_DATA;
+    getNotifications();
+    // } else {
+    //   Global.showNoInternetDialog(context);
+    // }
+    // });
   }
 
   getNotifications() async {
