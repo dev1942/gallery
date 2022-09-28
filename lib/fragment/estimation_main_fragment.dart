@@ -33,8 +33,8 @@ class EstimationFragmentState extends State<EstimationFragment>
     double width = size.width / 5;
 
     return SafeArea(
-        top: false,
-        bottom: false,
+        top: true,
+        bottom: true,
         child: Scaffold(
             resizeToAvoidBottomInset: true,
             backgroundColor: AppColors.getMainBgColor(),

@@ -14,7 +14,7 @@ class EstimationListController extends GetxController {
   int indexM = 0;
   List<EstimatesModel> alEstimates = [];
 
-  getEstimation(String status) async {
+  Future getEstimation(String status) async {
     mShowData = ShowData.showLoading;
     update();
     // isShowLoader = true;

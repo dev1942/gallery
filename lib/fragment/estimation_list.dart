@@ -30,8 +30,16 @@ class EstimationListFragmentState extends State<EstimationListFragment> {
 
   @override
   void initState() {
-    controller.getEstimation(widget.estimationStatus);
     super.initState();
+
+    loadData();
+  }
+
+  //put a second time, then disposed the controller
+  Future loadData() async {
+    await Future.delayed(Duration.zero, () async {
+      controller.getEstimation(widget.estimationStatus);
+    });
   }
 
   @override
