@@ -236,6 +236,18 @@ class AppViews {
           );
   } // Show Footer Loading Icon
 
+  static showLoadingChatWithStatus(bool isShowLoader) {
+    return isShowLoader
+        ? Container(
+            child: AppViews.shimmerChat(),
+            // color: Colors.white70,
+          )
+        : const SizedBox(
+            height: 0,
+            width: 0,
+          );
+  }
+
   static showFooterLoading(bool isProgressBarBottomShown) {
     if (isProgressBarBottomShown) {
       return SizedBox(
@@ -353,6 +365,104 @@ class AppViews {
       case ShowData.showLoading:
         widgetM = Container(
           child: AppViews.showLoading(),
+          color: Theme.of(context).colorScheme.surface,
+        );
+        break;
+
+      case ShowData.showData:
+        widgetM = showWidget;
+
+        break;
+      case ShowData.showNoDataFound:
+        widgetM = Center(
+          child: Text(
+            AppAlert.MSG_NO_RECORDS_FOUND,
+            textAlign: TextAlign.center,
+            style: AppStyle.textViewStyleLarge(
+                context: context,
+                color: AppColors.colorBlack,
+                fontWeightDelta: 0,
+                fontSizeDelta: 0),
+          ),
+        );
+        break;
+      case ShowData.showError:
+        widgetM = Container(
+          child:
+              AppViews.setNoData(AppAlert.ALERT_SERVER_NOT_RESPONDING, context),
+        );
+        break;
+    }
+
+    return widgetM;
+  }
+
+  static getSetDataNotification(
+    BuildContext context,
+    ShowData mShowData,
+    Widget showWidget,
+  ) {
+    Widget widgetM = Container();
+
+    switch (mShowData) {
+      case ShowData.showLoading:
+        widgetM = Container(
+          child: ListView.builder(
+            padding: EdgeInsets.all(AppDimens.dimens_20),
+            itemCount: 15,
+            itemBuilder: (context, i) {
+              return AppViews.shimmerNotification();
+            },
+          ),
+          color: Theme.of(context).colorScheme.surface,
+        );
+        break;
+
+      case ShowData.showData:
+        widgetM = showWidget;
+
+        break;
+      case ShowData.showNoDataFound:
+        widgetM = Center(
+          child: Text(
+            AppAlert.MSG_NO_RECORDS_FOUND,
+            textAlign: TextAlign.center,
+            style: AppStyle.textViewStyleLarge(
+                context: context,
+                color: AppColors.colorBlack,
+                fontWeightDelta: 0,
+                fontSizeDelta: 0),
+          ),
+        );
+        break;
+      case ShowData.showError:
+        widgetM = Container(
+          child:
+              AppViews.setNoData(AppAlert.ALERT_SERVER_NOT_RESPONDING, context),
+        );
+        break;
+    }
+
+    return widgetM;
+  }
+
+  static getSetDataChat(
+    BuildContext context,
+    ShowData mShowData,
+    Widget showWidget,
+  ) {
+    Widget widgetM = Container();
+
+    switch (mShowData) {
+      case ShowData.showLoading:
+        widgetM = Container(
+          child: ListView.builder(
+            padding: EdgeInsets.all(AppDimens.dimens_15),
+            itemCount: 15,
+            itemBuilder: (context, i) {
+              return AppViews.shimmerChat();
+            },
+          ),
           color: Theme.of(context).colorScheme.surface,
         );
         break;
@@ -811,6 +921,141 @@ class AppViews {
       borderSide: const BorderSide(
         width: 0,
         style: BorderStyle.none,
+      ),
+    );
+  }
+
+  static shimmerChat() {
+    return Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+        enabled: true,
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                  child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.colorChatBgLeft,
+                          borderRadius: const BorderRadius.all(
+                              Radius.circular(AppDimens.dimens_10)),
+                        ),
+                        padding: const EdgeInsets.all(AppDimens.dimens_12),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 20,
+                              width: 100,
+                              color: Colors.grey.shade400,
+                            ),
+                            Container(
+                              height: 20,
+                              color: Colors.grey.shade100,
+                            ),
+                          ],
+                        )),
+                  ],
+                ),
+              )),
+            ],
+          ),
+        ));
+  }
+
+  static shimmerNotification() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.grey.shade100,
+      enabled: true,
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(5)),
+              margin: const EdgeInsets.only(
+                right: AppDimens.dimens_10,
+              ),
+              // child:
+              //  ClipRRect(
+              //   borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+              //   child: NetworkImageCustom(
+              //       image: Global.checkNull(mNotificationModel.image)
+              //           ? mNotificationModel.image
+              //           : "https://qph.cf2.quoracdn.net/main-thumb-1278318002-200-ydzfegagslcexelzgsnplcklfkienzfr.jpeg",
+              //       fit: BoxFit.fill,
+              //       height: 90,
+              //       width: 90),
+              // ),
+            ),
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  height: 25,
+                  width: 200,
+                  color: Colors.grey.shade300,
+
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(
+                      top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
+                  // child:
+                  // Text(
+                  //   mNotificationModel.type.contains('estimate')
+                  //       ? 'Estimation Submitted '
+                  //       : mNotificationModel.title,
+                  //   maxLines: 2,
+                  //   style: AppStyle.textViewStyleNormalBodyText2(
+                  //       context: context,
+                  //       color: AppColors.grayDashboardText,
+                  //       fontSizeDelta: 0,
+                  //       fontWeightDelta: 2),
+                  // )
+                ),
+                SizedBox(height: 10),
+                Container(
+                  height: 20,
+                  width: 100,
+                  color: Colors.grey.shade300,
+                  margin: const EdgeInsets.only(bottom: AppDimens.dimens_5),
+                  alignment: Alignment.centerLeft,
+                  // child:
+                  //  Text(
+                  //   mNotificationModel.getDate(),
+                  //   style: AppStyle.textViewStyleSmall(
+                  //       context: context,
+                  //       color: AppColors.grayDashboardText,
+                  //       fontSizeDelta: -2,
+                  //       fontWeightDelta: 0),
+                  // )
+                ),
+              ],
+            )),
+            // SizedBox(
+            //   height: 90,
+
+            //   child: Icon(Icons.arrow_forward_ios_rounded,
+            //       size: AppDimens.dimens_13, color: AppColors.colorBlueStart),
+            // )
+          ],
+        ),
       ),
     );
   }

@@ -32,7 +32,7 @@ class ChatHistoryFragmentState extends State<ChatHistoryFragment> {
   @override
   Widget build(BuildContext context) {
     Widget widgetM = GetBuilder<ChatHistorController>(builder: (value) {
-      return AppViews.getSetData(
+      return AppViews.getSetDataChat(
           context,
           value.mShowData,
           ListView(

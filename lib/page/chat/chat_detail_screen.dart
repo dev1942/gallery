@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:otobucks/controllers/chat_controllers/chat_detail_controller.dart';
 import 'package:otobucks/custom_ui/loader/three_bounce.dart';
 import 'package:otobucks/global/app_colors.dart';
@@ -116,12 +117,14 @@ class ChatDetailScreenState extends State<ChatDetailScreen> {
               Expanded(
                   child: GetBuilder<ChatDetailController>(builder: (value) {
                 return value.mShowData
-                    ? Center(
-                        child: SpinKitThreeBounce(
-                          color: AppColors.colorAccent,
-                          size: 30,
-                          key: const ValueKey('chat'),
-                        ),
+                    ?
+                    //new interactive shimmer loading
+                    ListView.builder(
+                        padding: EdgeInsets.all(AppDimens.dimens_15),
+                        itemCount: 15,
+                        itemBuilder: (context, i) {
+                          return AppViews.shimmerChat();
+                        },
                       )
                     : ListView.builder(
                         padding: const EdgeInsets.all(AppDimens.dimens_10),

@@ -171,6 +171,30 @@ getDrawerItem(DrawerItem mDrawerItem, BuildContext context) {
                   fontSizeDelta: -1),
             ),
           ),
+          Constants.TAG_NOTIFICATION == mDrawerItem.title
+              ? Container(
+                  padding: EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(100)),
+                  margin: const EdgeInsets.only(
+                      left: AppDimens.dimens_15, right: AppDimens.dimens_10),
+                  child: Text(
+                    "40",
+                    style: AppStyle.textViewStyleNormalSubtitle2(
+                        context: context,
+                        color: AppColors.colorWhite,
+                        fontWeightDelta: 1,
+                        fontSizeDelta: -1),
+                  )
+                  // Image.asset(
+                  //   mDrawerItem.icon,
+                  //   color: AppColors.colorBlueStart,
+                  //   height: AppDimens.dimens_20,
+                  //   width: AppDimens.dimens_20,
+                  // ),
+                  )
+              : SizedBox(),
         ],
       ),
     ),

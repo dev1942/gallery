@@ -92,6 +92,7 @@ dependencies:
   syncfusion_flutter_sliders: ^20.2.48
   flutter_circular_text: ^0.3.1
   pretty_http_logger: ^0.2.1
+  flutter_intro: ^3.0.2
 
   #  flutter_date_picker_timeline: ^0.3.3
   #firebase_core: ^0.5.3

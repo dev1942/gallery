@@ -68,7 +68,16 @@ class BottomNavBarHelper {
             child: bottomNavIcon(AppImages.ic_cart),
           )),
       BottomNavigationBarItem(
-          icon: bottomNavIcon(AppImages.ic_notification),
+          icon: Stack(children: <Widget>[
+            bottomNavIcon(AppImages.ic_notification),
+            Positioned(
+              // draw a red marble
+              top: 0.0,
+              right: 0.0,
+              child: new Icon(Icons.brightness_1,
+                  size: 10.0, color: Colors.redAccent),
+            )
+          ]),
           label: "",
           activeIcon: Container(
             alignment: Alignment.center,

@@ -189,7 +189,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
             itemCount: alNotification.length)
       ],
     );
-    widgetM = AppViews.getSetData(context, mShowData, mShowWidget);
+    widgetM = AppViews.getSetDataNotification(context, mShowData, mShowWidget);
     return SafeArea(
         top: false,
         bottom: false,
