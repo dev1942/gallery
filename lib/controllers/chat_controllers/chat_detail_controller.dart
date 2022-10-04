@@ -164,6 +164,9 @@ class ChatDetailController extends GetxController {
       chats = chats.reversed.toList();
       if (chats.isNotEmpty) {
         for (var chat in chats) {
+          print("list files: ${chat.files}");
+          print("chat from image: ${chat.from.image}");
+          print("chat to image: ${chat.to.image}");
           bool isMe = chat.to.id == Get.find<HomeScreenController>().userId
               ? true
               : false;

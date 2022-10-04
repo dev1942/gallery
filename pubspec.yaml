@@ -134,7 +134,7 @@ flutter:
         - asset: assets/fonts/poppins_bold.ttf
         - asset: assets/fonts/poppins_medium.ttf
         - asset: assets/fonts/poppins_regular.ttf
-        - asset: assets/fonts/poppins_semi_bold.ttf
+        - asset: assets/fonts/poppins_semi_bold.ttf 
         - asset: assets/fonts/poppins_light.ttf
   # To add assets to your application, add an assets section, like this:
   # assets:
