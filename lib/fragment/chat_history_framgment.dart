@@ -47,6 +47,8 @@ class ChatHistoryFragmentState extends State<ChatHistoryFragment> {
                 color: AppColors.colorBlueStart,
                 child: Row(
                   children: [
+                    // if (Global.checkNull(
+                    //     Get.find<HomeScreenController>().image))
                     Container(
                       child: ClipRRect(
                         borderRadius:
@@ -232,18 +234,13 @@ class ChatHistoryFragmentState extends State<ChatHistoryFragment> {
                       ),
                       onTap: () async {
                         roomModel.unReadMessages = 0;
-                        setState(() {});
-                        var _isSubmitted = await Navigator.push(
+                        await Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ChatDetailScreen(
                                       roomUser: user!,
                                       roomId: roomModel.myRoomModelId,
                                     )));
-
-                        if (_isSubmitted) {
-                          await controller.getRooms();
-                        }
                       },
                     );
                   },
@@ -271,4 +268,3 @@ class ChatHistoryFragmentState extends State<ChatHistoryFragment> {
         ));
   }
 }
-  

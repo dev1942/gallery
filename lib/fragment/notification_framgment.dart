@@ -232,8 +232,6 @@ class NotificationFragmentState extends State<NotificationFragment> {
       return;
     }
 
-    print(connectionStatus);
-
     // setState(() {
     //   if (connectionStatus) {
     //mShowData = ShowData.SHOW_DATA;

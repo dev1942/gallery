@@ -33,7 +33,7 @@ class ServiceProviderProfileScreen extends StatefulWidget {
 class ServiceProviderProfileScreenState
     extends State<ServiceProviderProfileScreen>
     with SingleTickerProviderStateMixin {
-  ShowData mShowData = ShowData.showLoading;
+  ShowData mShowData = ShowData.showData;
   late TabController controller;
   bool connectionStatus = false;
   late ServiceProviderModel mServiceProviderModel;

@@ -22,17 +22,17 @@ class ServerChatModel {
     required this.serverChatModelId,
   });
 
-  var files;
-  var status;
-  var id;
-  var chatRoom;
-  var from;
-  var to;
-  var message;
-  var createdAt;
-  var updatedAt;
+  List<String> files;
+  String status;
+  String id;
+  String chatRoom;
+  From from;
+  From to;
+  String message;
+  String createdAt;
+  String updatedAt;
 
-  var serverChatModelId;
+  String serverChatModelId;
 
   factory ServerChatModel.fromJson(String str) =>
       ServerChatModel.fromMap(json.decode(str));

@@ -20,9 +20,9 @@ class MyRoomModel {
   });
 
   List<RoomUser> users;
-  var createdAt;
-  var updatedAt;
-  var myRoomModelId;
+  String createdAt;
+  String updatedAt;
+  String myRoomModelId;
   int unReadMessages;
   ServerChatModel? serverChatModel;
 
@@ -78,11 +78,11 @@ class RoomUser {
     required this.userId,
   });
 
-  var id;
-  var firstName;
-  var lastName;
-  var image;
-  var userId;
+  String id;
+  String firstName;
+  String lastName;
+  String image;
+  String userId;
 
   factory RoomUser.fromJson(String str) => RoomUser.fromMap(json.decode(str));
 

@@ -247,7 +247,7 @@ class ProfileScreenController extends GetxController {
 
   isValid(BuildContext context) {
     String strAddress = controllerAddress.text.toString();
-    String strPhone = controllerPhone.text.toString();
+
     String strEmail = controllerEmail.text.toString();
     String strEmgName = controllerEmgName.text.toString();
     String strEmgPhone = controllerEmgPhone.text.toString();
@@ -263,23 +263,6 @@ class ProfileScreenController extends GetxController {
           strMsg: AppAlert.ALERT_ENTER_ADDRESS,
           toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeAddress);
-      return false;
-    } else if (!Global.checkNull(strPhone)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_NUMBER,
-          toastType: TOAST_TYPE.toastError);
-      FocusScope.of(context).requestFocus(mFocusNodePhone);
-      return false;
-    } else if (Global.checkNull(strPhone) &&
-        !Global.checkValidMobile(strPhone)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER,
-          toastType: TOAST_TYPE.toastError);
-      FocusScope.of(context).requestFocus(mFocusNodePhone);
       return false;
     } else if (!Global.checkNull(strEmail)) {
       Global.showToastAlert(
@@ -314,8 +297,7 @@ class ProfileScreenController extends GetxController {
           toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmgPhone);
       return false;
-    } else if (Global.checkNull(strEmgPhone) &&
-        !Global.checkValidMobile(strEmgPhone)) {
+    } else if (!Global.checkNull(strEmgPhone)) {
       Global.showToastAlert(
           context: context,
           strTitle: "",

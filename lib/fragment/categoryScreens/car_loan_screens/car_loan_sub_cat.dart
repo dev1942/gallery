@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:otobucks/controllers/category_screens_controllers/auto_loans_controller.dart';
 import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/global/container_properties.dart';
+import 'package:otobucks/global/global.dart';
 import 'package:otobucks/global/text_styles.dart';
 import 'package:otobucks/model/auto_loan_model.dart';
 import 'package:otobucks/model/category_model.dart';
@@ -24,7 +25,10 @@ class _AutoLoansScreenState extends State<AutoLoansScreen> {
   var controller = Get.put(AutoLoansScreenController());
   @override
   void initState() {
-    controller.getSubCategory(widget.categoryModel.id);
+    Future.delayed(Duration.zero, () {
+      Global.inProgressAlert(Get.overlayContext!);
+      controller.getSubCategory(widget.categoryModel.id);
+    });
 
     super.initState();
   }

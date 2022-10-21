@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:otobucks/global/adaptive_helper.dart';
 import 'package:otobucks/global/app_colors.dart';
@@ -5,15 +7,13 @@ import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/container_properties.dart';
 import 'package:otobucks/global/text_styles.dart';
 import 'package:otobucks/model/cart_model.dart';
+import 'package:otobucks/services/repository/cart_repo.dart';
 import 'package:otobucks/widgets/cart_component.dart';
 import 'package:otobucks/widgets/small_button.dart';
-import 'dart:collection';
-import 'package:otobucks/services/repository/cart_repo.dart';
-import '../../../../global/app_views.dart';
 
+import '../../../../global/app_views.dart';
 import '../../../../global/enum.dart';
 import '../../../../global/global.dart';
-import '../model/notification_model.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);

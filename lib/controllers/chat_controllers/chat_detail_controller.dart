@@ -100,13 +100,16 @@ class ChatDetailController extends GetxController {
   sendMessage(String roomId, {String url = ''}) {
     socket.emitWithAck("sendMessage", {
       {
-        'message': controllerMessage.text,
+        'message': controllerMessage.text.isEmpty
+            ? 'image sent'
+            : controllerMessage.text,
         'files': [url]
       },
       roomId
     }, ack: (data) {
       log('ack Message: $data');
     });
+    log('image: ' + url);
     if (alChat.isNotEmpty) {
       alChat.insert(
           0,
@@ -116,8 +119,10 @@ class ChatDetailController extends GetxController {
               id: '',
               image: '',
               name: '',
-              message: controllerMessage.text,
-              images: [],
+              message: controllerMessage.text.isEmpty
+                  ? 'image sent'
+                  : controllerMessage.text,
+              images: url.isNotEmpty ? [url] : [],
               isRead: false,
               mMsgType: MsgType.right));
     } else {
@@ -126,8 +131,10 @@ class ChatDetailController extends GetxController {
           id: '',
           image: '',
           name: '',
-          message: controllerMessage.text,
-          images: [],
+          message: controllerMessage.text.isEmpty
+              ? 'image sent'
+              : controllerMessage.text,
+          images: url.isNotEmpty ? [url] : [],
           isRead: false,
           mMsgType: MsgType.right));
     }
@@ -164,12 +171,15 @@ class ChatDetailController extends GetxController {
       chats = chats.reversed.toList();
       if (chats.isNotEmpty) {
         for (var chat in chats) {
-          print("list files: ${chat.files}");
-          print("chat from image: ${chat.from.image}");
-          print("chat to image: ${chat.to.image}");
           bool isMe = chat.to.id == Get.find<HomeScreenController>().userId
               ? true
               : false;
+          List<String> files = [];
+          for (var file in chat.files) {
+            if (file.isNotEmpty && file.startsWith('http')) {
+              files.add(file);
+            }
+          }
           LocalChatModel localChatModel = LocalChatModel(
               time: Global.getTimeFormat(
                   chat.getDateInFormate().toString().split(' ')[1]),
@@ -177,7 +187,7 @@ class ChatDetailController extends GetxController {
               image: isMe ? chat.to.image : chat.from.image,
               name: isMe ? chat.from.firstName : chat.to.firstName,
               message: chat.message,
-              images: chat.files,
+              images: files,
               isRead: chat.status == 'read' ? true : false,
               mMsgType: isMe ? MsgType.left : MsgType.right);
           alChat.add(localChatModel);

@@ -150,8 +150,13 @@ class _ExploreAccessoriesScreenState extends State<ExploreAccessoriesScreen> {
                               shrinkWrap: true,
                               itemCount: value.products.length,
                               itemBuilder: (context, index) {
-                                return CartItemComponent(
-                                  productModel: value.products[index],
+                                return InkWell(
+                                  onTap: () {
+                                    Get.to(() => const ItemDetailsScreen());
+                                  },
+                                  child: CartItemComponent(
+                                    productModel: value.products[index],
+                                  ),
                                 );
                               })),
                     );

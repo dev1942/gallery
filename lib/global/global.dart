@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:http/http.dart' as http;
@@ -16,6 +17,7 @@ import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/model/failure.dart';
 import 'package:otobucks/model/result.dart';
+import 'package:otobucks/page/bot_sms.dart';
 import 'package:otobucks/page/show_video_screen.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:path_provider/path_provider.dart';
@@ -1442,11 +1444,12 @@ class Global {
   }
 
   static inProgressAlert(BuildContext context) {
-    showToastAlert(
-        context: context,
-        strTitle: "Alert",
-        strMsg: "This functionality in under construction",
-        toastType: TOAST_TYPE.toastWarning);
+    Get.to(() => BotSms());
+    // showToastAlert(
+    //     context: context,
+    //     strTitle: "Alert",
+    //     strMsg: "This functionality in under construction",
+    //     toastType: TOAST_TYPE.toastWarning);
   }
 
   static Future<String> destinationFile(String type) async {

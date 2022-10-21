@@ -408,7 +408,7 @@ class AppViews {
       case ShowData.showLoading:
         widgetM = Container(
           child: ListView.builder(
-            padding: EdgeInsets.all(AppDimens.dimens_20),
+            padding: const EdgeInsets.all(AppDimens.dimens_20),
             itemCount: 15,
             itemBuilder: (context, i) {
               return AppViews.shimmerNotification();
@@ -457,7 +457,7 @@ class AppViews {
       case ShowData.showLoading:
         widgetM = Container(
           child: ListView.builder(
-            padding: EdgeInsets.all(AppDimens.dimens_15),
+            padding: const EdgeInsets.all(AppDimens.dimens_15),
             itemCount: 15,
             itemBuilder: (context, i) {
               return AppViews.shimmerChat();
@@ -931,41 +931,39 @@ class AppViews {
         highlightColor: Colors.grey.shade100,
         enabled: true,
         child: Container(
-          margin: EdgeInsets.symmetric(vertical: 5),
+          margin: const EdgeInsets.symmetric(vertical: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
-                  child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.colorChatBgLeft,
-                          borderRadius: const BorderRadius.all(
-                              Radius.circular(AppDimens.dimens_10)),
-                        ),
-                        padding: const EdgeInsets.all(AppDimens.dimens_12),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: 20,
-                              width: 100,
-                              color: Colors.grey.shade400,
-                            ),
-                            Container(
-                              height: 20,
-                              color: Colors.grey.shade100,
-                            ),
-                          ],
-                        )),
-                  ],
-                ),
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.colorChatBgLeft,
+                        borderRadius: const BorderRadius.all(
+                            Radius.circular(AppDimens.dimens_10)),
+                      ),
+                      padding: const EdgeInsets.all(AppDimens.dimens_12),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 20,
+                            width: 100,
+                            color: Colors.grey.shade400,
+                          ),
+                          Container(
+                            height: 20,
+                            color: Colors.grey.shade100,
+                          ),
+                        ],
+                      )),
+                ],
               )),
             ],
           ),
@@ -978,7 +976,7 @@ class AppViews {
       highlightColor: Colors.grey.shade100,
       enabled: true,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1029,7 +1027,7 @@ class AppViews {
                   //       fontWeightDelta: 2),
                   // )
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Container(
                   height: 20,
                   width: 100,

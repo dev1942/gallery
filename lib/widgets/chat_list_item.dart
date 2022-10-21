@@ -1,9 +1,11 @@
+import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
-import 'package:image_collapse/image_collapse.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_style.dart';
+import 'package:otobucks/global/container_properties.dart';
 import 'package:otobucks/global/enum.dart';
+import 'package:otobucks/widgets/fade_in_image.dart';
 
 import '../global/app_images.dart';
 import '../model/local_chat_model.dart';
@@ -65,11 +67,33 @@ class ChatListItem extends StatelessWidget {
                       )),
                   Visibility(
                       visible: mChatModel.images.isNotEmpty ? true : false,
-                      child: ImageCollapse(
-                        appBarColor: AppColors.colorBlueEnd,
-                        imageUrls: mChatModel.images,
-                        fadingColorCollapse: AppColors.colorBlueEnd,
-                        titleGallery: "Chats",
+                      child: Column(
+                        children:
+                            List.generate(mChatModel.images.length, (index) {
+                          return Container(
+                            margin: const EdgeInsets.only(top: 5),
+                            height: 200,
+                            decoration: ContainerProperties.simpleDecoration(),
+                            child: InkWell(
+                              child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(AppDimens.dimens_5),
+                                  child: NetworkImageCustom(
+                                    image: mChatModel.images[index],
+                                    height: 70,
+                                    width: double.infinity,
+                                  )),
+                              onTap: () {
+                                final imageProvider =
+                                    Image.network(mChatModel.images[index])
+                                        .image;
+                                showImageViewer(context, imageProvider,
+                                    useSafeArea: true,
+                                    onViewerDismissed: () {});
+                              },
+                            ),
+                          );
+                        }),
                       )),
                 ],
               ),
@@ -126,15 +150,33 @@ class ChatListItem extends StatelessWidget {
                       )),
                   Visibility(
                       visible: mChatModel.images.isNotEmpty ? true : false,
-                      child: ImageCollapse(
-                        appBarColor: AppColors.colorBlueEnd,
-                        backgroundImageView: const BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(AppDimens.dimens_5)),
-                        ),
-                        imageUrls: mChatModel.images,
-                        fadingColorCollapse: AppColors.colorBlueEnd,
-                        titleGallery: "Chats",
+                      child: Column(
+                        children:
+                            List.generate(mChatModel.images.length, (index) {
+                          return Container(
+                            margin: const EdgeInsets.only(top: 5),
+                            height: 200,
+                            decoration: ContainerProperties.simpleDecoration(),
+                            child: InkWell(
+                              child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(AppDimens.dimens_5),
+                                  child: NetworkImageCustom(
+                                    image: mChatModel.images[index],
+                                    height: 70,
+                                    width: double.infinity,
+                                  )),
+                              onTap: () {
+                                final imageProvider =
+                                    Image.network(mChatModel.images[index])
+                                        .image;
+                                showImageViewer(context, imageProvider,
+                                    useSafeArea: true,
+                                    onViewerDismissed: () {});
+                              },
+                            ),
+                          );
+                        }),
                       )),
                   Container(
                     alignment: Alignment.centerRight,

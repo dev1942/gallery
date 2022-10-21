@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:otobucks/controllers/chat_controllers/chat_detail_controller.dart';
-import 'package:otobucks/custom_ui/loader/three_bounce.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_images.dart';
@@ -120,7 +118,8 @@ class ChatDetailScreenState extends State<ChatDetailScreen> {
                     ?
                     //new interactive shimmer loading
                     ListView.builder(
-                        padding: EdgeInsets.all(AppDimens.dimens_15),
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(AppDimens.dimens_15),
                         itemCount: 15,
                         itemBuilder: (context, i) {
                           return AppViews.shimmerChat();
@@ -150,7 +149,6 @@ class ChatDetailScreenState extends State<ChatDetailScreen> {
             children: [
               Flexible(
                 child: widgetM,
-                flex: 1,
               ),
               Container(
                 height: AppDimens.dimens_50,

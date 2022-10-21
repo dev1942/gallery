@@ -173,7 +173,7 @@ getDrawerItem(DrawerItem mDrawerItem, BuildContext context) {
           ),
           Constants.TAG_NOTIFICATION == mDrawerItem.title
               ? Container(
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(100)),
@@ -194,7 +194,7 @@ getDrawerItem(DrawerItem mDrawerItem, BuildContext context) {
                   //   width: AppDimens.dimens_20,
                   // ),
                   )
-              : SizedBox(),
+              : const SizedBox(),
         ],
       ),
     ),

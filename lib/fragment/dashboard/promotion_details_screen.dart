@@ -89,7 +89,6 @@ class PromotionDetailsScreenState extends State<PromotionDetailsScreen> {
             child: PromotionBanner(
               buttonText: 'Book Now',
               onTap: () {
-                print(widget.promotionsModel.sourceType);
                 if (widget.promotionsModel.sourceType == 'service') {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (_) => CreateEstimationScreen(

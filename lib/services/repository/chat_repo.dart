@@ -1,13 +1,12 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
 
-import 'dart:async';
-
+import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
+import 'package:otobucks/global/connectivity_status.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
-import 'package:dartz/dartz.dart';
-import 'package:otobucks/global/connectivity_status.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/model/failure.dart';
 import 'package:otobucks/model/my_rooms_model.dart';
@@ -35,10 +34,9 @@ class ChatRepo {
           mParamType: ParamType.simple);
       Result? mResponse;
 
-
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
-      debugPrint("mapData: ${mResponse?.responseData}");
+        debugPrint("mapData: ${mResponse?.responseData}");
       } else {
         return Left(
             Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
@@ -353,9 +351,9 @@ class ChatRepo {
         Map data = mResponse?.responseData as Map;
         List images = data['imageUrl'] as List;
 
-        images.forEach((element) {
+        for (var element in images) {
           urls.add(element);
-        });
+        }
         // ignore: unnecessary_null_comparison
         Success mSuccess = Success(
             responseStatus: mResponse!.responseStatus,

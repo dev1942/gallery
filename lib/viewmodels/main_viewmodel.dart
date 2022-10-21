@@ -13,7 +13,6 @@ import 'package:otobucks/page/auth/registation_screen.dart';
 import 'package:otobucks/services/navigation_service.dart' as my_nav_service;
 import 'package:otobucks/services/repository/login_repo.dart';
 import 'package:otobucks/services/repository/registration_repo.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 
@@ -32,12 +31,6 @@ class MainViewModel extends BaseViewModel {
   bool isShowLoader = false;
   bool obscureTextM = false;
 
-  PackageInfo _packageInfo = PackageInfo(
-    appName: 'Unknown',
-    packageName: 'Unknown',
-    version: 'Unknown',
-    buildNumber: 'Unknown',
-  );
   String strVersionName = "";
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();

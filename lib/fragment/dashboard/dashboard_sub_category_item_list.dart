@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/controllers/dashboard_controller/dashboard_controller.dart';
 import 'package:otobucks/fragment/categoryScreens/accessories_screens/acessories_sub_cat_screen.dart';
+import 'package:otobucks/fragment/categoryScreens/car_loan_screens/car_loan_sub_cat.dart';
 import 'package:otobucks/fragment/categoryScreens/car_sell_screens/filter_screen.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
@@ -106,7 +107,7 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
                   index: value.intTabPosition,
                   children: List.generate(
                       controller.alCategory.length,
-                      (index) =>   Visibility(
+                      (index) => Visibility(
                             child: getRespectiveTabs(
                                 controller.alCategory[index].title),
                             maintainState: false,
@@ -123,8 +124,8 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
         return AutoRepairSubCatScreen(
             mCategoryModel: controller.mCategoryModel);
       case 'Auto Loans':
-        // return AutoLoansScreen(categoryModel: controller.mCategoryModel);
-        return comingSoon();
+        return AutoLoansScreen(categoryModel: controller.mCategoryModel);
+      // return comingSoon();
       case 'Auto Spare Parts':
         return const AccessoriesSubCatScreen();
       case 'Sell a car':

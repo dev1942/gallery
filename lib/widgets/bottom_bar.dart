@@ -70,12 +70,12 @@ class BottomNavBarHelper {
       BottomNavigationBarItem(
           icon: Stack(children: <Widget>[
             bottomNavIcon(AppImages.ic_notification),
-            Positioned(
+            const Positioned(
               // draw a red marble
               top: 0.0,
               right: 0.0,
-              child: new Icon(Icons.brightness_1,
-                  size: 10.0, color: Colors.redAccent),
+              child:
+                  Icon(Icons.brightness_1, size: 10.0, color: Colors.redAccent),
             )
           ]),
           label: "",

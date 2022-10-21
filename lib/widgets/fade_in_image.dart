@@ -25,7 +25,9 @@ class NetworkImageCustom extends StatelessWidget {
             AppViews.getProgressImage(height, width),
         height: height,
         width: width,
-        imageUrl: image,
+        imageUrl: image == ''
+            ? 'https://d23jwszswncmo3.cloudfront.net/otobuckslogo.jpg'
+            : image,
         errorWidget: ((context, url, error) =>
             AppViews.getErrorImage(height, width)),
         fit: fit != null ? fit! : BoxFit.cover);

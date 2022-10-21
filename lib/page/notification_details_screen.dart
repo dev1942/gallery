@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:otobucks/fragment/estimation_main_fragment.dart';
 import 'package:otobucks/global/container_properties.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/small_button.dart';
 
-import '../../../model/estimates_model.dart';
 import '../../../../global/app_colors.dart';
 import '../../../../global/app_dimens.dart';
 import '../../../../global/app_style.dart';
 import '../../../../global/app_views.dart';
-import '../page/services/estimation/estimation_details_pdf_screen.dart';
 import '../model/notification_model.dart';
 
 class NotificationDetails extends StatefulWidget {

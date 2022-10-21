@@ -2,16 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:otobucks/global/app_images.dart';
-import 'package:otobucks/page/home_page.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
+import 'package:otobucks/global/app_images.dart';
 import 'package:otobucks/global/app_style.dart';
+import 'package:otobucks/page/home_page.dart';
 import 'package:otobucks/widgets/custom_button.dart';
-
-import '../global/app_colors.dart';
-import '../global/app_dimens.dart';
-import '../global/app_style.dart';
 
 class ThankYouFragment extends StatefulWidget {
   const ThankYouFragment({Key? key}) : super(key: key);
@@ -37,8 +33,6 @@ class ThankYouFragmentState extends State<ThankYouFragment> {
     var size = MediaQuery.of(context).size;
     double marginBoth = AppDimens.dimens_20;
     double height = AppDimens.dimens_36;
-    double imgHeight = AppDimens.dimens_90;
-    double iconSize = AppDimens.dimens_18;
     Widget widgetM = Scaffold(
         bottomSheet: Container(
           margin: EdgeInsets.only(

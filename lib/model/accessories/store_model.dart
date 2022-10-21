@@ -16,9 +16,6 @@ class AccessoriesStoreModel {
     required this.description,
     required this.provider,
     required this.type,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.deliveryDetails,
   });
 
   bool deliver;
@@ -32,9 +29,6 @@ class AccessoriesStoreModel {
   String description;
   String provider;
   String type;
-  String createdAt;
-  String updatedAt;
-  DeliveryDetails? deliveryDetails;
 
   factory AccessoriesStoreModel.fromJson(String str) =>
       AccessoriesStoreModel.fromMap(json.decode(str));
@@ -45,20 +39,15 @@ class AccessoriesStoreModel {
       AccessoriesStoreModel(
         deliver: json["deliver"],
         images: List<String>.from(json["images"].map((x) => x)),
-        id: json["_id"],
-        name: json["name"],
-        country: json["country"],
-        state: json["state"],
-        city: json["city"],
-        address: json["address"],
-        description: json["description"],
-        provider: json["provider"],
-        type: json["type"],
-        createdAt: json["createdAt"],
-        updatedAt: json["updatedAt"],
-        deliveryDetails: json["deliveryDetails"] == null
-            ? null
-            : DeliveryDetails.fromMap(json["deliveryDetails"]),
+        id: json["_id"] ?? '',
+        name: json["name"] ?? '',
+        country: json["country"] ?? '',
+        state: json["state"] ?? '',
+        city: json["city"] ?? '',
+        address: json["address"] ?? '',
+        description: json["description"] ?? '',
+        provider: json["provider"] ?? '',
+        type: json["type"] ?? '',
       );
 
   Map<String, dynamic> toMap() => {
@@ -73,10 +62,6 @@ class AccessoriesStoreModel {
         "description": description,
         "provider": provider,
         "type": type,
-        "createdAt": createdAt,
-        "updatedAt": updatedAt,
-        "deliveryDetails":
-            deliveryDetails == null ? null : deliveryDetails!.toMap(),
       };
 }
 

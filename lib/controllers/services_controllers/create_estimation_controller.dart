@@ -244,11 +244,6 @@ class CreateEstimationController extends GetxController {
       update();
     }, (mResult) {
       isShowLoader = false;
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
 
       Get.offAll(() => const ThankYouFragment());
     });
