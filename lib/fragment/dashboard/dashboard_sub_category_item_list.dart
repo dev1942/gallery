@@ -53,26 +53,29 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
                     left: AppDimens.dimens_15,
                     bottom: AppDimens.dimens_10,
                     right: AppDimens.dimens_15),
-                child: Card(
-                  child: CustomTextFieldWithIcon(
-                    textInputAction: TextInputAction.next,
-                    enabled: true,
-                    controller: value.controllerSearch,
-                    keyboardType: TextInputType.emailAddress,
-                    hintText: Constants.STR_SEARCH.tr,
-                    inputFormatters: const [],
-                    obscureText: false,
-                    onChanged: (String value) {},
-                    suffixIcon: InkWell(
-                      child: Image.asset(
-                        AppImages.ic_search,
-                        width: AppDimens.dimens_18,
-                      ),
-                      onTap: () {},
+                child: CustomTextFieldWithIcon(
+                  textInputAction: TextInputAction.next,
+                  enabled: true,
+
+                  controller: value.controllerSearch,
+                  keyboardType: TextInputType.emailAddress,
+                  hintText: Constants.STR_SEARCH.tr,
+                  inputFormatters: const [],
+                  obscureText: false,
+                  onChanged: (String value) {},
+                  suffixIcon: InkWell(
+                    child: Image.asset(
+                      AppImages.ic_search,
+                      width: AppDimens.dimens_18,
                     ),
+                    onTap: () {},
                   ),
                 ),
               ),
+Padding(
+  padding: const EdgeInsets.only(left: 20.0),
+  child:   Text("Sub Categories",style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorPrimary),),
+),
               TabBar(
                 onTap: (index) => value.onTapChangeTab(index),
                 isScrollable: true,
@@ -93,15 +96,37 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
                 tabs: [
                   for (CategoryModel mCategoryModel in value.alCategory)
                     Tab(
+                      height: 130,
                         text: mCategoryModel.title,
-                        icon: NetworkImageCustom(
-                            image: mCategoryModel.image,
-                            height: AppDimens.dimens_30,
-                            width: AppDimens.dimens_30)),
+                        icon: Card(
+                          elevation: 7,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(AppDimens.dimens_10)
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppColors.colorPrimary,
+                              borderRadius: BorderRadius.circular(AppDimens.dimens_10)
+                            ),
+                            width: 80,
+                            height: 80,
+
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(AppDimens.dimens_10,),
+                              child: NetworkImageCustom(
+                                  image: mCategoryModel.image,
+                                  height: AppDimens.dimens_40,
+                                  width: AppDimens.dimens_40),
+                            ),
+                          ),
+                        )),
                 ],
               ),
-              const SizedBox(
-                height: 20,
+              Divider(thickness: 1,),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text("Services",style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorPrimary),),
               ),
               IndexedStack(
                   index: value.intTabPosition,

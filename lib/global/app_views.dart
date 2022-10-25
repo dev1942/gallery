@@ -918,9 +918,10 @@ class AppViews {
   static textFieldRoundBorder() {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(5),
-      borderSide: const BorderSide(
-        width: 0,
-        style: BorderStyle.none,
+      borderSide:  BorderSide(
+        width: 2,
+        color: AppColors.colorAccent,
+        style: BorderStyle.solid,
       ),
     );
   }

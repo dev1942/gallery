@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:otobucks/global/app_dimens.dart';
 
 import '../global/app_views.dart';
 
@@ -19,18 +20,22 @@ class NetworkImageCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
-        // placeholder: ((context, url) => Image.asset(AppImages.ic_place_holder)),
-        progressIndicatorBuilder: (context, url, downloadProgress) =>
-            AppViews.getProgressImage(height, width),
-        height: height,
-        width: width,
-        imageUrl: image == ''
-            ? 'https://d23jwszswncmo3.cloudfront.net/otobuckslogo.jpg'
-            : image,
-        errorWidget: ((context, url, error) =>
-            AppViews.getErrorImage(height, width)),
-        fit: fit != null ? fit! : BoxFit.cover);
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(AppDimens.dimens_5,),
+      child: CachedNetworkImage(
+          // placeholder: ((context, url) => Image.asset(AppImages.ic_place_holder)),
+          progressIndicatorBuilder: (context, url, downloadProgress) =>
+              AppViews.getProgressImage(height, width),
+          height: height,
+          width: width,
+          imageUrl: image == ''
+              ? 'https://d23jwszswncmo3.cloudfront.net/otobuckslogo.jpg'
+              : image,
+          errorWidget: ((context, url, error) =>
+              AppViews.getErrorImage(height, width)),
+           fit: fit != null ? fit! : BoxFit.cover
+      ),
+    );
   }
 }
 // import 'package:flutter/material.dart';

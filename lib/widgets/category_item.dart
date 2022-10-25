@@ -34,10 +34,20 @@ class CategoryItem extends StatelessWidget {
               margin: const EdgeInsetsDirectional.only(
                 end: AppDimens.dimens_20,
               ),
-              child: NetworkImageCustom(
-                  image: image,
-                  height: AppDimens.dimens_70,
-                  width: AppDimens.dimens_70),
+              child: Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AppDimens.dimens_10),
+
+                ),
+                child: ClipRRect(
+                borderRadius: BorderRadius.circular(AppDimens.dimens_10),
+                  child: NetworkImageCustom(
+                      image: image,
+                      height: AppDimens.dimens_70,
+                      width: AppDimens.dimens_70),
+                ),
+              ),
             ),
             Expanded(
                 child: Column(
@@ -73,7 +83,7 @@ class CategoryItem extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         color: AppColors.grayDashboardItem,
-        borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+        borderRadius: BorderRadius.circular(AppDimens.dimens_20),
       ),
     );
   }

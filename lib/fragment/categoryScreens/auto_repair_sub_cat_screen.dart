@@ -66,16 +66,24 @@ class AutoRepairSubCatScreenState extends State<AutoRepairSubCatScreen> {
                   ),
                   child: Column(
                     children: [
-                      AspectRatio(
-                        aspectRatio: 1.9 - (itemWidth / itemHeight),
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(0),
-                              topRight: Radius.circular(0)),
-                          child: NetworkImageCustom(
-                              image: mSubCategoryModel.image,
-                              height: 0,
-                              width: 0),
+                      Container(
+                        width: 70,
+                        padding: EdgeInsets.all(8),
+                        decoration:
+                            BoxDecoration(color: Colors.grey.withOpacity(.4),
+                                borderRadius: BorderRadius.circular(AppDimens.dimens_10)),
+                        height: 70,
+                        child: AspectRatio(
+                          aspectRatio: 1.9 - (itemWidth / itemHeight),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(0)),
+                            child: NetworkImageCustom(
+                                image: mSubCategoryModel.image,
+                                height: 0,
+                                width: 0),
+                          ),
                         ),
                       ),
                       const SizedBox(

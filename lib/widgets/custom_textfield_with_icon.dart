@@ -102,6 +102,7 @@ class CustomTextFieldWithIcon extends StatelessWidget {
               left: AppDimens.dimens_15,
               right: AppDimens.dimens_15),
           focusedBorder: AppViews.textFieldRoundBorder(),
+          enabledBorder: OutlineInputBorder(),
           border: AppViews.textFieldRoundBorder(),
           disabledBorder: AppViews.textFieldRoundBorder(),
           focusedErrorBorder: AppViews.textFieldRoundBorder(),
