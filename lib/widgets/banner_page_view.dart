@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/controllers/home_screen_controller.dart';
 import 'package:otobucks/widgets/banner_component.dart';
@@ -36,6 +37,9 @@ class BannerPageViewState extends State<BannerPageView> {
                 ? size.maxWidth / 1.7
                 : size.maxWidth / 1.3,
             child: PageView.builder(
+              //this solves the overscroll indicator exception on promotion banner
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
               controller: _pageController,
               itemBuilder: (context, index) {
                 String strImage = widget.alPromotions[index].getPromoImage();

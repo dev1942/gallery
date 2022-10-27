@@ -56,7 +56,6 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
                 child: CustomTextFieldWithIcon(
                   textInputAction: TextInputAction.next,
                   enabled: true,
-
                   controller: value.controllerSearch,
                   keyboardType: TextInputType.emailAddress,
                   hintText: Constants.STR_SEARCH.tr,
@@ -72,14 +71,19 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
                   ),
                 ),
               ),
-Padding(
-  padding: const EdgeInsets.only(left: 20.0),
-  child:   Text("Sub Categories",style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorPrimary),),
-),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text(
+                  "Sub Categories",
+                  style: AppStyle.textViewStyleLarge(
+                      context: context, color: AppColors.colorPrimary),
+                ),
+              ),
               TabBar(
                 onTap: (index) => value.onTapChangeTab(index),
                 isScrollable: true,
                 controller: value.tabcontroller,
+                physics: const BouncingScrollPhysics(),
                 labelColor: AppColors.colorBlueStart,
                 unselectedLabelColor:
                     AppColors.colorTextFieldHint.withOpacity(0.6),
@@ -96,37 +100,44 @@ Padding(
                 tabs: [
                   for (CategoryModel mCategoryModel in value.alCategory)
                     Tab(
-                      height: 130,
+                        height: 130,
                         text: mCategoryModel.title,
                         icon: Card(
                           elevation: 7,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(AppDimens.dimens_10)
-                          ),
+                              borderRadius:
+                                  BorderRadius.circular(AppDimens.dimens_10)),
                           child: Container(
-                            padding: EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                              color: AppColors.colorPrimary,
-                              borderRadius: BorderRadius.circular(AppDimens.dimens_10)
-                            ),
+                                color: AppColors.colorPrimary,
+                                borderRadius:
+                                    BorderRadius.circular(AppDimens.dimens_10)),
                             width: 80,
                             height: 80,
-
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(AppDimens.dimens_10,),
+                              borderRadius: BorderRadius.circular(
+                                AppDimens.dimens_10,
+                              ),
                               child: NetworkImageCustom(
                                   image: mCategoryModel.image,
-                                  height: AppDimens.dimens_40,
-                                  width: AppDimens.dimens_40),
+                                  height: AppDimens.dimens_60,
+                                  width: AppDimens.dimens_60),
                             ),
                           ),
                         )),
                 ],
               ),
-              Divider(thickness: 1,),
+              const Divider(
+                thickness: 1,
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 20.0),
-                child: Text("Services",style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorPrimary),),
+                child: Text(
+                  "Services",
+                  style: AppStyle.textViewStyleLarge(
+                      context: context, color: AppColors.colorPrimary),
+                ),
               ),
               IndexedStack(
                   index: value.intTabPosition,

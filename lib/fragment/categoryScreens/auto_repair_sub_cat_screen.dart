@@ -44,7 +44,7 @@ class AutoRepairSubCatScreenState extends State<AutoRepairSubCatScreen> {
           return GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: (itemWidth / itemHeight),
+            childAspectRatio: ((itemWidth / itemHeight) * 1.08),
             crossAxisSpacing: size.maxWidth / 50,
             crossAxisCount: size.maxWidth > 600
                 ? 5
@@ -57,51 +57,57 @@ class AutoRepairSubCatScreenState extends State<AutoRepairSubCatScreen> {
                   value.alSubCategoryFiltered[index];
 
               return InkWell(
-                child: Container(
-                  margin: const EdgeInsets.only(
-                    left: AppDimens.dimens_20,
-                    right: AppDimens.dimens_20,
-                    bottom: AppDimens.dimens_5,
-                    top: AppDimens.dimens_5,
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 70,
-                        padding: EdgeInsets.all(8),
-                        decoration:
-                            BoxDecoration(color: Colors.grey.withOpacity(.4),
-                                borderRadius: BorderRadius.circular(AppDimens.dimens_10)),
-                        height: 70,
-                        child: AspectRatio(
-                          aspectRatio: 1.9 - (itemWidth / itemHeight),
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(0),
-                                topRight: Radius.circular(0)),
-                            child: NetworkImageCustom(
-                                image: mSubCategoryModel.image,
-                                height: 0,
-                                width: 0),
+                child: Card(
+                  child: Container(
+                    // margin: const EdgeInsets.only(
+                    //   left: AppDimens.dimens_20,
+                    //   right: AppDimens.dimens_20,
+                    //   bottom: AppDimens.dimens_5,
+                    //   top: AppDimens.dimens_5,
+                    // ),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: AppDimens.dimens_5,
+                        vertical: AppDimens.dimens_5),
+                    child: Column(
+                      children: [
+                        Container(
+                          // width: 20,
+                          decoration: BoxDecoration(
+                              // color: Colors.grey.withOpacity(.4),
+                              borderRadius:
+                                  BorderRadius.circular(AppDimens.dimens_10)),
+                          // height: 70,
+                          child: AspectRatio(
+                            aspectRatio: 1.9 - (itemWidth / itemHeight),
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(AppDimens.dimens_10),
+                                  topRight:
+                                      Radius.circular(AppDimens.dimens_10)),
+                              child: NetworkImageCustom(
+                                  image: mSubCategoryModel.image,
+                                  height: 0,
+                                  width: 0),
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      Text(
-                        mSubCategoryModel.title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                        textAlign: TextAlign.center,
-                        style: AppStyle.textViewStyleXSmall(
-                                context: context,
-                                color: AppColors.colorTextBlue,
-                                fontWeightDelta: 2)
-                            .copyWith(fontSize: 12),
-                      )
-                    ],
+                        const SizedBox(
+                          height: 3,
+                        ),
+                        Text(
+                          mSubCategoryModel.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                          textAlign: TextAlign.center,
+                          style: AppStyle.textViewStyleXSmall(
+                                  context: context,
+                                  color: AppColors.colorTextBlue,
+                                  fontWeightDelta: 2)
+                              .copyWith(fontSize: 12),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 onTap: () => Get.find<DashboardController>()
