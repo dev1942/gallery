@@ -35,6 +35,7 @@ class InProgressBookingState extends State<InProgressBooking> {
         backgroundColor: AppColors.getMainBgColor(),
         body: GetBuilder<InProgressBookingController>(
           init: InProgressBookingController(),
+
           builder: ((value) => AppViews.getSetData(
               context,
               value.mShowData,

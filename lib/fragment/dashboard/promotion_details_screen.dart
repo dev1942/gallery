@@ -8,6 +8,7 @@ import 'package:otobucks/model/promotion_model.dart';
 import 'package:otobucks/model/service/service_model.dart';
 import 'package:otobucks/page/services/estimation/create_estimation_screen.dart';
 import 'package:otobucks/widgets/banner_component.dart';
+import 'package:otobucks/widgets/custom_button.dart';
 
 class PromotionDetailsScreen extends StatefulWidget {
   final PromotionsModel promotionsModel;
@@ -88,6 +89,7 @@ class PromotionDetailsScreenState extends State<PromotionDetailsScreen> {
             // height: AppDimens.dimens_190,
             child: PromotionBanner(
               buttonText: 'Book Now',
+              isVisible: false,
               onTap: () {
                 if (widget.promotionsModel.sourceType == 'service') {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -162,6 +164,7 @@ class PromotionDetailsScreenState extends State<PromotionDetailsScreen> {
                 const SizedBox(
                   height: 12,
                 ),
+
                 Text(widget.promotionsModel.description.toString().capitalize(),
                     style: AppStyle.textViewStyleSmall(
                       context: context,
@@ -169,6 +172,33 @@ class PromotionDetailsScreenState extends State<PromotionDetailsScreen> {
                       fontSizeDelta: 1,
                       fontWeightDelta: 0,
                     )),
+
+                const SizedBox(
+                  height: 12,
+                ),
+                LayoutBuilder(builder: (_,size){
+                  double height = MediaQuery.of(context).size.width > 600
+                      ? size.maxWidth / 1.7
+                      : size.maxWidth / 1.3;
+                  return CustomButton(
+                      width: size.maxWidth / 3.3,
+                      height: height / 8.5,
+                      isRoundBorder: true,
+                      isGradient: true,
+                      textStyle: TextStyle(
+                          fontSize: height * 0.04,
+                          color: AppColors.colorWhite),
+                      onPressed: (){
+                        if (widget.promotionsModel.sourceType == 'service') {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => CreateEstimationScreen(
+                                mServiceModel: serviceModel,
+                                screenType: 'promotion',
+                              )));
+                        }
+                      },
+                      strTitle: "Book Now");
+                })
               ],
             ),
           ),

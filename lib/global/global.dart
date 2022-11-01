@@ -262,9 +262,12 @@ class Global {
       dynamic dataObj;
       if (status && data.containsKey(Constants.RES_RESULT)) {
         dataObj = data[Constants.RES_RESULT];
+        debugPrint("mapData: ${data[Constants.RES_RESULT]}");
+
       } else if (!status || data.containsKey(Constants.RES_ERROR)) {
         dataObj = data[Constants.RES_ERROR];
       }
+      print("ResponseData ${dataObj}");
       return Result(
           responseStatus: status,
           responseMessage: strMessage,

@@ -16,12 +16,15 @@ class PromotionBanner extends StatelessWidget {
   final String strImage;
   final PromotionsModel mPromotionsModel;
   final Function onTap;
-  const PromotionBanner(
+   bool isVisible;
+   PromotionBanner(
       {Key? key,
       required this.mPromotionsModel,
       required this.strImage,
       required this.onTap,
-      required this.buttonText})
+      required this.buttonText,
+      this.isVisible=true
+      })
       : super(key: key);
 
   @override
@@ -149,16 +152,19 @@ class PromotionBanner extends StatelessWidget {
                                 SizedBox(
                                   height: height * 0.03,
                                 ),
-                                CustomButton(
-                                    width: size.maxWidth / 3.3,
-                                    height: height / 8.5,
-                                    isRoundBorder: true,
-                                    isGradient: true,
-                                    textStyle: TextStyle(
-                                        fontSize: height * 0.04,
-                                        color: AppColors.colorWhite),
-                                    onPressed: () => onTap(),
-                                    strTitle: buttonText),
+                                Visibility(
+                                  visible: this.isVisible,
+                                  child: CustomButton(
+                                      width: size.maxWidth / 3.3,
+                                      height: height / 8.5,
+                                      isRoundBorder: true,
+                                      isGradient: true,
+                                      textStyle: TextStyle(
+                                          fontSize: height * 0.04,
+                                          color: AppColors.colorWhite),
+                                      onPressed: () => onTap(),
+                                      strTitle: buttonText),
+                                ),
                               ],
                             ),
                           )
