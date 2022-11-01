@@ -38,10 +38,9 @@ class CategoryItem extends StatelessWidget {
                 elevation: 4,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppDimens.dimens_10),
-
                 ),
                 child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppDimens.dimens_10),
+                  borderRadius: BorderRadius.circular(AppDimens.dimens_10),
                   child: NetworkImageCustom(
                       image: image,
                       height: AppDimens.dimens_70,
