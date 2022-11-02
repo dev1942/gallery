@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_circular_text/circular_text.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/custom_ui/loader/three_bounce.dart';
+import 'package:otobucks/helper/location_helper.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'app_colors.dart';
@@ -29,8 +30,12 @@ class AppViews {
 
     if (isShowSOS) {
       actionsList.add(GestureDetector(
-        onTap: () {
-          Global.inProgressAlert(mContext);
+        onTap: () async{
+          print("click");
+          await LocationHelper.getCurrentLocation(mContext, (p0, p1){
+            print("${p0}  ${p1}");
+          });
+          //Global.inProgressAlert(mContext);
         },
         child: SizedBox(
           // margin: const EdgeInsetsDirectional.only(end: AppDimens.dimens_20),

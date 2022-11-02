@@ -141,6 +141,9 @@ class ProfileScreenController extends GetxController {
     String strCarModelYear = controllerCarModelYear.text.toString();
     String strMileage = controllerMileage.text.toString();
     String strColour = controllerColour.text.toString();
+    String strNumber = controllerNumber.text.toString();
+    String strCity= controllerCity.text.toString();
+    String strCode = controllerCode.text.toString();
 
     HashMap<String, String> requestParams = HashMap();
     HashMap<String, String> requestParamsImage = HashMap();
@@ -157,6 +160,9 @@ class ProfileScreenController extends GetxController {
     requestParams[PARAMS.PARAM_COLOR] = strColour;
     requestParams[PARAMS.PARAM_MODELYEAR] = strCarModelYear;
     requestParams[PARAMS.PARAM_MILEAGE] = strMileage;
+    requestParams[PARAMS.PARAM_CAR_NUMBER] = strNumber;
+    requestParams[PARAMS.PARAM_CAR_CITY] = strCity;
+    requestParams[PARAMS.PARAM_CAR_CODE] = strCode;
 
     if (Global.checkNull(imgMulkia)) {
       if (Global.isURL(imgMulkia)) {
