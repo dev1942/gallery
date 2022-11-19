@@ -11,7 +11,7 @@ import 'package:otobucks/fragment/dashboard/dashboard_fragment_page_2.dart';
 import 'package:otobucks/fragment/dashboard/promotion_details_screen.dart';
 import 'package:otobucks/fragment/estimation_main_fragment.dart';
 import 'package:otobucks/fragment/invite_friend_fragment.dart';
-import 'package:otobucks/fragment/my_profile_framgment.dart';
+import 'package:otobucks/View/Profile/View/my_profile_view.dart';
 import 'package:otobucks/fragment/my_rating_fragment.dart';
 import 'package:otobucks/fragment/notification_framgment.dart';
 import 'package:otobucks/fragment/purchase_history_fragment.dart';

@@ -141,6 +141,7 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
               ),
               IndexedStack(
                   index: value.intTabPosition,
+                  sizing: StackFit.loose,
                   children: List.generate(
                       controller.alCategory.length,
                       (index) => Visibility(

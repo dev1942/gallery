@@ -9,6 +9,8 @@ import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/page/home_page.dart';
 import 'package:otobucks/widgets/custom_button.dart';
 
+import '../Utils/Navigation.dart';
+
 class ThankYouFragment extends StatefulWidget {
   const ThankYouFragment({Key? key}) : super(key: key);
 
@@ -20,13 +22,13 @@ class ThankYouFragmentState extends State<ThankYouFragment> {
   @override
   void initState() {
     super.initState();
-    startTime();
+   // startTime();
   }
 
-  startTime() async {
-    var _duration = const Duration(seconds: 2);
-    return Timer(_duration, navigateToHomePage);
-  }
+  // startTime() async {
+  //   var _duration = const Duration(seconds: 2);
+  //   return Timer(_duration, navigateToHomePage);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,7 @@ class ThankYouFragmentState extends State<ThankYouFragment> {
               fontColor: AppColors.colorWhite,
               width: size.width,
               onPressed: () {
+                Navigation().navigateToHomePage();
                 // if (value.isValid(context)) {
                 //   value.updateProfile(context);
                 // }
@@ -90,7 +93,5 @@ class ThankYouFragmentState extends State<ThankYouFragment> {
     );
   }
 
-  void navigateToHomePage() {
-    Get.offAll(() => const HomePage());
-  }
+
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/View/Profile/View/widget/my_car_list_widget.dart';
 import 'package:otobucks/controllers/profile_screen_controller.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
@@ -10,6 +11,7 @@ import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/global/text_styles.dart';
+import 'package:otobucks/widgets/category_item.dart';
 import 'package:otobucks/widgets/custom_button.dart';
 import 'package:otobucks/widgets/custom_textfield_mobile.dart';
 import 'package:otobucks/widgets/custom_textfield_with_icon.dart';
@@ -27,6 +29,7 @@ class MyProfileFragment extends StatefulWidget {
 
 class MyProfileFragmentState extends State<MyProfileFragment> {
   var controller = Get.put(ProfileScreenController());
+  bool IsAddCarTap=false;
 
   @override
   void initState() {
@@ -471,224 +474,293 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                   ],
                                 ),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(top: marginBoth),
-                                child: CustomButton(
-                                    isGradient: true,
-                                    isRoundBorder: true,
-                                    height: height,
-                                    fontSize: -2,
-                                    fontColor: AppColors.colorWhite,
-                                    width: size.width / 1.8,
-                                    onPressed: () {},
-                                    strTitle:
-                                        Constants.STR_ENTER_YOUR_CAR_DETAILS),
+                              /*--------------------------Add Car Button--------------------------------------*/
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(top: marginBoth),
+                                    child: CustomButton(
+                                        isGradient: true,
+                                        isRoundBorder: true,
+                                        height: height,
+                                        fontSize: -2,
+                                        fontColor: AppColors.colorWhite,
+                                        width: size.width / 1.8,
+                                        onPressed: () {},
+                                        strTitle:
+                                            Constants.STR_ENTER_YOUR_CAR_DETAILS),
+                                  ),
+                                  SizedBox(width: 10.0),
+                                  //profile-------
+                                  Container(
+                                    margin: EdgeInsets.only(top: marginBoth),
+                                    child: CustomButton(
+                                        isGradient: true,
+                                        isRoundBorder: true,
+                                        height: height,
+                                        fontSize: -2,
+                                        fontColor: AppColors.colorWhite,
+                                        width: size.width / 3.2,
+                                        onPressed: () {
+                                         setState(() {
+                                           IsAddCarTap= true;
+                                         });
+                                        },
+                                        strTitle:
+                                        "Add Car"//Constants.STR_ENTER_YOUR_CAR_DETAILS
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Container(
-                                alignment: Alignment.center,
-                                margin: EdgeInsets.only(
-                                    right: marginBoth,
-                                    top: marginBoth,
-                                    left: marginBoth),
-                                decoration: AppViews.getRoundBorder(
-                                    cBoxBgColor: AppColors.colorWhite,
-                                    cBorderColor: AppColors.colorBorder2,
-                                    dRadius: AppDimens.dimens_5,
-                                    dBorderWidth: AppDimens.dimens_1),
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        top: AppDimens.dimens_5),
-                                    child: CustomTextFieldWithIcon(
-                                      height: height,
-                                      textInputAction: TextInputAction.next,
-                                      enabled: true,
-                                      controller: value.controllerCarBrand,
-                                      keyboardType: TextInputType.text,
-                                      hintText: Constants.STR_CAR_BRAND,
-                                      inputFormatters: const [],
-                                      obscureText: false,
-                                      onChanged: (String value) {},
-                                      suffixIcon: Image.asset(AppImages.ic_car,
-                                          width: iconSize, height: iconSize),
-                                    )),
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                margin: EdgeInsets.only(
-                                    right: marginBoth,
-                                    top: marginBoth,
-                                    left: marginBoth),
-                                decoration: AppViews.getRoundBorder(
-                                    cBoxBgColor: AppColors.colorWhite,
-                                    cBorderColor: AppColors.colorBorder2,
-                                    dRadius: AppDimens.dimens_5,
-                                    dBorderWidth: AppDimens.dimens_1),
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        top: AppDimens.dimens_5),
-                                    child: CustomTextFieldWithIcon(
-                                      height: height,
-                                      textInputAction: TextInputAction.next,
-                                      enabled: true,
-                                      controller: value.controllerCarModelYear,
-                                      keyboardType: TextInputType.text,
-                                      hintText: Constants.STR_CAR_MODEL_YEAR,
-                                      inputFormatters: const [],
-                                      obscureText: false,
-                                      onChanged: (String value) {},
-                                      suffixIcon: Image.asset(AppImages.ic_car,
-                                          width: iconSize, height: iconSize),
-                                    )),
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                margin: EdgeInsets.only(
-                                    right: marginBoth,
-                                    top: marginBoth,
-                                    left: marginBoth),
-                                decoration: AppViews.getRoundBorder(
-                                    cBoxBgColor: AppColors.colorWhite,
-                                    cBorderColor: AppColors.colorBorder2,
-                                    dRadius: AppDimens.dimens_5,
-                                    dBorderWidth: AppDimens.dimens_1),
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        top: AppDimens.dimens_5),
-                                    child: CustomTextFieldWithIcon(
-                                      height: height,
-                                      textInputAction: TextInputAction.next,
-                                      enabled: true,
-                                      controller: value.controllerMileage,
-                                      keyboardType: TextInputType.text,
-                                      hintText: Constants.STR_MILEAGE,
-                                      inputFormatters: const [],
-                                      obscureText: false,
-                                      onChanged: (String value) {},
-                                      suffixIcon: Image.asset(
-                                          AppImages.ic_petrol,
-                                          width: iconSize,
-                                          height: iconSize),
-                                    )),
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                margin: EdgeInsets.only(
-                                    right: marginBoth,
-                                    top: marginBoth,
-                                    left: marginBoth),
-                                decoration: AppViews.getRoundBorder(
-                                    cBoxBgColor: AppColors.colorWhite,
-                                    cBorderColor: AppColors.colorBorder2,
-                                    dRadius: AppDimens.dimens_5,
-                                    dBorderWidth: AppDimens.dimens_1),
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        top: AppDimens.dimens_5),
-                                    child: CustomTextFieldWithIcon(
-                                      height: height,
-                                      textInputAction: TextInputAction.next,
-                                      enabled: true,
-                                      controller: value.controllerColour,
-                                      keyboardType: TextInputType.text,
-                                      hintText: Constants.STR_CAR_COLOUR,
-                                      inputFormatters: const [],
-                                      obscureText: false,
-                                      onChanged: (String value) {},
-                                      suffixIcon: Image.asset(
-                                          AppImages.ic_color,
-                                          width: iconSize,
-                                          height: iconSize),
-                                    )),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: marginBoth),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Car Plate Number',
-                                    style: regularText600(15),
+
+                              /*---------------------------------Add Car Inputs File Start---------------------------------------------*/
+                         IsAddCarTap? Column(children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  margin: EdgeInsets.only(
+                                      right: marginBoth,
+                                      top: marginBoth,
+                                      left: marginBoth),
+                                  decoration: AppViews.getRoundBorder(
+                                      cBoxBgColor: AppColors.colorWhite,
+                                      cBorderColor: AppColors.colorBorder2,
+                                      dRadius: AppDimens.dimens_5,
+                                      dBorderWidth: AppDimens.dimens_1),
+                                  child: Container(
+                                      margin: const EdgeInsets.only(
+                                          top: AppDimens.dimens_5),
+                                      child: CustomTextFieldWithIcon(
+                                        height: height,
+                                        textInputAction: TextInputAction.next,
+                                        enabled: true,
+                                        controller: value.controllerCarBrand,
+                                        keyboardType: TextInputType.text,
+                                        hintText: Constants.STR_CAR_BRAND,
+                                        inputFormatters: const [],
+                                        obscureText: false,
+                                        onChanged: (String value) {},
+                                        suffixIcon: Image.asset(AppImages.ic_car,
+                                            width: iconSize, height: iconSize),
+                                      )),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  margin: EdgeInsets.only(
+                                      right: marginBoth,
+                                      top: marginBoth,
+                                      left: marginBoth),
+                                  decoration: AppViews.getRoundBorder(
+                                      cBoxBgColor: AppColors.colorWhite,
+                                      cBorderColor: AppColors.colorBorder2,
+                                      dRadius: AppDimens.dimens_5,
+                                      dBorderWidth: AppDimens.dimens_1),
+                                  child: Container(
+                                      margin: const EdgeInsets.only(
+                                          top: AppDimens.dimens_5),
+                                      child: CustomTextFieldWithIcon(
+                                        height: height,
+                                        textInputAction: TextInputAction.next,
+                                        enabled: true,
+                                        controller: value.controllerCarModelYear,
+                                        keyboardType: TextInputType.text,
+                                        hintText: Constants.STR_CAR_MODEL_YEAR,
+                                        inputFormatters: const [],
+                                        obscureText: false,
+                                        onChanged: (String value) {},
+                                        suffixIcon: Image.asset(AppImages.ic_car,
+                                            width: iconSize, height: iconSize),
+                                      )),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  margin: EdgeInsets.only(
+                                      right: marginBoth,
+                                      top: marginBoth,
+                                      left: marginBoth),
+                                  decoration: AppViews.getRoundBorder(
+                                      cBoxBgColor: AppColors.colorWhite,
+                                      cBorderColor: AppColors.colorBorder2,
+                                      dRadius: AppDimens.dimens_5,
+                                      dBorderWidth: AppDimens.dimens_1),
+                                  child: Container(
+                                      margin: const EdgeInsets.only(
+                                          top: AppDimens.dimens_5),
+                                      child: CustomTextFieldWithIcon(
+                                        height: height,
+                                        textInputAction: TextInputAction.next,
+                                        enabled: true,
+                                        controller: value.controllerMileage,
+                                        keyboardType: TextInputType.text,
+                                        hintText: Constants.STR_MILEAGE,
+                                        inputFormatters: const [],
+                                        obscureText: false,
+                                        onChanged: (String value) {},
+                                        suffixIcon: Image.asset(
+                                            AppImages.ic_petrol,
+                                            width: iconSize,
+                                            height: iconSize),
+                                      )),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  margin: EdgeInsets.only(
+                                      right: marginBoth,
+                                      top: marginBoth,
+                                      left: marginBoth),
+                                  decoration: AppViews.getRoundBorder(
+                                      cBoxBgColor: AppColors.colorWhite,
+                                      cBorderColor: AppColors.colorBorder2,
+                                      dRadius: AppDimens.dimens_5,
+                                      dBorderWidth: AppDimens.dimens_1),
+                                  child: Container(
+                                      margin: const EdgeInsets.only(
+                                          top: AppDimens.dimens_5),
+                                      child: CustomTextFieldWithIcon(
+                                        height: height,
+                                        textInputAction: TextInputAction.next,
+                                        enabled: true,
+                                        controller: value.controllerColour,
+                                        keyboardType: TextInputType.text,
+                                        hintText: Constants.STR_CAR_COLOUR,
+                                        inputFormatters: const [],
+                                        obscureText: false,
+                                        onChanged: (String value) {},
+                                        suffixIcon: Image.asset(
+                                            AppImages.ic_color,
+                                            width: iconSize,
+                                            height: iconSize),
+                                      )),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: marginBoth),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      'Car Plate Number',
+                                      style: regularText600(15),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                margin: EdgeInsets.only(
-                                    right: marginBoth,
-                                    top: 10,
-                                    left: marginBoth),
-                                decoration: AppViews.getRoundBorder(
-                                    cBoxBgColor: AppColors.colorWhite,
-                                    cBorderColor: AppColors.colorBorder2,
-                                    dRadius: AppDimens.dimens_5,
-                                    dBorderWidth: AppDimens.dimens_1),
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        top: AppDimens.dimens_5),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: CustomTextFieldWithIcon(
-                                            height: height,
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            enabled: true,
-                                            controller: value.controllerCode,
-                                            keyboardType: TextInputType.text,
-                                            hintText: 'Code',
-                                            inputFormatters: const [],
-                                            obscureText: false,
-                                            onChanged: (String value) {},
+                                Container(
+                                  alignment: Alignment.center,
+                                  margin: EdgeInsets.only(
+                                      right: marginBoth,
+                                      top: 10,
+                                      left: marginBoth),
+                                  decoration: AppViews.getRoundBorder(
+                                      cBoxBgColor: AppColors.colorWhite,
+                                      cBorderColor: AppColors.colorBorder2,
+                                      dRadius: AppDimens.dimens_5,
+                                      dBorderWidth: AppDimens.dimens_1),
+                                  child: Container(
+                                      margin: const EdgeInsets.only(
+                                          top: AppDimens.dimens_5),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: CustomTextFieldWithIcon(
+                                              height: height,
+                                              textInputAction:
+                                              TextInputAction.next,
+                                              enabled: true,
+                                              controller: value.controllerCode,
+                                              keyboardType: TextInputType.text,
+                                              hintText: 'Code',
+                                              inputFormatters: const [],
+                                              obscureText: false,
+                                              onChanged: (String value) {},
+                                            ),
                                           ),
-                                        ),
-                                        Container(
-                                          height: 30,
-                                          width: 1.5,
-                                          color: AppColors.lightGrey,
-                                          margin:
-                                              const EdgeInsets.only(bottom: 4),
-                                        ),
-                                        Expanded(
-                                          child: CustomTextFieldWithIcon(
-                                            height: height,
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            enabled: true,
-                                            controller: value.controllerCity,
-                                            keyboardType: TextInputType.text,
-                                            hintText: 'City',
-                                            inputFormatters: const [],
-                                            obscureText: false,
-                                            onChanged: (String value) {},
+                                          Container(
+                                            height: 30,
+                                            width: 1.5,
+                                            color: AppColors.lightGrey,
+                                            margin:
+                                            const EdgeInsets.only(bottom: 4),
                                           ),
-                                        ),
-                                        Container(
-                                          height: 30,
-                                          width: 1.5,
-                                          color: AppColors.lightGrey,
-                                          margin:
-                                              const EdgeInsets.only(bottom: 4),
-                                        ),
-                                        Expanded(
-                                          child: CustomTextFieldWithIcon(
-                                            height: height,
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            enabled: true,
-                                            controller: value.controllerNumber,
-                                            keyboardType: TextInputType.text,
-                                            hintText: 'Number',
-                                            inputFormatters: const [],
-                                            obscureText: false,
-                                            onChanged: (String value) {},
+                                          Expanded(
+                                            child: CustomTextFieldWithIcon(
+                                              height: height,
+                                              textInputAction:
+                                              TextInputAction.next,
+                                              enabled: true,
+                                              controller: value.controllerCity,
+                                              keyboardType: TextInputType.text,
+                                              hintText: 'City',
+                                              inputFormatters: const [],
+                                              obscureText: false,
+                                              onChanged: (String value) {},
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    )),
-                              ),
+                                          Container(
+                                            height: 30,
+                                            width: 1.5,
+                                            color: AppColors.lightGrey,
+                                            margin:
+                                            const EdgeInsets.only(bottom: 4),
+                                          ),
+                                          Expanded(
+                                            child: CustomTextFieldWithIcon(
+                                              height: height,
+                                              textInputAction:
+                                              TextInputAction.next,
+                                              enabled: true,
+                                              controller: value.controllerNumber,
+                                              keyboardType: TextInputType.text,
+                                              hintText: 'Number',
+                                              inputFormatters: const [],
+                                              obscureText: false,
+                                              onChanged: (String value) {},
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: marginBoth),
+                                  child: CustomButton(
+                                      isGradient: true,
+                                      isRoundBorder: true,
+                                      height: height,
+                                      fontSize: -2,
+                                      fontColor: AppColors.colorWhite,
+                                      width: size.width / 1.8,
+                                      onPressed: () {
+                                        setState(() {
+                                          IsAddCarTap= false;
+                                        });
+                                      },
+                                      strTitle:
+                                      Constants.SAVE),
+                                ),
+                              ],):SizedBox(),
+
+                              /*---------------------------------Add Car Inputs File Start End---------------------------------------------*/
+
+
+                              /*---------------------------------Car List----------------------------------------------*/
+                             SizedBox(height: 10.0),
+                              MyCarListItem(
+                          carBrand:"Honda",
+                          modeYear:"2019",
+                          km:"200000",
+                          color:"Red",
+                          code:"123",
+                          city:"Sharjah",
+                          number: "123456",
+                          image:AppImages.icSplashScreenIcon,
+                                  onEditTap: () {
+                            // controller.onTapCategory(mCategoryModel);
+                          },
+                        onDeleteTap: () {
+                            // controller.onTapCategory(mCategoryModel);
+                          }),
+                              /*---------------------------------Car List End------------------------------------------*/
 
                               Container(
                                 alignment: Alignment.center,

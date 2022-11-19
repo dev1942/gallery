@@ -118,7 +118,8 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                           },
                           strTitle: widget.screenType == 'promotion'
                               ? 'Process To Payment'
-                              : Constants.TXT_REQUEST_ESTIMATION.tr),
+                              : Constants.TXT_REQUEST_ESTIMATION.tr
+                      ),
                     ),
                   ],
                 ),

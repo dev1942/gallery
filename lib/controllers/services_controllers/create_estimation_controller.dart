@@ -180,7 +180,7 @@ class CreateEstimationController extends GetxController {
                   paymentStatus: 'completePayment',
                 )));
   }
-
+//----------------------------Create Estimation--------------------
   createEstimation(BuildContext context) async {
     if (Global.checkNull(pickedVideo)) {
       double fileSize = await Global.getFileSize(pickedVideo);
@@ -200,7 +200,9 @@ class CreateEstimationController extends GetxController {
     String strNote = controllerNote.text.toString();
 
     HashMap<String, String> requestParams = HashMap();
+
     HashMap<String, String> requestParamsImage = HashMap();
+
     requestParams[PARAMS.PARAM_SOURCE] = mServiceModel.id;
     requestParams[PARAMS.PARAM_DATE] = selectedDate;
     requestParams[PARAMS.PARAM_TIME] =
