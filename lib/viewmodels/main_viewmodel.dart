@@ -412,11 +412,9 @@ class MainViewModel extends BaseViewModel {
   TextEditingController controllerCarModelYear = TextEditingController();
   TextEditingController controllerMileage = TextEditingController();
   TextEditingController controllerColour = TextEditingController();
-
   FocusNode mFocusNodeAddress = FocusNode();
   FocusNode mFocusNodeEmgName = FocusNode();
   FocusNode mFocusNodeEmgPhone = FocusNode();
-
   String selectedDate = "";
   String imgProfilePic = "";
   String imgMulkia = "";

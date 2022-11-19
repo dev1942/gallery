@@ -11,7 +11,6 @@ class AppImages {
   static const String ic_alert_octagon = "assets/images/ic_alert_octagon.png";
   static const String ic_alert_triangle = "assets/images/ic_alert_triangle.png";
   static const String ic_check_circle = "assets/images/ic_check_circle.png";
-
   // bottom bar icon
   static const String ic_car_home = "assets/images/ic_car_home.png";
   static const String ic_cart = "assets/images/ic_cart.png";
