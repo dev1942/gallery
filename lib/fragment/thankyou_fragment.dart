@@ -55,7 +55,7 @@ class ThankYouFragmentState extends State<ThankYouFragment> {
                 //   value.updateProfile(context);
                 // }
               },
-              strTitle: "GO TO BOOKING HISTORY"),
+              strTitle: "GO BACK HOME"),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,

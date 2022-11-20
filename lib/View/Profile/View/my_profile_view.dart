@@ -33,6 +33,8 @@ class MyProfileFragment extends StatefulWidget {
 class MyProfileFragmentState extends State<MyProfileFragment> {
   var controller = Get.put(ProfileScreenController());
   bool IsAddCarTap=false;
+  bool isEditidTab=false;
+  String? editId;
   @override
   void initState() {
   controller.getCarList();
@@ -519,7 +521,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                               ),
 
                               /*---------------------------------Add Car Inputs File Start---------------------------------------------*/
-                         IsAddCarTap? Column(children: [
+                         IsAddCarTap || isEditidTab ? Column(children: [
                                 Container(
                                   alignment: Alignment.center,
                                   margin: EdgeInsets.only(
@@ -725,20 +727,68 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         ],
                                       )),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(top: marginBoth),
-                                  child: CustomButton(
-                                      isGradient: true,
-                                      isRoundBorder: true,
-                                      height: height,
-                                      fontSize: -2,
-                                      fontColor: AppColors.colorWhite,
-                                      width: size.width / 1.8,
-                                      onPressed: () {
-                                          controller.addNewCar(value.controllerCarBrand.text,  value.controllerColour.text, value.controllerCarModelYear.text, value.controllerMileage.text,  value.controllerCity.text, value.controllerCode.text, value.controllerNumber.text);
-                                      },
-                                      strTitle:
-                                      Constants.SAVE),
+                                Visibility(
+                                  visible: isEditidTab,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                    Container(
+                                      margin: EdgeInsets.only(top: marginBoth),
+                                      child: CustomButton(
+                                          isGradient: true,
+                                          isRoundBorder: true,
+                                          height: height,
+                                          fontSize: -2,
+                                          fontColor: AppColors.colorWhite,
+                                          width: size.width / 2.2,
+                                          onPressed: () {
+                                         controller.clearController();
+                                            setState(() {
+                                              isEditidTab=false;
+                                            });
+                                          },
+                                          strTitle: "Cancel"
+                                      ),
+                                    ),
+                                    SizedBox(width: 10.0),
+                                    Container(
+                                      margin: EdgeInsets.only(top: marginBoth),
+                                      child: CustomButton(
+                                          isGradient: true,
+                                          isRoundBorder: true,
+                                          height: height,
+                                          fontSize: -2,
+                                          fontColor: AppColors.colorWhite,
+                                          width: size.width / 2.2,
+                                          onPressed: () {
+                                              controller.UpdateCar(value.controllerCarBrand.text,  value.controllerColour.text, value.controllerCarModelYear.text, value.controllerMileage.text,  value.controllerCity.text, value.controllerCode.text, value.controllerNumber.text,editId??"");
+                                          },
+                                          strTitle:
+                                         "Update"
+
+                                      ),
+                                    ),
+                                  ],),
+                                ),
+                                Visibility(
+                                  visible: !isEditidTab,
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: marginBoth),
+                                    child: CustomButton(
+                                        isGradient: true,
+                                        isRoundBorder: true,
+                                        height: height,
+                                        fontSize: -2,
+                                        fontColor: AppColors.colorWhite,
+                                        width: size.width / 1.8,
+                                        onPressed: () {
+                                            controller.addNewCar(value.controllerCarBrand.text,  value.controllerColour.text, value.controllerCarModelYear.text, value.controllerMileage.text,  value.controllerCity.text, value.controllerCode.text, value.controllerNumber.text);
+                                        },
+                                        strTitle:
+                                         Constants.SAVE
+
+                                    ),
+                                  ),
                                 ),
                               ],):SizedBox(),
 
@@ -748,14 +798,12 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                               /*---------------------------------Car List----------------------------------------------*/
                              SizedBox(height: 10.0),
 
-
-                      ListView.builder(
+                              controller.carList.isNotEmpty?ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           padding: const EdgeInsets.all(0),
                               itemCount: controller.carList.length,
                           itemBuilder: (BuildContext contextM, index) {
-
                             GetCarModelResult? mcarlistmodel = controller.carList[index];
                             return MyCarListItem(
                                 carBrand:mcarlistmodel.brand??"",
@@ -766,24 +814,28 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                 city:mcarlistmodel.carCity??"",
                                 number: mcarlistmodel.carNumber??"",
                                 image:"https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
-                                //AppImages.icSplashScreenIcon,
-                                // onTap: () {
-                                //   controller.onTapCategory(mCategoryModel);
-                                // });
                                 onEditTap: () {
-                              // controller.onTapCategory(mCategoryModel);
+                                  value.controllerCarBrand.text=mcarlistmodel.brand??"";
+                                  value.controllerColour.text=mcarlistmodel.color??"";
+                                  value.controllerCarModelYear.text=mcarlistmodel.modelYear??"";
+                                  value.controllerMileage.text=mcarlistmodel.mileage??"";
+                                  value.controllerCity.text=mcarlistmodel.carCity??"";
+                                  value.controllerCode.text=mcarlistmodel.carCode??"";
+                                  value.controllerNumber.text=mcarlistmodel.carNumber??"";
+                                  setState(() {
+                                    isEditidTab=true;
+                                    editId=mcarlistmodel.Id??"0";
+                                  });
+                                  // controller.onTapCategory(mCategoryModel);
                             },
                                 onDeleteTap: () {
-                                  print("delet taped========");
-                                  //setState(() {
-                                    //print(mcarlistmodel.Id??"0");
                                     controller.deletecar(mcarlistmodel.Id??"0");
                                  // });
 
 
                           });
 
-                          }),
+                          }):SizedBox(),
 
 
                               /*---------------------------------Car List End------------------------------------------*/

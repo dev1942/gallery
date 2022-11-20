@@ -60,7 +60,15 @@ class ProfileScreenController extends GetxController {
 
 
 
-
+clearController(){
+  controllerCarBrand.clear();
+  controllerCarModelYear.clear();
+  controllerMileage.clear();
+  controllerColour.clear();
+  controllerCode.clear();
+  controllerCity.clear();
+  controllerNumber.clear();
+}
 
   removeImage(String image) {
     switch (image) {
@@ -373,7 +381,7 @@ class ProfileScreenController extends GetxController {
   getCarList() async {
     HashMap<String, Object> requestParams = HashMap();
     var categorie1 = await MyProfileRepository().getCarList(requestParams);
-print("--------ibraim 2---------");
+
     categorie1.fold((failure) {
       Global.showToastAlert(
           context: Get.overlayContext!,
@@ -383,13 +391,13 @@ print("--------ibraim 2---------");
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
+
       carList = mResult.responseData as List<GetCarModelResult>;
       carList = carList.reversed.toList();
       mShowData = ShowData.showData;
       update();
     });
   }
-
 //---------------------------add new car---------
   addNewCar(
       String brand, String color, String year, String km, String city,String code,String number) async {
@@ -407,7 +415,6 @@ print("--------ibraim 2---------");
     requestParams['carNumber'] = number;
 
     var categories = await MyProfileRepository().addCar(requestParams);
-
     categories.fold((failure) {
       Global.showToastAlert(
           context: Get.overlayContext!,
@@ -422,18 +429,11 @@ print("--------ibraim 2---------");
           strTitle: "",
           strMsg: mResult.responseMessage,
           toastType: TOAST_TYPE.toastSuccess);
-      controllerCarBrand.clear();
-      controllerCarModelYear.clear();
-      controllerMileage.clear();
-      controllerColour.clear();
-      controllerCode.clear();
-      controllerCity.clear();
-      controllerNumber.clear();
+      clearController();
      // getCardsMine();
       getCarList();
     });
   }
-
 //-----------------------Delete car-------------------
   deletecar(String carId) async {
     // cardNumber.clear();
@@ -444,9 +444,7 @@ print("--------ibraim 2---------");
     update();
     HashMap<String, Object> requestParams = HashMap();
     //requestParams['cardId'] = cardId;
-
     var categories = await MyProfileRepository().deletecar(requestParams,carId);
-
     categories.fold((failure) {
       Global.showToastAlert(
           context: Get.overlayContext!,
@@ -465,4 +463,41 @@ print("--------ibraim 2---------");
     });
   }
 
+//-----------------------Update car----------------
+  UpdateCar(
+      String brand, String color, String year, String km, String city,String code,String number,String id) async {
+    mShowData = ShowData.showLoading;
+
+    update(); // isShowLoader = true;
+
+    HashMap<String, Object> requestParams = HashMap();
+    requestParams['brand'] = brand;
+    requestParams['color'] = color;
+    requestParams['modelYear'] = year;
+    requestParams['mileage'] = km;
+    requestParams['carCity'] = city;
+    requestParams['carCode'] = code;
+    requestParams['carNumber'] = number;
+
+    var categories = await MyProfileRepository().updatecar(requestParams,id);
+
+    categories.fold((failure) {
+      Global.showToastAlert(
+          context: Get.overlayContext!,
+          strTitle: "",
+          strMsg: failure.MESSAGE,
+          toastType: TOAST_TYPE.toastError);
+      mShowData = ShowData.showNoDataFound;
+      update();
+    }, (mResult) {
+      Global.showToastAlert(
+          context: Get.overlayContext!,
+          strTitle: "",
+          strMsg: mResult.responseMessage,
+          toastType: TOAST_TYPE.toastSuccess);
+      clearController();
+      // getCardsMine();
+      getCarList();
+    });
+  }
 }

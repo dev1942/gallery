@@ -15,7 +15,7 @@ class MyCarListItem extends StatelessWidget {
   final String code;
   final String city;
   final String number;
-  final Function onEditTap;
+  final Function() onEditTap;
   final Function() onDeleteTap;
 
   const MyCarListItem(
@@ -91,11 +91,14 @@ class MyCarListItem extends StatelessWidget {
                        ),
                      ],),
                       Row(children: [
-                        Image.asset(
-                            AppImages.ic_edit_profile_icon,
-                            color: AppColors.colorBlack,
-                            width: 18,
-                            height: 18),
+                        GestureDetector(
+                          onTap: onEditTap,
+                          child: Image.asset(
+                              AppImages.ic_edit_profile_icon,
+                              color: AppColors.colorBlack,
+                              width: 18,
+                              height: 18),
+                        ),
                         SizedBox(width: 20.0),
                        GestureDetector(
                            onTap: onDeleteTap,
