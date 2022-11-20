@@ -2,6 +2,7 @@
 
 class RequestBuilder {
   static final String LIVE_URL = "https://developmentapi-app.otobucks.com/v1/";
+  //https://developmentapi-app.otobucks.com/v1
   static final String LOCAL_URL = "https://192.168.111.97:8000/v1/auth/";
   //https://api.otobucks.com/v1/auth/customers/login
 
@@ -20,7 +21,10 @@ class RequestBuilder {
   static final String API_GET_CATEGORIES = "categories/getCategories";
   static final String API_GET_SUB_CATEGORIES = "categories/getSubCategories/";
   static final String API_GET_STORES = "stores";
-
+//---------------------My Profile--------------
+  static final String API_GET_CAR_LIST= "auth/customers/cars";
+  static final String API_ADD_CAR_LIST= "auth/customers/cars";
+  static final String API_DELETE_CAR_= "auth/customers/cars/";
   //Promotions
   static final String API_GET_PROMOTIONS = "promotions";
 

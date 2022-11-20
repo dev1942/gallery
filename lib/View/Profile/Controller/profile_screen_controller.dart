@@ -1,17 +1,20 @@
 import 'dart:collection';
+import 'package:otobucks/services/repository/my_profile_repo.dart';
 
+import '../../../../../global/global.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/View/Profile/Model/car_list_model.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
-import 'package:otobucks/global/global.dart';
 import 'package:otobucks/model/user_model.dart';
 import 'package:otobucks/services/repository/user_repo.dart';
 import 'package:otobucks/widgets/image_selection_bottom_sheet.dart';
 
 class ProfileScreenController extends GetxController {
   ShowData mShowData = ShowData.showLoading;
-
+  // Rx<ShowData> mShowData1 = ShowData.showLoading.obs;
+  List<GetCarModelResult> carList=[];
   bool connectionStatus = false;
   bool isShowLoader = false;
 
@@ -51,10 +54,13 @@ class ProfileScreenController extends GetxController {
   bool isEnableEmail = true;
   bool isEnableEmgName = true;
   bool isEnableEmgPhone = true;
-
   String strFname = "";
   String strCountry = "";
   String strLname = "";
+
+
+
+
 
   removeImage(String image) {
     switch (image) {
@@ -361,4 +367,102 @@ class ProfileScreenController extends GetxController {
           );
         });
   }
+
+
+//---------------------------get car list ---------
+  getCarList() async {
+    HashMap<String, Object> requestParams = HashMap();
+    var categorie1 = await MyProfileRepository().getCarList(requestParams);
+print("--------ibraim 2---------");
+    categorie1.fold((failure) {
+      Global.showToastAlert(
+          context: Get.overlayContext!,
+          strTitle: "",
+          strMsg: failure.MESSAGE,
+          toastType: TOAST_TYPE.toastError);
+      mShowData = ShowData.showNoDataFound;
+      update();
+    }, (mResult) {
+      carList = mResult.responseData as List<GetCarModelResult>;
+      carList = carList.reversed.toList();
+      mShowData = ShowData.showData;
+      update();
+    });
+  }
+
+//---------------------------add new car---------
+  addNewCar(
+      String brand, String color, String year, String km, String city,String code,String number) async {
+    mShowData = ShowData.showLoading;
+
+    update(); // isShowLoader = true;
+
+    HashMap<String, Object> requestParams = HashMap();
+    requestParams['brand'] = brand;
+    requestParams['color'] = color;
+    requestParams['modelYear'] = year;
+    requestParams['mileage'] = km;
+    requestParams['carCity'] = city;
+    requestParams['carCode'] = code;
+    requestParams['carNumber'] = number;
+
+    var categories = await MyProfileRepository().addCar(requestParams);
+
+    categories.fold((failure) {
+      Global.showToastAlert(
+          context: Get.overlayContext!,
+          strTitle: "",
+          strMsg: failure.MESSAGE,
+          toastType: TOAST_TYPE.toastError);
+      mShowData = ShowData.showNoDataFound;
+      update();
+    }, (mResult) {
+      Global.showToastAlert(
+          context: Get.overlayContext!,
+          strTitle: "",
+          strMsg: mResult.responseMessage,
+          toastType: TOAST_TYPE.toastSuccess);
+      controllerCarBrand.clear();
+      controllerCarModelYear.clear();
+      controllerMileage.clear();
+      controllerColour.clear();
+      controllerCode.clear();
+      controllerCity.clear();
+      controllerNumber.clear();
+     // getCardsMine();
+      getCarList();
+    });
+  }
+
+//-----------------------Delete car-------------------
+  deletecar(String carId) async {
+    // cardNumber.clear();
+    // expiryDate.clear();
+    // cardHolderName.clear();
+    // cvvCode.clear();
+    mShowData = ShowData.showLoading;
+    update();
+    HashMap<String, Object> requestParams = HashMap();
+    //requestParams['cardId'] = cardId;
+
+    var categories = await MyProfileRepository().deletecar(requestParams,carId);
+
+    categories.fold((failure) {
+      Global.showToastAlert(
+          context: Get.overlayContext!,
+          strTitle: "",
+          strMsg: failure.MESSAGE,
+          toastType: TOAST_TYPE.toastError);
+      mShowData = ShowData.showNoDataFound;
+      update();
+    }, (mResult) {
+      Global.showToastAlert(
+          context: Get.overlayContext!,
+          strTitle: "",
+          strMsg: mResult.responseMessage,
+          toastType: TOAST_TYPE.toastSuccess);
+      getCarList();
+    });
+  }
+
 }

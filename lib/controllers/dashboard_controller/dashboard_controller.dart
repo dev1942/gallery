@@ -26,6 +26,7 @@ class DashboardController extends GetxController {
   final PageController controller = PageController();
   int intCurrentPage = 0;
   int intTabPosition = 0;
+
   List<CategoryModel> alCategory = [];
   List<PromotionsModel> alPromotions = [];
 

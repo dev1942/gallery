@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Profile/View/widget/my_car_list_widget.dart';
-import 'package:otobucks/controllers/profile_screen_controller.dart';
+import 'package:otobucks/View/Profile/Controller/profile_screen_controller.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_images.dart';
@@ -20,6 +20,9 @@ import 'package:otobucks/widgets/image_view.dart';
 import 'package:otobucks/widgets/small_button.dart';
 import 'package:otobucks/widgets/wallet/withdraw_money_dialog.dart';
 
+
+import '../Model/car_list_model.dart';
+
 class MyProfileFragment extends StatefulWidget {
   const MyProfileFragment({Key? key}) : super(key: key);
 
@@ -30,10 +33,11 @@ class MyProfileFragment extends StatefulWidget {
 class MyProfileFragmentState extends State<MyProfileFragment> {
   var controller = Get.put(ProfileScreenController());
   bool IsAddCarTap=false;
-
   @override
   void initState() {
-    controller.getProfile();
+  controller.getCarList();
+  controller.getProfile();
+
     super.initState();
   }
 
@@ -504,7 +508,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         width: size.width / 3.2,
                                         onPressed: () {
                                          setState(() {
-                                           IsAddCarTap= true;
+                                           IsAddCarTap =! IsAddCarTap;
                                          });
                                         },
                                         strTitle:
@@ -731,9 +735,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                       fontColor: AppColors.colorWhite,
                                       width: size.width / 1.8,
                                       onPressed: () {
-                                        setState(() {
-                                          IsAddCarTap= false;
-                                        });
+                                          controller.addNewCar(value.controllerCarBrand.text,  value.controllerColour.text, value.controllerCarModelYear.text, value.controllerMileage.text,  value.controllerCity.text, value.controllerCode.text, value.controllerNumber.text);
                                       },
                                       strTitle:
                                       Constants.SAVE),
@@ -745,21 +747,45 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
 
                               /*---------------------------------Car List----------------------------------------------*/
                              SizedBox(height: 10.0),
-                              MyCarListItem(
-                          carBrand:"Honda",
-                          modeYear:"2019",
-                          km:"200000",
-                          color:"Red",
-                          code:"123",
-                          city:"Sharjah",
-                          number: "123456",
-                          image:AppImages.icSplashScreenIcon,
-                                  onEditTap: () {
-                            // controller.onTapCategory(mCategoryModel);
-                          },
-                        onDeleteTap: () {
-                            // controller.onTapCategory(mCategoryModel);
+
+
+                      ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.all(0),
+                              itemCount: controller.carList.length,
+                          itemBuilder: (BuildContext contextM, index) {
+
+                            GetCarModelResult? mcarlistmodel = controller.carList[index];
+                            return MyCarListItem(
+                                carBrand:mcarlistmodel.brand??"",
+                                modeYear:mcarlistmodel.modelYear??"",
+                                km:mcarlistmodel.mileage??"",
+                                color:mcarlistmodel.color??"",
+                                code:mcarlistmodel.carCode??"",
+                                city:mcarlistmodel.carCity??"",
+                                number: mcarlistmodel.carNumber??"",
+                                image:"https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
+                                //AppImages.icSplashScreenIcon,
+                                // onTap: () {
+                                //   controller.onTapCategory(mCategoryModel);
+                                // });
+                                onEditTap: () {
+                              // controller.onTapCategory(mCategoryModel);
+                            },
+                                onDeleteTap: () {
+                                  print("delet taped========");
+                                  //setState(() {
+                                    //print(mcarlistmodel.Id??"0");
+                                    controller.deletecar(mcarlistmodel.Id??"0");
+                                 // });
+
+
+                          });
+
                           }),
+
+
                               /*---------------------------------Car List End------------------------------------------*/
 
                               Container(
@@ -1220,4 +1246,23 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
           );
         });
   }
+
+  // _displayAddCard() async {
+  //   return showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AddEditCardDialogBox(
+  //           onTap: (CardModel mCardModelInserted) {
+  //             controller.addNewCard(
+  //                 mCardModelInserted.last4,
+  //                 mCardModelInserted.expMonth,
+  //                 mCardModelInserted.expYear,
+  //                 mCardModelInserted.cvcCheck,
+  //                 mCardModelInserted.name);
+  //           },
+  //         );
+  //       });
+  // }
+
+
 }

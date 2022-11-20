@@ -16,7 +16,7 @@ class MyCarListItem extends StatelessWidget {
   final String city;
   final String number;
   final Function onEditTap;
-  final Function onDeleteTap;
+  final Function() onDeleteTap;
 
   const MyCarListItem(
       {Key? key,
@@ -43,97 +43,94 @@ class MyCarListItem extends StatelessWidget {
           bottom: AppDimens.dimens_5,
           top: AppDimens.dimens_5),
       padding: const EdgeInsets.all(AppDimens.dimens_20),
-      child: InkResponse(
-        child: Row(
-          children: [
-            Container(
-              margin: const EdgeInsetsDirectional.only(
-                end: AppDimens.dimens_20,
+      child: Row(
+        children: [
+          Container(
+            margin: const EdgeInsetsDirectional.only(
+              end: AppDimens.dimens_20,
+            ),
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppDimens.dimens_10),
               ),
-              child: Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppDimens.dimens_10),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(AppDimens.dimens_10),
-                  child: NetworkImageCustom(
-                      image: image,
-                      height: AppDimens.dimens_70,
-                      width: AppDimens.dimens_70),
-                ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(AppDimens.dimens_10),
+                child: NetworkImageCustom(
+                    image: image,
+                    height: AppDimens.dimens_70,
+                    width: AppDimens.dimens_70),
               ),
             ),
-            Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                       Row(children: [
-                         Text(
-                           carBrand,
-                           style: AppStyle.textViewStyleNormalBodyText2(
-                               context: context,
-                               color: AppColors.colorBlueStart,
-                               fontSizeDelta: 0,
-                               fontWeightDelta: 2),
-                         ),
-                         SizedBox(width: 10.0),
-                         Text(
-                           modeYear,
-                           style: AppStyle.textViewStyleSmall(
-                               context: context,
-                               color: AppColors.colorBlack,
-                               fontSizeDelta: -2,
-                               fontWeightDelta: 0),
-                         ),
-                       ],),
-                        Row(children: [
-                          Image.asset(
-                              AppImages.ic_edit_profile_icon,
-                              color: AppColors.colorBlack,
-                              width: 18,
-                              height: 18),
-                          SizedBox(width: 20.0),
-                         Icon(Icons.delete),
-                        ],)
-                      ],
-                    ),
-                    Text(
-                      "${km} KM",
-                      style: AppStyle.textViewStyleSmall(
-                          context: context,
-                          color: AppColors.colorBlack,
-                          fontSizeDelta: -2,
-                          fontWeightDelta: 0),
-                    ),
+          ),
+          Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                     Row(children: [
+                       Text(
+                         carBrand,
+                         style: AppStyle.textViewStyleNormalBodyText2(
+                             context: context,
+                             color: AppColors.colorBlueStart,
+                             fontSizeDelta: 0,
+                             fontWeightDelta: 2),
+                       ),
+                       SizedBox(width: 10.0),
+                       Text(
+                         modeYear,
+                         style: AppStyle.textViewStyleSmall(
+                             context: context,
+                             color: AppColors.colorBlack,
+                             fontSizeDelta: -2,
+                             fontWeightDelta: 0),
+                       ),
+                     ],),
+                      Row(children: [
+                        Image.asset(
+                            AppImages.ic_edit_profile_icon,
+                            color: AppColors.colorBlack,
+                            width: 18,
+                            height: 18),
+                        SizedBox(width: 20.0),
+                       GestureDetector(
+                           onTap: onDeleteTap,
+                           child: Icon(Icons.delete)),
+                      ],)
+                    ],
+                  ),
+                  Text(
+                    "${km} KM",
+                    style: AppStyle.textViewStyleSmall(
+                        context: context,
+                        color: AppColors.colorBlack,
+                        fontSizeDelta: -2,
+                        fontWeightDelta: 0),
+                  ),
 
-                    Text(
-                      color,
-                      style: AppStyle.textViewStyleSmall(
-                          context: context,
-                          color: AppColors.colorBlack,
-                          fontSizeDelta: -2,
-                          fontWeightDelta: 0),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                      CodeCityNumber(context,"Code",code),
-                      CodeCityNumber(context,"City",city),
-                      CodeCityNumber(context,"Number",number),
-                    ],)
+                  Text(
+                    color,
+                    style: AppStyle.textViewStyleSmall(
+                        context: context,
+                        color: AppColors.colorBlack,
+                        fontSizeDelta: -2,
+                        fontWeightDelta: 0),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                    CodeCityNumber(context,"Code",code),
+                    CodeCityNumber(context,"City",city),
+                    CodeCityNumber(context,"Number",number),
+                  ],)
 
-                  ],
-                ))
-          ],
-        ),
-        onTap: () {
-          //onTap();
-        },
+                ],
+              ))
+        ],
       ),
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
