@@ -35,12 +35,12 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
   bool IsAddCarTap=false;
   bool isEditidTab=false;
   String? editId;
+
   @override
   void initState() {
   controller.getCarList();
   controller.getProfile();
-
-    super.initState();
+  super.initState();
   }
 
   @override
@@ -510,7 +510,8 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         width: size.width / 3.2,
                                         onPressed: () {
                                          setState(() {
-                                           IsAddCarTap =! IsAddCarTap;
+                                           IsAddCarTap=true;
+                                           //IsAddCarTap =! IsAddCarTap;
                                          });
                                         },
                                         strTitle:
@@ -761,7 +762,32 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                           fontColor: AppColors.colorWhite,
                                           width: size.width / 2.2,
                                           onPressed: () {
-                                              controller.UpdateCar(value.controllerCarBrand.text,  value.controllerColour.text, value.controllerCarModelYear.text, value.controllerMileage.text,  value.controllerCity.text, value.controllerCode.text, value.controllerNumber.text,editId??"");
+                                            if(
+                                            value.controllerCarBrand.text.isNotEmpty&&
+                                                value.controllerColour.text.isNotEmpty&&
+                                                value.controllerCarModelYear.text.isNotEmpty&&
+                                                value.controllerMileage.text.isNotEmpty&&
+                                                value.controllerCity.text.isNotEmpty&&
+                                                value.controllerCode.text.isNotEmpty&&
+                                                value.controllerNumber.text.isNotEmpty){
+                                              controller.UpdateCar(value.controllerCarBrand.text,
+                                                  value.controllerColour.text,
+                                                  value.controllerCarModelYear.text,
+                                                  value.controllerMileage.text,
+                                                  value.controllerCity.text,
+                                                  value.controllerCode.text,
+                                                  value.controllerNumber.text,editId??"");
+                                              setState(() {
+                                                isEditidTab=false;
+                                                IsAddCarTap=false;
+                                              });
+                                            }else{
+                                              Global.showToastAlert(
+                                                  context: Get.overlayContext!,
+                                                  strTitle: "",
+                                                  strMsg: "Please Fill All Fields",
+                                                  toastType: TOAST_TYPE.toastError);
+                                            }
                                           },
                                           strTitle:
                                          "Update"
@@ -772,22 +798,73 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                 ),
                                 Visibility(
                                   visible: !isEditidTab,
-                                  child: Container(
-                                    margin: EdgeInsets.only(top: marginBoth),
-                                    child: CustomButton(
-                                        isGradient: true,
-                                        isRoundBorder: true,
-                                        height: height,
-                                        fontSize: -2,
-                                        fontColor: AppColors.colorWhite,
-                                        width: size.width / 1.8,
-                                        onPressed: () {
-                                            controller.addNewCar(value.controllerCarBrand.text,  value.controllerColour.text, value.controllerCarModelYear.text, value.controllerMileage.text,  value.controllerCity.text, value.controllerCode.text, value.controllerNumber.text);
-                                        },
-                                        strTitle:
-                                         Constants.SAVE
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(top: marginBoth),
+                                        child: CustomButton(
+                                            isGradient: true,
+                                            isRoundBorder: true,
+                                            height: height,
+                                            fontSize: -2,
+                                            fontColor: AppColors.colorWhite,
+                                            width: size.width / 2.2,
+                                            onPressed: () {
+                                              controller.clearController();
+                                              setState(() {
+                                                IsAddCarTap=false;
+                                              });
+                                            },
+                                            strTitle: "Cancel"
+                                        ),
+                                      ),
+                                     const SizedBox(width: 10.0),
+                                      Container(
+                                        margin: EdgeInsets.only(top: marginBoth),
+                                        child: CustomButton(
+                                            isGradient: true,
+                                            isRoundBorder: true,
+                                            height: height,
+                                            fontSize: -2,
+                                            fontColor: AppColors.colorWhite,
+                                            width: size.width / 2.2,
+                                            onPressed: () {
+                                              if(
+                                              value.controllerCarBrand.text.isNotEmpty&&
+                                              value.controllerColour.text.isNotEmpty&&
+                                              value.controllerCarModelYear.text.isNotEmpty&&
+                                              value.controllerMileage.text.isNotEmpty&&
+                                              value.controllerCity.text.isNotEmpty&&
+                                              value.controllerCode.text.isNotEmpty&&
+                                              value.controllerNumber.text.isNotEmpty){
+                                                controller.addNewCar(
+                                                    value.controllerCarBrand.text,
+                                                    value.controllerColour.text,
+                                                    value.controllerCarModelYear.text,
+                                                    value.controllerMileage.text,
+                                                    value.controllerCity.text,
+                                                    value.controllerCode.text,
+                                                    value.controllerNumber.text);
+                                                setState(() {
+                                                  IsAddCarTap=false;
+                                                });
+                                              }else{
+                                                Global.showToastAlert(
+                                                    context: Get.overlayContext!,
+                                                    strTitle: "",
+                                                    strMsg: "Please Fill All Fields",
+                                                    toastType: TOAST_TYPE.toastError);
+                                              }
 
-                                    ),
+
+                                            },
+                                            strTitle:
+                                             Constants.SAVE
+
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],):SizedBox(),

@@ -151,13 +151,13 @@ clearController(){
     String strEmail = controllerEmail.text.toString();
     String strEmgName = controllerEmgName.text.toString();
     String strEmgPhone = controllerEmgPhone.text.toString();
-    String strCarBrand = controllerCarBrand.text.toString();
-    String strCarModelYear = controllerCarModelYear.text.toString();
-    String strMileage = controllerMileage.text.toString();
-    String strColour = controllerColour.text.toString();
-    String strNumber = controllerNumber.text.toString();
-    String strCity= controllerCity.text.toString();
-    String strCode = controllerCode.text.toString();
+    // String strCarBrand = controllerCarBrand.text.toString();
+    // String strCarModelYear = controllerCarModelYear.text.toString();
+    // String strMileage = controllerMileage.text.toString();
+    // String strColour = controllerColour.text.toString();
+    // String strNumber = controllerNumber.text.toString();
+    // String strCity= controllerCity.text.toString();
+    // String strCode = controllerCode.text.toString();
 
     HashMap<String, String> requestParams = HashMap();
     HashMap<String, String> requestParamsImage = HashMap();
@@ -170,13 +170,13 @@ clearController(){
     requestParams[PARAMS.PARAM_EMERGENCYNAME] = strEmgName;
     requestParams[PARAMS.PARAM_EMERGENCYPHONE] = strEmgPhone;
     requestParams[PARAMS.PARAM_COUNTRYCODE] = strCountyCode;
-    requestParams[PARAMS.PARAM_BRAND] = strCarBrand;
-    requestParams[PARAMS.PARAM_COLOR] = strColour;
-    requestParams[PARAMS.PARAM_MODELYEAR] = strCarModelYear;
-    requestParams[PARAMS.PARAM_MILEAGE] = strMileage;
-    requestParams[PARAMS.PARAM_CAR_NUMBER] = strNumber;
-    requestParams[PARAMS.PARAM_CAR_CITY] = strCity;
-    requestParams[PARAMS.PARAM_CAR_CODE] = strCode;
+    // requestParams[PARAMS.PARAM_BRAND] = strCarBrand;
+    // requestParams[PARAMS.PARAM_COLOR] = strColour;
+    // requestParams[PARAMS.PARAM_MODELYEAR] = strCarModelYear;
+    // requestParams[PARAMS.PARAM_MILEAGE] = strMileage;
+    // requestParams[PARAMS.PARAM_CAR_NUMBER] = strNumber;
+    // requestParams[PARAMS.PARAM_CAR_CITY] = strCity;
+    // requestParams[PARAMS.PARAM_CAR_CODE] = strCode;
 
     if (Global.checkNull(imgMulkia)) {
       if (Global.isURL(imgMulkia)) {
@@ -271,10 +271,10 @@ clearController(){
     String strEmail = controllerEmail.text.toString();
     String strEmgName = controllerEmgName.text.toString();
     String strEmgPhone = controllerEmgPhone.text.toString();
-    String strCarBrand = controllerCarBrand.text.toString();
-    String strCarModelYear = controllerCarModelYear.text.toString();
-    String strMileage = controllerMileage.text.toString();
-    String strColour = controllerColour.text.toString();
+    // String strCarBrand = controllerCarBrand.text.toString();
+    // String strCarModelYear = controllerCarModelYear.text.toString();
+    // String strMileage = controllerMileage.text.toString();
+    // String strColour = controllerColour.text.toString();
 
     if (!Global.checkNull(strAddress)) {
       Global.showToastAlert(
@@ -325,35 +325,36 @@ clearController(){
           toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmgPhone);
       return false;
-    } else if (!Global.checkNull(strCarBrand)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_CAR_BRAND,
-          toastType: TOAST_TYPE.toastError);
-      return false;
-    } else if (!Global.checkNull(strCarModelYear)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_CAR_MODEL_YEAR,
-          toastType: TOAST_TYPE.toastError);
-      return false;
-    } else if (!Global.checkNull(strMileage)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_CAR_MILAGE,
-          toastType: TOAST_TYPE.toastError);
-      return false;
-    } else if (!Global.checkNull(strColour)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_CAR_COLOR,
-          toastType: TOAST_TYPE.toastError);
-      return false;
     }
+    //else if (!Global.checkNull(strCarBrand)) {
+    //   Global.showToastAlert(
+    //       context: context,
+    //       strTitle: "",
+    //       strMsg: AppAlert.ALERT_ENTER_CAR_BRAND,
+    //       toastType: TOAST_TYPE.toastError);
+    //   return false;
+    // } else if (!Global.checkNull(strCarModelYear)) {
+    //   Global.showToastAlert(
+    //       context: context,
+    //       strTitle: "",
+    //       strMsg: AppAlert.ALERT_ENTER_CAR_MODEL_YEAR,
+    //       toastType: TOAST_TYPE.toastError);
+    //   return false;
+    // } else if (!Global.checkNull(strMileage)) {
+    //   Global.showToastAlert(
+    //       context: context,
+    //       strTitle: "",
+    //       strMsg: AppAlert.ALERT_ENTER_CAR_MILAGE,
+    //       toastType: TOAST_TYPE.toastError);
+    //   return false;
+    // } else if (!Global.checkNull(strColour)) {
+    //   Global.showToastAlert(
+    //       context: context,
+    //       strTitle: "",
+    //       strMsg: AppAlert.ALERT_ENTER_CAR_COLOR,
+    //       toastType: TOAST_TYPE.toastError);
+    //   return false;
+    // }
     return true;
   }
 

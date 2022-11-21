@@ -130,7 +130,6 @@ class UserRepo {
             responseStatus: mResponse!.responseStatus,
             responseData: "alServices",
             responseMessage: mResponse.responseMessage);
-
         return Right(mSuccess);
       }
 
