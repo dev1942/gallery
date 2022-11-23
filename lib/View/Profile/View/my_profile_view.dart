@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/View/Profile/Model/otp_phoneno_model.dart';
 import 'package:otobucks/View/Profile/View/widget/my_car_list_widget.dart';
 import 'package:otobucks/View/Profile/Controller/profile_screen_controller.dart';
+import 'package:otobucks/controllers/auth_controllers/otp_controller.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_images.dart';
@@ -11,6 +13,8 @@ import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/global/text_styles.dart';
+import 'package:otobucks/page/auth/otp_screen.dart';
+import 'package:otobucks/services/repository/otp_repo.dart';
 import 'package:otobucks/widgets/category_item.dart';
 import 'package:otobucks/widgets/custom_button.dart';
 import 'package:otobucks/widgets/custom_textfield_mobile.dart';
@@ -32,6 +36,7 @@ class MyProfileFragment extends StatefulWidget {
 
 class MyProfileFragmentState extends State<MyProfileFragment> {
   var controller = Get.put(ProfileScreenController());
+  var Otpcontroller = Get.put(OtpController());
   bool IsAddCarTap=false;
   bool isEditidTab=false;
   String? editId;
@@ -59,6 +64,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
             backgroundColor: AppColors.getMainBgColor(),
             body: Stack(
               children: [
+
                 Container(
                   color: AppColors.colorBlueStart,
                   height: 0,
@@ -71,6 +77,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                         SingleChildScrollView(
                           child: Column(
                             children: [
+                              // Text(  value.isPhoneVerified.toString()),
                               // profile pic and name
                               Stack(
                                 children: [
@@ -78,7 +85,6 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                     color: AppColors.colorBlueStart,
                                     height: AppDimens.dimens_110,
                                   ),
-
                                   Container(
                                     margin: const EdgeInsets.only(
                                         top: AppDimens.dimens_40,
@@ -292,36 +298,39 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         child: CustomTextFieldMobile(
                                       strCountyCode: value.strCountyCode,
                                       textInputAction: TextInputAction.done,
-                                      enabled: false,
+                                     enabled: false,
+                                    //  enabled: true,
                                       height: height,
                                       controller: value.controllerPhone,
                                       focusNode: value.mFocusNodePhone,
                                     )),
-                                    !value.isPhoneVerified
-                                        ? SizedBox(
+                                    value.isPhoneVerified ? Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 5),
+                                      child: Image.asset(
+                                        'assets/images/ic_verified.png',
+                                        height: 20,
+                                      ),
+                                    )
+                                        : SizedBox(
                                             height: 30,
                                             width: 50,
                                             child: PrimaryButton(
                                               color: null,
                                               label: const Text('verify'),
                                               onPress: () {
-                                                Future.delayed(Duration.zero,
-                                                    () {
-                                                  Global.inProgressAlert(
-                                                      Get.overlayContext!);
-                                                });
-                                                _displayVerify();
+                                                gotoMobileOTPScreen(context,value.controllerPhone.text);
+                                               print(value.controllerPhone);
+                                                // Future.delayed(Duration.zero,
+                                                //     () {
+                                                //   Global.inProgressAlert(
+                                                //       Get.overlayContext!);
+                                                // });
+                                              //  _displayVerify();
                                               },
                                             ),
                                           )
-                                        : Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 5),
-                                            child: Image.asset(
-                                              'assets/images/ic_verified.png',
-                                              height: 20,
-                                            ),
-                                          )
+
                                   ],
                                 ),
                               ),
@@ -1364,6 +1373,20 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
               ],
             )));
   }
+  void gotoMobileOTPScreen(BuildContext context,String phoneNumber) async {
+    // ModelPhoneOTP mModelOTP = ModelPhoneOTP(
+    //     phoneNumber: controllerPassword.text.toString(),
+    //     otp: controllerEmail.text.toString());
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => OTPScreen(phoneNumber: phoneNumber)));
+   // sendOTPTask();
+    Otpcontroller.sendNumberOTPTask(phoneNumber!,context);
+    //sentOTPToNumber();
+  }
+
 
   Future<void> _displayVerify() async {
     return showDialog(

@@ -755,7 +755,6 @@ class Global {
       prefManager.setString(
           SharedPrefKey.KEY_ACCESS_TOKEN, mUserDetail.accessToken);
     }
-
     prefManager.setBool(SharedPrefKey.KEY_IS_LOGIN, true);
   }
 

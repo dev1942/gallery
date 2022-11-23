@@ -16,7 +16,10 @@ class RequestBuilder {
   static final String API_SIGN_UP = "auth/customers/register";
   static final String API_SEND_EMAIL_VERIFICATION_TOKEN =
       "auth/users/send-email-verification-token";
+  static final String API_SEND_PHONE_VERIFICATION_TOKEN =
+      "auth/users/send-phone-verification-token";
   static final String API_VERIFY_EMAIL = "auth/users/verify-email/";
+  static final String API_VERIFY_PHONE = "auth/users/verify-phone/";
   // Category and Sub Category
   static final String API_GET_CATEGORIES = "categories/getCategories";
   static final String API_GET_SUB_CATEGORIES = "categories/getSubCategories/";

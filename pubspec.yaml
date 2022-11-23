@@ -65,7 +65,7 @@ dependencies:
   flutter_local_notifications: ^11.0.0
   shimmer: ^2.0.0
   # get:
-  video_player: ^2.4.5
+  video_player: ^2.4.8
   basic_utils: ^4.4.1
   image_collapse: ^1.0.1
   d_chart: ^0.0.4
@@ -126,6 +126,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/fonts/
+    - assets/videos/
 
 
   fonts:

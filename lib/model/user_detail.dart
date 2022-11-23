@@ -5,6 +5,8 @@ class UserDetail {
   String avatar;
   String mobile;
   String email;
+  bool? isEmailVerified;
+  bool? isPhoneVerified;
   String accessToken;
 
   UserDetail(
@@ -14,5 +16,7 @@ class UserDetail {
       required this.avatar,
       required this.mobile,
       required this.email,
+        this.isEmailVerified,
+        this.isPhoneVerified,
       required this.accessToken});
 }

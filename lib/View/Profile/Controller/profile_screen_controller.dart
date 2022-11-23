@@ -105,8 +105,8 @@ clearController(){
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      UserModel mUserModel = mResult.responseData as UserModel;
 
+      UserModel mUserModel = mResult.responseData as UserModel;
       controllerAddress.text = Global.getString(mUserModel.address);
 
       strFname = Global.getString(mUserModel.firstName);
@@ -151,14 +151,6 @@ clearController(){
     String strEmail = controllerEmail.text.toString();
     String strEmgName = controllerEmgName.text.toString();
     String strEmgPhone = controllerEmgPhone.text.toString();
-    // String strCarBrand = controllerCarBrand.text.toString();
-    // String strCarModelYear = controllerCarModelYear.text.toString();
-    // String strMileage = controllerMileage.text.toString();
-    // String strColour = controllerColour.text.toString();
-    // String strNumber = controllerNumber.text.toString();
-    // String strCity= controllerCity.text.toString();
-    // String strCode = controllerCode.text.toString();
-
     HashMap<String, String> requestParams = HashMap();
     HashMap<String, String> requestParamsImage = HashMap();
 
@@ -170,13 +162,7 @@ clearController(){
     requestParams[PARAMS.PARAM_EMERGENCYNAME] = strEmgName;
     requestParams[PARAMS.PARAM_EMERGENCYPHONE] = strEmgPhone;
     requestParams[PARAMS.PARAM_COUNTRYCODE] = strCountyCode;
-    // requestParams[PARAMS.PARAM_BRAND] = strCarBrand;
-    // requestParams[PARAMS.PARAM_COLOR] = strColour;
-    // requestParams[PARAMS.PARAM_MODELYEAR] = strCarModelYear;
-    // requestParams[PARAMS.PARAM_MILEAGE] = strMileage;
-    // requestParams[PARAMS.PARAM_CAR_NUMBER] = strNumber;
-    // requestParams[PARAMS.PARAM_CAR_CITY] = strCity;
-    // requestParams[PARAMS.PARAM_CAR_CODE] = strCode;
+
 
     if (Global.checkNull(imgMulkia)) {
       if (Global.isURL(imgMulkia)) {

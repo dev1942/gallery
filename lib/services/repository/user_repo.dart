@@ -55,6 +55,8 @@ class UserRepo {
               lastName: mUserModel.lastName,
               email: mUserModel.email,
               id: mUserModel.id,
+             isEmailVerified: mUserModel.isEmailVerified,
+             isPhoneVerified: mUserModel.isPhoneVerified,
               mobile: mUserModel.countryCode + mUserModel.phone,
               accessToken: "");
           await Global.storeUserDetails(mUserAddressDetail);
