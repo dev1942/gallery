@@ -14,16 +14,34 @@ import '../../../custom_ui/carousel_slider/carousel_slider.dart';
 import '../../../model/card_model.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/wallet/add_card_dialog.dart';
-
+/*
+{
+    "promotionID":"637e7240c0f2f554eca81c8f",
+    "paymentType":"card",
+    "cardID":"card_1LhnKGJ8fiILUJ13zZgjkjBn",
+    "address":"Modal Town Lahore",
+    "date":"2023-02-25",
+    "time":"13:00",
+    "note":"This is Promotion Booking Note"
+}
+*/
 class CheckoutScreen extends StatefulWidget {
-  final String estimateId;
-  final String sourceId;
-  final String paymentStatus;
+  final String? promotionID;
+  final String? address;
+  final String? date;
+  final String? time;
+  final String? amount;
+  final String? note;
+
   const CheckoutScreen(
       {Key? key,
-      required this.estimateId,
-      required this.sourceId,
-      required this.paymentStatus})
+       this.promotionID,
+       this.address,
+       this.date,
+       this.time,
+        this.amount,
+        this.note,
+      })
       : super(key: key);
 
   @override
@@ -188,7 +206,20 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                             ],
                                           )
                                         ],
-                                      )
+                                      ),
+                               SizedBox(height: 20.0),
+
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("Amount ",style: TextStyle(fontSize: 16),),
+                                          Text("AED ${widget.amount??"0"}",  style: AppStyle.textViewStyleNormalSubtitle2(
+                                              context: context,
+                                              color: AppColors.colorBlueStart,
+                                              fontSizeDelta: 1,
+                                              fontWeightDelta: 1),),
+
+                                        ],),
                                     ],
                                   ),
                                 ),
@@ -208,13 +239,14 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                 fontSize: 0,
                                 width: size.width / 1.5,
                                 onPressed: () {
-                                  widget.estimateId == ''
-                                      ? Global.inProgressAlert(context)
-                                      : value.bookEstimation(
-                                          widget.estimateId,
-                                          widget.sourceId,
-                                          widget.paymentStatus);
-
+                                  value.bookEstimation(
+                                         promotionId: widget.promotionID,
+                                          address: widget.address,
+                                          time: widget.time,
+                                          date: widget.date,
+                                    note: widget.note,
+                                    cardId: controller.cardId!,
+                                  );
                                 },
                                 strTitle: Constants.TXT_PROCEES_TO_PAY),
                           ),

@@ -153,22 +153,20 @@ class EstCheckOutController extends GetxController {
     return true;
   }
 
-  bookEstimation(String estimateId, String serviceId, String status) async {
+  bookEstimation({String? promotionId, String? time, String? date,String? address,String? cardId,String? note} ) async {
     if (!isValid()) return;
     mShowData = ShowData.showLoading;
     update();
     // isShowLoader = true;
-
     HashMap<String, Object> requestParams = HashMap();
-
-    requestParams['estimateId'] = estimateId;
-    requestParams['serviceId'] = serviceId;
-    requestParams['source'] = cardId!;
-    requestParams['paymentType'] = 'card';
-    requestParams['paymentStatus'] = status;
-
+    requestParams['promotionID'] = promotionId!;
+    requestParams['paymentType'] = "card";
+    requestParams['cardID'] = cardId??"0";
+    requestParams['address'] = address??"";
+    requestParams['date'] = date??"";
+    requestParams['time'] = time!;
+    requestParams['note'] =note??"";
     var categories = await EstimatesRepo().bookingEstimation(requestParams);
-
     categories.fold((failure) {
       Global.showToastAlert(
           context: Get.overlayContext!,

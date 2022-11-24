@@ -3,11 +3,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/View/Promotion_discount/model/promotion_model.dart';
 import 'package:otobucks/controllers/home_screen_controller.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/model/category_model.dart';
-import 'package:otobucks/model/promotion_model.dart';
 import 'package:otobucks/page/services/service_screen.dart';
 import 'package:otobucks/services/repository/categories_repo.dart';
 

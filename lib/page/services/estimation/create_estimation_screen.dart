@@ -13,6 +13,7 @@ import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/model/service/service_model.dart';
 import 'package:otobucks/model/time_model.dart';
+import 'package:otobucks/page/services/estimation/checkout_screen.dart';
 import 'package:otobucks/widgets/custom_button.dart';
 import 'package:otobucks/widgets/date_selector.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
@@ -94,7 +95,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                     //Voice Note
                     if (widget.screenType != 'promotion') _voiceNoteSection(),
                     //Leave Note (if any)
-                    if (widget.screenType != 'promotion')
+                    //if (widget.screenType != 'promotion')
                       _anyNoteTextFiledSection(),
 
                     Container(
@@ -110,10 +111,25 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                           fontColor: AppColors.colorWhite,
                           width: size.width,
                           onPressed: () {
+
                             if (controller.isValid()) {
-                              widget.screenType == 'promotion'
-                                  ? controller.promotionPayment(context)
-                                  : controller.createEstimation(context);
+                              if( widget.screenType == 'promotion'){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>  CheckoutScreen(
+                                          promotionID: widget.mServiceModel.id,
+                                          address:controller.addressNote.text ,
+                                          date:controller.selectedDate ,
+                                          time: controller.mTimeModel!.time_24hr,
+                                          amount:   controller.mServiceModel.price,
+                                           note: controller.controllerNote.text
+                                        )));
+                              }else{
+                                controller.createEstimation(context);
+                              }
+
+
                             }
                           },
                           strTitle: widget.screenType == 'promotion'
@@ -282,7 +298,8 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                   ),
                 ),
                 GradientText(
-                  Global.replaceCurrencySign(value.mServiceModel.currency) +
+                //  Global.replaceCurrencySign(value.mServiceModel.currency) +
+                  "AED "+
                       value.mServiceModel.price,
                   style: AppStyle.textViewStyleNormalSubtitle2(
                       context: context,

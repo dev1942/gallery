@@ -360,7 +360,8 @@ class EstimatesRepo {
     }
     try {
       String response = await ReqListener.fetchPost(
-          strUrl: 'bookings/serviceBooking',
+          // strUrl: 'bookings/serviceBooking',
+           strUrl: 'promotions/book',
           requestParams: requestParams,
           mReqType: ReqType.post,
           mParamType: ParamType.json);

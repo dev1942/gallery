@@ -34,14 +34,11 @@ class CreateEstimationController extends GetxController {
   String selectedDate = "";
   String pickedImage = "";
   String pickedVideo = "";
-
   String voiceNoteFile = "";
+
   late LatLng? mLatLng;
-
   Location location = Location();
-
   LightCompressor lightCompressor = LightCompressor();
-
   bool isVideoCompressed = false;
 
   getLocationAdress() async {
@@ -169,17 +166,17 @@ class CreateEstimationController extends GetxController {
 
     return true;
   }
-
-  promotionPayment(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const CheckoutScreen(
-                  estimateId: '',
-                  sourceId: '',
-                  paymentStatus: 'completePayment',
-                )));
-  }
+  //
+  // promotionPayment(BuildContext context) {
+  //   Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => const CheckoutScreen(
+  //                 estimateId: '',
+  //                 sourceId: '',
+  //                 paymentStatus: 'completePayment',
+  //               )));
+  // }
 //----------------------------Create Estimation--------------------
   createEstimation(BuildContext context) async {
     if (Global.checkNull(pickedVideo)) {

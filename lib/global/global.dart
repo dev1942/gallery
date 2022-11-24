@@ -433,7 +433,7 @@ class Global {
           break;
       }
     } else {
-      currency = Constants.SYMBOL_DOLLAR;
+      currency = "AED";//Constants.SYMBOL_DOLLAR;
     }
 
     return currency;
