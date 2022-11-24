@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/View/Promotion_discount/View/banner_page_view.dart';
 import 'package:otobucks/controllers/dashboard_controller/dashboard_controller.dart';
 import '../../global/app_colors.dart';
 import '../../global/app_dimens.dart';

@@ -19,7 +19,6 @@ Widget drawer(BuildContext context) {
   return Container(
     decoration: ContainerProperties.simpleDecoration(),
     // color: Colors.amber,
-
     width: Responsive.screenWidth / 1.4,
     height: Responsive.screenHeight,
     padding: const EdgeInsets.only(top: AppDimens.dimens_40),

@@ -44,7 +44,7 @@ class AutoRepairSubCatScreenState extends State<AutoRepairSubCatScreen> {
           return GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: ((itemWidth / itemHeight) * 1.08),
+            childAspectRatio: ((itemWidth / itemHeight) * 0.95),
             crossAxisSpacing: size.maxWidth / 50,
             crossAxisCount: size.maxWidth > 600
                 ? 5

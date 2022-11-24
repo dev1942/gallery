@@ -14,6 +14,7 @@ import 'package:otobucks/model/success.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
 
 class CategoriesRepo {
+
   Future<Either<Failure, Success>> getCategories(
       HashMap<String, Object> requestParams) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();

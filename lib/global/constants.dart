@@ -77,6 +77,7 @@ class PARAMS {
 
 class Constants {
   static const String APP_NAME = "Otobucks";
+  static const String SAVE = "Save";
   static String strTokenType = "Bearer";
   static String STATUS = "STATUS";
   static String STR_GOOGLE_API_KEY = 'AIzaSyAP_6eekLauLbXqRjwncBDUtIfVCzoWGyA';
@@ -437,8 +438,8 @@ class Constants {
       STR_EMERGENCY_CONTACT_DETAIL = 'Emergency Contact detail',
       STR_CAR_BRAND = 'Car brand',
       STR_CAR_MODEL_YEAR = 'Car model year',
-      STR_MILEAGE = 'Milegae of car has gone',
-      STR_CAR_COLOUR = 'Car Colour',
+      STR_MILEAGE = 'KM',
+      STR_CAR_COLOUR = 'Color',
       STR_ADD_MULKIA = 'Add \n Mulkia',
       STR_ADD_DRIVING_LICENCE = 'Add \n Driving Licence',
       STR_ADD_EMIRATES_ID_FRONT = 'Add \n Emirates id front',

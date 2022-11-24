@@ -2,7 +2,10 @@ import 'dart:collection';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/View/Profile/Model/otp_phoneno_model.dart';
+import 'package:otobucks/View/Profile/View/my_profile_view.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
@@ -40,14 +43,12 @@ class OtpController extends GetxController {
     }
     return true;
   }
-
+//---------------For Email
   sendOTPTask(String strEmailID, BuildContext context) async {
     isShowLoader = true;
     update();
     HashMap<String, Object> requestParams = HashMap();
-
     requestParams[PARAMS.PARAM_EMAIL] = strEmailID;
-
     var signInEmail = await OTPRepo().sentOTPToEmail(requestParams);
 
     signInEmail.fold((failure) {
@@ -69,6 +70,7 @@ class OtpController extends GetxController {
     });
   }
 
+//--------------------------verify Email--------------
   verifyOTPTask(BuildContext context, ModelOTP modelOTP) async {
     if (!isValid(context)) {
       return;
@@ -100,7 +102,73 @@ class OtpController extends GetxController {
       loginUserTask(context, modelOTP);
     });
   }
+//------------------------For Number-------------
 
+  //----------------------Send Otp------Number------
+  sendNumberOTPTask(String PhoneNumber, BuildContext context) async {
+    isShowLoader = true;
+    update();
+    HashMap<String, Object> requestParams = HashMap();
+
+    requestParams[PARAMS.PARAM_PHONE] = PhoneNumber;
+
+    var signInEmail = await OTPRepo().sentOTPToNumber(requestParams);
+
+    signInEmail.fold((failure) {
+      Global.showToastAlert(
+          context: context,
+          strTitle: "",
+          strMsg: failure.MESSAGE,
+          toastType: TOAST_TYPE.toastError);
+      isShowLoader = false;
+      update();
+    }, (mResult) {
+      Global.showToastAlert(
+          context: context,
+          strTitle: "",
+          strMsg: mResult.responseMessage,
+          toastType: TOAST_TYPE.toastSuccess);
+      isShowLoader = false;
+      update();
+    });
+  }
+
+//--------------------number otp verify ----------------------------
+  verifyNumberOTPTask(BuildContext context,String? phoneNumber) async {
+    if (!isValid(context)) {
+      return;
+    }
+    isShowLoader = true;
+    update();
+    String strOTP = mControllerOTP.text.toString();
+    String strPhoneNumber = phoneNumber!;//modelOTP.emailId;
+    HashMap<String, Object> requestParams = HashMap();
+    requestParams[PARAMS.PARAM_PHONE] = strPhoneNumber;
+    var signInEmail = await OTPRepo().verifyNumberOTP(requestParams, strOTP);
+    isShowLoader = false;
+    update();
+
+    signInEmail.fold((failure) {
+      Global.showToastAlert(
+          context: context,
+          strTitle: "",
+          strMsg: failure.MESSAGE,
+          toastType: TOAST_TYPE.toastError);
+    }, (mResult) {
+      Global.showToastAlert(
+          context: context,
+          strTitle: "",
+          strMsg: mResult.responseMessage,
+          toastType: TOAST_TYPE.toastSuccess);
+      print("Navigator pop context--- otp verify-------");
+      // Navigator.Pu
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyProfileFragment()));
+      //Navigator.pushReplacementNamed(context, Constants.ACT_HOME);
+    //  loginUserTask(context, modelOTP);
+    });
+  }
+
+  //---------------------Number otp verify  end---------------------
   loginUserTask(BuildContext context, ModelOTP modelOTP) async {
     isShowLoader = true;
     update();

@@ -620,10 +620,10 @@ class EstimationDetailsPDFScreenState
                             context,
                             MaterialPageRoute(
                                 builder: (context) => CheckoutScreen(
-                                      sourceId:
-                                          widget.mEstimatesModel.source!.id,
-                                      estimateId: widget.mEstimatesModel.id,
-                                      paymentStatus: 'partialPayment',
+                                      // sourceId:
+                                      //     widget.mEstimatesModel.source!.id,
+                                      // estimateId: widget.mEstimatesModel.id,
+                                      // paymentStatus: 'partialPayment',
                                     )));
                       },
                       strTitle: widget.mEstimatesModel.status == 'submitted'

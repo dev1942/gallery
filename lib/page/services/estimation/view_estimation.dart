@@ -133,11 +133,11 @@ class ViewEstimationState extends State<ViewEstimation> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => CheckoutScreen(
-                                              estimateId:
-                                                  widget.mEstimatesModel.id,
-                                              sourceId: widget
-                                                  .mEstimatesModel.source!.id,
-                                              paymentStatus: 'completePayment',
+                                              // estimateId:
+                                              //     widget.mEstimatesModel.id,
+                                              // sourceId: widget
+                                              //     .mEstimatesModel.source!.id,
+                                              // paymentStatus: 'completePayment',
                                             )));
                               },
                               strTitle: Constants.TXT_COMPLETED_ESTIMATION),
