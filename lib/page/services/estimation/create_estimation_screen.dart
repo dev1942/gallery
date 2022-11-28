@@ -123,7 +123,9 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                           date:controller.selectedDate ,
                                           time: controller.mTimeModel!.time_24hr,
                                           amount:   controller.mServiceModel.price,
-                                           note: controller.controllerNote.text
+                                           note: controller.controllerNote.text,
+                                           previousAmount: controller.mServiceModel.beforePrice,
+                                        discount: controller.mServiceModel.discount,
                                         )));
                               }else{
                                 controller.createEstimation(context);

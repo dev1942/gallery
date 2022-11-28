@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:otobucks/controllers/estimation_sidebar_controllers/estimation_fragment_controller.dart';
-import 'package:otobucks/fragment/estimation_list.dart';
-import 'package:otobucks/global/app_colors.dart';
-import 'package:otobucks/global/app_dimens.dart';
+import 'package:flutter/material.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/app_views.dart';
+import 'package:otobucks/global/app_colors.dart';
+import 'package:otobucks/global/app_dimens.dart';
+import 'package:otobucks/View/Estimation/view/estinamtion_list_view.dart';
+import 'package:otobucks/View/Estimation/controller/estimation_screen_controller.dart';
 
 class EstimationFragment extends StatefulWidget {
   const EstimationFragment({Key? key}) : super(key: key);
@@ -27,10 +27,6 @@ class EstimationFragmentState extends State<EstimationFragment>
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var style = const TextStyle(fontSize: 11, fontWeight: FontWeight.w500);
-    double height = AppDimens.dimens_38;
-    double width = size.width / 5;
 
     return SafeArea(
         top: true,
@@ -68,58 +64,10 @@ class EstimationFragmentState extends State<EstimationFragment>
                               mColor: Colors.white, mBorderRadius: 5),
                           indicatorSize: TabBarIndicatorSize.tab,
                           tabs: [
-                            Container(
-                              decoration: value.activeTabIndex != 0
-                                  ? AppViews.getColorDecor(
-                                      mColor: Colors.white, mBorderRadius: 5)
-                                  : null,
-                              alignment: Alignment.center,
-                              width: width,
-                              height: height,
-                              child: Text(
-                                "Pending",
-                                style: style,
-                              ),
-                            ),
-                            Container(
-                              decoration: value.activeTabIndex != 1
-                                  ? AppViews.getColorDecor(
-                                      mColor: Colors.white, mBorderRadius: 5)
-                                  : null,
-                              alignment: Alignment.center,
-                              width: width,
-                              height: height,
-                              child: Text(
-                                "Partial Paid",
-                                style: style,
-                              ),
-                            ),
-                            Container(
-                              decoration: value.activeTabIndex != 2
-                                  ? AppViews.getColorDecor(
-                                      mColor: Colors.white, mBorderRadius: 5)
-                                  : null,
-                              alignment: Alignment.center,
-                              width: width,
-                              height: height,
-                              child: Text(
-                                "Full Paid",
-                                style: style,
-                              ),
-                            ),
-                            Container(
-                              decoration: value.activeTabIndex != 3
-                                  ? AppViews.getColorDecor(
-                                      mColor: Colors.white, mBorderRadius: 5)
-                                  : null,
-                              alignment: Alignment.center,
-                              width: width,
-                              height: height,
-                              child: Text(
-                                "Declined",
-                                style: style,
-                              ),
-                            ),
+                            tabButtons(title:"Pending",activeindex: value.activeTabIndex,id:0),
+                            tabButtons(title:"Partial Paid",activeindex: value.activeTabIndex,id:1),
+                            tabButtons(title:"Full Paid",activeindex: value.activeTabIndex,id:2),
+                            tabButtons(title:"Declined",activeindex: value.activeTabIndex,id:3),
                           ],
                           controller: value.tabController,
                         ),
@@ -157,5 +105,21 @@ class EstimationFragmentState extends State<EstimationFragment>
                 ],
               ),
             )));
+  }
+
+  Widget tabButtons({int? activeindex,int? id,String? title}){
+    return  Container(
+      decoration:activeindex != id
+          ? AppViews.getColorDecor(
+          mColor: Colors.white, mBorderRadius: 5)
+          : null,
+      alignment: Alignment.center,
+      width:  MediaQuery.of(context).size.width/ 5,
+      height:AppDimens.dimens_38,
+      child: Text(
+        title??"",
+        style:const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
+      ),
+    );
   }
 }

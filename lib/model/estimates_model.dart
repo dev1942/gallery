@@ -17,7 +17,8 @@ class EstimatesModel {
   Source? source;
   String date;
   String cutomerNote;
-
+  bool offerCreated;
+  String? offerStatus;
   List<String> image;
   List<String> voiceNote;
   List<String> video;
@@ -26,7 +27,6 @@ class EstimatesModel {
   ServiceProviderModel? mServiceProviderModel;
   String discount;
   String grandTotal;
-
   String serviceTax;
   String subTotal;
 
@@ -36,6 +36,8 @@ class EstimatesModel {
     required this.time,
     required this.source,
     required this.date,
+    this.offerCreated=false,
+    this.offerStatus,
     required this.cutomerNote,
     required this.image,
     required this.voiceNote,

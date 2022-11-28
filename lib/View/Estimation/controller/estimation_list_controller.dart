@@ -33,6 +33,8 @@ class EstimationListController extends GetxController {
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
+      print("Estimation response data -----------------");
+      print(mResult.responseData );
       alEstimates = mResult.responseData as List<EstimatesModel>;
 
       if (alEstimates.isNotEmpty) {

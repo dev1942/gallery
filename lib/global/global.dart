@@ -93,9 +93,7 @@ class Global {
       case TOAST_TYPE.toastInfo:
         bgColor = AppColors.curiousBlue.withOpacity(0.2);
         strIcon = AppImages.ic_alert_circle;
-
         break;
-
       case TOAST_TYPE.toastSuccess:
         bgColor = AppColors.colorLogoGreenLight;
         strIcon = AppImages.ic_check_circle;

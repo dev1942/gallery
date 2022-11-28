@@ -32,6 +32,8 @@ class CheckoutScreen extends StatefulWidget {
   final String? time;
   final String? amount;
   final String? note;
+ final String? previousAmount;
+  final String? discount;
 
   const CheckoutScreen(
       {Key? key,
@@ -41,6 +43,8 @@ class CheckoutScreen extends StatefulWidget {
        this.time,
         this.amount,
         this.note,
+        this.previousAmount,
+        this.discount,
       })
       : super(key: key);
 
@@ -207,23 +211,56 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                           )
                                         ],
                                       ),
-                               SizedBox(height: 20.0),
 
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text("Amount ",style: TextStyle(fontSize: 16),),
-                                          Text("AED ${widget.amount??"0"}",  style: AppStyle.textViewStyleNormalSubtitle2(
-                                              context: context,
-                                              color: AppColors.colorBlueStart,
-                                              fontSizeDelta: 1,
-                                              fontWeightDelta: 1),),
-
-                                        ],),
                                     ],
                                   ),
                                 ),
                               )),
+                          SizedBox(height: 20.0),
+                          Text("Payment Detail"),
+                          Card(
+                            margin: const EdgeInsets.all(AppDimens.dimens_20),
+                            child:Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(children: [
+
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Total Amount ",style: TextStyle(fontSize: 16),),
+                                    Text("AED ${widget.previousAmount??"0"}",  style: AppStyle.textViewStyleNormalSubtitle2(
+                                        context: context,
+                                        color: AppColors.colorBlueStart,
+                                        fontSizeDelta: 1,
+                                        fontWeightDelta: 1),),
+
+                                  ],),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Discount ",style: TextStyle(fontSize: 16),),
+                                  Text("${widget.discount??"0"} %",  style: AppStyle.textViewStyleNormalSubtitle2(
+                                      context: context,
+                                      color: AppColors.colorBlueStart,
+                                      fontSizeDelta: 1,
+                                      fontWeightDelta: 1),),
+
+                                ],),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Sub Total Amount ",style: TextStyle(fontSize: 16),),
+                                  Text("AED ${widget.amount??"0"}",  style: AppStyle.textViewStyleNormalSubtitle2(
+                                      context: context,
+                                      color: AppColors.colorBlueStart,
+                                      fontSizeDelta: 1,
+                                      fontWeightDelta: 1),),
+
+                                ],),
+                              ],),
+                            )
+                          ),
 
                           Container(
                             alignment: Alignment.center,
