@@ -321,8 +321,6 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                   TextButton(
                                                     onPressed: () {
                                               Navigator.pop(context, 'OK');
-                                              print(value.oldPhoneNumebr);
-                                              print(value.controllerPhone.text);
                                               },
                                                     child: const Text('Submit'),
                                                   ),

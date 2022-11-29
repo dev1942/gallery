@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:otobucks/controllers/services_controllers/create_estimation_controller.dart';
+import 'package:otobucks/View/Estimation/controller/estimation_controller.dart';
+
 import 'package:otobucks/global/adaptive_helper.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';

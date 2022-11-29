@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Estimation/controller/estimation_list_controller.dart';
 import 'package:otobucks/View/Estimation/view/estimation_invoice_screen.dart';
-
-// import 'package:otobucks/controllers/estimation_sidebar_controllers/estimation_list_controller.dart';
 import 'package:otobucks/global/constants.dart';
-
 import 'package:otobucks/page/services/estimation/view_estimation.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
-import 'package:otobucks/widgets/gradient_text.dart';
 import '../../../../global/app_colors.dart';
 import '../../../../global/app_dimens.dart';
 import '../../../../global/app_style.dart';
 import '../../../../global/app_views.dart';
-import '../../../../global/global.dart';
 import '../../../model/estimates_model.dart';
 
 class EstimationListFragment extends StatefulWidget {
@@ -34,7 +29,6 @@ class EstimationListFragmentState extends State<EstimationListFragment> {
   @override
   void initState() {
     super.initState();
-
     loadData();
   }
 
@@ -115,7 +109,7 @@ class EstimationListFragmentState extends State<EstimationListFragment> {
                                                             fontsize: 0,
                                                             fontweight: 0),
                                                         Textwidget(
-                                                            text: "Car Wash  ",
+                                                            text:   mEstimatesModel.source?.title??"",
                                                             fontsize: 0,
                                                             fontweight: 0),
                                                       ],
@@ -265,7 +259,7 @@ class EstimationListFragmentState extends State<EstimationListFragment> {
                                           //---------------Offer Status----------
                                           mEstimatesModel
                                               .status ==
-                                              'submitted'?   Expanded(
+                                              'submitted' && mEstimatesModel.offerCreated?   Expanded(
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment

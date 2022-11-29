@@ -13,6 +13,7 @@ import '../global/global.dart';
 class EstimatesModel {
   String id;
   String status;
+  String? title;
   String time;
   Source? source;
   String date;
@@ -36,6 +37,7 @@ class EstimatesModel {
     required this.time,
     required this.source,
     required this.date,
+    this.title,
     this.offerCreated=false,
     this.offerStatus,
     required this.cutomerNote,

@@ -11,13 +11,12 @@ import 'package:location/location.dart';
 import 'package:otobucks/fragment/thankyou_fragment.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
+import 'package:otobucks/global/global.dart';
 import 'package:otobucks/model/service/service_model.dart';
 import 'package:otobucks/model/time_model.dart';
-import 'package:otobucks/page/services/estimation/checkout_screen.dart';
 import 'package:otobucks/page/services/profile/service_provider_profile_screen.dart';
 import 'package:otobucks/services/repository/estimates_repo.dart';
 
-import '../../global/global.dart';
 
 class CreateEstimationController extends GetxController {
   bool connectionStatus = false;
@@ -57,11 +56,11 @@ class CreateEstimationController extends GetxController {
       var currentLocation = await location.getLocation();
       log(currentLocation.latitude.toString());
       LatLng _mLatLng =
-          LatLng(currentLocation.latitude!, currentLocation.longitude!);
+      LatLng(currentLocation.latitude!, currentLocation.longitude!);
       List<i.Placemark> placemarks = await i.placemarkFromCoordinates(
           _mLatLng.latitude, _mLatLng.longitude);
       addressNote.text =
-          '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
+      '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
 
       mLatLng = _mLatLng;
     } else {
@@ -203,7 +202,7 @@ class CreateEstimationController extends GetxController {
     requestParams[PARAMS.PARAM_SOURCE] = mServiceModel.id;
     requestParams[PARAMS.PARAM_DATE] = selectedDate;
     requestParams[PARAMS.PARAM_TIME] =
-        mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
+    mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
     requestParams[PARAMS.PARAM_CUTOMERNOTE] = strNote;
     requestParams[PARAMS.PARAM_ADDRESS] = addressNote.text;
     if (mLatLng != null) {

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Estimation/controller/estimation_list_controller.dart';
 import 'package:otobucks/page/services/estimation/checkout_screen.dart';
+import 'package:otobucks/widgets/Alert_dialog_box.dart';
 // import 'package:otobucks/controllers/estimation_sidebar_controllers/estimation_list_controller.dart';
 import 'package:otobucks/widgets/cancel_booking_dialog.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -46,6 +47,8 @@ class EstimationDetailsPDFScreenState
 
   int indexM = 0;
 
+  EstimationListController _estimationListController=Get.put(EstimationListController());
+  TextEditingController _textOffercontroller=TextEditingController();
   @override
   void initState() {
     getEstimationDetails();
@@ -648,6 +651,24 @@ class EstimationDetailsPDFScreenState
                           // width: size.width / 1.5,
                           height: AppDimens.dimens_38,
                           onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => LogoutOverlay(
+                                textcontroller:_textOffercontroller ,
+                                onCancelTap: (){
+                                  _textOffercontroller.clear();
+                                  Navigator.of(context).pop();
+                                },
+                                onSubmitTap: (){
+                                print("submit tapped");
+                                if(_textOffercontroller.text.isNotEmpty){
+                                  _estimationListController.createAnOffer(estimateid: widget.mEstimatesModel.id,offerAmount:_textOffercontroller.text);
+                                  _textOffercontroller.clear();
+                                  Navigator.of(context).pop();
+                                }
+
+                              },),
+                            );
                             // Navigator.push(
                             //     context,
                             //     MaterialPageRoute(
