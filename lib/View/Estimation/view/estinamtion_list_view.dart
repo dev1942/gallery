@@ -225,9 +225,7 @@ class EstimationListFragmentState extends State<EstimationListFragment> {
                                                                           5.0),
                                                               decoration: AppViews
                                                                   .getGradientBoxDecoration(
-                                                                mBorderRadius:
-                                                                    5,
-                                                              ),
+                                                                mBorderRadius:5),
                                                               child: Text(
                                                                 "View Estimation",
                                                                 style: AppStyle.textViewStyleSmall(
@@ -259,50 +257,32 @@ class EstimationListFragmentState extends State<EstimationListFragment> {
                                           //---------------Offer Status----------
                                           mEstimatesModel
                                               .status ==
-                                              'submitted' && mEstimatesModel.offerCreated?   Expanded(
+                                              'submitted' && mEstimatesModel.offerCreated ?   Expanded(
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                   .spaceBetween,
 
                                               children: [
-                                                InkWell(
-                                                  child: Container(
-                                                      // alignment:
-                                                      // Alignment.centerLeft,
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.only(left: 5.0),
-                                                        child: Text(
-                                                         "Offer Status",
-
-                                                          style: AppStyle
-                                                              .textViewStyleSmall(
-                                                              context:
-                                                              context,
-                                                              color: AppColors
-                                                                  .colorTextBlue2,
-                                                              fontSizeDelta:
-                                                              3,
-                                                              fontWeightDelta:
-                                                              0),
-                                                        ),
-                                                      )),
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                ViewEstimation(
-                                                                  mEstimatesModel:
-                                                                  mEstimatesModel,
-                                                                  screen: widget
-                                                                      .screen,
-                                                                )));
-                                                  },
-                                                ),
                                                 Container(
 
-                                                  child: InkWell(
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.only(left: 5.0),
+                                                      child: Text(
+                                                       "Offer Status",
+                                                        style: AppStyle
+                                                            .textViewStyleSmall(
+                                                            context:
+                                                            context,
+                                                            color: AppColors
+                                                                .colorBlack,
+                                                            fontSizeDelta:
+                                                            3,
+                                                            fontWeightDelta:
+                                                            0),
+                                                      ),
+                                                    )),
+                                                 InkWell(
                                                     child: Container(
                                                       width: 125,
                                                         padding:const  EdgeInsets
@@ -312,43 +292,100 @@ class EstimationListFragmentState extends State<EstimationListFragment> {
                                                             vertical:
                                                             5.0),
                                                         decoration:BoxDecoration(
-                                                          color: Colors.yellow,
+                                                          color: mEstimatesModel.offerStatus=="accepted"?Colors.green:Colors.yellow,
                                                             borderRadius: BorderRadius.circular(5.0),
                                                         ),
-                                                        // AppViews
-                                                        //     .getGradientBoxDecoration(
-                                                        //   mBorderRadius:
-                                                        //   5,
-                                                        // ),
                                                         child: Row(
                                                           mainAxisAlignment: MainAxisAlignment.center,
                                                           children: [
                                                             Text(
-                                                              "Pending ",
+                                                              mEstimatesModel.offerStatus??"",
                                                               style: AppStyle.textViewStyleSmall(
                                                                   context:
                                                                   context,
-                                                                  color: AppColors
-                                                                      .colorBlack,
+                                                                  color: mEstimatesModel.offerStatus=="accepted"? AppColors
+                                                                      .colorWhite:Colors.black,
                                                                   fontSizeDelta:
                                                                   1,
                                                                   fontWeightDelta:
                                                                   2),
                                                             ),
-                                                            Icon(Icons.remove_red_eye_outlined),
+                                                         const Padding(
+                                                              padding:  EdgeInsets.only(left: 8.0),
+                                                              child: Icon(Icons.remove_red_eye_outlined),
+                                                            ),
                                                           ],
                                                         ),),
                                                     onTap: () {
-                                                      if (mEstimatesModel
-                                                          .status ==
-                                                          'submitted') {
-                                                        gotoViewEstimation(
-                                                            mEstimatesModel,
-                                                            false);
-                                                      }
+                                                      showDialog<String>(
+                                                          context: context,
+                                                          builder: (BuildContext context) => AlertDialog(
+                                                            title:  Text(' Offering Amount ',textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold),),
+                                                            content:  Column(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                              children: [
+                                                                Text(
+                                                                    "${mEstimatesModel.offerAmount} AED",
+                                                                style: AppStyle.textViewStyleSmall(
+                                                                context:
+                                                                context,
+                                                                color: AppColors
+                                                                    .colorBlack,
+                                                                fontSizeDelta:
+                                                                8,
+                                                                fontWeightDelta:
+                                                                2),
+                                                                ),
+                                                                InkWell(
+                                                                  onTap:(){
+                                                                    Navigator.pop(context);
+                                                                  },
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: Container(
+
+                                                                      decoration: BoxDecoration(
+                                                                        gradient: LinearGradient(
+                                                                          begin: Alignment.topCenter,
+                                                                          end: Alignment.bottomCenter,
+                                                                          colors: [
+                                                                            AppColors.colorBlueEnd,
+                                                                            AppColors.colorBlueStart,
+                                                                          ],
+                                                                        ),
+                                                                        borderRadius: BorderRadius.circular(5.0),
+                                                                      ),
+                                                                      child:  Padding(
+                                                                        padding: EdgeInsets.symmetric(horizontal: 30.0,vertical: 5.0),
+                                                                        child:Text(
+                                                                            'Cancel',
+                                                                            textAlign: TextAlign.center,
+                                                                            style: AppStyle.textViewStyleNormalButton(
+                                                                                context: context,
+                                                                                color:  Colors.white,
+                                                                                fontSizeDelta: 0,
+                                                                                fontWeightDelta:
+                                                                                2)
+                                                                        ),
+                                                                      ),
+
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ));
+
+                                                      // if (mEstimatesModel
+                                                      //     .status ==
+                                                      //     'submitted') {
+                                                      //   gotoViewEstimation(
+                                                      //       mEstimatesModel,
+                                                      //       false);
+                                                      //}
                                                     },
-                                                  ),
-                                                )
+
+                                                ),
 
                                               ],
                                             ),

@@ -12,6 +12,7 @@ class EstimationListController extends GetxController {
   bool connectionStatus = false;
   bool isShowLoader = false;
 
+
   int indexM = 0;
   List<EstimatesModel> alEstimates = [];
 
@@ -83,7 +84,8 @@ class EstimationListController extends GetxController {
       //clearController();
       // getCardsMine();
       //getCarList();
-      getEstimation("");
+      getEstimation("submitted");
+      update();
     });
   }
 
