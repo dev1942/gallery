@@ -2,7 +2,10 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:otobucks/controllers/estimation_sidebar_controllers/estimation_list_controller.dart';
+import 'package:otobucks/View/Estimation/controller/estimation_list_controller.dart';
+import 'package:otobucks/page/services/estimation/checkout_screen.dart';
+import 'package:otobucks/widgets/Alert_dialog_box.dart';
+// import 'package:otobucks/controllers/estimation_sidebar_controllers/estimation_list_controller.dart';
 import 'package:otobucks/widgets/cancel_booking_dialog.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -18,7 +21,7 @@ import '../../../model/estimates_model.dart';
 import '../../../model/estimation_detail_model.dart';
 import '../../../services/repository/estimates_repo.dart';
 import '../../../widgets/custom_button.dart';
-import 'checkout_screen.dart';
+
 
 class EstimationDetailsPDFScreen extends StatefulWidget {
   final Function? callback;
@@ -44,6 +47,8 @@ class EstimationDetailsPDFScreenState
 
   int indexM = 0;
 
+  EstimationListController _estimationListController=Get.put(EstimationListController());
+  TextEditingController _textOffercontroller=TextEditingController();
   @override
   void initState() {
     getEstimationDetails();
@@ -604,46 +609,97 @@ class EstimationDetailsPDFScreenState
                 left: AppDimens.dimens_10,
                 right: AppDimens.dimens_10),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+             // crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  child: CustomButton(
-                      isGradient: true,
-                      isRoundBorder: true,
-                      fontColor: AppColors.colorWhite,
-                      fontSize: 0,
-                      // width: size.width / 1.5,
-                      height: AppDimens.dimens_38,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CheckoutScreen(
-                                      // sourceId:
-                                      //     widget.mEstimatesModel.source!.id,
-                                      // estimateId: widget.mEstimatesModel.id,
-                                      // paymentStatus: 'partialPayment',
-                                    )));
-                      },
-                      strTitle: widget.mEstimatesModel.status == 'submitted'
-                          ? 'Make partial Payment'
-                          : "Make full Payment"),
-                  width: size.width / 1.8,
+                Flexible(
+                  child: SizedBox(
+                    child: CustomButton(
+                        isGradient: true,
+                        isRoundBorder: true,
+                        fontColor: AppColors.colorWhite,
+                        fontSize: -1,
+                        // width: size.width / 1.5,
+                        height: AppDimens.dimens_38,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const CheckoutScreen(
+                                    // sourceId:
+                                    //     widget.mEstimatesModel.source!.id,
+                                    // estimateId: widget.mEstimatesModel.id,
+                                    // paymentStatus: 'partialPayment',
+                                  )));
+                        },
+                        strTitle: widget.mEstimatesModel.status == 'submitted'
+                            ? 'Make partial Payment'
+                            : "Make full Payment"),
+                   // width: size.width / 1.8,
+                  ),
                 ),
-                const Spacer(),
-                SizedBox(
-                  child: CustomButton(
-                      fontSize: 0,
-                      isGradient: false,
-                      isRoundBorder: true,
-                      color: AppColors.greyDateBG,
-                      fontColor: AppColors.colorBlack,
-                      width: size.width / 1.5,
-                      height: AppDimens.dimens_38,
-                      onPressed: () => displayTextInputDialog(),
-                      strTitle: Constants.TXT_DECLINE),
-                  width: size.width / 3.2,
+                widget.mEstimatesModel.status == 'submitted'
+                    ?    Flexible(
+                      child: SizedBox(
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CustomButton(
+                          isGradient: true,
+                          isRoundBorder: true,
+                          fontColor: AppColors.colorWhite,
+                          fontSize: 0,
+                          // width: size.width / 1.5,
+                          height: AppDimens.dimens_38,
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => LogoutOverlay(
+                                textcontroller:_textOffercontroller ,
+                                onCancelTap: (){
+                                  _textOffercontroller.clear();
+                                  Navigator.of(context).pop();
+                                },
+                                onSubmitTap: (){
+                                print("submit tapped");
+                                if(_textOffercontroller.text.isNotEmpty){
+                                  _estimationListController.createAnOffer(estimateid: widget.mEstimatesModel.id,offerAmount:_textOffercontroller.text);
+                                  _textOffercontroller.clear();
+                                  Navigator.of(context).pop();
+                                }
+
+                              },),
+                            );
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => CheckoutScreen(
+                            //           // sourceId:
+                            //           //     widget.mEstimatesModel.source!.id,
+                            //           // estimateId: widget.mEstimatesModel.id,
+                            //           // paymentStatus: 'partialPayment',
+                            //         )));
+                          },
+                          strTitle: 'Make Offer'
+                              ),
+                  ),
+                  //width: size.width / 1.8,
+                ),
+                    ):SizedBox(),
+                //const Spacer(),
+                Flexible(
+                  child: SizedBox(
+                    child: CustomButton(
+                        fontSize: 0,
+                        isGradient: false,
+                        isRoundBorder: true,
+                        color: AppColors.greyDateBG,
+                        fontColor: AppColors.colorBlack,
+                        width: size.width / 1.5,
+                        height: AppDimens.dimens_38,
+                        onPressed: () => displayTextInputDialog(),
+                        strTitle: Constants.TXT_DECLINE),
+                  //  width: size.width / 3.2,
+                  ),
                 ),
               ],
             ),
@@ -739,7 +795,7 @@ class EstimationDetailsPDFScreenState
     }, (mResult) {
       setState(() {
         List<EstimationDetailModel> alEstimation =
-            mResult.responseData as List<EstimationDetailModel>;
+        mResult.responseData as List<EstimationDetailModel>;
         if (alEstimation.isNotEmpty) {
           mEstimationDetailModel = alEstimation.first;
           mShowData = ShowData.showData;

@@ -57,6 +57,7 @@ class ProfileScreenController extends GetxController {
   String strFname = "";
   String strCountry = "";
   String strLname = "";
+  String oldPhoneNumebr="";
 
 
 
@@ -93,9 +94,7 @@ clearController(){
     update();
 
     HashMap<String, Object> requestParams = HashMap();
-
     var categories = await UserRepo().getUser(requestParams);
-
     categories.fold((failure) {
       Global.showToastAlert(
           context: Get.overlayContext!,
@@ -112,7 +111,7 @@ clearController(){
       strFname = Global.getString(mUserModel.firstName);
       strLname = Global.getString(mUserModel.lastName);
       strCountry = Global.getString(mUserModel.country.first);
-
+      oldPhoneNumebr=Global.getString(mUserModel.phone);
       controllerPhone.text = Global.getString(mUserModel.phone);
       controllerEmail.text = Global.getString(mUserModel.email);
       isEmailVerified = mUserModel.isEmailVerified;

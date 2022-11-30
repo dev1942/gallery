@@ -298,13 +298,43 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         child: CustomTextFieldMobile(
                                       strCountyCode: value.strCountyCode,
                                       textInputAction: TextInputAction.done,
-                                     enabled: false,
+                                    readonly: true,
+                                          // enabled: false,
                                     //  enabled: true,
                                       height: height,
                                       controller: value.controllerPhone,
                                       focusNode: value.mFocusNodePhone,
+                                          suffixIcon: InkWell(
+                                            onTap: (){
+                                              showDialog<String>(
+                                                  context: context,
+                                                  builder: (BuildContext context) => AlertDialog(
+                                                title: const Text('Edit Number'),
+                                                content:  TextField(
+                                                  controller: value.controllerPhone,
+                                                ),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                                                    child: const Text('Cancel'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () {
+                                              Navigator.pop(context, 'OK');
+                                              },
+                                                    child: const Text('Submit'),
+                                                  ),
+                                                ],
+                                              ));
+                                            },
+                                            child: Image.asset(
+                                                AppImages.ic_edit_profile_icon,
+                                                color: AppColors.colorBlack,
+                                                width: iconSize,
+                                                height: iconSize),
+                                          ),
                                     )),
-                                    value.isPhoneVerified ? Padding(
+                                    value.isPhoneVerified && value.oldPhoneNumebr==value.controllerPhone.text ? Padding(
                                       padding: const EdgeInsets.only(
                                           bottom: 5),
                                       child: Image.asset(
@@ -320,13 +350,6 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                               label: const Text('verify'),
                                               onPress: () {
                                                 gotoMobileOTPScreen(context,value.controllerPhone.text);
-                                               print(value.controllerPhone);
-                                                // Future.delayed(Duration.zero,
-                                                //     () {
-                                                //   Global.inProgressAlert(
-                                                //       Get.overlayContext!);
-                                                // });
-                                              //  _displayVerify();
                                               },
                                             ),
                                           )

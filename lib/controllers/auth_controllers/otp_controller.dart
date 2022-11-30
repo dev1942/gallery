@@ -176,7 +176,6 @@ class OtpController extends GetxController {
     String strEmailID = modelOTP.emailId;
     String strPassword = modelOTP.password;
     HashMap<String, Object> requestParams = HashMap();
-
     requestParams[PARAMS.PARAM_EMAIL] = strEmailID;
     requestParams[PARAMS.PARAM_PASSWORD] = strPassword;
     requestParams[PARAMS.PARAM_FIREBASE_TOKEN] =

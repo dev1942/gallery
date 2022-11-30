@@ -15,22 +15,26 @@ import '../model/country_code.dart';
 // ignore: must_be_immutable
 class CustomTextFieldMobile extends StatefulWidget {
   TextEditingController? controller;
-  bool enabled = true;
+  bool? enabled;
   FocusNode? focusNode;
+  bool? readonly;
   double? height;
   Widget? suffixIcon;
   TextInputAction? textInputAction;
   String strCountyCode;
 
-  CustomTextFieldMobile(
+    CustomTextFieldMobile(
       {Key? key,
       required this.controller,
       required this.strCountyCode,
+        this.readonly,
       this.focusNode,
       this.suffixIcon,
       this.height,
       this.textInputAction,
-      required this.enabled})
+       this.enabled
+
+      })
       : super(key: key);
 
   @override
@@ -56,6 +60,7 @@ class CustomTextFieldMobileState extends State<CustomTextFieldMobile> {
       child: TextField(
         keyboardType: TextInputType.phone,
         maxLength: 10,
+        readOnly:widget.readonly??false,
         enabled: widget.enabled,
         textInputAction: widget.textInputAction ?? TextInputAction.done,
         focusNode: widget.focusNode,

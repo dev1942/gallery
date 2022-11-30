@@ -51,7 +51,10 @@ class PromotionDetailsScreenState extends State<PromotionDetailsScreen> {
               image: "",
               type: ""),
           price: widget.promotionsModel.priceAfterDiscount,
-          title: widget.promotionsModel.source.title);
+          title: widget.promotionsModel.source.title,
+      beforePrice:widget.promotionsModel.previousPrice,
+      discount: widget.promotionsModel.discount,
+      );
     }
     super.initState();
   }
