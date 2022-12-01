@@ -648,9 +648,17 @@ class EstimationDetailsPDFScreenState
                           isRoundBorder: true,
                           fontColor: AppColors.colorWhite,
                           fontSize: 0,
-                          // width: size.width / 1.5,
+
+
                           height: AppDimens.dimens_38,
-                          onPressed: () {
+                          onPressed: mEstimatesModel.offerCreated?(){
+                            Global.showToastAlert(
+                                context: context,
+                                strTitle: "",
+                                strMsg: "Offer Already Created",
+                                toastType: TOAST_TYPE.toastError);
+                          }:
+                              () {
                             showDialog(
                               context: context,
                               builder: (_) => LogoutOverlay(
@@ -660,12 +668,19 @@ class EstimationDetailsPDFScreenState
                                   Navigator.of(context).pop();
                                 },
                                 onSubmitTap: (){
-                                print("submit tapped");
                                 if(_textOffercontroller.text.isNotEmpty){
                                   _estimationListController.createAnOffer(estimateid: widget.mEstimatesModel.id,offerAmount:_textOffercontroller.text);
                                   _textOffercontroller.clear();
                                   Navigator.of(context).pop();
+
+
                                 }
+// Future.delayed(Duration(seconds: 3),(){
+//   Navigator.pu
+//   EstimationFragment
+//                                 }
+//                                 );
+
 
                               },),
                             );
@@ -793,6 +808,8 @@ class EstimationDetailsPDFScreenState
         mShowData = ShowData.showNoDataFound;
       });
     }, (mResult) {
+      print("Estimation detaisl pdf ---------2---");
+      print(widget.mEstimatesModel.id);
       setState(() {
         List<EstimationDetailModel> alEstimation =
         mResult.responseData as List<EstimationDetailModel>;

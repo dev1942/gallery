@@ -19,7 +19,7 @@ class EstimatesModel {
   String date;
   String cutomerNote;
   bool offerCreated;
-  String? offerStatus;
+  String offerStatus;
   List<String> image;
   List<String> voiceNote;
   List<String> video;
@@ -30,6 +30,7 @@ class EstimatesModel {
   String grandTotal;
   String serviceTax;
   String subTotal;
+  String offerAmount;
 
   EstimatesModel({
     required this.id,
@@ -38,8 +39,8 @@ class EstimatesModel {
     required this.source,
     required this.date,
     this.title,
-    this.offerCreated=false,
-    this.offerStatus,
+    required this.offerCreated,
+    required this.offerStatus,
     required this.cutomerNote,
     required this.image,
     required this.voiceNote,
@@ -51,6 +52,7 @@ class EstimatesModel {
     required this.grandTotal,
     required this.serviceTax,
     required this.subTotal,
+    required this.offerAmount,
   });
 
   factory EstimatesModel.fromJson(Map<String, dynamic> json) {
@@ -125,9 +127,12 @@ class EstimatesModel {
       mServiceProviderModel: mProvider,
       itemModel: alItems,
       discount: json['discount'].toString(),
+      offerCreated: json['offerCreated'],
+      offerStatus: json['offerStatus'].toString(),
       grandTotal: json['grandTotal'].toString(),
       serviceTax: json['serviceTax'].toString(),
       subTotal: json['subTotal'].toString(),
+      offerAmount: json['offerAmount'].toString(),
     );
   }
 

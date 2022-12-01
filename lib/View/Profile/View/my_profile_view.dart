@@ -336,7 +336,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                     )),
                                     value.isPhoneVerified && value.oldPhoneNumebr==value.controllerPhone.text ? Padding(
                                       padding: const EdgeInsets.only(
-                                          bottom: 5),
+                                          bottom: 5,left: 5.0),
                                       child: Image.asset(
                                         'assets/images/ic_verified.png',
                                         height: 20,
