@@ -36,7 +36,7 @@ class EstimationListController extends GetxController {
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      print("response----------3----------");
+
 
       alEstimates = mResult.responseData as List<EstimatesModel>;
    for(int i=0;i<alEstimates.length;i++){
@@ -53,11 +53,9 @@ class EstimationListController extends GetxController {
   }
 
   //----------------------------Create Offer-post Api------------
-
  createAnOffer({
     String? estimateid,var offerAmount}) async {
     mShowData = ShowData.showLoading;
-
     update(); // isShowLoader = true;
 
     HashMap<String, Object> requestParams = HashMap();
@@ -81,9 +79,6 @@ class EstimationListController extends GetxController {
           strTitle: "",
           strMsg:"Offer Created Successfully",// mResult.responseMessage,
           toastType: TOAST_TYPE.toastSuccess);
-      //clearController();
-      // getCardsMine();
-      //getCarList();
       getEstimation("submitted");
       update();
     });

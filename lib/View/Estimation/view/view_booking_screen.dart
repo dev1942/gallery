@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:otobucks/View/Estimation/widget/date_selector_view.dart';
+import 'package:otobucks/View/Estimation/widget/time_selector_view.dart';
 import 'package:otobucks/controllers/estimation_sidebar_controllers/view_estimation_controller.dart';
 import 'package:otobucks/global/adaptive_helper.dart';
 import 'package:otobucks/model/estimates_model.dart';
@@ -9,7 +11,6 @@ import 'package:otobucks/page/services/estimation/checkout_screen.dart';
 import 'package:otobucks/widgets/cancel_booking_dialog.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
-
 import '../../../../global/app_colors.dart';
 import '../../../../global/app_dimens.dart';
 import '../../../../global/app_style.dart';
@@ -27,19 +28,19 @@ import '../../../widgets/media_button.dart';
 import '../../../widgets/time_selector.dart';
 import '../../../widgets/voice_note_buttons.dart';
 
-class ViewEstimation extends StatefulWidget {
+class ViewBookingEstimation extends StatefulWidget {
   final EstimatesModel mEstimatesModel;
   final String screen;
 
-  const ViewEstimation(
+  const ViewBookingEstimation(
       {Key? key, required this.mEstimatesModel, required this.screen})
       : super(key: key);
 
   @override
-  ViewEstimationState createState() => ViewEstimationState();
+  ViewBookingEstimationState createState() => ViewBookingEstimationState();
 }
 
-class ViewEstimationState extends State<ViewEstimation> {
+class ViewBookingEstimationState extends State<ViewBookingEstimation> {
   var controller = Get.put(ViewEstimationController());
 
   @override
@@ -98,7 +99,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                       //Leave Note (if any)
 
                       _anyNoteTextFiledSection(),
-                      if (widget.screen == 'cancelled')
+                     // if (widget.screen == 'cancelled')
                         Container(
                           alignment: Alignment.center,
                           margin: const EdgeInsets.only(
@@ -111,78 +112,80 @@ class ViewEstimationState extends State<ViewEstimation> {
                               isRoundBorder: true,
                               fontColor: AppColors.colorWhite,
                               width: size.width,
-                              onPressed: () => controller.rebook(
-                                  context, widget.mEstimatesModel),
-                              strTitle: Constants.TXT_REBOOK),
+                              onPressed: (){},
+                              // =>
+                              //     controller.rebook(
+                              //     context, widget.mEstimatesModel),
+                              strTitle: "Booked"),
                         ),
-                      if (widget.screen == 'partial')
-                        Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.only(
-                              top: AppDimens.dimens_20,
-                              bottom: AppDimens.dimens_20,
-                              left: AppDimens.dimens_10,
-                              right: AppDimens.dimens_10),
-                          child: CustomButton(
-                              isGradient: true,
-                              isRoundBorder: true,
-                              fontColor: AppColors.colorWhite,
-                              width: size.width,
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => CheckoutScreen(
-                                              // estimateId:
-                                              //     widget.mEstimatesModel.id,
-                                              // sourceId: widget
-                                              //     .mEstimatesModel.source!.id,
-                                              // paymentStatus: 'completePayment',
-                                            )));
-                              },
-                              strTitle: "Make The Balance Payment"
-
-                              //Constants.TXT_COMPLETED_ESTIMATION
-                          ),
-                        )
-                      else if (widget.screen == 'pending')
-                        Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.only(
-                              top: AppDimens.dimens_20,
-                              bottom: AppDimens.dimens_20,
-                              left: AppDimens.dimens_10,
-                              right: AppDimens.dimens_10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                child: CustomButton(
-                                    isGradient: true,
-                                    fontSize: -2,
-                                    isRoundBorder: true,
-                                    fontColor: AppColors.colorWhite,
-                                    width: size.width,
-                                    onPressed: () =>
-                                        controller.checkDateTime(context),
-                                    strTitle: Constants.TXT_RESCHEDULE),
-                                width: size.width / 2.5,
-                              ),
-                              SizedBox(
-                                child: CustomButton(
-                                    fontSize: -2,
-                                    isGradient: false,
-                                    isRoundBorder: true,
-                                    color: AppColors.greyDateBG,
-                                    fontColor: AppColors.colorBlack,
-                                    width: size.width,
-                                    onPressed: () => displayTextInputDialog(),
-                                    strTitle: Constants.TXT_CANCEL),
-                                width: size.width / 2.5,
-                              ),
-                            ],
-                          ),
-                        )
+                      // if (widget.screen == 'partial')
+                      //   Container(
+                      //     alignment: Alignment.center,
+                      //     margin: const EdgeInsets.only(
+                      //         top: AppDimens.dimens_20,
+                      //         bottom: AppDimens.dimens_20,
+                      //         left: AppDimens.dimens_10,
+                      //         right: AppDimens.dimens_10),
+                      //     child: CustomButton(
+                      //         isGradient: true,
+                      //         isRoundBorder: true,
+                      //         fontColor: AppColors.colorWhite,
+                      //         width: size.width,
+                      //         onPressed: () {
+                      //           Navigator.push(
+                      //               context,
+                      //               MaterialPageRoute(
+                      //                   builder: (context) => CheckoutScreen(
+                      //                     // estimateId:
+                      //                     //     widget.mEstimatesModel.id,
+                      //                     // sourceId: widget
+                      //                     //     .mEstimatesModel.source!.id,
+                      //                     // paymentStatus: 'completePayment',
+                      //                   )));
+                      //         },
+                      //         strTitle: "Make The Balance Payment"
+                      //
+                      //       //Constants.TXT_COMPLETED_ESTIMATION
+                      //     ),
+                      //   )
+                      // else if (widget.screen == 'pending')
+                      //   Container(
+                      //     alignment: Alignment.center,
+                      //     margin: const EdgeInsets.only(
+                      //         top: AppDimens.dimens_20,
+                      //         bottom: AppDimens.dimens_20,
+                      //         left: AppDimens.dimens_10,
+                      //         right: AppDimens.dimens_10),
+                      //     child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //       children: [
+                      //         SizedBox(
+                      //           child: CustomButton(
+                      //               isGradient: true,
+                      //               fontSize: -2,
+                      //               isRoundBorder: true,
+                      //               fontColor: AppColors.colorWhite,
+                      //               width: size.width,
+                      //               onPressed: () =>
+                      //                   controller.checkDateTime(context),
+                      //               strTitle: Constants.TXT_RESCHEDULE),
+                      //           width: size.width / 2.5,
+                      //         ),
+                      //         SizedBox(
+                      //           child: CustomButton(
+                      //               fontSize: -2,
+                      //               isGradient: false,
+                      //               isRoundBorder: true,
+                      //               color: AppColors.greyDateBG,
+                      //               fontColor: AppColors.colorBlack,
+                      //               width: size.width,
+                      //               onPressed: () => displayTextInputDialog(),
+                      //               strTitle: Constants.TXT_CANCEL),
+                      //           width: size.width / 2.5,
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   )
                     ],
                   ))
 
@@ -220,38 +223,38 @@ class ViewEstimationState extends State<ViewEstimation> {
   }
 
   _profileSection() => Container(
-        margin: const EdgeInsets.only(
-            left: AppDimens.dimens_30,
-            top: AppDimens.dimens_20,
-            bottom: AppDimens.dimens_30,
-            right: AppDimens.dimens_20),
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(
-                right: AppDimens.dimens_20,
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppDimens.dimens_5),
-                child: NetworkImageCustom(
-                    image: controller.estimatesModel!.getProviderImage(),
-                    fit: BoxFit.fill,
-                    height: AppDimens.dimens_120,
-                    width: AppDimens.dimens_120),
-              ),
-            ),
-            Expanded(
-                child: Column(
+    margin: const EdgeInsets.only(
+        left: AppDimens.dimens_30,
+        top: AppDimens.dimens_20,
+        bottom: AppDimens.dimens_30,
+        right: AppDimens.dimens_20),
+    alignment: Alignment.center,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(
+            right: AppDimens.dimens_20,
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+            child: NetworkImageCustom(
+                image: controller.estimatesModel!.getProviderImage(),
+                fit: BoxFit.fill,
+                height: AppDimens.dimens_120,
+                width: AppDimens.dimens_120),
+          ),
+        ),
+        Expanded(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   controller.estimatesModel!.mServiceProviderModel != null
                       ? controller.estimatesModel!.mServiceProviderModel!
-                          .getName()
+                      .getName()
                       : "",
                   softWrap: true,
                   overflow: TextOverflow.clip,
@@ -280,9 +283,9 @@ class ViewEstimationState extends State<ViewEstimation> {
                 ),
               ],
             ))
-          ],
-        ),
-      );
+      ],
+    ),
+  );
 
   _uploadImagesSection() {
     return GetBuilder<ViewEstimationController>(
@@ -367,7 +370,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                     ),
                     GradientText(
                       Global.replaceCurrencySign(
-                              value.estimatesModel!.source!.currency) +
+                          value.estimatesModel!.source!.currency) +
                           value.estimatesModel!.source!.price,
                       style: AppStyle.textViewStyleNormalSubtitle2(
                           context: context,
@@ -411,10 +414,15 @@ class ViewEstimationState extends State<ViewEstimation> {
                   left: AppDimens.dimens_14,
                   right: AppDimens.dimens_14,
                 ),
-                child: DateSelector(
+                child: DateViewSelector(
                     selectedDate: value.estimatesModel!.getDateInFormate(),
-                    onSelection: (String _selectedDate) =>
-                        value.onSelectDate(_selectedDate)),
+                    onSelection: (String _selectedDate) {
+                      // print(_selectedDate);
+
+                     // value.onSelectDate(_selectedDate);
+                    },
+
+                ),
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -439,7 +447,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                   left: AppDimens.dimens_14,
                   right: AppDimens.dimens_14,
                 ),
-                child: TimeSelector(
+                child: TimeViewSelector(
                     selectedDate: value.selectedDate,
                     mTimeModel: value.mTimeModel,
                     onSelection: (TimeModel mtimeModel_) =>
@@ -491,7 +499,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                       Visibility(
                         child: Container(
                           margin:
-                              const EdgeInsets.only(right: AppDimens.dimens_15),
+                          const EdgeInsets.only(right: AppDimens.dimens_15),
                           height: AppDimens.dimens_100,
                           width: AppDimens.dimens_100,
                           child: Stack(
@@ -500,7 +508,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius:
-                                      BorderRadius.circular(AppDimens.dimens_5),
+                                  BorderRadius.circular(AppDimens.dimens_5),
                                 ),
                                 height: AppDimens.dimens_100,
                                 width: AppDimens.dimens_100,
@@ -511,7 +519,8 @@ class ViewEstimationState extends State<ViewEstimation> {
                                   top: 0,
                                   child: InkWell(
                                     child: const Icon(Icons.close),
-                                    onTap: () => value.onDeleteImage(),
+                                    onTap: () {},
+          //value.onDeleteImage(),
                                   ))
                             ],
                           ),
@@ -525,7 +534,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                               MediaButton(
                                 strImage: AppImages.ic_cloud,
                                 onPressed: () {
-                                  value.getImage(ImageSource.gallery);
+                                //  value.getImage(ImageSource.gallery);
                                 },
                               ),
                               Container(
@@ -534,7 +543,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                                 child: MediaButton(
                                   strImage: AppImages.ic_camera,
                                   onPressed: () {
-                                    value.getImage(ImageSource.camera);
+                                   // value.getImage(ImageSource.camera);
                                   },
                                 ),
                               ),
@@ -612,7 +621,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                                 context: context, color: AppColors.colorBlack),
                           ),
                           margin:
-                              const EdgeInsets.only(top: AppDimens.dimens_8),
+                          const EdgeInsets.only(top: AppDimens.dimens_8),
                         )
                       ],
                     ),
@@ -637,7 +646,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                         visible: Global.checkNull(value.pickedVideo),
                         child: Container(
                           margin:
-                              const EdgeInsets.only(right: AppDimens.dimens_15),
+                          const EdgeInsets.only(right: AppDimens.dimens_15),
                           height: AppDimens.dimens_100,
                           width: AppDimens.dimens_100,
                           child: Stack(
@@ -646,7 +655,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius:
-                                      BorderRadius.circular(AppDimens.dimens_5),
+                                  BorderRadius.circular(AppDimens.dimens_5),
                                 ),
                                 height: AppDimens.dimens_100,
                                 width: AppDimens.dimens_100,
@@ -676,7 +685,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                                   top: 0,
                                   child: InkWell(
                                     child: const Icon(Icons.close),
-                                    onTap: () => value.onDeleteVideo(),
+                                    onTap: () {}//=> value.onDeleteVideo(),
                                   ))
                             ],
                           ),
@@ -688,7 +697,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                           MediaButton(
                             strImage: AppImages.ic_cloud,
                             onPressed: () {
-                              value.pickVideo(ImageSource.gallery);
+                             // value.pickVideo(ImageSource.gallery);
                             },
                           ),
                           Container(
@@ -697,7 +706,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                             child: MediaButton(
                               strImage: AppImages.ic_video_cam,
                               onPressed: () {
-                                value.pickVideo(ImageSource.camera);
+                               // value.pickVideo(ImageSource.camera);
                               },
                             ),
                           ),
@@ -716,56 +725,58 @@ class ViewEstimationState extends State<ViewEstimation> {
   }
 
   _voiceNoteSection() => GetBuilder<ViewEstimationController>(builder: (value) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(
-                top: AppDimens.dimens_20,
-                left: AppDimens.dimens_14,
-                right: AppDimens.dimens_14,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(
+            top: AppDimens.dimens_20,
+            left: AppDimens.dimens_14,
+            right: AppDimens.dimens_14,
+          ),
+          child: Row(
+            children: [
+              Flexible(
+                child: Text(
+                  Constants.STR_LEAVE_VOICE_NOTE,
+                  style: AppStyle.textViewStyleNormalSubtitle2(
+                      context: context,
+                      color: AppColors.colorBlack2,
+                      fontWeightDelta: 1,
+                      fontSizeDelta: 0),
+                ),
               ),
-              child: Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      Constants.STR_LEAVE_VOICE_NOTE,
-                      style: AppStyle.textViewStyleNormalSubtitle2(
-                          context: context,
-                          color: AppColors.colorBlack2,
-                          fontWeightDelta: 1,
-                          fontSizeDelta: 0),
-                    ),
-                  ),
-                  const SizedBox(width: AppDimens.dimens_5),
-                  Text(
-                    Constants.STR_MAX_SIZE,
-                    style: AppStyle.textViewStyleNormalSubtitle2(
-                        context: context,
-                        color: AppColors.colorBlack2,
-                        fontWeightDelta: -1,
-                        fontSizeDelta: -4),
-                  ),
-                ],
+              const SizedBox(width: AppDimens.dimens_5),
+              Text(
+                Constants.STR_MAX_SIZE,
+                style: AppStyle.textViewStyleNormalSubtitle2(
+                    context: context,
+                    color: AppColors.colorBlack2,
+                    fontWeightDelta: -1,
+                    fontSizeDelta: -4),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: AppDimens.dimens_10,
-                left: AppDimens.dimens_14,
-                right: AppDimens.dimens_14,
-              ),
-              child: VoiceRecordingButton(
-                // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
-                strVoiceNotePath: value.voiceNoteFile,
-                callback: (String filePath) =>
-                    value.onSelectVoiceNote(filePath),
-              ),
-            ),
-          ],
-        );
-      });
+            ],
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(
+            top: AppDimens.dimens_10,
+            left: AppDimens.dimens_14,
+            right: AppDimens.dimens_14,
+          ),
+          child: VoiceRecordingButton(
+            // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
+            strVoiceNotePath: value.voiceNoteFile,
+            callback: (String filePath) {
+              //value.onSelectVoiceNote(filePath);
+
+    }
+          ),
+        ),
+      ],
+    );
+  });
 
   _addressTextFiledSection() {
     return Column(
@@ -807,12 +818,13 @@ class ViewEstimationState extends State<ViewEstimation> {
                   fontWeightDelta: 0,
                   context: context),
               controller: controller.addressNote,
+              readOnly: true,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
                 prefixIconConstraints:
-                    const BoxConstraints(minWidth: AppDimens.dimens_33),
+                const BoxConstraints(minWidth: AppDimens.dimens_33),
                 suffixIconConstraints:
-                    const BoxConstraints(minWidth: AppDimens.dimens_33),
+                const BoxConstraints(minWidth: AppDimens.dimens_33),
                 suffixIcon: Container(
                   margin: const EdgeInsets.only(right: AppDimens.dimens_12),
                   alignment: Alignment.center,
@@ -837,7 +849,7 @@ class ViewEstimationState extends State<ViewEstimation> {
             height: AppDimens.dimens_50,
           ),
           decoration:
-              AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
+          AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
         )
       ],
     );
@@ -884,11 +896,12 @@ class ViewEstimationState extends State<ViewEstimation> {
                   context: context),
               controller: controller.controllerNote,
               textAlign: TextAlign.start,
+              readOnly: true,
               decoration: InputDecoration(
                 prefixIconConstraints:
-                    const BoxConstraints(minWidth: AppDimens.dimens_33),
+                const BoxConstraints(minWidth: AppDimens.dimens_33),
                 suffixIconConstraints:
-                    const BoxConstraints(minWidth: AppDimens.dimens_33),
+                const BoxConstraints(minWidth: AppDimens.dimens_33),
                 suffixIcon: Container(
                   margin: const EdgeInsets.only(right: AppDimens.dimens_12),
                   alignment: Alignment.center,
@@ -913,7 +926,7 @@ class ViewEstimationState extends State<ViewEstimation> {
             height: AppDimens.dimens_50,
           ),
           decoration:
-              AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
+          AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
         )
       ],
     );

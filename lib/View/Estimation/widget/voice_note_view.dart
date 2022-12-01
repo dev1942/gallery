@@ -12,14 +12,15 @@ import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:otobucks/global/app_colors.dart';
+import 'package:otobucks/global/app_dimens.dart';
+import 'package:otobucks/global/app_images.dart';
 import 'package:otobucks/global/app_style.dart';
+import 'package:otobucks/global/global.dart';
+import 'package:otobucks/widgets/media_button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../global/app_dimens.dart';
-import '../global/app_images.dart';
-import '../global/global.dart';
-import 'media_button.dart';
+
 
 const int tSAMPLERATE = 8000;
 const int tSTREAMSAMPLERATE = 44000;
@@ -37,19 +38,19 @@ enum AudioState {
   isRecordingPaused,
 }
 
-class VoiceRecordingButton extends StatefulWidget {
+class VoiceRecordingViewButton extends StatefulWidget {
   final Function callback;
   final String strVoiceNotePath;
 
-  const VoiceRecordingButton(
+  const VoiceRecordingViewButton(
       {Key? key, required this.callback, required this.strVoiceNotePath})
       : super(key: key);
 
   @override
-  VoiceRecordingState createState() => VoiceRecordingState();
+  VoiceRecordingViewButtonState createState() => VoiceRecordingViewButtonState();
 }
 
-class VoiceRecordingState extends State<VoiceRecordingButton> {
+class VoiceRecordingViewButtonState extends State<VoiceRecordingViewButton> {
   bool _isRecording = false;
   bool isShowRecordButton = true;
   bool isShowPlayView = false;
@@ -113,11 +114,11 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
     await session.configure(AudioSessionConfiguration(
       avAudioSessionCategory: AVAudioSessionCategory.playAndRecord,
       avAudioSessionCategoryOptions:
-          AVAudioSessionCategoryOptions.allowBluetooth |
-              AVAudioSessionCategoryOptions.defaultToSpeaker,
+      AVAudioSessionCategoryOptions.allowBluetooth |
+      AVAudioSessionCategoryOptions.defaultToSpeaker,
       avAudioSessionMode: AVAudioSessionMode.spokenAudio,
       avAudioSessionRouteSharingPolicy:
-          AVAudioSessionRouteSharingPolicy.defaultPolicy,
+      AVAudioSessionRouteSharingPolicy.defaultPolicy,
       avAudioSessionSetActiveOptions: AVAudioSessionSetActiveOptions.none,
       androidAudioAttributes: const AndroidAudioAttributes(
         contentType: AndroidAudioContentType.speech,
@@ -480,7 +481,7 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
 
   void Function()? onStartPlayerPressed() {
     if (_media == Media.file) // A file must be already recorded to play it
-    {
+        {
       if (!Global.checkNull(_path)) return null;
     }
 
@@ -512,9 +513,9 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
     }
     return (recorderModule.isStopped)
         ? Icon(
-            Icons.mic,
-            color: AppColors.colorChatBgRight,
-          )
+      Icons.mic,
+      color: AppColors.colorChatBgRight,
+    )
         : const Icon(Icons.stop);
   }
 
@@ -677,13 +678,14 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
                   child: InkWell(
                     child: const Icon(Icons.close),
                     onTap: () {
-                      print("------close--------");
+                     print("close buttons");
                       // setState(() {
                       //   _path = "";
                       //   isShowPlayView = false;
                       //   isShowRecordButton = true;
-                      // });
-                      // updatePath();
+                      //}
+                     // );
+                     // updatePath();
                     },
                   ),
                   visible: isHideRemoveButton,

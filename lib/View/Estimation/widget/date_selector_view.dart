@@ -5,31 +5,32 @@ import 'package:intl/intl.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_style.dart';
+import 'package:otobucks/global/app_views.dart';
+import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
+import 'package:otobucks/global/global.dart';
+import 'package:otobucks/model/date_model.dart';
 
-import '../global/app_views.dart';
-import '../global/constants.dart';
-import '../global/global.dart';
-import '../model/date_model.dart';
+
 
 // ignore: must_be_immutable
-class DateSelector extends StatefulWidget {
+class DateViewSelector extends StatefulWidget {
   Function onSelection;
   Function? clearTimeSelection;
   DateTime? selectedDate;
 
-  DateSelector(
+  DateViewSelector(
       {Key? key,
-      required this.onSelection,
-      this.clearTimeSelection,
-      this.selectedDate})
+        required this.onSelection,
+        this.clearTimeSelection,
+        this.selectedDate})
       : super(key: key);
 
   @override
-  DateSelectorState createState() => DateSelectorState();
+  DateViewSelectorState createState() => DateViewSelectorState();
 }
 
-class DateSelectorState extends State<DateSelector> {
+class DateViewSelectorState extends State<DateViewSelector> {
   List<DateModel> alDatesOfMonth = [];
   List<String> alDateModel = [];
   late String? dropdownValue = "";
@@ -44,7 +45,7 @@ class DateSelectorState extends State<DateSelector> {
 
     if (widget.selectedDate != null) {
       String mMonth =
-          DateFormat(Constants.STRING_MMMM_yyyy).format(widget.selectedDate!);
+      DateFormat(Constants.STRING_MMMM_yyyy).format(widget.selectedDate!);
       if (alDateModel.contains(mMonth)) {
         dropdownValue = mMonth;
         alDatesOfMonth =
@@ -100,10 +101,11 @@ class DateSelectorState extends State<DateSelector> {
               height: 0,
             ),
             onChanged: (String? newValue) {
+              /*
               DateTime parseDate =
-                  DateFormat(Constants.STRING_MMMM_yyyy).parse(newValue!);
+              DateFormat(Constants.STRING_MMMM_yyyy).parse(newValue!);
               DateTime currentDate =
-                  DateTime(DateTime.now().year, DateTime.now().month);
+              DateTime(DateTime.now().year, DateTime.now().month);
               int diff = parseDate.difference(currentDate).inDays;
               if (diff >= 0) {
                 setState(() {
@@ -118,10 +120,12 @@ class DateSelectorState extends State<DateSelector> {
                     strMsg: "Please select a future month.",
                     toastType: TOAST_TYPE.toastWarning);
               }
+              */
             },
             items: alDateModel.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
+                enabled: false,
                 child: Text(
                   value,
                   style: AppStyle.textViewStyleNormalBodyText2(
@@ -188,32 +192,32 @@ class DateSelectorState extends State<DateSelector> {
                       onTap: () {
 
 
-                        DateType mDateType =
-                            Global.checkIsToday(mTimeModel.getDateString());
-
-                        switch (mDateType) {
-                          case DateType.past:
-                            if (widget.clearTimeSelection != null) {
-                              widget.clearTimeSelection!();
-                            }
-                            Global.showToastAlert(
-                                context: context,
-                                strTitle: "",
-                                strMsg: "Please select a future month & date.",
-                                toastType: TOAST_TYPE.toastWarning);
-                            break;
-                          case DateType.today:
-                          case DateType.none:
-                            setState(() {
-                              for (var element in alDatesOfMonth) {
-                                element.isSelected = false;
-                              }
-                              mTimeModel.isSelected = true;
-
-                              widget.onSelection(mTimeModel.getDateString());
-                            });
-                            break;
-                        }
+                        // DateType mDateType =
+                        // Global.checkIsToday(mTimeModel.getDateString());
+                        //
+                        // switch (mDateType) {
+                        //   case DateType.past:
+                        //     if (widget.clearTimeSelection != null) {
+                        //       widget.clearTimeSelection!();
+                        //     }
+                        //     Global.showToastAlert(
+                        //         context: context,
+                        //         strTitle: "",
+                        //         strMsg: "Please select a future month & date.",
+                        //         toastType: TOAST_TYPE.toastWarning);
+                        //     break;
+                        //   case DateType.today:
+                        //   case DateType.none:
+                        //     setState(() {
+                        //       for (var element in alDatesOfMonth) {
+                        //         element.isSelected = false;
+                        //       }
+                        //       mTimeModel.isSelected = true;
+                        //
+                        //       widget.onSelection(mTimeModel.getDateString());
+                        //     });
+                        //     break;
+                        // }
                       },
                     ),
                   );
