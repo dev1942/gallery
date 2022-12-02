@@ -61,7 +61,6 @@ class EstimationDetailsPDFScreenState
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var mBorderColor = AppColors.colorBorder;
-
     Widget widgetM = Container();
     Widget mShowWidget = Container();
     List<TableRow> alTableRow = [];
@@ -196,156 +195,161 @@ class EstimationDetailsPDFScreenState
             ]));
       }
 
-      mShowWidget = ListView(
+      mShowWidget = Column(
+// mainAxisAlignment: MainAxisAlignment.start//,
+      crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // profile pic and name
-          Container(
-              margin: const EdgeInsets.only(
-                  right: AppDimens.dimens_10, top: AppDimens.dimens_10),
-              width: AppDimens.dimens_190,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.download_rounded, size: AppDimens.dimens_17),
-                  const SizedBox(
-                    width: AppDimens.dimens_3,
-                  ),
-                  InkWell(
-                    child: Text(Constants.TXT_DOWNLOAD_INVOICE,
-                        style: AppStyle.textViewStyleSmall(
-                            context: context,
-                            color: AppColors.colorBlack,
-                            fontWeightDelta: 0,
-                            fontSizeDelta: 0)),
-                    onTap: () {},
-                  )
-                ],
-              )),
+
 
           Container(
-            margin: const EdgeInsets.only(
-                left: AppDimens.dimens_10, top: AppDimens.dimens_10),
-            child: Column(
+            // margin: const EdgeInsets.only(
+            //     left: 0, top: AppDimens.dimens_10),
+             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(Constants.TXT_CUSTOMER_ESTIMATION.toUpperCase(),
-                    style: AppStyle.textViewStyleNormalBodyText2(
-                        context: context,
-                        color: AppColors.colorBlack,
-                        fontWeightDelta: 1,
-                        fontSizeDelta: 2)),
-                Text(Constants.TXT_TAX_INVOICE,
-                    style: AppStyle.textViewStyleSmall(
-                        context: context,
-                        color: AppColors.colorBlack,
-                        fontWeightDelta: 0,
-                        fontSizeDelta: -1))
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(
-              top: AppDimens.dimens_5,
-              bottom: AppDimens.dimens_5,
-            ),
-            height: AppDimens.dimens_30,
-            color: AppColors.colorBlue2,
-          ),
-          Container(
-              margin: const EdgeInsets.only(
-                  left: AppDimens.dimens_10, top: AppDimens.dimens_10),
-              alignment: Alignment.centerLeft,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(Constants.TXT_CUSTOMER_NAME,
-                      style: AppStyle.textViewStyleSmall(
-                          context: context,
-                          color: AppColors.colorBlack,
-                          fontWeightDelta: 1,
-                          fontSizeDelta: 1)),
-                  Text("Willow Anderson",
-                      style: AppStyle.textViewStyleSmall(
-                          context: context,
-                          color: AppColors.colorBlack2,
-                          fontWeightDelta: -1,
-                          fontSizeDelta: -1)),
-                ],
-              )),
-          Container(
-              margin: const EdgeInsets.only(
-                  right: AppDimens.dimens_10, top: AppDimens.dimens_10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(Constants.TXT_INVOICE_ID,
-                      style: AppStyle.textViewStyleSmall(
-                          context: context,
-                          color: AppColors.colorBlack,
-                          fontWeightDelta: 0,
-                          fontSizeDelta: -2)),
-                  Text("0123456789",
-                      style: AppStyle.textViewStyleSmall(
-                          context: context,
-                          color: AppColors.colorBlack2,
-                          fontWeightDelta: 0,
-                          fontSizeDelta: -2)),
-                ],
-              )),
-          Container(
-              margin: const EdgeInsets.only(
-                  right: AppDimens.dimens_10, left: AppDimens.dimens_10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Text(Constants.TXT_DISCRIPTION,
-                        style: AppStyle.textViewStyleSmall(
-                            context: context,
-                            color: AppColors.colorBlack,
-                            fontWeightDelta: 1,
-                            fontSizeDelta: 1)),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment:CrossAxisAlignment.start ,
                     children: [
-                      Text(Constants.TXT_INVOICE_DATE,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(Constants.TXT_CUSTOMER_ESTIMATION.toUpperCase(),
+                            style: AppStyle.textViewStyleNormalBodyText2(
+                                context: context,
+                                color: AppColors.colorBlack,
+                                fontWeightDelta: 1,
+                                fontSizeDelta: 2)),
+
+                        Text(Constants.TXT_TAX_INVOICE,
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: AppColors.colorBlack,
+                                fontWeightDelta: 0,
+                                fontSizeDelta: -1)),
+
+                      ],
+                    ),
+
+                    Container(
+
+
+                        child: Row(
+
+                          children: [
+                            const Icon(Icons.download_rounded, size: AppDimens.dimens_17),
+                            const SizedBox(
+                              width: AppDimens.dimens_3,
+                            ),
+                            InkWell(
+                              child: Text(Constants.TXT_DOWNLOAD_INVOICE,
+                                  style: AppStyle.textViewStyleSmall(
+                                      context: context,
+                                      color: AppColors.colorBlack,
+                                      fontWeightDelta: 0,
+                                      fontSizeDelta: 0)),
+                              onTap: () {},
+                            )
+                          ],
+                        )),
+                  ],),
+                ),
+
+
+
+
+
+
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: AppDimens.dimens_5,
+                    bottom: AppDimens.dimens_5,
+                  ),
+                  height: AppDimens.dimens_30,
+                  color: AppColors.colorBlue2,
+                ),
+
+
+                SizedBox(height: 10.0),
+                //-----------invoice id ,invoice date ,
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(Constants.TXT_CUSTOMER_NAME,
+                          style: AppStyle.textViewStyleSmall(
+                              context: context,
+                              color: AppColors.colorBlack,
+                              fontWeightDelta: 1,
+                              fontSizeDelta: 1)),
+                      Text("Willow Anderson",
+                          style: AppStyle.textViewStyleSmall(
+                              context: context,
+                              color: AppColors.colorBlack2,
+                              fontWeightDelta: -1,
+                              fontSizeDelta: -1)),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 5.0),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.end,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text("Invoice Number :",
                           style: AppStyle.textViewStyleSmall(
                               context: context,
                               color: AppColors.colorBlack,
                               fontWeightDelta: 0,
                               fontSizeDelta: -2)),
-                      Text("08/04/2022",
+                      Text("0123456789",
                           style: AppStyle.textViewStyleSmall(
                               context: context,
                               color: AppColors.colorBlack2,
                               fontWeightDelta: 0,
                               fontSizeDelta: -2)),
                     ],
-                  )
-                ],
-              )),
-          Container(
-            margin: EdgeInsets.only(
-                right: size.width / 3, left: AppDimens.dimens_10),
-            child: SizedBox(
-              width: 190,
-              child: Text(
-                  "Duis odio neque, pretium a massa eget, consectetur venenatis nisl. In sollicitudin tempus quam, quis dignissim ex eleifend eu.",
-                  style: AppStyle.textViewStyleSmall(
-                      context: context,
-                      color: AppColors.colorBlack2,
-                      fontWeightDelta: 0,
-                      fontSizeDelta: -3)),
+                  ),
+                ),
+                SizedBox(height: 5.0),
+                Row(
+                  // mainAxisAlignment: MainAxisAlignment.end,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(Constants.TXT_INVOICE_DATE,
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: AppColors.colorBlack,
+                                fontWeightDelta: 0,
+                                fontSizeDelta: -2)),
+                        Text("08/04/2022",
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: AppColors.colorBlack2,
+                                fontWeightDelta: 0,
+                                fontSizeDelta: -2)),
+                      ],
+                    )
+                  ],
+                ),
+                //------------------end------------
+              ],
             ),
           ),
+
+
           Container(
             margin: const EdgeInsets.only(top: AppDimens.dimens_14),
             decoration: BoxDecoration(
@@ -406,7 +410,7 @@ class EstimationDetailsPDFScreenState
                         height: AppDimens.dimens_25,
                       )),
                 ]),
-                TableRow(children: [
+               /* TableRow(children: [
                   TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: Container(
@@ -419,28 +423,27 @@ class EstimationDetailsPDFScreenState
                                 fontSizeDelta: -2)),
                         height: AppDimens.dimens_25,
                       )),
-                  TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text(mEstimationDetailModel!.discount,
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: AppColors.colorBlack2,
-                                fontWeightDelta: 0,
-                                fontSizeDelta: -2)),
-                        height: AppDimens.dimens_25,
-                      )),
+                  // TableCell(
+                  //     verticalAlignment: TableCellVerticalAlignment.middle,
+                  //     child: Container(
+                  //       alignment: Alignment.center,
+                  //       child: Text(mEstimationDetailModel!.discount,
+                  //           style: AppStyle.textViewStyleSmall(
+                  //               context: context,
+                  //               color: AppColors.colorBlack2,
+                  //               fontWeightDelta: 0,
+                  //               fontSizeDelta: -2)),
+                  //       height: AppDimens.dimens_25,
+                  //     )),
                 ]),
+                */
                 TableRow(children: [
                   TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: Container(
                         alignment: Alignment.center,
                         child: Text(
-                            "Service Tax (" +
-                                mEstimationDetailModel!.serviceTax +
-                                "%)",
+                            "Service Tax ( 5 %)",
                             style: AppStyle.textViewStyleSmall(
                                 context: context,
                                 color: AppColors.colorBlack2,
@@ -452,7 +455,7 @@ class EstimationDetailsPDFScreenState
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: Container(
                         alignment: Alignment.center,
-                        child: Text("0",
+                        child: Text( mEstimationDetailModel!.serviceTax,
                             style: AppStyle.textViewStyleSmall(
                                 context: context,
                                 color: AppColors.colorBlack2,
@@ -626,6 +629,7 @@ class EstimationDetailsPDFScreenState
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const CheckoutScreen(
+
                                     // sourceId:
                                     //     widget.mEstimatesModel.source!.id,
                                     // estimateId: widget.mEstimatesModel.id,
@@ -633,7 +637,7 @@ class EstimationDetailsPDFScreenState
                                   )));
                         },
                         strTitle: widget.mEstimatesModel.status == 'submitted'
-                            ? 'Make partial Payment'
+                            ? 'Pay'
                             : "Make full Payment"),
                    // width: size.width / 1.8,
                   ),
@@ -644,9 +648,10 @@ class EstimationDetailsPDFScreenState
                   child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomButton(
-                          isGradient: true,
+                          isGradient: false,
+                          color: Colors.yellow,
                           isRoundBorder: true,
-                          fontColor: AppColors.colorWhite,
+                          fontColor: AppColors.colorBlack,
                           fontSize: 0,
 
 
@@ -705,10 +710,10 @@ class EstimationDetailsPDFScreenState
                   child: SizedBox(
                     child: CustomButton(
                         fontSize: 0,
-                        isGradient: false,
+                        isGradient: true,
                         isRoundBorder: true,
-                        color: AppColors.greyDateBG,
-                        fontColor: AppColors.colorBlack,
+                       // color: AppColors.greyDateBG,
+                        fontColor: AppColors.colorWhite,
                         width: size.width / 1.5,
                         height: AppDimens.dimens_38,
                         onPressed: () => displayTextInputDialog(),
@@ -737,18 +742,19 @@ class EstimationDetailsPDFScreenState
       ),
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.getMainBgColor(),
-      body: Stack(
-        children: [
-          Container(
-            color: AppColors.colorBlueStart,
-            //height: AppDimens.dimens_120,
-            height: 0,
-          ),
-          // Container(height: size.height, child: widgetM),
-          widgetM,
-          AppViews.showLoadingWithStatus(isShowLoader)
-        ],
-      ),
+      body:   widgetM,
+
+      // Stack(
+      //   children: [
+      //     Container(
+      //       color: AppColors.colorBlueStart,
+      //       height: 0,
+      //     ),
+      //
+      //     widgetM,
+      //     AppViews.showLoadingWithStatus(isShowLoader)
+      //   ],
+      // ),
     );
   }
 

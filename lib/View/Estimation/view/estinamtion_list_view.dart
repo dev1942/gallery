@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Estimation/controller/estimation_list_controller.dart';
 import 'package:otobucks/View/Estimation/view/estimation_invoice_screen.dart';
+import 'package:otobucks/View/Estimation/view/view_booking_screen.dart';
 import 'package:otobucks/global/constants.dart';
+import 'package:otobucks/global/global.dart';
 import 'package:otobucks/page/services/estimation/view_estimation.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
+import 'package:otobucks/widgets/gradient_text.dart';
 import '../../../../global/app_colors.dart';
 import '../../../../global/app_dimens.dart';
 import '../../../../global/app_style.dart';
@@ -138,9 +141,9 @@ class EstimationListFragmentState extends State<EstimationListFragment> {
                                                                   context:
                                                                       context,
                                                                   color: AppColors
-                                                                      .grayDashboardText,
+                                                                      .colorBlack,
                                                                   fontSizeDelta:
-                                                                      -2,
+                                                                      -1,
                                                                   fontWeightDelta:
                                                                       0),
                                                         ),
@@ -152,9 +155,9 @@ class EstimationListFragmentState extends State<EstimationListFragment> {
                                                                   context:
                                                                       context,
                                                                   color: AppColors
-                                                                      .grayDashboardText,
+                                                                      .colorBlack,
                                                                   fontSizeDelta:
-                                                                      -2,
+                                                                      -1,
                                                                   fontWeightDelta:
                                                                       0),
                                                         ),
@@ -201,12 +204,14 @@ class EstimationListFragmentState extends State<EstimationListFragment> {
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                ViewEstimation(
+                                                            ViewBookingEstimation(
+                                                                //ViewEstimation(
                                                                   mEstimatesModel:
                                                                       mEstimatesModel,
                                                                   screen: widget
                                                                       .screen,
-                                                                )));
+                                                                )
+                                                        ));
                                                   },
                                                 ),
                                                 //Details Button
@@ -460,26 +465,23 @@ class EstimationListFragmentState extends State<EstimationListFragment> {
   Widget priceWidget(EstimatesModel mEstimatesModel) {
     return Container(
         alignment: Alignment.centerLeft,
-        child: Text(
-          "AED ${mEstimatesModel.source!.price}/-",
-          // mEstimatesModel
-          //     .itemModel
-          //     .isNotEmpty
-          //     ? GradientText(
-          //   Global.checkNull(mEstimatesModel
-          //       .source
-          //       ?.price)
-          //       ? Global.replaceCurrencySign(
-          //       "USD") +
-          //       "" +
-          //       mEstimatesModel
-          //           .itemModel[0]
-          //           .amount +
-          //       "/-"
-          //       : "",
+        child:
+         // "AED ${mEstimatesModel.grandTotal}/-",
+          GradientText("AED ${mEstimatesModel.grandTotal} /-",
+            // Global.checkNull(mEstimatesModel
+            //     .source
+            //     ?.price)
+            //     ? Global.replaceCurrencySign(
+            //     "USD") +
+            //     "" +
+            //     mEstimatesModel
+            //         .itemModel[0]
+            //         .amount +
+            //     "/-"
+
           style: AppStyle.textViewStyleNormalBodyText2(
               context: context,
-              color: AppColors.colorBlack,
+              color: AppColors.colorBlueStart,
               fontSizeDelta: 1,
               fontWeightDelta: 1),
         ));
