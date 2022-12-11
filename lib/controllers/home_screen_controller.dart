@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:otobucks/View/Estimation/view/estimation_screen.dart';
 import 'package:otobucks/View/Promotion_discount/View/promotion_detail_view.dart';
 import 'package:otobucks/View/Promotion_discount/model/promotion_model.dart';
 import 'package:otobucks/fragment/analytics_fragment.dart';
@@ -30,6 +29,8 @@ import 'package:otobucks/page/cart_screen.dart';
 import 'package:otobucks/services/navigation_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../View/MyBookings/view/estimation_screen.dart';
 
 class HomeScreenController extends GetxController {
   int indexM = 0;

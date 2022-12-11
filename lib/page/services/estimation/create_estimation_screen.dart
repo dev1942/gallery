@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:otobucks/View/Estimation/controller/estimation_controller.dart';
-
+import 'package:otobucks/View/MyBookings/controller/estimation_controller.dart';
+import 'package:http/http.dart'as http;
 import 'package:otobucks/global/adaptive_helper.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
@@ -24,6 +24,7 @@ import 'package:otobucks/widgets/image_view.dart';
 import 'package:otobucks/widgets/media_button.dart';
 import 'package:otobucks/widgets/time_selector.dart';
 import 'package:otobucks/widgets/voice_note_buttons.dart';
+import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 class CreateEstimationScreen extends StatefulWidget {
   final ServiceModel mServiceModel;
@@ -112,7 +113,6 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                           fontColor: AppColors.colorWhite,
                           width: size.width,
                           onPressed: () {
-
                             if (controller.isValid()) {
                               if( widget.screenType == 'promotion'){
                                 Navigator.push(
@@ -120,7 +120,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                     MaterialPageRoute(
                                         builder: (context) =>  CheckoutScreen(
                                           promotionID: widget.mServiceModel.id,
-                                          address:controller.addressNote.text ,
+                                          address:controller.addressNote.text.toString() ,
                                           date:controller.selectedDate ,
                                           time: controller.mTimeModel!.time_24hr,
                                           amount:   controller.mServiceModel.price,
@@ -131,8 +131,6 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                               }else{
                                 controller.createEstimation(context);
                               }
-
-
                             }
                           },
                           strTitle: widget.screenType == 'promotion'
@@ -859,4 +857,13 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
       ],
     );
   }
+  // Future  hitAPI() async {
+  //   final response=await http.get(Uri.parse('https://developmentapi-app.otobucks.com/v1/bookings/bookService'));
+  //   if(response.statusCode==200){
+  //     return print(response.body.toString());
+  //   }
+  //   else{
+  //     return print(response.body.toString());
+  //   }
+  // }
 }

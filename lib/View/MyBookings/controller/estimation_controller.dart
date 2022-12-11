@@ -1,6 +1,5 @@
 import 'dart:collection';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as i;
 import 'package:get/get.dart';
@@ -8,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:light_compressor/light_compressor.dart';
 import 'package:location/location.dart';
+import 'package:logger/logger.dart';
 import 'package:otobucks/fragment/thankyou_fragment.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
@@ -21,20 +21,15 @@ import 'package:otobucks/services/repository/estimates_repo.dart';
 class CreateEstimationController extends GetxController {
   bool connectionStatus = false;
   bool isShowLoader = false;
-
   late ServiceModel mServiceModel;
-
   TextEditingController controllerNote = TextEditingController();
-  TextEditingController addressNote = TextEditingController(text: '');
-
+  TextEditingController addressNote = TextEditingController(text: "");
   // ignore: avoid_init_to_null
   late TimeModel? mTimeModel = null;
-
   String selectedDate = "";
   String pickedImage = "";
   String pickedVideo = "";
   String voiceNoteFile = "";
-
   late LatLng? mLatLng;
   Location location = Location();
   LightCompressor lightCompressor = LightCompressor();
@@ -42,12 +37,11 @@ class CreateEstimationController extends GetxController {
 
   getLocationAdress() async {
     Location location = Location();
-
     log('method callled');
     selectedDate = "";
     pickedImage = "";
     pickedVideo = "";
-    addressNote.clear();
+    addressNote.text="";
     voiceNoteFile = "";
     mTimeModel = null;
     PermissionStatus _permissionGranted = await location.hasPermission();
@@ -62,6 +56,7 @@ class CreateEstimationController extends GetxController {
       addressNote.text =
       '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
 
+print("addresssssis${addressNote.text}");
       mLatLng = _mLatLng;
     } else {
       Global.showToastAlert(
@@ -192,15 +187,14 @@ class CreateEstimationController extends GetxController {
 
     isShowLoader = true;
     update();
-
     String strNote = controllerNote.text.toString();
-
     HashMap<String, String> requestParams = HashMap();
-
     HashMap<String, String> requestParamsImage = HashMap();
-
-    requestParams[PARAMS.PARAM_SOURCE] = mServiceModel.id;
+    // requestParamsImage["sourceID"]="62d461692e64f55c5c0802f3";
+    requestParams["sourceID"] = mServiceModel.id;
     requestParams[PARAMS.PARAM_DATE] = selectedDate;
+    // final gasGiants = {PARAMS.PARAM_SOURCE:  mServiceModel.id, PARAMS.PARAM_ADDRESS: addressNote.text};
+
     requestParams[PARAMS.PARAM_TIME] =
     mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
     requestParams[PARAMS.PARAM_CUTOMERNOTE] = strNote;
@@ -227,11 +221,16 @@ class CreateEstimationController extends GetxController {
     if (Global.checkNull(voiceNoteFile)) {
       requestParamsImage[PARAMS.PARAM_VOICE_NOTE] = voiceNoteFile;
     }
+    // requestParamsImage.addEntries(gasGiants.entries);
+    //........Rrepo of create estimation...................
 
+    Logger().i(requestParamsImage);
     var categories = await EstimatesRepo()
-        .createEstimates(requestParams, requestParamsImage, ReqType.post);
+        .createEstimates(requestParams,requestParamsImage, ReqType.post);
+
 
     categories.fold((failure) {
+      //.............Failure case............................
       Global.showToastAlert(
           context: Get.overlayContext!,
           strTitle: "",
@@ -242,11 +241,11 @@ class CreateEstimationController extends GetxController {
       update();
     }, (mResult) {
       isShowLoader = false;
-
+      //................ goto Thank you......................
       Get.offAll(() => const ThankYouFragment());
     });
   }
-
+//.............goto profile
   gotoProfile(BuildContext context) {
     Navigator.push(
         context,

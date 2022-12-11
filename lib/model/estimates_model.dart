@@ -1,5 +1,4 @@
 // ignore_for_file: empty_catches
-
 import 'dart:convert';
 
 import 'package:intl/intl.dart';
@@ -20,7 +19,8 @@ class EstimatesModel {
   String cutomerNote;
   bool offerCreated;
   String offerStatus;
-  List<String> image;
+  List<String>
+  image;
   List<String> voiceNote;
   List<String> video;
   List<String> address;
@@ -81,7 +81,7 @@ class EstimatesModel {
     } catch (exp) {}
 
     try {
-      var mVoiceNote = json['voice_note'];
+      var mVoiceNote = json['voiceNote'];
       for (var imageItem in mVoiceNote) {
         voiceNote.add(imageItem.toString());
       }
@@ -118,7 +118,7 @@ class EstimatesModel {
       status: json['status'].toString(),
       time: json['time'].toString(),
       source: mSource,
-      cutomerNote: json['cutomerNote'].toString(),
+      cutomerNote: json['customerNote'].toString(),
       image: image,
       voiceNote: voiceNote,
       video: video,
@@ -127,8 +127,8 @@ class EstimatesModel {
       mServiceProviderModel: mProvider,
       itemModel: alItems,
       discount: json['discount'].toString(),
-      offerCreated: json['offerCreated'],
-      offerStatus: json['offerStatus'].toString(),
+      offerCreated: json['createdAt'],
+      offerStatus: json['status'].toString(),
       grandTotal: json['grandTotal'].toString(),
       serviceTax: json['serviceTax'].toString(),
       subTotal: json['subTotal'].toString(),
@@ -227,7 +227,6 @@ class EstimatesModel {
     return mTimeModel;
   }
 }
-
 class Source {
   String id;
   String category;
@@ -304,9 +303,8 @@ class Source {
         features: features);
   }
 }
-
 // To parse this JSON data, do
-//
+
 //     final itemModel = itemModelFromMap(jsonString);
 
 class ItemModel {
@@ -325,7 +323,6 @@ class ItemModel {
   String price;
   String tax;
   double amount;
-
   factory ItemModel.fromJson(String str) => ItemModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());

@@ -40,7 +40,6 @@ class LoginRepo {
       }
 
       if (mResponse?.responseStatus == true) {
-
         Map data = jsonDecode(response);
         String token = data[Constants.RES_TOKEN].toString();
 
@@ -48,7 +47,6 @@ class LoginRepo {
 
         var objData = data['data'];
         var user = objData['user'];
-
         String image = user['image'].toString();
         String id = user['id'].toString();
         String firstName = user['firstName'].toString();
@@ -56,9 +54,8 @@ class LoginRepo {
         String email = user['email'].toString();
         String phone = user['phone'].toString();
         String countryCode = user['countryCode'].toString();
-        bool isEmailVerified=user['isEmailVerified'];
-        bool isPhoneVerified=user['isPhoneVerified'];
-
+        bool isEmailVerified = user['isEmailVerified'];
+        bool isPhoneVerified = user['isPhoneVerified'];
         UserDetail mUserAddressDetail = UserDetail(
             avatar: image,
             firstName: firstName,
@@ -66,7 +63,7 @@ class LoginRepo {
             email: email,
             id: id,
             mobile: countryCode + phone,
-            isEmailVerified:isEmailVerified ,
+            isEmailVerified: isEmailVerified,
             isPhoneVerified: isPhoneVerified,
             accessToken: token);
         await Global.storeUserDetails(mUserAddressDetail);

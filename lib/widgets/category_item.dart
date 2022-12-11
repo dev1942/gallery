@@ -17,7 +17,6 @@ class CategoryItem extends StatelessWidget {
       required this.image,
       required this.onTap})
       : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(

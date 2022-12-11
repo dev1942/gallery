@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:otobucks/View/Estimation/widget/date_selector_view.dart';
-import 'package:otobucks/View/Estimation/widget/time_selector_view.dart';
+
+import 'package:otobucks/View/MyBookings/widget/date_selector_view.dart';
+import 'package:otobucks/View/MyBookings/widget/time_selector_view.dart';
 import 'package:otobucks/controllers/estimation_sidebar_controllers/view_estimation_controller.dart';
 import 'package:otobucks/global/adaptive_helper.dart';
 import 'package:otobucks/model/estimates_model.dart';
-import 'package:otobucks/page/services/estimation/checkout_screen.dart';
+
 import 'package:otobucks/widgets/cancel_booking_dialog.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
@@ -35,21 +35,17 @@ class ViewBookingEstimation extends StatefulWidget {
   const ViewBookingEstimation(
       {Key? key, required this.mEstimatesModel, required this.screen})
       : super(key: key);
-
   @override
   ViewBookingEstimationState createState() => ViewBookingEstimationState();
 }
-
 class ViewBookingEstimationState extends State<ViewBookingEstimation> {
   var controller = Get.put(ViewEstimationController());
-
   @override
   void initState() {
     controller.estimatesModel = widget.mEstimatesModel;
     controller.onInitScreen(widget.mEstimatesModel);
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;

@@ -70,7 +70,6 @@ class CancelBookingController extends GetxController {
           strTitle: "",
           strMsg: failure.MESSAGE,
           toastType: TOAST_TYPE.toastError);
-
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {

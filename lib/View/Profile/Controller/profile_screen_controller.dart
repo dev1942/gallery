@@ -124,7 +124,6 @@ clearController(){
       controllerCarModelYear.text = Global.getString(mUserModel.car.modelYear);
       controllerMileage.text = Global.getString(mUserModel.car.mileage);
       controllerColour.text = Global.getString(mUserModel.car.color);
-
       imgProfilePic = Global.getString(mUserModel.image);
       imgMulkia = Global.getString(mUserModel.customer.mulkiya);
       imgDrivingLicence = Global.getString(mUserModel.customer.drivingLicence);
@@ -140,11 +139,9 @@ clearController(){
       update();
     });
   }
-
   updateProfile(BuildContext context) async {
     isShowLoader = true;
     update();
-
     String strAddress = controllerAddress.text.toString();
     String strPhone = controllerPhone.text.toString();
     String strEmail = controllerEmail.text.toString();

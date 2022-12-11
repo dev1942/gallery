@@ -1,6 +1,5 @@
 import 'dart:collection';
 import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:otobucks/global/connectivity_status.dart';
 import 'package:otobucks/global/constants.dart';
@@ -12,9 +11,7 @@ import 'package:otobucks/model/failure.dart';
 import 'package:otobucks/model/result.dart';
 import 'package:otobucks/model/success.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
-
 class CategoriesRepo {
-
   Future<Either<Failure, Success>> getCategories(
       HashMap<String, Object> requestParams) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();

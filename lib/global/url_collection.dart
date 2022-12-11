@@ -36,17 +36,15 @@ class RequestBuilder {
 
   //wallet
   static final String API_GET_WALLET = "auth/customers/dashboard/totalEarnings";
-
   //
   static final String API_GET_SERVICES = "services/";
   static final String API_GET_SERVICES_SIMPLE = "services";
-  static final String API_CREATE_ESTIMATES = "estimates/customer/";
+  static final String API_CREATE_ESTIMATES = "bookings/bookService/";
   static final String API_GET_ESTIMATES = "estimates";
-
   //given rating
   static final String API_GIVEN_BY_CUSTOMER_RATING = "ratings/givenByCustomer/";
   static final String API_GIVEN_BY_PROVIDER_RATING = "ratings/givenByProvider/";
-
   // cancel booking
   static final String API_CANCEL_BOOKING_REQUESTS = "bookings/cancelRequests";
+  static final String API_GET_ALL_BOOKINGS = "https://developmentapi-app.otobucks.com/v1/bookings/bookService/";
 }

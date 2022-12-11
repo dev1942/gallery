@@ -1389,7 +1389,9 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                               ),
                             ],
                           ),
-                        ))),
+                        ))
+
+                ),
                 GetBuilder<ProfileScreenController>(
                     builder: (value) =>
                         AppViews.showLoadingWithStatus(value.isShowLoader))

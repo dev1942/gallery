@@ -1,6 +1,5 @@
 import 'dart:collection';
 import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:otobucks/global/connectivity_status.dart';
 import 'package:otobucks/global/constants.dart';
@@ -11,13 +10,12 @@ import 'package:otobucks/model/failure.dart';
 import 'package:otobucks/model/result.dart';
 import 'package:otobucks/model/success.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
-
 import '../../model/estimates_model.dart';
 import '../../model/estimation_detail_model.dart';
-
 class GetProviderBooking {
   String providerId;
   String bookingId;
+
 
   GetProviderBooking({required this.providerId, required this.bookingId});
 
@@ -59,7 +57,6 @@ class BookingRepo {
             GetProviderBooking.fromJson(data);
         // if (mEstimatesModel.status == 'pending')
         // }
-
         Success mSuccess = Success(
             responseStatus: mResponse!.responseStatus,
             responseData: getProviderBooking,

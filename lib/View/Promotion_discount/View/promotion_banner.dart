@@ -58,7 +58,7 @@ class PromotionBanner extends StatelessWidget {
                     top: 0,
                   ),
                   SizedBox(
-                    height: double.infinity,
+
                     child:
                     Image.asset(AppImages.ic_banner_bg, fit: BoxFit.cover),
                   ),
@@ -85,7 +85,8 @@ class PromotionBanner extends StatelessWidget {
                                   fontWeightDelta: 3,
                                   color: AppColors.colorBlueEnd)
                                   .copyWith(
-                                  fontSize: height * 0.1, height: 1.2),
+                                  fontSize: height * 0.1,
+                                  height: 1.2),
                             ),
                           ),
                           Expanded(

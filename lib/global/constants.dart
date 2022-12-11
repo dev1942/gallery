@@ -34,7 +34,7 @@ class PARAMS {
       PARAM_CUTOMERNOTE = 'cutomerNote',
       PARAM_ADDRESS = 'address',
       PARAM_IMAGE = 'image',
-      PARAM_VOICE_NOTE = 'voice_note',
+      PARAM_VOICE_NOTE = 'voiceNote',
       PARAM_VIDEO = 'video';
 
   // update Profile
@@ -126,7 +126,8 @@ class Constants {
       TAG_TERMS_CONDITIONS = 'Terms & Conditions',
       TAG_ABOUT_US = 'About Us',
       TAG_ENTER_YOUR_CAR_DETAILS = 'Enter your car details',
-      TAG_ESTIMATION = 'Estimation',
+  //it was Estimations then text is replaced by My Bookings in drawerremaininh navigationis with same name of estimation just text changed
+      TAG_ESTIMATION = 'My Booking',
       TAG_LOG_OUT = 'Log Out';
 
   // dashboard

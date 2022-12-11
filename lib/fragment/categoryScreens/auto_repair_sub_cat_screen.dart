@@ -36,7 +36,6 @@ class AutoRepairSubCatScreenState extends State<AutoRepairSubCatScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
     final double itemHeight = (size.width / 3) + AppDimens.dimens_40;
     final double itemWidth = size.width / 3;
 

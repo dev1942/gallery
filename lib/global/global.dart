@@ -39,7 +39,6 @@ import 'constants.dart';
 //Main Global class
 class Global {
   static LatLng mLatLng = const LatLng(25.2048, 55.2708);
-
   // All String
   static const String poppins = "poppins";
 
@@ -741,7 +740,6 @@ class Global {
 
   static storeUserDetails(UserDetail mUserDetail) async {
     final prefManager = await SharedPreferences.getInstance();
-
     prefManager.setString(SharedPrefKey.KEY_USER_ID, mUserDetail.id);
     prefManager.setString(SharedPrefKey.KEY_FIRST_NAME, mUserDetail.firstName);
     prefManager.setString(SharedPrefKey.KEY_LAST_NAME, mUserDetail.lastName);

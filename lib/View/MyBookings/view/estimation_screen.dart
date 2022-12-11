@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:otobucks/View/MyBookings/view/tabs_views/PendingFragment.dart';
+import 'package:otobucks/View/MyBookings/view/tabs_views/cancelled_booking.dart';
+import 'package:otobucks/View/MyBookings/view/tabs_views/completed_booking.dart';
+import 'package:otobucks/View/MyBookings/view/tabs_views/in_progress_booking.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
-import 'package:otobucks/View/Estimation/view/estinamtion_list_view.dart';
-import 'package:otobucks/View/Estimation/controller/estimation_screen_controller.dart';
+import 'package:otobucks/View/MyBookings/controller/estimation_screen_controller.dart';
 
 class EstimationFragment extends StatefulWidget {
   const EstimationFragment({Key? key}) : super(key: key);
@@ -27,7 +30,6 @@ class EstimationFragmentState extends State<EstimationFragment>
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
         top: true,
         bottom: true,
@@ -64,10 +66,22 @@ class EstimationFragmentState extends State<EstimationFragment>
                               mColor: Colors.white, mBorderRadius: 5),
                           indicatorSize: TabBarIndicatorSize.tab,
                           tabs: [
-                            tabButtons(title:"Pending",activeindex: value.activeTabIndex,id:0),
-                            tabButtons(title:"Partial Paid",activeindex: value.activeTabIndex,id:1),
-                            tabButtons(title:"Full Paid",activeindex: value.activeTabIndex,id:2),
-                            tabButtons(title:"Declined",activeindex: value.activeTabIndex,id:3),
+                            tabButtons(
+                                title: "Pending",
+                                activeindex: value.activeTabIndex,
+                                id: 0),
+                            tabButtons(
+                                title: "In Progress",
+                                activeindex: value.activeTabIndex,
+                                id: 1),
+                            tabButtons(
+                                title: "Completed",
+                                activeindex: value.activeTabIndex,
+                                id: 2),
+                            tabButtons(
+                                title: "Cancelled",
+                                activeindex: value.activeTabIndex,
+                                id: 3),
                           ],
                           controller: value.tabController,
                         ),
@@ -76,49 +90,34 @@ class EstimationFragmentState extends State<EstimationFragment>
                       ),
                     ],
                   ),
-
                   Expanded(
                     child: TabBarView(
                       controller: value.tabController,
                       physics: const NeverScrollableScrollPhysics(),
                       children: const [
-                        EstimationListFragment(
-                          estimationStatus: 'submitted',
-                          screen: 'submitted',
-                        ),
-                        EstimationListFragment(
-                          estimationStatus: 'inProgress',
-                          screen: 'partial',
-                        ),
-                        EstimationListFragment(
-                          estimationStatus: 'completed',
-                          screen: 'complete',
-                        ),
-                        EstimationListFragment(
-                          estimationStatus: 'declined',
-                          screen: 'decline',
-                        ),
+                        PendingFragment(),
+                        InProgressFragment(),
+                        CompletedFragment(),
+                        CancelledFragment(),
                       ],
                     ),
-                  ),
-                  // Expanded(child: Container()),
+                  ), // Expanded(child: Container()),
                 ],
               ),
             )));
   }
 
-  Widget tabButtons({int? activeindex,int? id,String? title}){
-    return  Container(
-      decoration:activeindex != id
-          ? AppViews.getColorDecor(
-          mColor: Colors.white, mBorderRadius: 5)
+  Widget tabButtons({int? activeindex, int? id, String? title}) {
+    return Container(
+      decoration: activeindex != id
+          ? AppViews.getColorDecor(mColor: Colors.white, mBorderRadius: 5)
           : null,
       alignment: Alignment.center,
-      width:  MediaQuery.of(context).size.width/ 5,
-      height:AppDimens.dimens_38,
+      width: MediaQuery.of(context).size.width / 5,
+      height: AppDimens.dimens_38,
       child: Text(
-        title??"",
-        style:const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
+        title ?? "",
+        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
       ),
     );
   }

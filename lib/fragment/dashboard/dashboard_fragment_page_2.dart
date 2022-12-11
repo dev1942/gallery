@@ -27,7 +27,6 @@ class DashboardFragmentPageTwoState extends State<DashboardFragmentPageTwo> {
         body: Obx(() => AppViews.getSetData(
             context, controller.mShowData.value, mShowWidget(controller))));
   }
-
   Widget mShowWidget(controller) => ListView(
         children: [
           Stack(

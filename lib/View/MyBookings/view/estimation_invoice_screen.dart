@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:otobucks/View/Estimation/controller/estimation_list_controller.dart';
+import 'package:otobucks/View/MyBookings/controller/estimation_list_controller.dart';
 import 'package:otobucks/page/services/estimation/checkout_screen.dart';
 import 'package:otobucks/widgets/Alert_dialog_box.dart';
 // import 'package:otobucks/controllers/estimation_sidebar_controllers/estimation_list_controller.dart';
