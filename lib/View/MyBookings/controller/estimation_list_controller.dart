@@ -99,8 +99,9 @@ class EstimationListController extends GetxController {
     update(); // isShowLoader = true;
 
     HashMap<String, Object> requestParams = HashMap();
-    requestParams['estimateID'] = estimateid!;
+    requestParams['bookingID'] = estimateid!;
     requestParams['offerAmount'] = offerAmount;
+    requestParams['offerNote'] = "This is Offer Note";
     var categories = await EstimatesRepo().CreateAnOfferEstimate(requestParams);
     categories.fold((failure) {
       Global.showToastAlert(

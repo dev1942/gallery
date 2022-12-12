@@ -27,6 +27,7 @@ import '../../../widgets/wallet/add_card_dialog.dart';
 */
 class CheckoutScreen extends StatefulWidget {
   final String? promotionID;
+  final String? bookingID;
   final String? address;
   final String? date;
   final String? time;
@@ -34,9 +35,12 @@ class CheckoutScreen extends StatefulWidget {
   final String? note;
  final String? previousAmount;
   final String? discount;
+  bool isPartialPay;
 
-  const CheckoutScreen(
+   CheckoutScreen(
       {Key? key,
+        this.isPartialPay=false,
+        this.bookingID,
        this.promotionID,
        this.address,
        this.date,
@@ -218,7 +222,49 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                               )),
                           SizedBox(height: 20.0),
                           Text("Payment Detail"),
-                          Card(
+                         widget.isPartialPay? Card(
+                             margin: const EdgeInsets.all(AppDimens.dimens_20),
+                             child:Padding(
+                               padding: const EdgeInsets.all(8.0),
+                               child: Column(children: [
+
+
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: [
+                                     Text("Total Amount ",style: TextStyle(fontSize: 16),),
+                                     Text("AED ${widget.amount??"0"}",  style: AppStyle.textViewStyleNormalSubtitle2(
+                                         context: context,
+                                         color: AppColors.colorBlueStart,
+                                         fontSizeDelta: 1,
+                                         fontWeightDelta: 1),),
+
+                                   ],),
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: [
+                                     Text("50 % Pay",style: TextStyle(fontSize: 16),),
+                                     Text("${(num.parse(widget.amount!)/2)}",  style: AppStyle.textViewStyleNormalSubtitle2(
+                                         context: context,
+                                         color: AppColors.colorBlueStart,
+                                         fontSizeDelta: 1,
+                                         fontWeightDelta: 1),),
+
+                                   ],),
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: [
+                                     Text("Sub Total Amount ",style: TextStyle(fontSize: 16),),
+                                     Text("AED ${(num.parse(widget.amount!)/2)}",  style: AppStyle.textViewStyleNormalSubtitle2(
+                                         context: context,
+                                         color: AppColors.colorBlueStart,
+                                         fontSizeDelta: 1,
+                                         fontWeightDelta: 1),),
+
+                                   ],),
+                               ],),
+                             )
+                         ):Card(
                             margin: const EdgeInsets.all(AppDimens.dimens_20),
                             child:Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -276,14 +322,23 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                 fontSize: 0,
                                 width: size.width / 1.5,
                                 onPressed: () {
-                                  value.bookEstimation(
-                                         promotionId: widget.promotionID,
-                                          address: widget.address,
-                                          time: widget.time,
-                                          date: widget.date,
-                                    note: widget.note,
-                                    cardId: controller.cardId!,
-                                  );
+                                  if(widget.isPartialPay){
+                                    value.bookEstimationPartial(
+                                      bookingID: widget.bookingID,
+                                      cardId: controller.cardId!,
+                                    );
+
+                                  }else{
+                                    value.bookEstimation(
+                                      promotionId: widget.promotionID,
+                                      address: widget.address,
+                                      time: widget.time,
+                                      date: widget.date,
+                                      note: widget.note,
+                                      cardId: controller.cardId!,
+                                    );
+                                  }
+
                                 },
                                 strTitle: Constants.TXT_PROCEES_TO_PAY),
                           ),

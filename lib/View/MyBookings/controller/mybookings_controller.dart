@@ -60,7 +60,6 @@ class MyBookingsController extends GetxController {
         "https://developmentapi-app.otobucks.com/v1/bookings/bookService"),
         headers: headers);
     var data = jsonDecode(response.body);
-    print(data);
     if (response.statusCode == 200) {
       log.i("Get booking API success");
       return AllBookingsModel.fromJson(data);

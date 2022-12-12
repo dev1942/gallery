@@ -36,7 +36,7 @@ class InProgressFragment extends GetView<MyBookingsController> {
                 if (snapshot.hasData) {
                   return ListView.builder(
                   //  itemCount: 2,
-                     itemCount: snapshot.data?.result?.where((element) => element.status=="inprogress").length,
+                     itemCount: snapshot.data?.result?.where((element) => element.status=="inProgress").length,
                     padding: const EdgeInsets.symmetric(
                         vertical: 5, horizontal: 5),
                     itemBuilder: (BuildContext contextM, index) {
@@ -60,7 +60,7 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                   mainAxisAlignment:
                                   MainAxisAlignment.start,
                                   children: [
-                                    //Row left image and right data
+
                                     Row(
                                       mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,

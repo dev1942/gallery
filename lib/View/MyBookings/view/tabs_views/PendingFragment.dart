@@ -13,6 +13,7 @@ import '../../../../../global/app_views.dart';
 import '../../../../global/constants.dart';
 import '../../../../global/global.dart';
 import '../../Models/AllBookingsModel.dart';
+import 'package:otobucks/global/enum.dart';
 import '../../controller/mybookings_controller.dart';
 import '../view_booking_screen.dart';
 class PendingFragment extends GetView<MyBookingsController> {
@@ -36,13 +37,14 @@ class PendingFragment extends GetView<MyBookingsController> {
                   return ListView.builder(
                     itemCount: snapshot.data?.result
                         ?.where((element) =>
-                            element.status == "pending" ||
-                            element.status == "submitted")
+                            element.status == "submitted" ||
+                            element.status == "pending")
                         .length,
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     itemBuilder: (BuildContext contextM, index) {
                       var data = snapshot.data!.result![index];
+                      print(  data.status);
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6.0),
                         child: Card(
@@ -210,7 +212,17 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                   onTap: () {
                                                    if( data.status==
                                                        "submitted"){
-                                                     Get.to(EstimationDetailsPDFScreen(allBookingsModel: snapshot.data!),);
+                                                     //items data isEmpty or Not
+                                                    if(snapshot.data!.result!.first.estimation!.items!.isNotEmpty){
+                                                      Get.to(EstimationDetailsPDFScreen(allBookingsModel: data));
+                                                    }else{
+                                                      Global.showToastAlert(
+                                                                  context: Get.overlayContext!,
+                                                                  strTitle: "",
+                                                                  strMsg:"Estimation Data Uncomplete",
+                                                                  toastType: TOAST_TYPE.toastInfo);
+                                                    }
+                                                     //
                                                    }
                                                   },
                                                 ),
@@ -336,8 +348,9 @@ class PendingFragment extends GetView<MyBookingsController> {
 
                                                           if (data.estimation?.offerStatus==
                                                               'submitted') {
+
                                                             gotoViewEstimation(
-                                                                snapshot.data!,
+                                                               data,
                                                                 false);
                                                           }
                                                         },
@@ -368,9 +381,9 @@ class PendingFragment extends GetView<MyBookingsController> {
         ));
   }
 
-  gotoViewEstimation(AllBookingsModel allBookingsModel, bool makePayment) {
+  gotoViewEstimation(Result allBookingsModel, bool makePayment) {
     Get.to(EstimationDetailsPDFScreen(
-      allBookingsModel: allBookingsModel,
+      allBookingsModel:allBookingsModel,
     ));
   }
 
