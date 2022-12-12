@@ -6,12 +6,12 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
-import 'package:otobucks/model/estimates_model.dart';
 import 'package:otobucks/services/repository/estimates_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../global/constants.dart';
 import '../../../global/url_collection.dart';
+import '../Models/AllBookingsModel.dart';
 class EstimationListController extends GetxController {
   ShowData mShowData = ShowData.showLoading;
   bool connectionStatus = false;
@@ -19,7 +19,7 @@ class EstimationListController extends GetxController {
 
 
   int indexM = 0;
-  List<EstimatesModel> alEstimates = [];
+  List<Estimation> alEstimates = [];
   //List<AllBookingsModel> alBookings = [];
 
   //...................Get All Bookings from Repo......................
@@ -78,10 +78,10 @@ class EstimationListController extends GetxController {
     }, (mResult) {
 
 
-      alEstimates = mResult.responseData as List<EstimatesModel>;
+      alEstimates = mResult.responseData as List<Estimation>;
    for(int i=0;i<alEstimates.length;i++){
-     Logger().w(alEstimates[i].status);
-     Logger().w(alEstimates[i].offerCreated);
+     Logger().w(alEstimates[i].offerStatus);
+     Logger().w(alEstimates[i].isOfferCreated);
 
    }
       if (alEstimates.isNotEmpty) {

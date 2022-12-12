@@ -40,7 +40,7 @@ class RequestBuilder {
   static final String API_GET_SERVICES = "services/";
   static final String API_GET_SERVICES_SIMPLE = "services";
   static final String API_CREATE_ESTIMATES = "bookings/bookService/";
-  static final String API_GET_ESTIMATES = "estimates";
+  static final String API_GET_ESTIMATES = "bookings/bookService";
   //given rating
   static final String API_GIVEN_BY_CUSTOMER_RATING = "ratings/givenByCustomer/";
   static final String API_GIVEN_BY_PROVIDER_RATING = "ratings/givenByProvider/";

@@ -12,7 +12,6 @@ import '../../../../../global/app_style.dart';
 import '../../../../../global/app_views.dart';
 import '../../../../global/constants.dart';
 import '../../../../global/global.dart';
-import '../../../../model/estimates_model.dart';
 import '../../Models/AllBookingsModel.dart';
 import '../../controller/mybookings_controller.dart';
 import '../view_booking_screen.dart';
@@ -36,8 +35,8 @@ class InProgressFragment extends GetView<MyBookingsController> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
-                    itemCount: 2,
-                    // itemCount: snapshot.data?.result?.where((element) => element.status=="inprogress").length,
+                  //  itemCount: 2,
+                     itemCount: snapshot.data?.result?.where((element) => element.status=="inprogress").length,
                     padding: const EdgeInsets.symmetric(
                         vertical: 5, horizontal: 5),
                     itemBuilder: (BuildContext contextM, index) {
@@ -254,11 +253,11 @@ class InProgressFragment extends GetView<MyBookingsController> {
         ));
   }
 
-  gotoViewEstimation(EstimatesModel mEstimatesModel, bool makePayment) {
-    Get.to(EstimationDetailsPDFScreen(
-      mEstimatesModel: mEstimatesModel,
-    ));
-  }
+  // gotoViewEstimation(EstimatesModel mEstimatesModel, bool makePayment) {
+  //   Get.to(EstimationDetailsPDFScreen(
+  //     mEstimatesModel: mEstimatesModel,
+  //   ));
+  // }
 
   Widget Textwidget({String? text, double? fontsize, int? fontweight}) {
     return Text(

@@ -2,9 +2,11 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart';
 import 'package:otobucks/View/MyBookings/controller/estimation_list_controller.dart';
 import 'package:otobucks/page/services/estimation/checkout_screen.dart';
 import 'package:otobucks/widgets/Alert_dialog_box.dart';
+
 // import 'package:otobucks/controllers/estimation_sidebar_controllers/estimation_list_controller.dart';
 import 'package:otobucks/widgets/cancel_booking_dialog.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -17,19 +19,17 @@ import '../../../../global/constants.dart';
 import '../../../../global/enum.dart';
 import '../../../../global/global.dart';
 import '../../../global/app_images.dart';
-import '../../../model/estimates_model.dart';
-import '../../../model/estimation_detail_model.dart';
+
 import '../../../services/repository/estimates_repo.dart';
 import '../../../widgets/custom_button.dart';
 
-
 class EstimationDetailsPDFScreen extends StatefulWidget {
   final Function? callback;
-  final EstimatesModel mEstimatesModel;
 
   const EstimationDetailsPDFScreen(
-      {Key? key, this.callback, required this.mEstimatesModel})
+      {Key? key, this.callback, required this.allBookingsModel})
       : super(key: key);
+  final AllBookingsModel allBookingsModel;
 
   @override
   EstimationDetailsPDFScreenState createState() =>
@@ -42,26 +42,24 @@ class EstimationDetailsPDFScreenState
 
   bool connectionStatus = false;
   bool isShowLoader = false;
-  late EstimatesModel mEstimatesModel;
-  late EstimationDetailModel? mEstimationDetailModel;
+  late AllBookingsModel allBookingsModel;
 
   int indexM = 0;
 
-  EstimationListController _estimationListController=Get.put(EstimationListController());
-  TextEditingController _textOffercontroller=TextEditingController();
+  EstimationListController _estimationListController =
+      Get.put(EstimationListController());
+  TextEditingController _textOffercontroller = TextEditingController();
   @override
   void initState() {
     getEstimationDetails();
     super.initState();
     //getLocation();
-    mEstimatesModel = widget.mEstimatesModel;
+    allBookingsModel = widget.allBookingsModel;
   }
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var mBorderColor = AppColors.colorBorder;
-    Widget widgetM = Container();
     Widget mShowWidget = Container();
     List<TableRow> alTableRow = [];
     alTableRow.add(TableRow(
@@ -131,7 +129,7 @@ class EstimationDetailsPDFScreenState
               )),
         ]));
     if (mShowData == ShowData.showData) {
-      for (var element in mEstimationDetailModel!.items) {
+      for (var element in allBookingsModel.result![0].estimation!.items!) {
         alTableRow.add(TableRow(
             decoration: BoxDecoration(color: AppColors.colorWhite),
             children: [
@@ -140,7 +138,7 @@ class EstimationDetailsPDFScreenState
                   child: Container(
                     margin: const EdgeInsets.only(left: AppDimens.dimens_3),
                     alignment: Alignment.centerLeft,
-                    child: Text(element.title,
+                    child: Text(element.title!,
                         style: AppStyle.textViewStyleSmall(
                             context: context,
                             color: AppColors.colorBlack2,
@@ -152,7 +150,7 @@ class EstimationDetailsPDFScreenState
                   child: Container(
                     margin: const EdgeInsets.only(left: AppDimens.dimens_3),
                     alignment: Alignment.centerLeft,
-                    child: Text(element.description,
+                    child: Text(element.description!,
                         style: AppStyle.textViewStyleSmall(
                             context: context,
                             color: AppColors.colorBlack2,
@@ -163,7 +161,7 @@ class EstimationDetailsPDFScreenState
                   verticalAlignment: TableCellVerticalAlignment.middle,
                   child: Container(
                     alignment: Alignment.center,
-                    child: Text(element.quantity,
+                    child: Text(element.quantity!,
                         style: AppStyle.textViewStyleSmall(
                             context: context,
                             color: AppColors.colorBlack2,
@@ -174,7 +172,7 @@ class EstimationDetailsPDFScreenState
                   verticalAlignment: TableCellVerticalAlignment.middle,
                   child: Container(
                     alignment: Alignment.center,
-                    child: Text(element.price,
+                    child: Text(element.price!,
                         style: AppStyle.textViewStyleSmall(
                             context: context,
                             color: AppColors.colorBlack2,
@@ -185,7 +183,7 @@ class EstimationDetailsPDFScreenState
                   verticalAlignment: TableCellVerticalAlignment.middle,
                   child: Container(
                     alignment: Alignment.center,
-                    child: Text(element.amount,
+                    child: Text(element.amount!,
                         style: AppStyle.textViewStyleSmall(
                             context: context,
                             color: AppColors.colorBlack2,
@@ -194,18 +192,26 @@ class EstimationDetailsPDFScreenState
                   )),
             ]));
       }
-
-      mShowWidget = Column(
-// mainAxisAlignment: MainAxisAlignment.start//,
-      crossAxisAlignment: CrossAxisAlignment.start,
+    }
+    return Scaffold(
+      appBar: AppViews.initAppBar(
+        mContext: context,
+        centerTitle: false,
+        strTitle: "Estimation",
+        isShowNotification: false,
+        isShowSOS: false,
+      ),
+      resizeToAvoidBottomInset: true,
+      backgroundColor: AppColors.getMainBgColor(),
+      body: Column(
+           // mainAxisAlignment: MainAxisAlignment.start//,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // profile pic and name
-
-
           Container(
             // margin: const EdgeInsets.only(
             //     left: 0, top: AppDimens.dimens_10),
-             child: Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -213,57 +219,47 @@ class EstimationDetailsPDFScreenState
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment:CrossAxisAlignment.start ,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(Constants.TXT_CUSTOMER_ESTIMATION.toUpperCase(),
-                            style: AppStyle.textViewStyleNormalBodyText2(
-                                context: context,
-                                color: AppColors.colorBlack,
-                                fontWeightDelta: 1,
-                                fontSizeDelta: 2)),
-
-                        Text(Constants.TXT_TAX_INVOICE,
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: AppColors.colorBlack,
-                                fontWeightDelta: 0,
-                                fontSizeDelta: -1)),
-
-                      ],
-                    ),
-
-                    Container(
-
-
-                        child: Row(
-
-                          children: [
-                            const Icon(Icons.download_rounded, size: AppDimens.dimens_17),
-                            const SizedBox(
-                              width: AppDimens.dimens_3,
-                            ),
-                            InkWell(
-                              child: Text(Constants.TXT_DOWNLOAD_INVOICE,
-                                  style: AppStyle.textViewStyleSmall(
-                                      context: context,
-                                      color: AppColors.colorBlack,
-                                      fontWeightDelta: 0,
-                                      fontSizeDelta: 0)),
-                              onTap: () {},
-                            )
-                          ],
-                        )),
-                  ],),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(Constants.TXT_CUSTOMER_ESTIMATION.toUpperCase(),
+                              style: AppStyle.textViewStyleNormalBodyText2(
+                                  context: context,
+                                  color: AppColors.colorBlack,
+                                  fontWeightDelta: 1,
+                                  fontSizeDelta: 2)),
+                          Text(Constants.TXT_TAX_INVOICE,
+                              style: AppStyle.textViewStyleSmall(
+                                  context: context,
+                                  color: AppColors.colorBlack,
+                                  fontWeightDelta: 0,
+                                  fontSizeDelta: -1)),
+                        ],
+                      ),
+                      Container(
+                          child: Row(
+                        children: [
+                          const Icon(Icons.download_rounded,
+                              size: AppDimens.dimens_17),
+                          const SizedBox(
+                            width: AppDimens.dimens_3,
+                          ),
+                          InkWell(
+                            child: Text(Constants.TXT_DOWNLOAD_INVOICE,
+                                style: AppStyle.textViewStyleSmall(
+                                    context: context,
+                                    color: AppColors.colorBlack,
+                                    fontWeightDelta: 0,
+                                    fontSizeDelta: 0)),
+                            onTap: () {},
+                          )
+                        ],
+                      )),
+                    ],
+                  ),
                 ),
-
-
-
-
-
-
                 Container(
                   margin: const EdgeInsets.only(
                     top: AppDimens.dimens_5,
@@ -272,7 +268,6 @@ class EstimationDetailsPDFScreenState
                   height: AppDimens.dimens_30,
                   color: AppColors.colorBlue2,
                 ),
-
 
                 SizedBox(height: 10.0),
                 //-----------invoice id ,invoice date ,
@@ -349,7 +344,6 @@ class EstimationDetailsPDFScreenState
             ),
           ),
 
-
           Container(
             margin: const EdgeInsets.only(top: AppDimens.dimens_14),
             decoration: BoxDecoration(
@@ -401,7 +395,9 @@ class EstimationDetailsPDFScreenState
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: Container(
                         alignment: Alignment.center,
-                        child: Text(mEstimationDetailModel!.subTotal,
+                        child: Text(
+                            allBookingsModel.result![0].estimation!.subTotal
+                                .toString(),
                             style: AppStyle.textViewStyleSmall(
                                 context: context,
                                 color: AppColors.colorBlack2,
@@ -410,7 +406,7 @@ class EstimationDetailsPDFScreenState
                         height: AppDimens.dimens_25,
                       )),
                 ]),
-               /* TableRow(children: [
+                /* TableRow(children: [
                   TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: Container(
@@ -442,8 +438,7 @@ class EstimationDetailsPDFScreenState
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: Container(
                         alignment: Alignment.center,
-                        child: Text(
-                            "Service Tax ( 5 %)",
+                        child: Text("Service Tax ( 5 %)",
                             style: AppStyle.textViewStyleSmall(
                                 context: context,
                                 color: AppColors.colorBlack2,
@@ -455,7 +450,9 @@ class EstimationDetailsPDFScreenState
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: Container(
                         alignment: Alignment.center,
-                        child: Text( mEstimationDetailModel!.serviceTax,
+                        child: Text(
+                            allBookingsModel.result![0].estimation!.serviceTax
+                                .toString(),
                             style: AppStyle.textViewStyleSmall(
                                 context: context,
                                 color: AppColors.colorBlack2,
@@ -483,7 +480,9 @@ class EstimationDetailsPDFScreenState
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child: Container(
                           alignment: Alignment.center,
-                          child: Text(mEstimationDetailModel!.grandTotal,
+                          child: Text(
+                              allBookingsModel.result![0].estimation!.grandTotal
+                                  .toString(),
                               style: AppStyle.textViewStyleSmall(
                                   context: context,
                                   color: AppColors.colorWhite,
@@ -609,10 +608,10 @@ class EstimationDetailsPDFScreenState
             margin: const EdgeInsets.only(
                 top: AppDimens.dimens_20,
                 bottom: AppDimens.dimens_20,
-                left: AppDimens.dimens_10,
-                right: AppDimens.dimens_10),
+                left: AppDimens.dimens_5,
+                right: AppDimens.dimens_5),
             child: Row(
-             // crossAxisAlignment: CrossAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
@@ -630,81 +629,90 @@ class EstimationDetailsPDFScreenState
                               MaterialPageRoute(
                                   builder: (context) => const CheckoutScreen(
 
-                                    // sourceId:
-                                    //     widget.mEstimatesModel.source!.id,
-                                    // estimateId: widget.mEstimatesModel.id,
-                                    // paymentStatus: 'partialPayment',
-                                  )));
+                                      // sourceId:
+                                      //     widget.mEstimatesModel.source!.id,
+                                      // estimateId: widget.mEstimatesModel.id,
+                                      // paymentStatus: 'partialPayment',
+                                      )));
                         },
-                        strTitle: widget.mEstimatesModel.status == 'submitted'
-                            ? 'Pay'
+                        strTitle: widget.allBookingsModel.result![0].estimation?.offerStatus == 'pending'
+                            ? 'Pay 50% Now'
                             : "Make full Payment"),
-                   // width: size.width / 1.8,
+                    // width: size.width / 1.8,
                   ),
                 ),
-                widget.mEstimatesModel.status == 'submitted'
-                    ?    Flexible(
-                      child: SizedBox(
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomButton(
-                          isGradient: false,
-                          color: Colors.yellow,
-                          isRoundBorder: true,
-                          fontColor: AppColors.colorBlack,
-                          fontSize: 0,
-
-
-                          height: AppDimens.dimens_38,
-                          onPressed: mEstimatesModel.offerCreated?(){
-                            Global.showToastAlert(
-                                context: context,
-                                strTitle: "",
-                                strMsg: "Offer Already Created",
-                                toastType: TOAST_TYPE.toastError);
-                          }:
-                              () {
-                            showDialog(
-                              context: context,
-                              builder: (_) => LogoutOverlay(
-                                textcontroller:_textOffercontroller ,
-                                onCancelTap: (){
-                                  _textOffercontroller.clear();
-                                  Navigator.of(context).pop();
-                                },
-                                onSubmitTap: (){
-                                if(_textOffercontroller.text.isNotEmpty){
-                                  _estimationListController.createAnOffer(estimateid: widget.mEstimatesModel.id,offerAmount:_textOffercontroller.text);
-                                  _textOffercontroller.clear();
-                                  Navigator.of(context).pop();
-
-
-                                }
+                widget.allBookingsModel.result![0].estimation?.offerStatus == 'pending'
+                    ? Flexible(
+                        child: SizedBox(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: CustomButton(
+                                isGradient: false,
+                                color: Colors.yellow,
+                                isRoundBorder: true,
+                                fontColor: AppColors.colorBlack,
+                                fontSize: 0,
+                                height: AppDimens.dimens_38,
+                                onPressed: allBookingsModel.result![0]
+                                            .estimation!.isOfferCreated ==
+                                        true
+                                    ? () {
+                                        Global.showToastAlert(
+                                            context: context,
+                                            strTitle: "",
+                                            strMsg: "Offer Already Created",
+                                            toastType: TOAST_TYPE.toastError);
+                                      }
+                                    : () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) => LogoutOverlay(
+                                            textcontroller:
+                                                _textOffercontroller,
+                                            onCancelTap: () {
+                                              _textOffercontroller.clear();
+                                              Navigator.of(context).pop();
+                                            },
+                                            onSubmitTap: () {
+                                              if (_textOffercontroller
+                                                  .text.isNotEmpty) {
+                                                _estimationListController
+                                                    .createAnOffer(
+                                                        estimateid: widget
+                                                            .allBookingsModel
+                                                            .result![0]
+                                                            .id,
+                                                        offerAmount:
+                                                            _textOffercontroller
+                                                                .text);
+                                                _textOffercontroller.clear();
+                                                Navigator.of(context).pop();
+                                              }
 // Future.delayed(Duration(seconds: 3),(){
 //   Navigator.pu
 //   EstimationFragment
 //                                 }
 //                                 );
-
-
-                              },),
-                            );
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => CheckoutScreen(
-                            //           // sourceId:
-                            //           //     widget.mEstimatesModel.source!.id,
-                            //           // estimateId: widget.mEstimatesModel.id,
-                            //           // paymentStatus: 'partialPayment',
-                            //         )));
-                          },
-                          strTitle: 'Make Offer'
-                              ),
-                  ),
-                  //width: size.width / 1.8,
-                ),
-                    ):SizedBox(),
+                                            },
+                                          ),
+                                        );
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) => CheckoutScreen(
+                                        //           // sourceId:
+                                        //           //     widget.mEstimatesModel.source!.id,
+                                        //           // estimateId: widget.mEstimatesModel.id,
+                                        //           // paymentStatus: 'partialPayment',
+                                        //         )));
+                                      },
+                                strTitle: 'Make Offer'),
+                          ),
+                          //width: size.width / 1.8,
+                        ),
+                      )
+                    : SizedBox(),
+                SizedBox(width: 5,),
                 //const Spacer(),
                 Flexible(
                   child: SizedBox(
@@ -712,13 +720,13 @@ class EstimationDetailsPDFScreenState
                         fontSize: 0,
                         isGradient: true,
                         isRoundBorder: true,
-                       // color: AppColors.greyDateBG,
+                        // color: AppColors.greyDateBG,
                         fontColor: AppColors.colorWhite,
                         width: size.width / 1.5,
                         height: AppDimens.dimens_38,
                         onPressed: () => displayTextInputDialog(),
                         strTitle: Constants.TXT_DECLINE),
-                  //  width: size.width / 3.2,
+                    //  width: size.width / 3.2,
                   ),
                 ),
               ],
@@ -727,22 +735,7 @@ class EstimationDetailsPDFScreenState
 
           // Expanded(child: Container()),
         ],
-      );
-    }
-
-    widgetM = AppViews.getSetData(context, mShowData, mShowWidget);
-
-    return Scaffold(
-      appBar: AppViews.initAppBar(
-        mContext: context,
-        centerTitle: false,
-        strTitle: "Estimation",
-        isShowNotification: false,
-        isShowSOS: false,
       ),
-      resizeToAvoidBottomInset: true,
-      backgroundColor: AppColors.getMainBgColor(),
-      body:   widgetM,
 
       // Stack(
       //   children: [
@@ -801,32 +794,32 @@ class EstimationDetailsPDFScreenState
 
     HashMap<String, Object> requestParams = HashMap();
 
-    var categories = await EstimatesRepo()
-        .getEstimatesDetail(requestParams, widget.mEstimatesModel.id);
+    // var categories = await EstimatesRepo()
+    //     .getEstimatesDetail(requestParams, widget.allBookingsModel.result![0].id.toString());
 
-    categories.fold((failure) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
-      setState(() {
-        mShowData = ShowData.showNoDataFound;
-      });
-    }, (mResult) {
-      print("Estimation detaisl pdf ---------2---");
-      print(widget.mEstimatesModel.id);
-      setState(() {
-        List<EstimationDetailModel> alEstimation =
-        mResult.responseData as List<EstimationDetailModel>;
-        if (alEstimation.isNotEmpty) {
-          mEstimationDetailModel = alEstimation.first;
-          mShowData = ShowData.showData;
-        } else {
-          mShowData = ShowData.showNoDataFound;
-        }
-      });
-    });
+    // categories.fold((failure) {
+    //   Global.showToastAlert(
+    //       context: context,
+    //       strTitle: "",
+    //       strMsg: failure.MESSAGE,
+    //       toastType: TOAST_TYPE.toastError);
+    //   setState(() {
+    //     mShowData = ShowData.showNoDataFound;
+    //   });
+    // }, (mResult) {
+    //   print("Estimation detaisl pdf ---------2---");
+    //   print(widget.allBookingsModel.result![0].id);
+    //   setState(() {
+    //     List<Estimation> alEstimation =
+    //     mResult.responseData as List<Estimation>;
+    //     if (alEstimation.isNotEmpty) {
+    //       estimationDetails = alEstimation.first;
+    //       mShowData = ShowData.showData;
+    //     } else {
+    //       mShowData = ShowData.showNoDataFound;
+    //     }
+    //   });
+    // });
   }
 
   declineEstimation(String reason) async {
@@ -839,8 +832,8 @@ class EstimationDetailsPDFScreenState
 
     requestParams['declineReason'] = reason;
 
-    var categories = await EstimatesRepo()
-        .declineEstimate(requestParams, widget.mEstimatesModel.id);
+    var categories = await EstimatesRepo().declineEstimate(
+        requestParams, widget.allBookingsModel.result![0].id!.toString());
 
     categories.fold((failure) {
       Global.showToastAlert(

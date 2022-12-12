@@ -217,10 +217,7 @@ var alDrawerItem = [
       title: Constants.TAG_MY_PROFILE,
       icon: AppImages.ic_drawer_my_profile,
       pageType: PageType.myProfile),
-  DrawerItem(
-      title: Constants.TAG_BOOKING_HISTORY,
-      icon: AppImages.ic_drawer_booking_history,
-      pageType: PageType.bookingHistory),
+  //booking history deleted
   DrawerItem(
       title: Constants.TAG_ESTIMATION,
       icon: AppImages.ic_drawer_estimation,

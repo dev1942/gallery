@@ -118,7 +118,7 @@ class HomeScreenController extends GetxController {
         indexM = 0;
         break;
       case PageType.estimations:
-        navigationPage = const EstimationFragment();
+        navigationPage = EstimationFragment();
         strTitle = Constants.TAG_ESTIMATION;
         indexM = 0;
         break;

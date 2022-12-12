@@ -12,11 +12,9 @@ import '../../../../../global/app_style.dart';
 import '../../../../../global/app_views.dart';
 import '../../../../global/constants.dart';
 import '../../../../global/global.dart';
-import '../../../../model/estimates_model.dart';
 import '../../Models/AllBookingsModel.dart';
 import '../../controller/mybookings_controller.dart';
 import '../view_booking_screen.dart';
-
 class CompletedFragment extends GetView<MyBookingsController> {
   const CompletedFragment({
     Key? key,
@@ -251,11 +249,11 @@ class CompletedFragment extends GetView<MyBookingsController> {
         ));
   }
 
-  gotoViewEstimation(EstimatesModel mEstimatesModel, bool makePayment) {
-    Get.to(EstimationDetailsPDFScreen(
-      mEstimatesModel: mEstimatesModel,
-    ));
-  }
+  // gotoViewEstimation(EstimatesModel mEstimatesModel, bool makePayment) {
+  //   Get.to(EstimationDetailsPDFScreen(
+  //     mEstimatesModel: mEstimatesModel,
+  //   ));
+  // }
 
   Widget Textwidget({String? text, double? fontsize, int? fontweight}) {
     return Text(

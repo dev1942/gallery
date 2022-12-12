@@ -7,7 +7,6 @@ import 'package:otobucks/View/MyBookings/widget/time_selector_view.dart';
 import 'package:otobucks/controllers/estimation_sidebar_controllers/view_estimation_controller.dart';
 import 'package:otobucks/global/adaptive_helper.dart';
 import 'package:otobucks/model/estimates_model.dart';
-
 import 'package:otobucks/widgets/cancel_booking_dialog.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';

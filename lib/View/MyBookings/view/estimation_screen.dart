@@ -10,9 +10,10 @@ import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/View/MyBookings/controller/estimation_screen_controller.dart';
 
-class EstimationFragment extends StatefulWidget {
-  const EstimationFragment({Key? key}) : super(key: key);
+import '../Models/AllBookingsModel.dart';
 
+class EstimationFragment extends StatefulWidget {
+   EstimationFragment({Key? key,}) : super(key: key);
   @override
   EstimationFragmentState createState() => EstimationFragmentState();
 }
@@ -30,6 +31,8 @@ class EstimationFragmentState extends State<EstimationFragment>
 
   @override
   Widget build(BuildContext context) {
+    final List<AllBookingsModel> allBookingsModel;
+
     return SafeArea(
         top: true,
         bottom: true,
@@ -94,7 +97,7 @@ class EstimationFragmentState extends State<EstimationFragment>
                     child: TabBarView(
                       controller: value.tabController,
                       physics: const NeverScrollableScrollPhysics(),
-                      children: const [
+                      children:  [
                         PendingFragment(),
                         InProgressFragment(),
                         CompletedFragment(),

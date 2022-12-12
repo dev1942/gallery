@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:otobucks/View/Promotion_discount/model/promotion_model.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
@@ -58,7 +59,7 @@ class PromotionBanner extends StatelessWidget {
                     top: 0,
                   ),
                   SizedBox(
-
+                    height:Get.height,
                     child:
                     Image.asset(AppImages.ic_banner_bg, fit: BoxFit.cover),
                   ),
@@ -85,7 +86,7 @@ class PromotionBanner extends StatelessWidget {
                                   fontWeightDelta: 3,
                                   color: AppColors.colorBlueEnd)
                                   .copyWith(
-                                  fontSize: height * 0.1,
+                                  fontSize: height * 0.09,
                                   height: 1.2),
                             ),
                           ),

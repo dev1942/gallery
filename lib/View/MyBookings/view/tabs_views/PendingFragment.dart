@@ -12,11 +12,9 @@ import '../../../../../global/app_style.dart';
 import '../../../../../global/app_views.dart';
 import '../../../../global/constants.dart';
 import '../../../../global/global.dart';
-import '../../../../model/estimates_model.dart';
 import '../../Models/AllBookingsModel.dart';
 import '../../controller/mybookings_controller.dart';
 import '../view_booking_screen.dart';
-
 class PendingFragment extends GetView<MyBookingsController> {
   const PendingFragment({
     Key? key,
@@ -118,8 +116,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                 Expanded(
                                                   child: UserNameWidget(
                                                       userName:
-                                                          "${data.customer?.firstName}"
-                                                          "${data.customer?.lastName} "),
+                                                          "${data.provider?.firstName}"
+                                                          "${data.provider?.lastName} "),
                                                 ),
                                               ],
                                             ),
@@ -142,7 +140,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                     text: "Price :  ",
                                                     fontsize: 0,
                                                     fontweight: 0),
-                                                priceWidget(data.source!.price
+                                                priceWidget("${data.source!.price}/hr"
                                                     .toString()),
                                               ],
                                             ),
@@ -159,8 +157,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                           fontWeightDelta: 0),
                                                 ),
                                                 Text(
-                                                  getDate(data
-                                                      .bookingDetails!.date!),
+                                                  getDate(data.createdAt
+                                                      !),
                                                   style: AppStyle
                                                       .textViewStyleSmall(
                                                           context: context,
@@ -195,8 +193,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                       //.....estimation staus............
                                                       child: Center(
                                                         child: Text(
-                                                          data.status ==
-                                                                  "pending"
+                                                          data.status==
+                                                                  "submitted"
                                                               ? "View Estimation"
                                                               : "Requested Estimation"
                                                                   .toUpperCase(),
@@ -210,9 +208,10 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                         ),
                                                       )),
                                                   onTap: () {
-                                                    // gotoViewEstimation(
-                                                    //     AllBookingsModel(),
-                                                    //     false);false
+                                                   if( data.status==
+                                                       "submitted"){
+                                                     Get.to(EstimationDetailsPDFScreen(allBookingsModel: snapshot.data!),);
+                                                   }
                                                   },
                                                 ),
                                                 const SizedBox(
@@ -335,13 +334,12 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                                     ),
                                                                   ));
 
-                                                          // if (mEstimatesModel
-                                                          //     .status ==
-                                                          //     'submitted') {
-                                                          //   gotoViewEstimation(
-                                                          //       mEstimatesModel,
-                                                          //       false);
-                                                          //}
+                                                          if (data.estimation?.offerStatus==
+                                                              'submitted') {
+                                                            gotoViewEstimation(
+                                                                snapshot.data!,
+                                                                false);
+                                                          }
                                                         },
                                                       )
                                                     : SizedBox()
@@ -370,9 +368,9 @@ class PendingFragment extends GetView<MyBookingsController> {
         ));
   }
 
-  gotoViewEstimation(EstimatesModel mEstimatesModel, bool makePayment) {
+  gotoViewEstimation(AllBookingsModel allBookingsModel, bool makePayment) {
     Get.to(EstimationDetailsPDFScreen(
-      mEstimatesModel: mEstimatesModel,
+      allBookingsModel: allBookingsModel,
     ));
   }
 
