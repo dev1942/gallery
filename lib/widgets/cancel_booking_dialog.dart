@@ -136,6 +136,7 @@ class _CancelBookingDialogBoxState extends State<CancelBookingDialogBox> {
               width: AppDimens.dimens_200,
               height: AppDimens.dimens_40,
               onPressed: () {
+
                 if (isValid()) {
                   String strComments = controllerComments.text.toString();
                   widget.onTap(strComments);

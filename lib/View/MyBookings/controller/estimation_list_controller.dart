@@ -118,7 +118,7 @@ class EstimationListController extends GetxController {
           strTitle: "",
           strMsg:"Offer Created Successfully",// mResult.responseMessage,
           toastType: TOAST_TYPE.toastSuccess);
-      getEstimation("submitted");
+      //getEstimation("submitted");
       update();
     });
   }

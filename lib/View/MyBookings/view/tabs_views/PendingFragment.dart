@@ -74,7 +74,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                            const SizedBox(
                                              height: AppDimens.dimens_12,
                                            ),
-
+//--------------------------------View booking--------------------------
                                            /// onclick of view booking
                                            InkWell(
                                              child: Container(
@@ -93,8 +93,15 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                    ),
                                                  )),
                                              onTap: () {
+                      if( data.status==
+                      "pending"){
+                        //reschedule and decline
+                        Get.to(ViewBookingEstimation(mEstimatesModel: data,isPending: true));
 
-                                               Get.to(ViewBookingEstimation(mEstimatesModel: data));
+                      }else{
+                        Get.to(ViewBookingEstimation(mEstimatesModel: data));
+
+                      }
                                              },
                                            ),
                                          ],
@@ -220,7 +227,6 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                  const SizedBox(
                                                    width: 3,
                                                  ),
-
                                                  /// ofer Status button
                                                  data.estimation
                                                      ?.isOfferCreated ==

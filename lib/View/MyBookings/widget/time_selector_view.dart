@@ -38,7 +38,7 @@ class TimeViewSelectorState extends State<TimeViewSelector> {
   @override
   void initState() {
     super.initState();
-    log(widget.mTimeModel.toString());
+
     alTimeModel = Global.getTimeList(widget.mTimeModel);
     timer();
   }

@@ -1,13 +1,17 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:otobucks/View/MyBookings/Repo/decline_booking_Repo.dart';
 
 import 'package:otobucks/View/MyBookings/widget/date_selector_view.dart';
 import 'package:otobucks/View/MyBookings/widget/time_selector_view.dart';
 import 'package:otobucks/controllers/estimation_sidebar_controllers/view_estimation_controller.dart';
 import 'package:otobucks/global/adaptive_helper.dart';
 import 'package:otobucks/model/estimates_model.dart';
+import 'package:otobucks/services/repository/estimates_repo.dart';
 import 'package:otobucks/widgets/cancel_booking_dialog.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
@@ -31,13 +35,22 @@ import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart';
 
 class ViewBookingEstimation extends StatefulWidget {
   final Result mEstimatesModel;
+  final bool isPending;
   const ViewBookingEstimation(
-      {Key? key, required this.mEstimatesModel, })
+      {Key? key, required this.mEstimatesModel,
+        this.isPending=false,
+      })
       : super(key: key);
   @override
   ViewBookingEstimationState createState() => ViewBookingEstimationState();
 }
 class ViewBookingEstimationState extends State<ViewBookingEstimation> {
+  ShowData mShowData = ShowData.showLoading;
+
+  bool connectionStatus = false;
+  bool isShowLoader = false;
+
+
   var controller = Get.put(ViewEstimationController());
   @override
   void initState() {
@@ -92,10 +105,56 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                       //Voice Note
                       _voiceNoteSection(),
                       //Leave Note (if any)
-
                       _anyNoteTextFiledSection(),
-                     // if (widget.screen == 'cancelled')
-                        Container(
+                      widget.isPending?
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.center,
+                                margin: const EdgeInsets.only(
+                                    top: AppDimens.dimens_20,
+                                    bottom: AppDimens.dimens_20,
+                                    left: AppDimens.dimens_10,
+                                    right: AppDimens.dimens_10),
+                                child: CustomButton(
+                                    isGradient: true,
+                                    isRoundBorder: true,
+                                    fontColor: AppColors.colorWhite,
+                                   // width: size.width,
+                                    onPressed: (){},
+                                    // =>
+                                    //     controller.rebook(
+                                    //     context, widget.mEstimatesModel),
+                                    strTitle: "Resheduled"),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.center,
+                                margin: const EdgeInsets.only(
+                                    top: AppDimens.dimens_20,
+                                    bottom: AppDimens.dimens_20,
+                                    left: AppDimens.dimens_10,
+                                    right: AppDimens.dimens_10),
+                                child: CustomButton(
+                                    isGradient: true,
+                                    isRoundBorder: true,
+                                    fontColor: AppColors.colorWhite,
+                                    //width: size.width,
+                                    onPressed: (){
+
+                                      displayTextInputDialog();
+                                    },
+                                    // =>
+                                    //     controller.rebook(
+                                    //     context, widget.mEstimatesModel),
+                                    strTitle: "Decline"),
+                              ),
+                            ),
+                          ],
+                        ):
+                      Container(
                           alignment: Alignment.center,
                           margin: const EdgeInsets.only(
                               top: AppDimens.dimens_20,
@@ -112,7 +171,9 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                               //     controller.rebook(
                               //     context, widget.mEstimatesModel),
                               strTitle: "Booked"),
-                        ),
+                      
+                      ),
+
                       // if (widget.screen == 'partial')
                       //   Container(
                       //     alignment: Alignment.center,
@@ -195,16 +256,18 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
       ),
     );
   }
-
   displayTextInputDialog() async {
     return showDialog(
         context: context,
         builder: (context) {
           return CancelBookingDialogBox(
-            isDecline: false,
+            isDecline: true,
             onTap: (String strReason) {
               if (Global.checkNull(strReason)) {
-                controller.cancelEstimation(strReason);
+                declineEstimation(
+                    id: widget.mEstimatesModel.id.toString(),
+                    reason: strReason
+                );
               } else {
                 Global.showToastAlert(
                     context: context,
@@ -216,7 +279,43 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
           );
         });
   }
+//-----------------------Decline Booking-------------------
+  declineEstimation({required String reason,required String id}) async {
+    setState(() {
+      mShowData = ShowData.showLoading;
+      // isShowLoader = true;
+    });
 
+    HashMap<String, Object> requestParams = HashMap();
+
+    requestParams['bookingID'] = id;
+    requestParams['cancelReason'] = reason;
+
+    var categories = await BookingDeclineRepo().declineBooking(
+      requestParams,);
+
+    categories.fold((failure) {
+      Global.showToastAlert(
+          context: context,
+          strTitle: "",
+          strMsg: failure.MESSAGE,
+          toastType: TOAST_TYPE.toastError);
+      setState(() {
+        mShowData = ShowData.showNoDataFound;
+      });
+    }, (mResult) {
+      Global.showToastAlert(
+          context: context,
+          strTitle: "",
+          strMsg: mResult.responseMessage,
+          toastType: TOAST_TYPE.toastSuccess);
+      setState(() {
+        mShowData = ShowData.showNoDataFound;
+      });
+      Get.back();
+      //Get.find<EstimationListController>().getEstimation('submitted');
+    });
+  }
   _profileSection() => Container(
     margin: const EdgeInsets.only(
         left: AppDimens.dimens_30,
@@ -399,152 +498,153 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                       fontSizeDelta: 0),
                 ),
               ),
-Text(widget.mEstimatesModel.bookingDetails!.date.toString()),
-              // Container(
-              //   margin: const EdgeInsets.only(
-              //     top: AppDimens.dimens_8,
-              //     left: AppDimens.dimens_14,
-              //     right: AppDimens.dimens_14,
-              //   ),
-              //   child: DateViewSelector(
-              //       selectedDate: widget.mEstimatesModel.bookingDetails!.date as DateTime,
-              //       onSelection: (String _selectedDate) {
-              //         // print(_selectedDate);
-              //
-              //        // value.onSelectDate(_selectedDate);
-              //       },
-              //
-              //   ),
-              // ),
-              // Container(
-              //   margin: const EdgeInsets.only(
-              //     top: AppDimens.dimens_15,
-              //     left: AppDimens.dimens_14,
-              //     right: AppDimens.dimens_14,
-              //   ),
-              //   child: Text(
-              //     "Time",
-              //     style: AppStyle.textViewStyleNormalSubtitle2(
-              //         context: context,
-              //         color: AppColors.colorBlack2,
-              //         fontWeightDelta: 1,
-              //         fontSizeDelta: 0),
-              //   ),
-              // ),
-          //     Container(
-          //       height: AppDimens.dimens_50,
-          //       alignment: Alignment.centerLeft,
-          //       margin: const EdgeInsets.only(
-          //         top: AppDimens.dimens_10,
-          //         left: AppDimens.dimens_14,
-          //         right: AppDimens.dimens_14,
-          //       ),
-          //       child: TimeViewSelector(
-          //           selectedDate: value.selectedDate,
-          //           mTimeModel: value.mTimeModel,
-          //           onSelection: (TimeModel mtimeModel_) =>
-          //               value.onSelectTime(mtimeModel_)),
-          //     ),
+// Text(widget.mEstimatesModel.bookingDetails!.date.toString()),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: AppDimens.dimens_8,
+                  left: AppDimens.dimens_14,
+                  right: AppDimens.dimens_14,
+                ),
+                child: DateViewSelector(
+                    selectedDate: DateTime.parse(widget.mEstimatesModel.bookingDetails!.date!),
+                    onSelection: (String _selectedDate) {
+                      // print(_selectedDate);
+
+                     // value.onSelectDate(_selectedDate);
+                    },
+
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: AppDimens.dimens_15,
+                  left: AppDimens.dimens_14,
+                  right: AppDimens.dimens_14,
+                ),
+                child: Text(
+                  "Time",
+                  style: AppStyle.textViewStyleNormalSubtitle2(
+                      context: context,
+                      color: AppColors.colorBlack2,
+                      fontWeightDelta: 1,
+                      fontSizeDelta: 0),
+                ),
+              ),
+              Container(
+                height: AppDimens.dimens_50,
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(
+                  top: AppDimens.dimens_10,
+                  left: AppDimens.dimens_14,
+                  right: AppDimens.dimens_14,
+                ),
+                child: TimeViewSelector(
+                    selectedDate: widget.mEstimatesModel.bookingDetails!.time!,//value.selectedDate,
+                    //mTimeModel: value.mTimeModel,
+                    onSelection: (TimeModel mtimeModel_)
+                    =>
+                        value.onSelectTime(mtimeModel_)),
+              ),
           //     //Upload image or Take a photo
-          //     Container(
-          //       margin: const EdgeInsets.only(
-          //         top: AppDimens.dimens_15,
-          //         left: AppDimens.dimens_14,
-          //         right: AppDimens.dimens_14,
-          //       ),
-          //       child: Row(
-          //         children: [
-          //           Flexible(
-          //             child: Text(
-          //               Constants.STR_IMAGE_MSG,
-          //               style: AppStyle.textViewStyleNormalSubtitle2(
-          //                   context: context,
-          //                   color: AppColors.colorBlack2,
-          //                   fontWeightDelta: 1,
-          //                   fontSizeDelta: 0),
-          //             ),
-          //           ),
-          //           const SizedBox(width: AppDimens.dimens_5),
-          //           Flexible(
-          //             child: Text(
-          //               Constants.STR_MAX_SIZE,
-          //               style: AppStyle.textViewStyleNormalSubtitle2(
-          //                   context: context,
-          //                   color: AppColors.colorBlack2,
-          //                   fontWeightDelta: -1,
-          //                   fontSizeDelta: -4),
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //     Container(
-          //       margin: const EdgeInsets.only(
-          //         top: AppDimens.dimens_10,
-          //         left: AppDimens.dimens_14,
-          //         right: AppDimens.dimens_14,
-          //       ),
-          //       child: SingleChildScrollView(
-          //         scrollDirection: Axis.horizontal,
-          //         child: Row(
-          //           children: [
-          //             Visibility(
-          //               child: Container(
-          //                 margin:
-          //                 const EdgeInsets.only(right: AppDimens.dimens_15),
-          //                 height: AppDimens.dimens_100,
-          //                 width: AppDimens.dimens_100,
-          //                 child: Stack(
-          //                   alignment: Alignment.center,
-          //                   children: [
-          //                     Container(
-          //                       decoration: BoxDecoration(
-          //                         borderRadius:
-          //                         BorderRadius.circular(AppDimens.dimens_5),
-          //                       ),
-          //                       height: AppDimens.dimens_100,
-          //                       width: AppDimens.dimens_100,
-          //                       child: ImageView(strImage: value.pickedImage),
-          //                     ),
-          //                     Positioned(
-          //                         right: 0,
-          //                         top: 0,
-          //                         child: InkWell(
-          //                           child: const Icon(Icons.close),
-          //                           onTap: () {},
-          // //value.onDeleteImage(),
-          //                         ))
-          //                   ],
-          //                 ),
-          //               ),
-          //               visible: Global.checkNull(value.pickedImage),
-          //             ),
-          //             Visibility(
-          //                 visible: !Global.checkNull(value.pickedImage),
-          //                 child: Row(
-          //                   children: [
-          //                     MediaButton(
-          //                       strImage: AppImages.ic_cloud,
-          //                       onPressed: () {
-          //                       //  value.getImage(ImageSource.gallery);
-          //                       },
-          //                     ),
-          //                     Container(
-          //                       margin: const EdgeInsets.only(
-          //                           left: AppDimens.dimens_15),
-          //                       child: MediaButton(
-          //                         strImage: AppImages.ic_camera,
-          //                         onPressed: () {
-          //                          // value.getImage(ImageSource.camera);
-          //                         },
-          //                       ),
-          //                     ),
-          //                   ],
-          //                 ))
-          //           ],
-          //         ),
-          //       ),
-          //     ),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: AppDimens.dimens_15,
+                  left: AppDimens.dimens_14,
+                  right: AppDimens.dimens_14,
+                ),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        Constants.STR_IMAGE_MSG,
+                        style: AppStyle.textViewStyleNormalSubtitle2(
+                            context: context,
+                            color: AppColors.colorBlack2,
+                            fontWeightDelta: 1,
+                            fontSizeDelta: 0),
+                      ),
+                    ),
+                    const SizedBox(width: AppDimens.dimens_5),
+                    Flexible(
+                      child: Text(
+                        Constants.STR_MAX_SIZE,
+                        style: AppStyle.textViewStyleNormalSubtitle2(
+                            context: context,
+                            color: AppColors.colorBlack2,
+                            fontWeightDelta: -1,
+                            fontSizeDelta: -4),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: AppDimens.dimens_10,
+                  left: AppDimens.dimens_14,
+                  right: AppDimens.dimens_14,
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      Visibility(
+                        child: Container(
+                          margin:
+                          const EdgeInsets.only(right: AppDimens.dimens_15),
+                          height: AppDimens.dimens_100,
+                          width: AppDimens.dimens_100,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(AppDimens.dimens_5),
+                                ),
+                                height: AppDimens.dimens_100,
+                                width: AppDimens.dimens_100,
+                                child: ImageView(strImage: value.pickedImage),
+                              ),
+                              Positioned(
+                                  right: 0,
+                                  top: 0,
+                                  child: InkWell(
+                                    child: const Icon(Icons.close),
+                                    onTap: ()=>
+          value.onDeleteImage(),
+                                  ))
+                            ],
+                          ),
+                        ),
+                        visible: Global.checkNull(value.pickedImage),
+                      ),
+                      Visibility(
+                          visible: !Global.checkNull(value.pickedImage),
+                          child: Row(
+                            children: [
+                              MediaButton(
+                                strImage: AppImages.ic_cloud,
+                                onPressed: () {
+                                  value.getImage(ImageSource.gallery);
+                                },
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    left: AppDimens.dimens_15),
+                                child: MediaButton(
+                                  strImage: AppImages.ic_camera,
+                                  onPressed: () {
+                                    value.getImage(ImageSource.camera);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ))
+                    ],
+                  ),
+                ),
+              ),
             ],
           );
         });

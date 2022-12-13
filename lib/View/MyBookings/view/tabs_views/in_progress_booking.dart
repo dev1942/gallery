@@ -42,7 +42,8 @@ class InProgressFragment extends GetView<MyBookingsController> {
                     itemBuilder: (BuildContext contextM, index) {
                       List inProcgressList=snapshot.data!.result!.reversed.toList();
                       var data = inProcgressList[index];
-                      if(data.status=="inProgress"){  return
+                      if(data.status=="inProgress"){
+                        return
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6.0),
                           child: Card(

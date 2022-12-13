@@ -56,8 +56,6 @@ class EstimationDetailsPDFScreenState
     getEstimationDetails();
     super.initState();
     //getLocation();
-    print("------------------------------------dsatatas---------------");
-
     allBookingsModel = widget.allBookingsModel;
 
 
@@ -955,18 +953,19 @@ class EstimationDetailsPDFScreenState
           return CancelBookingDialogBox(
             isDecline: true,
             onTap: (String strReason) {
-              declineEstimation(allBookingsModel.id.toString());
-              // if (Global.checkNull(strReason)) {
-              //   declineEstimation(strReason);
-              //
-              //   // cancelEstimation(strReason);
-              // } else {
-              //   Global.showToastAlert(
-              //       context: context,
-              //       strTitle: "",
-              //       strMsg: AppAlert.ALERT_ENTER_FN,
-              //       toastType: TOAST_TYPE.toastError);
-              // }
+              if (Global.checkNull(strReason)) {
+               declineEstimation(
+                   id:
+                   allBookingsModel.id.toString(),
+              reason: strReason
+               );
+              } else {
+                Global.showToastAlert(
+                    context: context,
+                    strTitle: "",
+                    strMsg: AppAlert.ALERT_ENTER_FN,
+                    toastType: TOAST_TYPE.toastError);
+              }
             },
           );
         });
@@ -1020,7 +1019,7 @@ class EstimationDetailsPDFScreenState
     // });
   }
 
-  declineEstimation(String reason) async {
+  declineEstimation({required String reason,required String id}) async {
     setState(() {
       mShowData = ShowData.showLoading;
       // isShowLoader = true;
@@ -1028,7 +1027,8 @@ class EstimationDetailsPDFScreenState
 
     HashMap<String, Object> requestParams = HashMap();
 
-    requestParams['bookingID'] = reason;
+    requestParams['bookingID'] = id;
+    requestParams['declineReason'] = reason;
 
     var categories = await EstimatesRepo().declineEstimate(
         requestParams,);
@@ -1052,7 +1052,7 @@ class EstimationDetailsPDFScreenState
         mShowData = ShowData.showNoDataFound;
       });
       Get.back();
-      Get.find<EstimationListController>().getEstimation('submitted');
+      //Get.find<EstimationListController>().getEstimation('submitted');
     });
   }
 }
