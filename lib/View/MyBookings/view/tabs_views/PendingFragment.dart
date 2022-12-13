@@ -35,335 +35,335 @@ class PendingFragment extends GetView<MyBookingsController> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
-                    itemCount: snapshot.data?.result
-                        ?.where((element) =>
-                            element.status == "submitted" ||
-                            element.status == "pending")
-                        .length,
+                    itemCount:snapshot.data?.result!.length,
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     itemBuilder: (BuildContext contextM, index) {
-                      var data = snapshot.data!.result![index];
-                      print(  data.status);
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6.0),
-                        child: Card(
-                          elevation: AppDimens.dimens_8,
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(AppDimens.dimens_7),
-                          ),
-                          child: Container(
-                            padding: const EdgeInsets.only(
-                                top: 10,
-                                right: AppDimens.dimens_10,
-                                left: 5,
-                                bottom: 7),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  //Row left image and right data
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      //------------------ column Image  amd view booking-----------------
-                                      Column(
-                                        children: [
-                                          ImageWidget(
-                                              imagePath:
-                                                  data.source?.image?.first),
-                                          const SizedBox(
-                                            height: AppDimens.dimens_12,
-                                          ),
+                      List inProcgressList=snapshot.data!.result!.reversed.toList();
+                      var data = inProcgressList[index];
+                   if(data.status=="submitted" || data.status=="pending" ){
+                     return
+                       Padding(
+                         padding: const EdgeInsets.symmetric(vertical: 6.0),
+                         child: Card(
+                           elevation: AppDimens.dimens_8,
+                           shape: RoundedRectangleBorder(
+                             borderRadius:
+                             BorderRadius.circular(AppDimens.dimens_7),
+                           ),
+                           child: Container(
+                             padding: const EdgeInsets.only(
+                                 top: 10,
+                                 right: AppDimens.dimens_10,
+                                 left: 5,
+                                 bottom: 7),
+                             child: Column(
+                                 mainAxisAlignment: MainAxisAlignment.start,
+                                 children: [
+                                   //Row left image and right data
+                                   Row(
+                                     mainAxisAlignment:
+                                     MainAxisAlignment.spaceBetween,
+                                     children: [
+                                       //------------------ column Image  amd view booking-----------------
+                                       Column(
+                                         children: [
+                                           ImageWidget(
+                                               imagePath:
+                                               data.source?.image?.first),
+                                           const SizedBox(
+                                             height: AppDimens.dimens_12,
+                                           ),
 
-                                          /// onclick of view booking
-                                          InkWell(
-                                            child: Container(
-                                                child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 5.0),
-                                              child: Text(
-                                                Constants.TXT_VIEW_BOOKING,
-                                                style:
-                                                    AppStyle.textViewStyleSmall(
-                                                        context: context,
-                                                        color: AppColors
-                                                            .colorTextBlue2,
-                                                        fontSizeDelta: 0,
-                                                        fontWeightDelta: 0),
-                                              ),
-                                            )),
-                                            onTap: () {
+                                           /// onclick of view booking
+                                           InkWell(
+                                             child: Container(
+                                                 child: Padding(
+                                                   padding: const EdgeInsets.only(
+                                                       left: 5.0),
+                                                   child: Text(
+                                                     Constants.TXT_VIEW_BOOKING,
+                                                     style:
+                                                     AppStyle.textViewStyleSmall(
+                                                         context: context,
+                                                         color: AppColors
+                                                             .colorTextBlue2,
+                                                         fontSizeDelta: 0,
+                                                         fontWeightDelta: 0),
+                                                   ),
+                                                 )),
+                                             onTap: () {
 
-                                                     Get.to(ViewBookingEstimation(mEstimatesModel: data));
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                      //..........................right side data column
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                //---------------UserName
-                                                Expanded(
-                                                  child: UserNameWidget(
-                                                      userName:
-                                                          "${data.provider?.firstName?.toUpperCase()}"" "
-                                                          "${data.provider?.lastName?.toUpperCase()} "),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Textwidget(
-                                                    text: "Service Title: ",
-                                                    fontsize: 0,
-                                                    fontweight: 0),
-                                                Textwidget(
-                                                    text: data.source?.title ??
-                                                        "",
-                                                    fontsize: 0,
-                                                    fontweight: 0),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Textwidget(
-                                                    text: "Price :  ",
-                                                    fontsize: 0,
-                                                    fontweight: 0),
-                                                priceWidget("${data.source!.price}/hr"
-                                                    .toString()),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "Booking Date : ",
-                                                  style: AppStyle
-                                                      .textViewStyleSmall(
-                                                          context: context,
-                                                          color: AppColors
-                                                              .colorBlack,
-                                                          fontSizeDelta: -1,
-                                                          fontWeightDelta: 0),
-                                                ),
-                                                Text(
-                                                  getDate(data.createdAt
-                                                      !),
-                                                  style: AppStyle
-                                                      .textViewStyleSmall(
-                                                          context: context,
-                                                          color: AppColors
-                                                              .colorBlack,
-                                                          fontSizeDelta: -1,
-                                                          fontWeightDelta: 0),
-                                                ),
-                                              ],
-                                            ),
+                                               Get.to(ViewBookingEstimation(mEstimatesModel: data));
+                                             },
+                                           ),
+                                         ],
+                                       ),
+                                       //..........................right side data column
+                                       Expanded(
+                                         child: Column(
+                                           children: [
+                                             Row(
+                                               children: [
+                                                 //---------------UserName
+                                                 Expanded(
+                                                   child: UserNameWidget(
+                                                       userName:
+                                                       "${data.provider?.firstName?.toUpperCase()}"" "
+                                                           "${data.provider?.lastName?.toUpperCase()} "),
+                                                 ),
+                                               ],
+                                             ),
+                                             Row(
+                                               children: [
+                                                 Textwidget(
+                                                     text: "Service Title: ",
+                                                     fontsize: 0,
+                                                     fontweight: 0),
+                                                 Textwidget(
+                                                     text: data.source?.title ??
+                                                         "",
+                                                     fontsize: 0,
+                                                     fontweight: 0),
+                                               ],
+                                             ),
+                                             Row(
+                                               children: [
+                                                 Textwidget(
+                                                     text: "Price :  ",
+                                                     fontsize: 0,
+                                                     fontweight: 0),
+                                                 priceWidget("${data.source!.price}/hr"
+                                                     .toString()),
+                                               ],
+                                             ),
+                                             Row(
+                                               children: [
+                                                 Text(
+                                                   "Booking Date : ",
+                                                   style: AppStyle
+                                                       .textViewStyleSmall(
+                                                       context: context,
+                                                       color: AppColors
+                                                           .colorBlack,
+                                                       fontSizeDelta: -1,
+                                                       fontWeightDelta: 0),
+                                                 ),
+                                                 Text(
+                                                   getDate(data.bookingDetails!.date
+                                                   !),
+                                                   style: AppStyle
+                                                       .textViewStyleSmall(
+                                                       context: context,
+                                                       color: AppColors
+                                                           .colorBlack,
+                                                       fontSizeDelta: -1,
+                                                       fontWeightDelta: 0),
+                                                 ),
+                                               ],
+                                             ),
 
-                                            ///........... estimation and status row button
-                                            const SizedBox(
-                                              height: 12,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              //     : MainAxisAlignment.center,
-                                              children: [
-                                                ///on click view estimation
-                                                InkWell(
-                                                  child: Container(
-                                                      width: 130,
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 6.0,
-                                                          vertical: 5.0),
-                                                      decoration: AppViews
-                                                          .getGradientBoxDecoration(
-                                                              mBorderRadius: 2),
-                                                      //.....estimation staus............
-                                                      child: Center(
-                                                        child: Text(
-                                                          data.status==
-                                                                  "submitted"
-                                                              ? "View Estimation"
-                                                              : "Requested Estimation"
-                                                                  .toUpperCase(),
-                                                          style: TextStyle(
-                                                              color: AppColors
-                                                                  .colorWhite,
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-                                                      )),
-                                                  onTap: () {
-                                                   if( data.status==
-                                                       "submitted"){
-                                                     //items data isEmpty or Not
-                                                    if(snapshot.data!.result!.first.estimation!.items!.isNotEmpty){
-                                                      Get.to(EstimationDetailsPDFScreen(allBookingsModel: data));
-                                                    }else{
-                                                      Global.showToastAlert(
-                                                                  context: Get.overlayContext!,
-                                                                  strTitle: "",
-                                                                  strMsg:"Estimation Data Uncomplete",
-                                                                  toastType: TOAST_TYPE.toastInfo);
-                                                    }
-                                                     //
-                                                   }
-                                                  },
-                                                ),
-                                                const SizedBox(
-                                                  width: 3,
-                                                ),
+                                             ///........... estimation and status row button
+                                             const SizedBox(
+                                               height: 12,
+                                             ),
+                                             Row(
+                                               mainAxisAlignment:
+                                               MainAxisAlignment.start,
+                                               //     : MainAxisAlignment.center,
+                                               children: [
+                                                 ///on click view estimation
+                                                 InkWell(
+                                                   child: Container(
+                                                       width: 130,
+                                                       padding: const EdgeInsets
+                                                           .symmetric(
+                                                           horizontal: 6.0,
+                                                           vertical: 5.0),
+                                                       decoration: AppViews
+                                                           .getGradientBoxDecoration(
+                                                           mBorderRadius: 2),
+                                                       //.....estimation staus............
+                                                       child: Center(
+                                                         child: Text(
+                                                           data.status==
+                                                               "submitted"
+                                                               ? "View Estimation"
+                                                               : "Requested Estimation"
+                                                               .toUpperCase(),
+                                                           style: TextStyle(
+                                                               color: AppColors
+                                                                   .colorWhite,
+                                                               fontSize: 10,
+                                                               fontWeight:
+                                                               FontWeight
+                                                                   .w500),
+                                                         ),
+                                                       )),
+                                                   onTap: () {
+                                                     if( data.status==
+                                                         "submitted"){
+                                                       //items data isEmpty or Not
+                                                       if(snapshot.data!.result!.first.estimation!.items!.isNotEmpty){
+                                                         Get.to(EstimationDetailsPDFScreen(allBookingsModel: data));
+                                                       }else{
+                                                         Global.showToastAlert(
+                                                             context: Get.overlayContext!,
+                                                             strTitle: "",
+                                                             strMsg:"Estimation Data Uncomplete",
+                                                             toastType: TOAST_TYPE.toastInfo);
+                                                       }
+                                                       //
+                                                     }
+                                                   },
+                                                 ),
+                                                 const SizedBox(
+                                                   width: 3,
+                                                 ),
 
-                                                /// ofer Status button
-                                                data.estimation
-                                                            ?.isOfferCreated ==
-                                                        true
-                                                    ? InkWell(
-                                                        child: Container(
-                                                          width: 110,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal:
-                                                                      6.0,
-                                                                  vertical:
-                                                                      5.0),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: data.estimation
-                                                                        ?.offerStatus ==
-                                                                    "accepted"
-                                                                ? Colors.green
-                                                                : data.estimation
-                                                                            ?.offerStatus ==
-                                                                        "declined"
-                                                                    ? Colors
-                                                                        .pink
-                                                                    : Colors
-                                                                        .yellow,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        2.0),
-                                                          ),
-                                                          child: Center(
-                                                            child: Text(
-                                                              "Offer ${data.estimation?.offerStatus}"
-                                                                      .toUpperCase() ??
-                                                                  "",
-                                                              style: TextStyle(
-                                                                color: data.estimation
-                                                                            ?.offerStatus ==
-                                                                        "accepted"
-                                                                    ? AppColors
-                                                                        .colorWhite
-                                                                    : Colors
-                                                                        .black,
-                                                                fontSize: 10,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        onTap: () {
-                                                          showDialog<String>(
-                                                              context: context,
-                                                              builder: (BuildContext
-                                                                      context) =>
-                                                                  AlertDialog(
-                                                                    title:
-                                                                        const Text(
-                                                                      ' Offering Amount ',
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center,
-                                                                      style: TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight.bold),
-                                                                    ),
-                                                                    content:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .min,
-                                                                      children: [
-                                                                        Text(
-                                                                          "${data.estimation?.grandTotal} AED",
-                                                                          style: AppStyle.textViewStyleSmall(
-                                                                              context: context,
-                                                                              color: AppColors.colorBlack,
-                                                                              fontSizeDelta: 8,
-                                                                              fontWeightDelta: 2),
-                                                                        ),
-                                                                        InkWell(
-                                                                          onTap:
-                                                                              () {
-                                                                            Navigator.pop(context);
-                                                                          },
-                                                                          child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.all(8.0),
-                                                                            child:
-                                                                                Container(
-                                                                              decoration: BoxDecoration(
-                                                                                gradient: LinearGradient(
-                                                                                  begin: Alignment.topCenter,
-                                                                                  end: Alignment.bottomCenter,
-                                                                                  colors: [
-                                                                                    AppColors.colorBlueEnd,
-                                                                                    AppColors.colorBlueStart,
-                                                                                  ],
-                                                                                ),
-                                                                                borderRadius: BorderRadius.circular(5.0),
-                                                                              ),
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
-                                                                                child: Text('Cancel', textAlign: TextAlign.center, style: AppStyle.textViewStyleNormalButton(context: context, color: Colors.white, fontSizeDelta: 0, fontWeightDelta: 2)),
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ));
+                                                 /// ofer Status button
+                                                 data.estimation
+                                                     ?.isOfferCreated ==
+                                                     true
+                                                     ? InkWell(
+                                                   child: Container(
+                                                     width: 110,
+                                                     padding:
+                                                     const EdgeInsets
+                                                         .symmetric(
+                                                         horizontal:
+                                                         6.0,
+                                                         vertical:
+                                                         5.0),
+                                                     decoration:
+                                                     BoxDecoration(
+                                                       color: data.estimation
+                                                           ?.offerStatus ==
+                                                           "accepted"
+                                                           ? Colors.green
+                                                           : data.estimation
+                                                           ?.offerStatus ==
+                                                           "declined"
+                                                           ? Colors
+                                                           .pink
+                                                           : Colors
+                                                           .yellow,
+                                                       borderRadius:
+                                                       BorderRadius
+                                                           .circular(
+                                                           2.0),
+                                                     ),
+                                                     child: Center(
+                                                       child: Text(
+                                                         "Offer ${data.estimation?.offerStatus}"
+                                                             .toUpperCase() ??
+                                                             "",
+                                                         style: TextStyle(
+                                                           color: data.estimation
+                                                               ?.offerStatus ==
+                                                               "accepted"
+                                                               ? AppColors
+                                                               .colorWhite
+                                                               : Colors
+                                                               .black,
+                                                           fontSize: 10,
+                                                           fontWeight:
+                                                           FontWeight
+                                                               .w500,
+                                                         ),
+                                                       ),
+                                                     ),
+                                                   ),
+                                                   onTap: () {
+                                                     showDialog<String>(
+                                                         context: context,
+                                                         builder: (BuildContext
+                                                         context) =>
+                                                             AlertDialog(
+                                                               title:
+                                                               const Text(
+                                                                 ' Offering Amount ',
+                                                                 textAlign:
+                                                                 TextAlign
+                                                                     .center,
+                                                                 style: TextStyle(
+                                                                     fontWeight:
+                                                                     FontWeight.bold),
+                                                               ),
+                                                               content:
+                                                               Column(
+                                                                 mainAxisSize:
+                                                                 MainAxisSize
+                                                                     .min,
+                                                                 children: [
+                                                                   Text(
+                                                                     "${data.estimation?.grandTotal} AED",
+                                                                     style: AppStyle.textViewStyleSmall(
+                                                                         context: context,
+                                                                         color: AppColors.colorBlack,
+                                                                         fontSizeDelta: 8,
+                                                                         fontWeightDelta: 2),
+                                                                   ),
+                                                                   InkWell(
+                                                                     onTap:
+                                                                         () {
+                                                                       Navigator.pop(context);
+                                                                     },
+                                                                     child:
+                                                                     Padding(
+                                                                       padding:
+                                                                       const EdgeInsets.all(8.0),
+                                                                       child:
+                                                                       Container(
+                                                                         decoration: BoxDecoration(
+                                                                           gradient: LinearGradient(
+                                                                             begin: Alignment.topCenter,
+                                                                             end: Alignment.bottomCenter,
+                                                                             colors: [
+                                                                               AppColors.colorBlueEnd,
+                                                                               AppColors.colorBlueStart,
+                                                                             ],
+                                                                           ),
+                                                                           borderRadius: BorderRadius.circular(5.0),
+                                                                         ),
+                                                                         child: Padding(
+                                                                           padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
+                                                                           child: Text('Cancel', textAlign: TextAlign.center, style: AppStyle.textViewStyleNormalButton(context: context, color: Colors.white, fontSizeDelta: 0, fontWeightDelta: 2)),
+                                                                         ),
+                                                                       ),
+                                                                     ),
+                                                                   ),
+                                                                 ],
+                                                               ),
+                                                             ));
 
-                                                          if (data.estimation?.offerStatus==
-                                                              'submitted') {
+                                                     if (data.estimation?.offerStatus==
+                                                         'submitted') {
 
-                                                            gotoViewEstimation(
-                                                               data,
-                                                                false);
-                                                          }
-                                                        },
-                                                      )
-                                                    : SizedBox()
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  //buttons
+                                                       gotoViewEstimation(
+                                                           data,
+                                                           false);
+                                                     }
+                                                   },
+                                                 )
+                                                     : SizedBox()
+                                               ],
+                                             ),
+                                           ],
+                                         ),
+                                       ),
+                                     ],
+                                   ),
+                                   //buttons
 
-                                  const SizedBox(height: 3.0),
-                                ]),
-                          ),
-                        ),
-                      );
-                      ///////////////////////////////// ////////////////////////////////////////////////////////////////
+                                   const SizedBox(height: 3.0),
+                                 ]),
+                           ),
+                         ),
+                       );
+                   }else{
+                     return SizedBox();
+                   }
                     },
                   );
                 } else if (snapshot.hasError) {
