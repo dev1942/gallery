@@ -95,15 +95,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                               ),
                                             )),
                                             onTap: () {
-                                              //Navigator.push(
-                                              //  context,
-                                              // MaterialPageRoute(
-                                              //     builder: (context) =>
-                                              //         ViewBookingEstimation(
-                                              //           //ViewEstimation(
-                                              //           mEstimatesModel:
-                                              //           mEstimatesModel, screen: '',
-                                              //         )));
+
+                                                     Get.to(ViewBookingEstimation(mEstimatesModel: data));
                                             },
                                           ),
                                         ],
@@ -118,8 +111,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                 Expanded(
                                                   child: UserNameWidget(
                                                       userName:
-                                                          "${data.provider?.firstName}"
-                                                          "${data.provider?.lastName} "),
+                                                          "${data.provider?.firstName?.toUpperCase()}"" "
+                                                          "${data.provider?.lastName?.toUpperCase()} "),
                                                 ),
                                               ],
                                             ),

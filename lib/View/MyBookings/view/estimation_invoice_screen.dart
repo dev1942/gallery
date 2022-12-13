@@ -221,435 +221,351 @@ class EstimationDetailsPDFScreenState
       ),
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.getMainBgColor(),
-      body: Column(
-        // mainAxisAlignment: MainAxisAlignment.start//,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // profile pic and name
-          Container(
-            // margin: const EdgeInsets.only(
-            //     left: 0, top: AppDimens.dimens_10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(Constants.TXT_CUSTOMER_ESTIMATION.toUpperCase(),
-                              style: AppStyle.textViewStyleNormalBodyText2(
-                                  context: context,
-                                  color: AppColors.colorBlack,
-                                  fontWeightDelta: 1,
-                                  fontSizeDelta: 2)),
-                          Text(Constants.TXT_TAX_INVOICE,
-                              style: AppStyle.textViewStyleSmall(
-                                  context: context,
-                                  color: AppColors.colorBlack,
-                                  fontWeightDelta: 0,
-                                  fontSizeDelta: -1)),
-                        ],
-                      ),
-                      Container(
-                          child: Row(
-                        children: [
-                          const Icon(Icons.download_rounded,
-                              size: AppDimens.dimens_17),
-                          const SizedBox(
-                            width: AppDimens.dimens_3,
-                          ),
-                          InkWell(
-                            child: Text(Constants.TXT_DOWNLOAD_INVOICE,
+      body: SingleChildScrollView(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start//,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // profile pic and name
+            Container(
+              // margin: const EdgeInsets.only(
+              //     left: 0, top: AppDimens.dimens_10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(Constants.TXT_CUSTOMER_ESTIMATION.toUpperCase(),
+                                style: AppStyle.textViewStyleNormalBodyText2(
+                                    context: context,
+                                    color: AppColors.colorBlack,
+                                    fontWeightDelta: 1,
+                                    fontSizeDelta: 2)),
+                            Text(Constants.TXT_TAX_INVOICE,
                                 style: AppStyle.textViewStyleSmall(
                                     context: context,
                                     color: AppColors.colorBlack,
                                     fontWeightDelta: 0,
-                                    fontSizeDelta: 0)),
-                            onTap: () {},
-                          )
-                        ],
-                      )),
-                    ],
+                                    fontSizeDelta: -1)),
+                          ],
+                        ),
+                        Container(
+                            child: Row(
+                          children: [
+                            const Icon(Icons.download_rounded,
+                                size: AppDimens.dimens_17),
+                            const SizedBox(
+                              width: AppDimens.dimens_3,
+                            ),
+                            InkWell(
+                              child: Text(Constants.TXT_DOWNLOAD_INVOICE,
+                                  style: AppStyle.textViewStyleSmall(
+                                      context: context,
+                                      color: AppColors.colorBlack,
+                                      fontWeightDelta: 0,
+                                      fontSizeDelta: 0)),
+                              onTap: () {},
+                            )
+                          ],
+                        )),
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(
-                    top: AppDimens.dimens_5,
-                    bottom: AppDimens.dimens_5,
+                  Container(
+                    margin: const EdgeInsets.only(
+                      top: AppDimens.dimens_5,
+                      bottom: AppDimens.dimens_5,
+                    ),
+                    height: AppDimens.dimens_30,
+                    color: AppColors.colorBlue2,
                   ),
-                  height: AppDimens.dimens_30,
-                  color: AppColors.colorBlue2,
-                ),
 
-                SizedBox(height: 10.0),
-                //-----------invoice id ,invoice date ,
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.start,
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(Constants.TXT_CUSTOMER_NAME,
-                          style: AppStyle.textViewStyleSmall(
-                              context: context,
-                              color: AppColors.colorBlack,
-                              fontWeightDelta: 1,
-                              fontSizeDelta: 1)),
-                      Text("${allBookingsModel.customer!.firstName}  ${allBookingsModel.customer!.lastName}",
-                          style: AppStyle.textViewStyleSmall(
-                              context: context,
-                              color: AppColors.colorBlack2,
-                              fontWeightDelta: -1,
-                              fontSizeDelta: -1)),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 5.0),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    children: [
-                      Text("Invoice Number :",
-                          style: AppStyle.textViewStyleSmall(
-                              context: context,
-                              color: AppColors.colorBlack,
-                              fontWeightDelta: 0,
-                              fontSizeDelta: -2)),
-                      Text(allBookingsModel.estimation!.invoiceNumber.toString(),
-                          style: AppStyle.textViewStyleSmall(
-                              context: context,
-                              color: AppColors.colorBlack2,
-                              fontWeightDelta: 0,
-                              fontSizeDelta: -2)),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 5.0),
-                Row(
-
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                  SizedBox(height: 10.0),
+                  //-----------invoice id ,invoice date ,
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      // crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(Constants.TXT_INVOICE_DATE,
+                        Text(Constants.TXT_CUSTOMER_NAME,
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: AppColors.colorBlack,
+                                fontWeightDelta: 1,
+                                fontSizeDelta: 1)),
+                        Text("${allBookingsModel.customer!.firstName}  ${allBookingsModel.customer!.lastName}",
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: AppColors.colorBlack2,
+                                fontWeightDelta: -1,
+                                fontSizeDelta: -1)),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 5.0),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Row(
+                      children: [
+                        Text("Invoice Number :",
                             style: AppStyle.textViewStyleSmall(
                                 context: context,
                                 color: AppColors.colorBlack,
                                 fontWeightDelta: 0,
                                 fontSizeDelta: -2)),
-                        Text(allBookingsModel.estimation!.createdAt!.substring(0,10),
+                        Text(allBookingsModel.estimation!.invoiceNumber.toString(),
                             style: AppStyle.textViewStyleSmall(
                                 context: context,
                                 color: AppColors.colorBlack2,
                                 fontWeightDelta: 0,
                                 fontSizeDelta: -2)),
-                      ],
-                    )
-                  ],
-                ),
-                //------------------end------------
-              ],
-            ),
-          ),
-
-          Container(
-            margin: const EdgeInsets.only(top: AppDimens.dimens_14),
-            decoration: BoxDecoration(
-              border: Border.all(
-                  width: 1, color: AppColors.colorBlack.withOpacity(0.2)),
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(AppDimens.dimens_5),
-                  topRight: Radius.circular(AppDimens.dimens_5)),
-            ),
-            child: Table(
-
-              border: TableBorder.symmetric(
-                inside: BorderSide(width: 1, color: mBorderColor),
-              ),
-              children:
-                  //alTableRow,
-                  [
-                /*-------------------------------Invoice Title----------------------------- */
-                TableRow(
-                  decoration: BoxDecoration(color: AppColors.colorBlack3),
-                  children: [
-                    TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-                        child: Container(
-                          margin:
-                              const EdgeInsets.only(left: AppDimens.dimens_3),
-                          alignment: Alignment.centerLeft,
-                          child: Text(Constants.TXT_TITLE,
-                              style: AppStyle.textViewStyleSmall(
-                                  context: context,
-                                  color: AppColors.colorBlack2,
-                                  fontWeightDelta: 0,
-                                  fontSizeDelta: -2)),
-                          height: AppDimens.dimens_25,
-                        )),
-
-                    /*-------------------------------Invoice Description--------------------------- */
-                    TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-                        child: Container(
-                          margin:
-                              const EdgeInsets.only(left: AppDimens.dimens_3),
-                          alignment: Alignment.centerLeft,
-                          child: Text(Constants.TXT_DISCRIPTION,
-                              style: AppStyle.textViewStyleSmall(
-                                  context: context,
-                                  color: AppColors.colorBlack2,
-                                  fontWeightDelta: 0,
-                                  fontSizeDelta: -2)),
-                          height: AppDimens.dimens_25,
-                        )),
-                    /*-------------------------------Invoice Qty--------------------------- */
-
-                    TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: Text(Constants.TXT_QTY,
-                              style: AppStyle.textViewStyleSmall(
-                                  context: context,
-                                  color: AppColors.colorBlack2,
-                                  fontWeightDelta: 0,
-                                  fontSizeDelta: -2)),
-                          height: AppDimens.dimens_25,
-                        )),
-                    /*-------------------------------Invoice price--------------------------- */
-
-                    TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: Text(Constants.TXT_PRICE,
-                              style: AppStyle.textViewStyleSmall(
-                                  context: context,
-                                  color: AppColors.colorBlack2,
-                                  fontWeightDelta: 0,
-                                  fontSizeDelta: -2)),
-                          height: AppDimens.dimens_25,
-                        )),
-                    /*-------------------------------Invoice Amount--------------------------- */
-
-                    TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: Text(Constants.TXT_AMOUNT,
-                              style: AppStyle.textViewStyleSmall(
-                                  context: context,
-                                  color: AppColors.colorBlack2,
-                                  fontWeightDelta: 0,
-                                  fontSizeDelta: -2)),
-                          height: AppDimens.dimens_25,
-                        )),
-                  ],
-                ),
-
-                    /*------------------------------values of Title Description Qty Price Amount--------------------------*/
-                    TableRow(
-                      // decoration: BoxDecoration(color: AppColors.colorBlack3),
-                      children: [
-                        TableCell(
-                            verticalAlignment: TableCellVerticalAlignment.middle,
-                            child: Container(
-                              margin:
-                               EdgeInsets.only(left: AppDimens.dimens_3),
-                              alignment: Alignment.centerLeft,
-                              child: Text( allBookingsModel.estimation!.items!.first.title.toString(),
-                                  style: AppStyle.textViewStyleSmall(
-                                      context: context,
-                                      color: AppColors.colorBlack2,
-                                      fontWeightDelta: 0,
-                                      fontSizeDelta: -2)),
-                              //height: AppDimens.dimens_25,
-                            )),
-
-                        /*-------------------------------Invoice Description--------------------------- */
-                        TableCell(
-                            verticalAlignment: TableCellVerticalAlignment.middle,
-                            child: Container(
-                              margin:
-                              const EdgeInsets.only(left: AppDimens.dimens_3),
-                              alignment: Alignment.centerLeft,
-                              child: Text(allBookingsModel.estimation!.items!.first.description.toString(),
-                                  style: AppStyle.textViewStyleSmall(
-                                      context: context,
-                                      color: AppColors.colorBlack2,
-                                      fontWeightDelta: 0,
-                                      fontSizeDelta: -2)),
-                              //height: AppDimens.dimens_25,
-                            )),
-                        /*-------------------------------Invoice Qty--------------------------- */
-
-                        TableCell(
-                            verticalAlignment: TableCellVerticalAlignment.middle,
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Text(allBookingsModel.estimation!.items!.first.quantity.toString(),
-                                  style: AppStyle.textViewStyleSmall(
-                                      context: context,
-                                      color: AppColors.colorBlack2,
-                                      fontWeightDelta: 0,
-                                      fontSizeDelta: -2)),
-                              height: AppDimens.dimens_25,
-                            )),
-                        /*-------------------------------Invoice price--------------------------- */
-
-                        TableCell(
-                            verticalAlignment: TableCellVerticalAlignment.middle,
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Text(allBookingsModel.estimation!.items!.first.price.toString(),
-                                  style: AppStyle.textViewStyleSmall(
-                                      context: context,
-                                      color: AppColors.colorBlack2,
-                                      fontWeightDelta: 0,
-                                      fontSizeDelta: -2)),
-                              height: AppDimens.dimens_25,
-                            )),
-                        /*-------------------------------Invoice Amount--------------------------- */
-
-                        TableCell(
-                            verticalAlignment: TableCellVerticalAlignment.middle,
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Text(allBookingsModel.estimation!.items!.first.amount.toString(),
-                                  style: AppStyle.textViewStyleSmall(
-                                      context: context,
-                                      color: AppColors.colorBlack2,
-                                      fontWeightDelta: 0,
-                                      fontSizeDelta: -2)),
-                              height: AppDimens.dimens_25,
-                            )),
                       ],
                     ),
-              ],
-              columnWidths: const {
-                //0: FlexColumnWidth(2),
-                1: FlexColumnWidth(2),
-                //2: FlexColumnWidth(2),
-                //3: FlexColumnWidth(2),
-              },
-            ),
-          ),
-          /*-----------------------------------------Table-----------------------*/
-          Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.only(left: size.width / 4),
-            child: Table(
-              border: TableBorder(
-                left: BorderSide(width: 1, color: mBorderColor),
-                right: BorderSide(width: 1, color: mBorderColor),
-                bottom: BorderSide(width: 1, color: mBorderColor),
-                horizontalInside: BorderSide(width: 1, color: mBorderColor),
-                verticalInside: BorderSide(width: 1, color: mBorderColor),
+                  ),
+                  SizedBox(height: 5.0),
+                  Row(
+
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(Constants.TXT_INVOICE_DATE,
+                              style: AppStyle.textViewStyleSmall(
+                                  context: context,
+                                  color: AppColors.colorBlack,
+                                  fontWeightDelta: 0,
+                                  fontSizeDelta: -2)),
+                          Text(allBookingsModel.estimation!.createdAt!.substring(0,10),
+                              style: AppStyle.textViewStyleSmall(
+                                  context: context,
+                                  color: AppColors.colorBlack2,
+                                  fontWeightDelta: 0,
+                                  fontSizeDelta: -2)),
+                        ],
+                      )
+                    ],
+                  ),
+                  //------------------end------------
+                ],
               ),
-              children: [
-                TableRow(children: [
-                  TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text(Constants.TXT_SUB_TOTAL,
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: AppColors.colorBlack2,
-                                fontWeightDelta: 0,
-                                fontSizeDelta: -2)),
-                        height: AppDimens.dimens_25,
-                      )),
-                  TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                            allBookingsModel.estimation!.subTotal
-                                .toString(),
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: AppColors.colorBlack2,
-                                fontWeightDelta: 0,
-                                fontSizeDelta: -2)),
-                        height: AppDimens.dimens_25,
-                      )),
-                ]),
-                /* TableRow(children: [
-                  TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text(Constants.TXT_DISCOUNT,
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: AppColors.colorBlack2,
-                                fontWeightDelta: 0,
-                                fontSizeDelta: -2)),
-                        height: AppDimens.dimens_25,
-                      )),
-                  // TableCell(
-                  //     verticalAlignment: TableCellVerticalAlignment.middle,
-                  //     child: Container(
-                  //       alignment: Alignment.center,
-                  //       child: Text(mEstimationDetailModel!.discount,
-                  //           style: AppStyle.textViewStyleSmall(
-                  //               context: context,
-                  //               color: AppColors.colorBlack2,
-                  //               fontWeightDelta: 0,
-                  //               fontSizeDelta: -2)),
-                  //       height: AppDimens.dimens_25,
-                  //     )),
-                ]),
-                */
-                TableRow(children: [
-                  TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text("Service Tax ( 5 %)",
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: AppColors.colorBlack2,
-                                fontWeightDelta: 0,
-                                fontSizeDelta: -2)),
-                        height: AppDimens.dimens_25,
-                      )),
-                  TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                            allBookingsModel.estimation!.serviceTax
-                                .toString(),
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: AppColors.colorBlack2,
-                                fontWeightDelta: 0,
-                                fontSizeDelta: -2)),
-                        height: AppDimens.dimens_25,
-                      )),
-                ]),
-                TableRow(
-                  decoration: BoxDecoration(color: AppColors.colorBlue2),
-                  children: [
+            ),
+
+            Container(
+              margin: const EdgeInsets.only(top: AppDimens.dimens_14),
+              decoration: BoxDecoration(
+                border: Border.all(
+                    width: 1, color: AppColors.colorBlack.withOpacity(0.2)),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(AppDimens.dimens_5),
+                    topRight: Radius.circular(AppDimens.dimens_5)),
+              ),
+              child: Table(
+
+                border: TableBorder.symmetric(
+                  inside: BorderSide(width: 1, color: mBorderColor),
+                ),
+                children:
+                    //alTableRow,
+                    [
+                  /*-------------------------------Invoice Title----------------------------- */
+                  TableRow(
+                    decoration: BoxDecoration(color: AppColors.colorBlack3),
+                    children: [
+                      TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child: Container(
+                            margin:
+                                const EdgeInsets.only(left: AppDimens.dimens_3),
+                            alignment: Alignment.centerLeft,
+                            child: Text(Constants.TXT_TITLE,
+                                style: AppStyle.textViewStyleSmall(
+                                    context: context,
+                                    color: AppColors.colorBlack2,
+                                    fontWeightDelta: 0,
+                                    fontSizeDelta: -2)),
+                            height: AppDimens.dimens_25,
+                          )),
+
+                      /*-------------------------------Invoice Description--------------------------- */
+                      TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child: Container(
+                            margin:
+                                const EdgeInsets.only(left: AppDimens.dimens_3),
+                            alignment: Alignment.centerLeft,
+                            child: Text(Constants.TXT_DISCRIPTION,
+                                style: AppStyle.textViewStyleSmall(
+                                    context: context,
+                                    color: AppColors.colorBlack2,
+                                    fontWeightDelta: 0,
+                                    fontSizeDelta: -2)),
+                            height: AppDimens.dimens_25,
+                          )),
+                      /*-------------------------------Invoice Qty--------------------------- */
+
+                      TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text(Constants.TXT_QTY,
+                                style: AppStyle.textViewStyleSmall(
+                                    context: context,
+                                    color: AppColors.colorBlack2,
+                                    fontWeightDelta: 0,
+                                    fontSizeDelta: -2)),
+                            height: AppDimens.dimens_25,
+                          )),
+                      /*-------------------------------Invoice price--------------------------- */
+
+                      TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text(Constants.TXT_PRICE,
+                                style: AppStyle.textViewStyleSmall(
+                                    context: context,
+                                    color: AppColors.colorBlack2,
+                                    fontWeightDelta: 0,
+                                    fontSizeDelta: -2)),
+                            height: AppDimens.dimens_25,
+                          )),
+                      /*-------------------------------Invoice Amount--------------------------- */
+
+                      TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text(Constants.TXT_AMOUNT,
+                                style: AppStyle.textViewStyleSmall(
+                                    context: context,
+                                    color: AppColors.colorBlack2,
+                                    fontWeightDelta: 0,
+                                    fontSizeDelta: -2)),
+                            height: AppDimens.dimens_25,
+                          )),
+                    ],
+                  ),
+
+                      /*------------------------------values of Title Description Qty Price Amount--------------------------*/
+                      TableRow(
+                        // decoration: BoxDecoration(color: AppColors.colorBlack3),
+                        children: [
+                          TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.middle,
+                              child: Container(
+                                margin:
+                                 EdgeInsets.only(left: AppDimens.dimens_3),
+                                alignment: Alignment.centerLeft,
+                                child: Text( allBookingsModel.estimation!.items!.first.title.toString(),
+                                    style: AppStyle.textViewStyleSmall(
+                                        context: context,
+                                        color: AppColors.colorBlack2,
+                                        fontWeightDelta: 0,
+                                        fontSizeDelta: -2)),
+                                //height: AppDimens.dimens_25,
+                              )),
+
+                          /*-------------------------------Invoice Description--------------------------- */
+                          TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.middle,
+                              child: Container(
+                                margin:
+                                const EdgeInsets.only(left: AppDimens.dimens_3),
+                                alignment: Alignment.centerLeft,
+                                child: Text(allBookingsModel.estimation!.items!.first.description.toString(),
+                                    style: AppStyle.textViewStyleSmall(
+                                        context: context,
+                                        color: AppColors.colorBlack2,
+                                        fontWeightDelta: 0,
+                                        fontSizeDelta: -2)),
+                                //height: AppDimens.dimens_25,
+                              )),
+                          /*-------------------------------Invoice Qty--------------------------- */
+
+                          TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.middle,
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Text(allBookingsModel.estimation!.items!.first.quantity.toString(),
+                                    style: AppStyle.textViewStyleSmall(
+                                        context: context,
+                                        color: AppColors.colorBlack2,
+                                        fontWeightDelta: 0,
+                                        fontSizeDelta: -2)),
+                                height: AppDimens.dimens_25,
+                              )),
+                          /*-------------------------------Invoice price--------------------------- */
+
+                          TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.middle,
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Text(allBookingsModel.estimation!.items!.first.price.toString(),
+                                    style: AppStyle.textViewStyleSmall(
+                                        context: context,
+                                        color: AppColors.colorBlack2,
+                                        fontWeightDelta: 0,
+                                        fontSizeDelta: -2)),
+                                height: AppDimens.dimens_25,
+                              )),
+                          /*-------------------------------Invoice Amount--------------------------- */
+
+                          TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.middle,
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Text(allBookingsModel.estimation!.items!.first.amount.toString(),
+                                    style: AppStyle.textViewStyleSmall(
+                                        context: context,
+                                        color: AppColors.colorBlack2,
+                                        fontWeightDelta: 0,
+                                        fontSizeDelta: -2)),
+                                height: AppDimens.dimens_25,
+                              )),
+                        ],
+                      ),
+                ],
+                columnWidths: const {
+                  //0: FlexColumnWidth(2),
+                  1: FlexColumnWidth(2),
+                  //2: FlexColumnWidth(2),
+                  //3: FlexColumnWidth(2),
+                },
+              ),
+            ),
+            /*-----------------------------------------Table-----------------------*/
+            Container(
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.only(left: size.width / 4),
+              child: Table(
+                border: TableBorder(
+                  left: BorderSide(width: 1, color: mBorderColor),
+                  right: BorderSide(width: 1, color: mBorderColor),
+                  bottom: BorderSide(width: 1, color: mBorderColor),
+                  horizontalInside: BorderSide(width: 1, color: mBorderColor),
+                  verticalInside: BorderSide(width: 1, color: mBorderColor),
+                ),
+                children: [
+                  TableRow(children: [
                     TableCell(
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child: Container(
                           alignment: Alignment.center,
-                          child: Text(Constants.TXT_TOTAL,
+                          child: Text(Constants.TXT_SUB_TOTAL,
                               style: AppStyle.textViewStyleSmall(
                                   context: context,
-                                  color: AppColors.colorWhite,
-                                  fontWeightDelta: 1,
+                                  color: AppColors.colorBlack2,
+                                  fontWeightDelta: 0,
                                   fontSizeDelta: -2)),
                           height: AppDimens.dimens_25,
                         )),
@@ -658,278 +574,364 @@ class EstimationDetailsPDFScreenState
                         child: Container(
                           alignment: Alignment.center,
                           child: Text(
-                              allBookingsModel.estimation!.grandTotal
+                              allBookingsModel.estimation!.subTotal
                                   .toString(),
                               style: AppStyle.textViewStyleSmall(
                                   context: context,
-                                  color: AppColors.colorWhite,
-                                  fontWeightDelta: 1,
+                                  color: AppColors.colorBlack2,
+                                  fontWeightDelta: 0,
                                   fontSizeDelta: -2)),
                           height: AppDimens.dimens_25,
                         )),
-                  ],
-                ),
-              ],
-              columnWidths: const {
-                0: FlexColumnWidth(3.5),
-                1: FlexColumnWidth(1),
-              },
-            ),
-          ),
-          Container(
-            alignment: Alignment.center,
-            margin: const EdgeInsets.only(top: AppDimens.dimens_20),
-            child: Text(Constants.TXT_THANKS_CONNECTING,
-                style: AppStyle.textViewStyleNormalBodyText2(
-                    context: context,
-                    color: AppColors.colorBlack,
-                    fontWeightDelta: 0,
-                    fontSizeDelta: 0)),
-            height: AppDimens.dimens_25,
-          ),
-          Container(
-            margin: const EdgeInsets.only(
-                top: AppDimens.dimens_20, bottom: AppDimens.dimens_20),
-            height: AppDimens.dimens_1,
-            color: AppColors.colorBorder,
-          ),
-          Container(
-            margin: const EdgeInsets.only(
-                bottom: AppDimens.dimens_20,
-                left: AppDimens.dimens_20,
-                right: AppDimens.dimens_20),
-            child: Row(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(right: AppDimens.dimens_10),
-                  child: Image.asset(
-                    AppImages.icSplashScreenIcon,
-                    height: AppDimens.dimens_50,
+                  ]),
+                  /* TableRow(children: [
+                    TableCell(
+                        verticalAlignment: TableCellVerticalAlignment.middle,
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Text(Constants.TXT_DISCOUNT,
+                              style: AppStyle.textViewStyleSmall(
+                                  context: context,
+                                  color: AppColors.colorBlack2,
+                                  fontWeightDelta: 0,
+                                  fontSizeDelta: -2)),
+                          height: AppDimens.dimens_25,
+                        )),
+                    // TableCell(
+                    //     verticalAlignment: TableCellVerticalAlignment.middle,
+                    //     child: Container(
+                    //       alignment: Alignment.center,
+                    //       child: Text(mEstimationDetailModel!.discount,
+                    //           style: AppStyle.textViewStyleSmall(
+                    //               context: context,
+                    //               color: AppColors.colorBlack2,
+                    //               fontWeightDelta: 0,
+                    //               fontSizeDelta: -2)),
+                    //       height: AppDimens.dimens_25,
+                    //     )),
+                  ]),
+                  */
+                  TableRow(children: [
+                    TableCell(
+                        verticalAlignment: TableCellVerticalAlignment.middle,
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Text("Service Tax ( 5 %)",
+                              style: AppStyle.textViewStyleSmall(
+                                  context: context,
+                                  color: AppColors.colorBlack2,
+                                  fontWeightDelta: 0,
+                                  fontSizeDelta: -2)),
+                          height: AppDimens.dimens_25,
+                        )),
+                    TableCell(
+                        verticalAlignment: TableCellVerticalAlignment.middle,
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                              allBookingsModel.estimation!.serviceTax
+                                  .toString(),
+                              style: AppStyle.textViewStyleSmall(
+                                  context: context,
+                                  color: AppColors.colorBlack2,
+                                  fontWeightDelta: 0,
+                                  fontSizeDelta: -2)),
+                          height: AppDimens.dimens_25,
+                        )),
+                  ]),
+                  TableRow(
+                    decoration: BoxDecoration(color: AppColors.colorBlue2),
+                    children: [
+                      TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text(Constants.TXT_TOTAL,
+                                style: AppStyle.textViewStyleSmall(
+                                    context: context,
+                                    color: AppColors.colorWhite,
+                                    fontWeightDelta: 1,
+                                    fontSizeDelta: -2)),
+                            height: AppDimens.dimens_25,
+                          )),
+                      TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                                allBookingsModel.estimation!.grandTotal
+                                    .toString(),
+                                style: AppStyle.textViewStyleSmall(
+                                    context: context,
+                                    color: AppColors.colorWhite,
+                                    fontWeightDelta: 1,
+                                    fontSizeDelta: -2)),
+                            height: AppDimens.dimens_25,
+                          )),
+                    ],
                   ),
-                ),
-                // Expanded(
-                //     child: Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   mainAxisAlignment: MainAxisAlignment.start,
-                //   children: [
-                //     Container(
-                //       alignment: Alignment.centerLeft,
-                //       child: Text("Otobucks",
-                //           style: AppStyle.textViewStyleSmall(
-                //               context: context,
-                //               color: AppColors.colorBlack,
-                //               fontWeightDelta: 1,
-                //               fontSizeDelta: -2)),
-                //     ),
-                //     Container(
-                //       alignment: Alignment.centerLeft,
-                //       child: Text("David anderson",
-                //           style: AppStyle.textViewStyleSmall(
-                //               context: context,
-                //               color: AppColors.colorBlack,
-                //               fontWeightDelta: 0,
-                //               fontSizeDelta: -4)),
-                //     ),
-                //     Container(
-                //       margin: const EdgeInsets.only(top: AppDimens.dimens_2),
-                //       alignment: Alignment.centerLeft,
-                //       child: Text("united arab emirates",
-                //           style: AppStyle.textViewStyleSmall(
-                //               context: context,
-                //               color: AppColors.colorBlack,
-                //               fontWeightDelta: 0,
-                //               fontSizeDelta: -4)),
-                //     )
-                //   ],
-                // )),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text("Contact information",
-                          style: AppStyle.textViewStyleSmall(
-                              context: context,
-                              color: AppColors.colorBlack,
-                              fontWeightDelta: 1,
-                              fontSizeDelta: -2)),
-                    ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text("Mobile: +971 1234567890",
-                          style: AppStyle.textViewStyleSmall(
-                              context: context,
-                              color: AppColors.colorBlack,
-                              fontWeightDelta: 0,
-                              fontSizeDelta: -4)),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: AppDimens.dimens_2),
-                      alignment: Alignment.centerLeft,
-                      child: Text("www.otobucks.com",
-                          style: AppStyle.textViewStyleSmall(
-                              context: context,
-                              color: AppColors.colorBlack,
-                              fontWeightDelta: 0,
-                              fontSizeDelta: -4)),
-                    )
-                  ],
-                ),
-              ],
+                ],
+                columnWidths: const {
+                  0: FlexColumnWidth(3.5),
+                  1: FlexColumnWidth(1),
+                },
+              ),
             ),
-          ),
-
-          Container(
-            alignment: Alignment.center,
-            margin: const EdgeInsets.only(
-                top: AppDimens.dimens_20,
-                bottom: AppDimens.dimens_20,
-                left: AppDimens.dimens_5,
-                right: AppDimens.dimens_5),
-            child: Row(
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: SizedBox(
-                    child: CustomButton(
-                        isGradient: true,
-                        isRoundBorder: true,
-                        fontColor: AppColors.colorWhite,
-                        fontSize: -1,
-                        // width: size.width / 1.5,
-                        height: AppDimens.dimens_38,
-                        onPressed: () {
-
-                          if(widget.allBookingsModel.estimation?.offerStatus=="pending"){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>  CheckoutScreen(
-                                      isPartialPay: true,
-                                     bookingID: allBookingsModel.id,
-                                      amount:   allBookingsModel.estimation!.grandTotal.toString(),
-                                      previousAmount: allBookingsModel.estimation!.subTotal.toString(),
-                                    )));
-                          }
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const CheckoutScreen(
-                          //
-                          //             // sourceId:
-                          //             //     widget.mEstimatesModel.source!.id,
-                          //             // estimateId: widget.mEstimatesModel.id,
-                          //             // paymentStatus: 'partialPayment',
-                          //             )));
-
-                        },
-                        strTitle: widget.allBookingsModel.estimation
-                                    ?.offerStatus ==
-                                'pending'
-                            ? 'Pay 50% Now'
-                            : "Make full Payment"),
-                    // width: size.width / 1.8,
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.only(top: AppDimens.dimens_20),
+              child: Text(Constants.TXT_THANKS_CONNECTING,
+                  style: AppStyle.textViewStyleNormalBodyText2(
+                      context: context,
+                      color: AppColors.colorBlack,
+                      fontWeightDelta: 0,
+                      fontSizeDelta: 0)),
+              height: AppDimens.dimens_25,
+            ),
+            Container(
+              margin: const EdgeInsets.only(
+                  top: AppDimens.dimens_20, bottom: AppDimens.dimens_20),
+              height: AppDimens.dimens_1,
+              color: AppColors.colorBorder,
+            ),
+            Container(
+              margin: const EdgeInsets.only(
+                  bottom: AppDimens.dimens_20,
+                  left: AppDimens.dimens_20,
+                  right: AppDimens.dimens_20),
+              child: Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: AppDimens.dimens_10),
+                    child: Image.asset(
+                      AppImages.icSplashScreenIcon,
+                      height: AppDimens.dimens_50,
+                    ),
                   ),
-                ),
-                widget.allBookingsModel.estimation?.offerStatus ==
-                        'pending'
-                    ? Flexible(
-                        child: SizedBox(
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: CustomButton(
-                                isGradient: false,
-                                color: Colors.yellow,
-                                isRoundBorder: true,
-                                fontColor: AppColors.colorBlack,
-                                fontSize: 0,
-                                height: AppDimens.dimens_38,
-                                onPressed: allBookingsModel
-                                            .estimation!.isOfferCreated ==
-                                        true
-                                    ? () {
-                                        Global.showToastAlert(
+                  // Expanded(
+                  //     child: Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   children: [
+                  //     Container(
+                  //       alignment: Alignment.centerLeft,
+                  //       child: Text("Otobucks",
+                  //           style: AppStyle.textViewStyleSmall(
+                  //               context: context,
+                  //               color: AppColors.colorBlack,
+                  //               fontWeightDelta: 1,
+                  //               fontSizeDelta: -2)),
+                  //     ),
+                  //     Container(
+                  //       alignment: Alignment.centerLeft,
+                  //       child: Text("David anderson",
+                  //           style: AppStyle.textViewStyleSmall(
+                  //               context: context,
+                  //               color: AppColors.colorBlack,
+                  //               fontWeightDelta: 0,
+                  //               fontSizeDelta: -4)),
+                  //     ),
+                  //     Container(
+                  //       margin: const EdgeInsets.only(top: AppDimens.dimens_2),
+                  //       alignment: Alignment.centerLeft,
+                  //       child: Text("united arab emirates",
+                  //           style: AppStyle.textViewStyleSmall(
+                  //               context: context,
+                  //               color: AppColors.colorBlack,
+                  //               fontWeightDelta: 0,
+                  //               fontSizeDelta: -4)),
+                  //     )
+                  //   ],
+                  // )),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text("Contact information",
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: AppColors.colorBlack,
+                                fontWeightDelta: 1,
+                                fontSizeDelta: -2)),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text("Mobile: +971 1234567890",
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: AppColors.colorBlack,
+                                fontWeightDelta: 0,
+                                fontSizeDelta: -4)),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: AppDimens.dimens_2),
+                        alignment: Alignment.centerLeft,
+                        child: Text("www.otobucks.com",
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: AppColors.colorBlack,
+                                fontWeightDelta: 0,
+                                fontSizeDelta: -4)),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.only(
+                  top: AppDimens.dimens_20,
+                  bottom: AppDimens.dimens_20,
+                  left: AppDimens.dimens_5,
+                  right: AppDimens.dimens_5),
+              child: Row(
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: SizedBox(
+                      child: CustomButton(
+                          isGradient: true,
+                          isRoundBorder: true,
+                          fontColor: AppColors.colorWhite,
+                          fontSize: -1,
+                          // width: size.width / 1.5,
+                          height: AppDimens.dimens_38,
+                          onPressed: () {
+
+                            if(widget.allBookingsModel.estimation?.offerStatus=="pending"){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>  CheckoutScreen(
+                                        isPartialPay: true,
+                                       bookingID: allBookingsModel.id,
+                                        amount:   allBookingsModel.estimation!.grandTotal.toString(),
+                                        previousAmount: allBookingsModel.estimation!.subTotal.toString(),
+                                      )));
+                            }
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => const CheckoutScreen(
+                            //
+                            //             // sourceId:
+                            //             //     widget.mEstimatesModel.source!.id,
+                            //             // estimateId: widget.mEstimatesModel.id,
+                            //             // paymentStatus: 'partialPayment',
+                            //             )));
+
+                          },
+                          strTitle: widget.allBookingsModel.estimation
+                                      ?.offerStatus ==
+                                  'pending'
+                              ? 'Pay 50% Now'
+                              : "Make full Payment"),
+                      // width: size.width / 1.8,
+                    ),
+                  ),
+                  widget.allBookingsModel.estimation?.offerStatus ==
+                          'pending'
+                      ? Flexible(
+                          child: SizedBox(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: CustomButton(
+                                  isGradient: false,
+                                  color: Colors.yellow,
+                                  isRoundBorder: true,
+                                  fontColor: AppColors.colorBlack,
+                                  fontSize: 0,
+                                  height: AppDimens.dimens_38,
+                                  onPressed: allBookingsModel
+                                              .estimation!.isOfferCreated ==
+                                          true
+                                      ? () {
+                                          Global.showToastAlert(
+                                              context: context,
+                                              strTitle: "",
+                                              strMsg: "Offer Already Created",
+                                              toastType: TOAST_TYPE.toastError);
+                                        }
+                                      : () {
+                                          showDialog(
                                             context: context,
-                                            strTitle: "",
-                                            strMsg: "Offer Already Created",
-                                            toastType: TOAST_TYPE.toastError);
-                                      }
-                                    : () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (_) => LogoutOverlay(
-                                            textcontroller:
-                                                _textOffercontroller,
-                                            onCancelTap: () {
-                                              _textOffercontroller.clear();
-                                              Navigator.of(context).pop();
-                                            },
-                                            onSubmitTap: () {
-                                              if (_textOffercontroller
-                                                  .text.isNotEmpty) {
-                                                _estimationListController
-                                                    .createAnOffer(
-                                                        estimateid:
-                                                            allBookingsModel
-
-                                                            .id,
-                                                        offerAmount:
-                                                            _textOffercontroller
-                                                                .text);
+                                            builder: (_) => LogoutOverlay(
+                                              textcontroller:
+                                                  _textOffercontroller,
+                                              onCancelTap: () {
                                                 _textOffercontroller.clear();
                                                 Navigator.of(context).pop();
-                                              }
+                                              },
+                                              onSubmitTap: () {
+                                                if (_textOffercontroller
+                                                    .text.isNotEmpty) {
+                                                  _estimationListController
+                                                      .createAnOffer(
+                                                          estimateid:
+                                                              allBookingsModel
+
+                                                              .id,
+                                                          offerAmount:
+                                                              _textOffercontroller
+                                                                  .text);
+                                                  _textOffercontroller.clear();
+                                                  Navigator.of(context).pop();
+                                                }
 // Future.delayed(Duration(seconds: 3),(){
 //   Navigator.pu
 //   EstimationFragment
 //                                 }
 //                                 );
-                                            },
-                                          ),
-                                        );
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) => CheckoutScreen(
-                                        //           // sourceId:
-                                        //           //     widget.mEstimatesModel.source!.id,
-                                        //           // estimateId: widget.mEstimatesModel.id,
-                                        //           // paymentStatus: 'partialPayment',
-                                        //         )));
-                                      },
-                                strTitle: 'Make Offer'),
+                                              },
+                                            ),
+                                          );
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) => CheckoutScreen(
+                                          //           // sourceId:
+                                          //           //     widget.mEstimatesModel.source!.id,
+                                          //           // estimateId: widget.mEstimatesModel.id,
+                                          //           // paymentStatus: 'partialPayment',
+                                          //         )));
+                                        },
+                                  strTitle: 'Make Offer'),
+                            ),
+                            //width: size.width / 1.8,
                           ),
-                          //width: size.width / 1.8,
-                        ),
-                      )
-                    : SizedBox(),
-                SizedBox(
-                  width: 5,
-                ),
-                //const Spacer(),
-                Flexible(
-                  child: SizedBox(
-                    child: CustomButton(
-                        fontSize: 0,
-                        isGradient: true,
-                        isRoundBorder: true,
-                        // color: AppColors.greyDateBG,
-                        fontColor: AppColors.colorWhite,
-                        width: size.width / 1.5,
-                        height: AppDimens.dimens_38,
-                        onPressed: () => displayTextInputDialog(),
-                        strTitle: Constants.TXT_DECLINE),
-                    //  width: size.width / 3.2,
+                        )
+                      : SizedBox(),
+                  SizedBox(
+                    width: 5,
                   ),
-                ),
-              ],
+                  //const Spacer(),
+                  Flexible(
+                    child: SizedBox(
+                      child: CustomButton(
+                          fontSize: 0,
+                          isGradient: true,
+                          isRoundBorder: true,
+                          // color: AppColors.greyDateBG,
+                          fontColor: AppColors.colorWhite,
+                          width: size.width / 1.5,
+                          height: AppDimens.dimens_38,
+                          onPressed: () => displayTextInputDialog(),
+                          strTitle: Constants.TXT_DECLINE),
+                      //  width: size.width / 3.2,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
 
-          // Expanded(child: Container()),
-        ],
+            // Expanded(child: Container()),
+          ],
+        ),
       ),
 
       // Stack(

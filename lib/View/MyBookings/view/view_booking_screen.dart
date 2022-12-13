@@ -26,13 +26,11 @@ import '../../../widgets/image_view.dart';
 import '../../../widgets/media_button.dart';
 import '../../../widgets/time_selector.dart';
 import '../../../widgets/voice_note_buttons.dart';
-
+import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart';
 class ViewBookingEstimation extends StatefulWidget {
-  final EstimatesModel mEstimatesModel;
-  final String screen;
-
+  final Result mEstimatesModel;
   const ViewBookingEstimation(
-      {Key? key, required this.mEstimatesModel, required this.screen})
+      {Key? key, required this.mEstimatesModel, })
       : super(key: key);
   @override
   ViewBookingEstimationState createState() => ViewBookingEstimationState();
@@ -41,8 +39,8 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
   var controller = Get.put(ViewEstimationController());
   @override
   void initState() {
-    controller.estimatesModel = widget.mEstimatesModel;
-    controller.onInitScreen(widget.mEstimatesModel);
+    // controller.estimatesModel = widget.mEstimatesModel;
+    // controller.onInitScreen(widget.mEstimatesModel);
     super.initState();
   }
   @override
@@ -53,7 +51,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
       appBar: AppViews.initAppBar(
         mContext: context,
         centerTitle: false,
-        strTitle: widget.mEstimatesModel.source!.title + " Detail",
+        strTitle: widget.mEstimatesModel.source!.title.toString() + " Detail",
         isShowNotification: false,
         isShowSOS: false,
       ),
@@ -235,7 +233,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(AppDimens.dimens_5),
             child: NetworkImageCustom(
-                image: controller.estimatesModel!.getProviderImage(),
+                image: widget.mEstimatesModel.source!.image!.first,
                 fit: BoxFit.fill,
                 height: AppDimens.dimens_120,
                 width: AppDimens.dimens_120),
@@ -247,10 +245,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  controller.estimatesModel!.mServiceProviderModel != null
-                      ? controller.estimatesModel!.mServiceProviderModel!
-                      .getName()
-                      : "",
+                  widget.mEstimatesModel.provider!.firstName.toString(),
                   softWrap: true,
                   overflow: TextOverflow.clip,
                   maxLines: 2,
@@ -306,7 +301,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                       ),
                     ),
                     Text(
-                      value.estimatesModel!.source!.title,
+                      widget.mEstimatesModel.source!.title.toString(),
                       style: AppStyle.textViewStyleNormalSubtitle2(
                           context: context,
                           color: Colors.grey,
@@ -335,7 +330,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                       ),
                     ),
                     Text(
-                      value.estimatesModel!.mServiceProviderModel!.getName(),
+                    widget.mEstimatesModel.provider!.firstName.toString(),
                       style: AppStyle.textViewStyleNormalSubtitle2(
                           context: context,
                           color: Colors.grey,
@@ -365,8 +360,8 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                     ),
                     GradientText(
                       Global.replaceCurrencySign(
-                          value.estimatesModel!.source!.currency) +
-                          value.estimatesModel!.source!.price,
+                          widget.mEstimatesModel.source!.currency!) +
+                          widget.mEstimatesModel.source!.price!.toString(),
                       style: AppStyle.textViewStyleNormalSubtitle2(
                           context: context,
                           color: AppColors.colorTextBlue,
@@ -402,152 +397,152 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                       fontSizeDelta: 0),
                 ),
               ),
-
-              Container(
-                margin: const EdgeInsets.only(
-                  top: AppDimens.dimens_8,
-                  left: AppDimens.dimens_14,
-                  right: AppDimens.dimens_14,
-                ),
-                child: DateViewSelector(
-                    selectedDate: value.estimatesModel!.getDateInFormate(),
-                    onSelection: (String _selectedDate) {
-                      // print(_selectedDate);
-
-                     // value.onSelectDate(_selectedDate);
-                    },
-
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(
-                  top: AppDimens.dimens_15,
-                  left: AppDimens.dimens_14,
-                  right: AppDimens.dimens_14,
-                ),
-                child: Text(
-                  "Time",
-                  style: AppStyle.textViewStyleNormalSubtitle2(
-                      context: context,
-                      color: AppColors.colorBlack2,
-                      fontWeightDelta: 1,
-                      fontSizeDelta: 0),
-                ),
-              ),
-              Container(
-                height: AppDimens.dimens_50,
-                alignment: Alignment.centerLeft,
-                margin: const EdgeInsets.only(
-                  top: AppDimens.dimens_10,
-                  left: AppDimens.dimens_14,
-                  right: AppDimens.dimens_14,
-                ),
-                child: TimeViewSelector(
-                    selectedDate: value.selectedDate,
-                    mTimeModel: value.mTimeModel,
-                    onSelection: (TimeModel mtimeModel_) =>
-                        value.onSelectTime(mtimeModel_)),
-              ),
-              //Upload image or Take a photo
-              Container(
-                margin: const EdgeInsets.only(
-                  top: AppDimens.dimens_15,
-                  left: AppDimens.dimens_14,
-                  right: AppDimens.dimens_14,
-                ),
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        Constants.STR_IMAGE_MSG,
-                        style: AppStyle.textViewStyleNormalSubtitle2(
-                            context: context,
-                            color: AppColors.colorBlack2,
-                            fontWeightDelta: 1,
-                            fontSizeDelta: 0),
-                      ),
-                    ),
-                    const SizedBox(width: AppDimens.dimens_5),
-                    Flexible(
-                      child: Text(
-                        Constants.STR_MAX_SIZE,
-                        style: AppStyle.textViewStyleNormalSubtitle2(
-                            context: context,
-                            color: AppColors.colorBlack2,
-                            fontWeightDelta: -1,
-                            fontSizeDelta: -4),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(
-                  top: AppDimens.dimens_10,
-                  left: AppDimens.dimens_14,
-                  right: AppDimens.dimens_14,
-                ),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      Visibility(
-                        child: Container(
-                          margin:
-                          const EdgeInsets.only(right: AppDimens.dimens_15),
-                          height: AppDimens.dimens_100,
-                          width: AppDimens.dimens_100,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                  BorderRadius.circular(AppDimens.dimens_5),
-                                ),
-                                height: AppDimens.dimens_100,
-                                width: AppDimens.dimens_100,
-                                child: ImageView(strImage: value.pickedImage),
-                              ),
-                              Positioned(
-                                  right: 0,
-                                  top: 0,
-                                  child: InkWell(
-                                    child: const Icon(Icons.close),
-                                    onTap: () {},
-          //value.onDeleteImage(),
-                                  ))
-                            ],
-                          ),
-                        ),
-                        visible: Global.checkNull(value.pickedImage),
-                      ),
-                      Visibility(
-                          visible: !Global.checkNull(value.pickedImage),
-                          child: Row(
-                            children: [
-                              MediaButton(
-                                strImage: AppImages.ic_cloud,
-                                onPressed: () {
-                                //  value.getImage(ImageSource.gallery);
-                                },
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    left: AppDimens.dimens_15),
-                                child: MediaButton(
-                                  strImage: AppImages.ic_camera,
-                                  onPressed: () {
-                                   // value.getImage(ImageSource.camera);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ))
-                    ],
-                  ),
-                ),
-              ),
+Text(widget.mEstimatesModel.bookingDetails!.date.toString()),
+              // Container(
+              //   margin: const EdgeInsets.only(
+              //     top: AppDimens.dimens_8,
+              //     left: AppDimens.dimens_14,
+              //     right: AppDimens.dimens_14,
+              //   ),
+              //   child: DateViewSelector(
+              //       selectedDate: widget.mEstimatesModel.bookingDetails!.date as DateTime,
+              //       onSelection: (String _selectedDate) {
+              //         // print(_selectedDate);
+              //
+              //        // value.onSelectDate(_selectedDate);
+              //       },
+              //
+              //   ),
+              // ),
+              // Container(
+              //   margin: const EdgeInsets.only(
+              //     top: AppDimens.dimens_15,
+              //     left: AppDimens.dimens_14,
+              //     right: AppDimens.dimens_14,
+              //   ),
+              //   child: Text(
+              //     "Time",
+              //     style: AppStyle.textViewStyleNormalSubtitle2(
+              //         context: context,
+              //         color: AppColors.colorBlack2,
+              //         fontWeightDelta: 1,
+              //         fontSizeDelta: 0),
+              //   ),
+              // ),
+          //     Container(
+          //       height: AppDimens.dimens_50,
+          //       alignment: Alignment.centerLeft,
+          //       margin: const EdgeInsets.only(
+          //         top: AppDimens.dimens_10,
+          //         left: AppDimens.dimens_14,
+          //         right: AppDimens.dimens_14,
+          //       ),
+          //       child: TimeViewSelector(
+          //           selectedDate: value.selectedDate,
+          //           mTimeModel: value.mTimeModel,
+          //           onSelection: (TimeModel mtimeModel_) =>
+          //               value.onSelectTime(mtimeModel_)),
+          //     ),
+          //     //Upload image or Take a photo
+          //     Container(
+          //       margin: const EdgeInsets.only(
+          //         top: AppDimens.dimens_15,
+          //         left: AppDimens.dimens_14,
+          //         right: AppDimens.dimens_14,
+          //       ),
+          //       child: Row(
+          //         children: [
+          //           Flexible(
+          //             child: Text(
+          //               Constants.STR_IMAGE_MSG,
+          //               style: AppStyle.textViewStyleNormalSubtitle2(
+          //                   context: context,
+          //                   color: AppColors.colorBlack2,
+          //                   fontWeightDelta: 1,
+          //                   fontSizeDelta: 0),
+          //             ),
+          //           ),
+          //           const SizedBox(width: AppDimens.dimens_5),
+          //           Flexible(
+          //             child: Text(
+          //               Constants.STR_MAX_SIZE,
+          //               style: AppStyle.textViewStyleNormalSubtitle2(
+          //                   context: context,
+          //                   color: AppColors.colorBlack2,
+          //                   fontWeightDelta: -1,
+          //                   fontSizeDelta: -4),
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //     Container(
+          //       margin: const EdgeInsets.only(
+          //         top: AppDimens.dimens_10,
+          //         left: AppDimens.dimens_14,
+          //         right: AppDimens.dimens_14,
+          //       ),
+          //       child: SingleChildScrollView(
+          //         scrollDirection: Axis.horizontal,
+          //         child: Row(
+          //           children: [
+          //             Visibility(
+          //               child: Container(
+          //                 margin:
+          //                 const EdgeInsets.only(right: AppDimens.dimens_15),
+          //                 height: AppDimens.dimens_100,
+          //                 width: AppDimens.dimens_100,
+          //                 child: Stack(
+          //                   alignment: Alignment.center,
+          //                   children: [
+          //                     Container(
+          //                       decoration: BoxDecoration(
+          //                         borderRadius:
+          //                         BorderRadius.circular(AppDimens.dimens_5),
+          //                       ),
+          //                       height: AppDimens.dimens_100,
+          //                       width: AppDimens.dimens_100,
+          //                       child: ImageView(strImage: value.pickedImage),
+          //                     ),
+          //                     Positioned(
+          //                         right: 0,
+          //                         top: 0,
+          //                         child: InkWell(
+          //                           child: const Icon(Icons.close),
+          //                           onTap: () {},
+          // //value.onDeleteImage(),
+          //                         ))
+          //                   ],
+          //                 ),
+          //               ),
+          //               visible: Global.checkNull(value.pickedImage),
+          //             ),
+          //             Visibility(
+          //                 visible: !Global.checkNull(value.pickedImage),
+          //                 child: Row(
+          //                   children: [
+          //                     MediaButton(
+          //                       strImage: AppImages.ic_cloud,
+          //                       onPressed: () {
+          //                       //  value.getImage(ImageSource.gallery);
+          //                       },
+          //                     ),
+          //                     Container(
+          //                       margin: const EdgeInsets.only(
+          //                           left: AppDimens.dimens_15),
+          //                       child: MediaButton(
+          //                         strImage: AppImages.ic_camera,
+          //                         onPressed: () {
+          //                          // value.getImage(ImageSource.camera);
+          //                         },
+          //                       ),
+          //                     ),
+          //                   ],
+          //                 ))
+          //           ],
+          //         ),
+          //       ),
+          //     ),
             ],
           );
         });
