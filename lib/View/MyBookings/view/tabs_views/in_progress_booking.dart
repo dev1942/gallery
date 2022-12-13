@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:otobucks/View/MyBookings/controller/estimation_list_controller.dart';
 import 'package:otobucks/View/MyBookings/view/estimation_invoice_screen.dart';
+import 'package:otobucks/page/services/estimation/checkout_screen.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
 import '../../../../../global/app_colors.dart';
@@ -41,7 +42,7 @@ class InProgressFragment extends GetView<MyBookingsController> {
                     itemBuilder: (BuildContext contextM, index) {
                       List inProcgressList=snapshot.data!.result!.reversed.toList();
                       var data = inProcgressList[index];
-                      if(data.status=="inProgress" ){  return
+                      if(data.status=="inProgress"){  return
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6.0),
                           child: Card(
@@ -140,13 +141,13 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                 children: [
                                                   Textwidget(
                                                       text:
-                                                      "Price :  ",
+                                                      "Total Amount : ",
                                                       fontsize: 0,
                                                       fontweight:
                                                       0),
                                                   priceWidget(
-                                                      data.source!.price.toString()),
-                                                  Text(" 50% Paid",style: TextStyle(color: Colors.green),)
+                                                      data.totalprice.toString()),
+                                                  Text("50% Paid",style: TextStyle(color: Colors.green),)
 
                                                 ],
                                               ),
@@ -214,6 +215,16 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                           ),
                                                         )),
                                                     onTap: () {
+
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) =>  CheckoutScreen(
+                                                                 isFullyPay: true,
+                                                                  bookingID: data.id,
+                                                                  amount: data.paymentCompleted.toString(),
+                                                                  previousAmount:   data.totalprice.toString(),
+                                                                )));
 
                                                       // gotoViewEstimation(
                                                       //     AllBookingsModel(),

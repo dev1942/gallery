@@ -36,10 +36,12 @@ class CheckoutScreen extends StatefulWidget {
  final String? previousAmount;
   final String? discount;
   bool isPartialPay;
+  bool isFullyPay;
 
    CheckoutScreen(
       {Key? key,
         this.isPartialPay=false,
+        this.isFullyPay=false,
         this.bookingID,
        this.promotionID,
        this.address,
@@ -264,7 +266,51 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                    ],),
                                ],),
                              )
-                         ):Card(
+                         ):widget.isFullyPay?
+                         Card(
+                             margin: const EdgeInsets.all(AppDimens.dimens_20),
+                             child:Padding(
+                               padding: const EdgeInsets.all(8.0),
+                               child: Column(children: [
+
+
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: [
+                                     Text("Total Amount ",style: TextStyle(fontSize: 16),),
+                                     Text("AED ${widget.previousAmount??"0"}",  style: AppStyle.textViewStyleNormalSubtitle2(
+                                         context: context,
+                                         color: AppColors.colorBlueStart,
+                                         fontSizeDelta: 1,
+                                         fontWeightDelta: 1),),
+
+                                   ],),
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: [
+                                     Text("50 % Payed Amount",style: TextStyle(fontSize: 16),),
+                                     Text("${(num.parse(widget.amount!))}",  style: AppStyle.textViewStyleNormalSubtitle2(
+                                         context: context,
+                                         color: AppColors.colorBlueStart,
+                                         fontSizeDelta: 1,
+                                         fontWeightDelta: 1),),
+
+                                   ],),
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: [
+                                     Text("Balance Amount ",style: TextStyle(fontSize: 16),),
+                                     Text("AED ${(num.parse(widget.amount!))}",  style: AppStyle.textViewStyleNormalSubtitle2(
+                                         context: context,
+                                         color: AppColors.colorBlueStart,
+                                         fontSizeDelta: 1,
+                                         fontWeightDelta: 1),),
+
+                                   ],),
+                               ],),
+                             )
+                         )
+                             :  Card(
                             margin: const EdgeInsets.all(AppDimens.dimens_20),
                             child:Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -323,12 +369,19 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                 width: size.width / 1.5,
                                 onPressed: () {
                                   if(widget.isPartialPay){
+
                                     value.bookEstimationPartial(
                                       bookingID: widget.bookingID,
                                       cardId: controller.cardId!,
                                     );
-
-                                  }else{
+                                  }else if(widget.isFullyPay)
+                                  {
+                                    value.bookEstimationFullPay(
+                                      bookingID: widget.bookingID,
+                                      cardId: controller.cardId!,
+                                    );
+                                  }
+                                  else{
                                     value.bookEstimation(
                                       promotionId: widget.promotionID,
                                       address: widget.address,
