@@ -35,197 +35,211 @@ class CancelledFragment extends GetView<MyBookingsController> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
-                    itemCount: snapshot.data?.result?.where((element) => element.status=="declined").length,
+                    itemCount: snapshot.data?.result!.length,
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     itemBuilder: (BuildContext contextM, index) {
-                      var data = snapshot.data!.result![index];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6.0),
-                        child: Card(
-                          elevation: AppDimens.dimens_8,
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(AppDimens.dimens_7),
-                          ),
-                          child: Container(
-                            padding: const EdgeInsets.only(
-                                top: 10,
-                                right: AppDimens.dimens_10,
-                                left: 5,
-                                bottom: 7),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  //Row left image and right data
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      //------------------ column Image  amd view booking-----------------
-                                      Column(
-                                        children: [
-                                          ImageWidget(
-                                              imagePath:
-                                                  data.source?.image?.first),
-                                          const SizedBox(
-                                            height: AppDimens.dimens_12,
-                                          ),
-
-                                          /// onclick of view booking
-                                          InkWell(
-                                            child: Container(
-                                                child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 5.0),
-                                              child: Text(
-                                                Constants.TXT_VIEW_BOOKING,
-                                                style:
-                                                    AppStyle.textViewStyleSmall(
-                                                        context: context,
-                                                        color: AppColors
-                                                            .colorTextBlue2,
-                                                        fontSizeDelta: 0,
-                                                        fontWeightDelta: 0),
-                                              ),
-                                            )),
-                                            onTap: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     MaterialPageRoute(
-                                              //         builder: (context) =>
-                                              //             ViewBookingEstimation(
-                                              //               //ViewEstimation(
-                                              //               mEstimatesModel:
-                                              //               mEstimatesModel,
-                                              //             )));
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                      //..........................right side data column
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                      List inProcgressList =
+                          snapshot.data!.result!.reversed.toList();
+                      var data = inProcgressList[index];
+                      if (data.status == "completed") {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 6.0),
+                          child: Card(
+                            elevation: AppDimens.dimens_8,
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(AppDimens.dimens_7),
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                  top: 10,
+                                  right: AppDimens.dimens_10,
+                                  left: 5,
+                                  bottom: 7),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    //Row left image and right data
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        //------------------ column Image  amd view booking-----------------
+                                        Column(
                                           children: [
-                                            Row(
-                                              children: [
-                                                //---------------UserName
-                                                Expanded(
-                                                  child: UserNameWidget(
-                                                      userName:
-                                                          "${data.customer?.firstName}"
-                                                          "${data.customer?.lastName} "),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Textwidget(
-                                                    text: "Service Title: ",
-                                                    fontsize: 0,
-                                                    fontweight: 0),
-                                                Textwidget(
-                                                    text: data.source?.title ??
-                                                        "",
-                                                    fontsize: 0,
-                                                    fontweight: 0),
-                                              ],
-                                            ),
-                                            Text(
-                                              "Booking Cancelled",
-                                              style:
-                                                  TextStyle(color: Colors.pink),
-                                            ),
-                                            Row(
-                                              children: [
-                                                Textwidget(
-                                                    text: "Price :  ",
-                                                    fontsize: 0,
-                                                    fontweight: 0),
-                                                priceWidget(data.source!.price
-                                                    .toString()),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "Booking Date : ",
-                                                  style: AppStyle
-                                                      .textViewStyleSmall(
-                                                          context: context,
-                                                          color: AppColors
-                                                              .colorBlack,
-                                                          fontSizeDelta: -1,
-                                                          fontWeightDelta: 0),
-                                                ),
-                                                Text(
-                                                  getDate(data
-                                                      .bookingDetails!.date!),
-                                                  style: AppStyle
-                                                      .textViewStyleSmall(
-                                                          context: context,
-                                                          color: AppColors
-                                                              .colorBlack,
-                                                          fontSizeDelta: -1,
-                                                          fontWeightDelta: 0),
-                                                ),
-                                              ],
+                                            ImageWidget(
+                                                imagePath:
+                                                    data.source?.image?.first),
+                                            const SizedBox(
+                                              height: AppDimens.dimens_12,
                                             ),
 
-                                            ///........... estimation and status row butto
-                                            Divider(color: Colors.grey.shade500,thickness: 1,),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              //     : MainAxisAlignment.center,
-                                              children: [
-                                                ///rebook onclick
-                                                InkWell(
-                                                  child: Container(
-                                                      width: Get.width / 2.6,
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 6.0,
-                                                          vertical: 5.0),
-                                                      decoration: AppViews
-                                                          .getGradientBoxDecoration(
-                                                              mBorderRadius: 2),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "re-book".toUpperCase(),
-                                                          style: TextStyle(
-                                                              color: AppColors
-                                                                  .colorWhite,
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-                                                      )),
-                                                  onTap: () {
-                                                    // gotoViewEstimation(
-                                                    //     AllBookingsModel(),
-                                                    //     false);false
-                                                  },
+                                            /// onclick of view booking
+                                            InkWell(
+                                              child: Container(
+                                                  child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 5.0),
+                                                child: Text(
+                                                  Constants.TXT_VIEW_BOOKING,
+                                                  style: AppStyle
+                                                      .textViewStyleSmall(
+                                                          context: context,
+                                                          color: AppColors
+                                                              .colorTextBlue2,
+                                                          fontSizeDelta: 0,
+                                                          fontWeightDelta: 0),
                                                 ),
-                                                const SizedBox(
-                                                  width: 3,
-                                                ),
-                                              ],
+                                              )),
+                                              onTap: () {
+                                                // Navigator.push(
+                                                //     context,
+                                                //     MaterialPageRoute(
+                                                //         builder: (context) =>
+                                                //             ViewBookingEstimation(
+                                                //               //ViewEstimation(
+                                                //               mEstimatesModel:
+                                                //               mEstimatesModel,
+                                                //             )));
+                                              },
                                             ),
                                           ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  //buttons
+                                        //..........................right side data column
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  //---------------UserName
+                                                  Expanded(
+                                                    child: UserNameWidget(
+                                                        userName:
+                                                            "${data.customer?.firstName}"
+                                                            "${data.customer?.lastName} "),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Textwidget(
+                                                      text: "Service Title: ",
+                                                      fontsize: 0,
+                                                      fontweight: 0),
+                                                  Textwidget(
+                                                      text:
+                                                          data.source?.title ??
+                                                              "",
+                                                      fontsize: 0,
+                                                      fontweight: 0),
+                                                ],
+                                              ),
+                                              Text(
+                                                "Booking Cancelled",
+                                                style: TextStyle(
+                                                    color: Colors.pink),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Textwidget(
+                                                      text: "Price :  ",
+                                                      fontsize: 0,
+                                                      fontweight: 0),
+                                                  priceWidget(data.source!.price
+                                                      .toString()),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "Booking Date : ",
+                                                    style: AppStyle
+                                                        .textViewStyleSmall(
+                                                            context: context,
+                                                            color: AppColors
+                                                                .colorBlack,
+                                                            fontSizeDelta: -1,
+                                                            fontWeightDelta: 0),
+                                                  ),
+                                                  Text(
+                                                    getDate(data
+                                                        .bookingDetails!.date!),
+                                                    style: AppStyle
+                                                        .textViewStyleSmall(
+                                                            context: context,
+                                                            color: AppColors
+                                                                .colorBlack,
+                                                            fontSizeDelta: -1,
+                                                            fontWeightDelta: 0),
+                                                  ),
+                                                ],
+                                              ),
 
-                                  const SizedBox(height: 3.0),
-                                ]),
+                                              ///........... estimation and status row butto
+                                              Divider(
+                                                color: Colors.grey.shade500,
+                                                thickness: 1,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                //     : MainAxisAlignment.center,
+                                                children: [
+                                                  ///rebook onclick
+                                                  InkWell(
+                                                    child: Container(
+                                                        width: Get.width / 2.6,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 6.0,
+                                                                vertical: 5.0),
+                                                        decoration: AppViews
+                                                            .getGradientBoxDecoration(
+                                                                mBorderRadius:
+                                                                    2),
+                                                        child: Center(
+                                                          child: Text(
+                                                            "re-book"
+                                                                .toUpperCase(),
+                                                            style: TextStyle(
+                                                                color: AppColors
+                                                                    .colorWhite,
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+                                                        )),
+                                                    onTap: () {
+                                                      // gotoViewEstimation(
+                                                      //     AllBookingsModel(),
+                                                      //     false);false
+                                                    },
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 3,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    //buttons
+
+                                    const SizedBox(height: 3.0),
+                                  ]),
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        return SizedBox();
+                      }
                       ///////////////////////////////// ////////////////////////////////////////////////////////////////
                     },
                   );

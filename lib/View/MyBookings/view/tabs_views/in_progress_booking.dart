@@ -35,13 +35,13 @@ class InProgressFragment extends GetView<MyBookingsController> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
-                  //  itemCount: 2,
-                     itemCount: snapshot.data?.result?.where((element) => element.status=="inProgress").length,
+                    itemCount:snapshot.data?.result!.length,
                     padding: const EdgeInsets.symmetric(
                         vertical: 5, horizontal: 5),
                     itemBuilder: (BuildContext contextM, index) {
-                      var data=snapshot.data!.result![index];
-                      return
+                      List inProcgressList=snapshot.data!.result!.reversed.toList();
+                      var data = inProcgressList[index];
+                      if(data.status=="inProgress" ){  return
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6.0),
                           child: Card(
@@ -237,7 +237,9 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                   ]),
                             ),
                           ),
-                        );
+                        );}
+                      else {return SizedBox();}
+
                       ///////////////////////////////// ////////////////////////////////////////////////////////////////
                     },
                   );

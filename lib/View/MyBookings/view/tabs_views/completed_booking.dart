@@ -15,6 +15,7 @@ import '../../../../global/global.dart';
 import '../../Models/AllBookingsModel.dart';
 import '../../controller/mybookings_controller.dart';
 import '../view_booking_screen.dart';
+
 class CompletedFragment extends GetView<MyBookingsController> {
   const CompletedFragment({
     Key? key,
@@ -34,62 +35,63 @@ class CompletedFragment extends GetView<MyBookingsController> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
-                    itemCount: snapshot.data?.result?.where((element) => element.status=="completed").length,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 5, horizontal: 5),
+                    itemCount: snapshot.data?.result!.length,
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     itemBuilder: (BuildContext contextM, index) {
-                      var data=snapshot.data!.result![index];
-                      return
-                        Padding(
+                      List inProcgressList =
+                          snapshot.data!.result!.reversed.toList();
+                      var data = inProcgressList[index];
+                      if (data.status == "completed") {
+                        return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6.0),
                           child: Card(
                             elevation: AppDimens.dimens_8,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  AppDimens.dimens_7),
+                              borderRadius:
+                                  BorderRadius.circular(AppDimens.dimens_7),
                             ),
                             child: Container(
                               padding: const EdgeInsets.only(
                                   top: 10,
                                   right: AppDimens.dimens_10,
-                                  left: 5,bottom: 7
-                              ),
+                                  left: 5,
+                                  bottom: 7),
                               child: Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     //Row left image and right data
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         //------------------ column Image  amd view booking-----------------
                                         Column(
                                           children: [
                                             ImageWidget(
-                                                imagePath: data.source?.image?.first
+                                                imagePath:
+                                                    data.source?.image?.first),
+                                            const SizedBox(
+                                              height: AppDimens.dimens_12,
                                             ),
-                                            const SizedBox(height: AppDimens.dimens_12,),
+
                                             /// onclick of view booking
                                             InkWell(
                                               child: Container(
                                                   child: Padding(
-                                                    padding:
-                                                    const EdgeInsets.only(
-                                                        left: 5.0),
-                                                    child: Text(
-                                                      Constants
-                                                          .TXT_VIEW_BOOKING,
-                                                      style: AppStyle
-                                                          .textViewStyleSmall(
+                                                padding: const EdgeInsets.only(
+                                                    left: 5.0),
+                                                child: Text(
+                                                  Constants.TXT_VIEW_BOOKING,
+                                                  style: AppStyle
+                                                      .textViewStyleSmall(
                                                           context: context,
                                                           color: AppColors
                                                               .colorTextBlue2,
                                                           fontSizeDelta: 0,
-                                                          fontWeightDelta:
-                                                          0),
-                                                    ),
-                                                  )),
+                                                          fontWeightDelta: 0),
+                                                ),
+                                              )),
                                               onTap: () {
                                                 // Navigator.push(
                                                 //     context,
@@ -113,23 +115,22 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                   //---------------UserName
                                                   Expanded(
                                                     child: UserNameWidget(
-                                                        userName:"${data.customer?.firstName}"  "${data.customer?.lastName} "
-                                                    ),
+                                                        userName:
+                                                            "${data.customer?.firstName}"
+                                                            "${data.customer?.lastName} "),
                                                   ),
                                                 ],
                                               ),
                                               Row(
                                                 children: [
                                                   Textwidget(
-                                                      text:
-                                                      "Service Title: ",
+                                                      text: "Service Title: ",
                                                       fontsize: 0,
                                                       fontweight: 0),
                                                   Textwidget(
-                                                      text: data
-                                                          .source
-                                                          ?.title ??
-                                                          "",
+                                                      text:
+                                                          data.source?.title ??
+                                                              "",
                                                       fontsize: 0,
                                                       fontweight: 0),
                                                 ],
@@ -137,15 +138,16 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                               Row(
                                                 children: [
                                                   Textwidget(
-                                                      text:
-                                                      "Price :  ",
+                                                      text: "Price :  ",
                                                       fontsize: 0,
-                                                      fontweight:
-                                                      0),
-                                                  priceWidget(
-                                                      data.source!.price.toString()),
-                                                  Text(" Fully Paid",style: TextStyle(color: Colors.green),)
-
+                                                      fontweight: 0),
+                                                  priceWidget(data.source!.price
+                                                      .toString()),
+                                                  Text(
+                                                    " Fully Paid",
+                                                    style: TextStyle(
+                                                        color: Colors.green),
+                                                  )
                                                 ],
                                               ),
                                               Row(
@@ -154,72 +156,70 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                     "Booking Date : ",
                                                     style: AppStyle
                                                         .textViewStyleSmall(
-                                                        context:
-                                                        context,
-                                                        color: AppColors
-                                                            .colorBlack,
-                                                        fontSizeDelta:
-                                                        -1,
-                                                        fontWeightDelta:
-                                                        0),
+                                                            context: context,
+                                                            color: AppColors
+                                                                .colorBlack,
+                                                            fontSizeDelta: -1,
+                                                            fontWeightDelta: 0),
                                                   ),
                                                   Text(
-                                                    getDate(data.bookingDetails!.date!),
+                                                    getDate(data
+                                                        .bookingDetails!.date!),
                                                     style: AppStyle
                                                         .textViewStyleSmall(
-                                                        context:
-                                                        context,
-                                                        color: AppColors
-                                                            .colorBlack,
-                                                        fontSizeDelta:
-                                                        -1,
-                                                        fontWeightDelta:
-                                                        0),
+                                                            context: context,
+                                                            color: AppColors
+                                                                .colorBlack,
+                                                            fontSizeDelta: -1,
+                                                            fontWeightDelta: 0),
                                                   ),
                                                 ],
                                               ),
+
                                               ///........... estimation and status row button
-                                              const SizedBox(height: 12,),
+                                              const SizedBox(
+                                                height: 12,
+                                              ),
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
                                                 //     : MainAxisAlignment.center,
                                                 children: [
                                                   ///on click view estimation
                                                   InkWell(
                                                     child: Container(
-                                                        width: Get.width/2.6,
-                                                        padding: const EdgeInsets
-                                                            .symmetric(
-                                                            horizontal:
-                                                            6.0,
-                                                            vertical:
-                                                            5.0),
-
-
+                                                        width: Get.width / 2.6,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 6.0,
+                                                                vertical: 5.0),
                                                         decoration: AppViews
                                                             .getGradientBoxDecoration(
-                                                            mBorderRadius:
-                                                            2),
+                                                                mBorderRadius:
+                                                                    2),
                                                         child: Center(
                                                           child: Text(
-                                                            "Give rating".toUpperCase(),
+                                                            "Give rating"
+                                                                .toUpperCase(),
                                                             style: TextStyle(
                                                                 color: AppColors
                                                                     .colorWhite,
                                                                 fontSize: 12,
-                                                                fontWeight: FontWeight.w500
-                                                            ),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
                                                           ),
                                                         )),
                                                     onTap: () {
-
                                                       // gotoViewEstimation(
                                                       //     AllBookingsModel(),
                                                       //     false);false
                                                     },
                                                   ),
-                                                  const SizedBox(width: 3,),
-
+                                                  const SizedBox(
+                                                    width: 3,
+                                                  ),
                                                 ],
                                               ),
                                             ],
@@ -234,18 +234,18 @@ class CompletedFragment extends GetView<MyBookingsController> {
                             ),
                           ),
                         );
+                      } else {
+                        return SizedBox();
+                      }
+
                       ///////////////////////////////// ////////////////////////////////////////////////////////////////
                     },
                   );
-
                 } else if (snapshot.hasError) {
                   const Center(child: Text("No data found"));
                 }
                 return const Center(child: CircularProgressIndicator());
-              }
-          ),
-
-
+              }),
         ));
   }
 
@@ -272,14 +272,14 @@ class CompletedFragment extends GetView<MyBookingsController> {
   Widget UserNameWidget({String? userName}) {
     return Container(
         child: Text(
-          userName ?? "",
-          maxLines: 1,
-          style: AppStyle.textViewStyleNormalBodyText2(
-              context: Get.context!,
-              color: AppColors.colorBlack2,
-              fontSizeDelta: 1,
-              fontWeightDelta: 1),
-        ));
+      userName ?? "",
+      maxLines: 1,
+      style: AppStyle.textViewStyleNormalBodyText2(
+          context: Get.context!,
+          color: AppColors.colorBlack2,
+          fontSizeDelta: 1,
+          fontWeightDelta: 1),
+    ));
   }
 
   Widget ImageWidget({String? imagePath}) {
@@ -305,8 +305,8 @@ class CompletedFragment extends GetView<MyBookingsController> {
     return Container(
         alignment: Alignment.centerLeft,
         child:
-        // "AED ${mEstimatesModel.grandTotal}/-",
-        GradientText(
+            // "AED ${mEstimatesModel.grandTotal}/-",
+            GradientText(
           "AED ${price} /-",
           // Global.checkNull(mEstimatesModel
           //     .source
@@ -326,10 +326,11 @@ class CompletedFragment extends GetView<MyBookingsController> {
               fontWeightDelta: 1),
         ));
   }
+
   getDate(String date) {
     if (Global.checkNull(date)) {
       DateTime parseDate =
-      DateFormat(Constants.STRING_DB_DATE_FORMATE).parse(date!);
+          DateFormat(Constants.STRING_DB_DATE_FORMATE).parse(date!);
       var inputDate = DateTime.parse(parseDate.toString());
       var outputFormat = DateFormat(Constants.STRING_DD_MMM_YYYY);
       var outputDate = outputFormat.format(inputDate);

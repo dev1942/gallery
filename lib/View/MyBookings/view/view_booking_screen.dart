@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:otobucks/View/MyBookings/widget/date_selector_view.dart';
 import 'package:otobucks/View/MyBookings/widget/time_selector_view.dart';
@@ -688,7 +689,7 @@ Text(widget.mEstimatesModel.bookingDetails!.date.toString()),
                           MediaButton(
                             strImage: AppImages.ic_cloud,
                             onPressed: () {
-                             // value.pickVideo(ImageSource.gallery);
+                              value.pickVideo(ImageSource.gallery);
                             },
                           ),
                           Container(
@@ -697,7 +698,7 @@ Text(widget.mEstimatesModel.bookingDetails!.date.toString()),
                             child: MediaButton(
                               strImage: AppImages.ic_video_cam,
                               onPressed: () {
-                               // value.pickVideo(ImageSource.camera);
+                                value.pickVideo(ImageSource.camera);
                               },
                             ),
                           ),
