@@ -372,10 +372,8 @@ class AppViews {
           color: Theme.of(context).colorScheme.surface,
         );
         break;
-
       case ShowData.showData:
         widgetM = showWidget;
-
         break;
       case ShowData.showNoDataFound:
         widgetM = Center(
@@ -921,9 +919,9 @@ class AppViews {
 
   static textFieldRoundBorder() {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(5),
+      borderRadius: BorderRadius.circular(12),
       borderSide:  BorderSide(
-        width: 2,
+        width: 1,
         color: AppColors.colorAccent,
         style: BorderStyle.solid,
       ),
@@ -1062,4 +1060,10 @@ class AppViews {
       ),
     );
   }
+}
+addVerticleSpace(double height){
+  return SizedBox(height: height,);
+}
+addHorizontalSpace(double width){
+  return SizedBox(height: width,);
 }

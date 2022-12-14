@@ -23,6 +23,7 @@ import '../../../../global/constants.dart';
 import '../../../../global/enum.dart';
 import '../../../../global/global.dart';
 import '../../../global/app_images.dart';
+import '../../../model/failure.dart';
 import '../../../model/time_model.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/date_selector.dart';
@@ -32,6 +33,8 @@ import '../../../widgets/media_button.dart';
 import '../../../widgets/time_selector.dart';
 import '../../../widgets/voice_note_buttons.dart';
 import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart';
+
+import '../controller/estimation_controller.dart';
 
 class ViewBookingEstimation extends StatefulWidget {
   final Result mEstimatesModel;
@@ -122,11 +125,13 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                     isRoundBorder: true,
                                     fontColor: AppColors.colorWhite,
                                    // width: size.width,
-                                    onPressed: (){},
+                                    onPressed: (){
+                                     Global.showAlert(context, "Something went wrong");
+                                    },
                                     // =>
                                     //     controller.rebook(
                                     //     context, widget.mEstimatesModel),
-                                    strTitle: "Resheduled"),
+                                    strTitle: "Rescheduled"),
                               ),
                             ),
                             Expanded(

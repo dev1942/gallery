@@ -54,8 +54,6 @@ class CompletedFragment extends GetView<MyBookingsController> {
                             child: Container(
                               padding: const EdgeInsets.only(
                                   top: 10,
-                                  right: AppDimens.dimens_10,
-                                  left: 5,
                                   bottom: 7),
                               child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,

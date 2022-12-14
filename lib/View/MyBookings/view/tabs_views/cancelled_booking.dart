@@ -166,7 +166,7 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                   ),
                                                   Text(
                                                     getDate(data
-                                                        .bookingDetails!.date!),
+                                                        .bookingDetails!.date.toString()),
                                                     style: AppStyle
                                                         .textViewStyleSmall(
                                                             context: context,

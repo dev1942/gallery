@@ -627,7 +627,7 @@ class EstimationDetailsPDFScreenState
                         child: Container(
                           alignment: Alignment.center,
                           child: Text(
-                              allBookingsModel.estimation!.serviceTax
+                              allBookingsModel.estimation!.serviceTax!.roundToDouble()
                                   .toString(),
                               style: AppStyle.textViewStyleSmall(
                                   context: context,
