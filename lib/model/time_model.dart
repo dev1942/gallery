@@ -12,3 +12,16 @@ class TimeModel {
       required this.isSelected,
       required this.isEnable});
 }
+
+
+class TimeResModel {
+  String time_12hr;
+  bool isSelected;
+  bool isEnable;
+  TimeResModel(
+      {
+        required this.time_12hr,
+        required this.isSelected,
+        required this.isEnable
+      });
+}

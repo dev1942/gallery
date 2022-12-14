@@ -1,6 +1,11 @@
+import 'dart:collection';
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/global/enum.dart';
+import 'package:otobucks/global/global.dart';
+import 'package:otobucks/services/repository/estimates_repo.dart';
 
 class EstimationFragmentController extends GetxController {
   ShowData mShowData = ShowData.showLoading;
@@ -16,4 +21,44 @@ class EstimationFragmentController extends GetxController {
     activeTabIndex = index;
     update();
   }
+
+
+  RatingBooking({required String? reason,required int ratingstarts  ,required String id,required BuildContext context}) async {
+   // setState(() {
+      mShowData = ShowData.showLoading;
+      // isShowLoader = true;
+    //});
+
+    HashMap<String, Object> requestParams = HashMap();
+
+    requestParams['bookingID'] = id;
+    requestParams['review'] = reason??"";
+    requestParams['stars'] = ratingstarts;
+
+    var categories = await EstimatesRepo().ratingBookingRepo(
+      requestParams);
+
+    categories.fold((failure) {
+      Global.showToastAlert(
+          context: context,
+          strTitle: "",
+          strMsg: failure.MESSAGE,
+          toastType: TOAST_TYPE.toastError);
+      //setState(() {
+        mShowData = ShowData.showNoDataFound;
+     // });
+    }, (mResult) {
+      Global.showToastAlert(
+          context: context,
+          strTitle: "",
+          strMsg: mResult.responseMessage,
+          toastType: TOAST_TYPE.toastSuccess);
+      //setState(() {
+        mShowData = ShowData.showNoDataFound;
+     // });
+      Get.back();
+      //Get.find<EstimationListController>().getEstimation('submitted');
+    });
+  }
+
 }

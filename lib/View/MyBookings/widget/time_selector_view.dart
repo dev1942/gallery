@@ -15,13 +15,13 @@ import 'package:otobucks/model/time_model.dart';
 
 // ignore: must_be_immutable
 class TimeViewSelector extends StatefulWidget {
-  TimeModel? mTimeModel;
+  //TimeModel? mTimeModel;
   String selectedDate;
   Function onSelection;
 
   TimeViewSelector(
       {Key? key,
-        this.mTimeModel,
+       // this.mTimeModel,
         required this.selectedDate,
         required this.onSelection})
       : super(key: key);
@@ -39,14 +39,14 @@ class TimeViewSelectorState extends State<TimeViewSelector> {
   void initState() {
     super.initState();
 
-    alTimeModel = Global.getTimeList(widget.mTimeModel);
-    timer();
+    //alTimeModel = Global.getTimeList(widget.mTimeModel);
+    //timer();
   }
 
-  timer() {
-    var _duration = const Duration(seconds: 1);
-    return Timer(_duration, scrollToPosition);
-  }
+  // timer() {
+  //   var _duration = const Duration(seconds: 1);
+  //   return Timer(_duration, scrollToPosition);
+  // }
 
   scrollToPosition() {
     for (var element in alTimeModel) {
@@ -103,79 +103,79 @@ class TimeViewSelectorState extends State<TimeViewSelector> {
               ),
             ),
             onTap: () {
-              // setState(() {
-              //   DateType mDateType = Global.checkIsToday(widget.selectedDate);
-              //
-              //   switch (mDateType) {
-              //     case DateType.today:
-              //       int hour = DateTime.now().hour;
-              //       for (var element in alTimeModel) {
-              //         element.isSelected = false;
-              //         if (hour >= element.t24hr) {
-              //           element.isEnable = false;
-              //         }
-              //       }
-              //       if (mTimeModel.isEnable) {
-              //         mTimeModel.isSelected = true;
-              //         widget.onSelection(mTimeModel);
-              //       } else {
-              //         Global.showToastAlert(
-              //             context: context,
-              //             strTitle: "",
-              //             strMsg: AppAlert.ALERT_PLEASE_SELECT_FUTURE_TIME,
-              //             toastType: TOAST_TYPE.toastWarning);
-              //       }
-              //       break;
-              //     case DateType.past:
-              //       for (var element in alTimeModel) {
-              //         element.isSelected = false;
-              //         element.isEnable = false;
-              //       }
-              //       if (mTimeModel.isEnable) {
-              //         mTimeModel.isSelected = true;
-              //         widget.onSelection(mTimeModel);
-              //       } else {
-              //         Global.showToastAlert(
-              //             context: context,
-              //             strTitle: "",
-              //             strMsg:
-              //             AppAlert.ALERT_PLEASE_SELECT_FUTURE_DATE_AND_TIME,
-              //             toastType: TOAST_TYPE.toastWarning);
-              //       }
-              //
-              //       break;
-              //     case DateType.none:
-              //       for (var element in alTimeModel) {
-              //         element.isSelected = false;
-              //       }
-              //       mTimeModel.isSelected = true;
-              //       widget.onSelection(mTimeModel);
-              //       break;
-              //   }
-              //
-              //   // if (mDateType == DateType.TODAY) {
-              //   //   int hour = DateTime.now().hour;
-              //   //   alTimeModel.forEach((element) {
-              //   //     element.isSelected = false;
-              //   //     if (hour >= element.t24hr) {
-              //   //       element.isEnable = false;
-              //   //     }
-              //   //   });
-              //   //   if (mTimeModel.isEnable) {
-              //   //     mTimeModel.isSelected = true;
-              //   //     widget.onSelection(mTimeModel);
-              //   //   } else {
-              //   //     Global.showToastAlert(
-              //   //         context: context,
-              //   //         strTitle: "",
-              //   //         strMsg: AppAlert.ALERT_PLEASE_SELECT_FUTURE_TIME,
-              //   //         mTOAST_TYPE: TOAST_TYPE.TOAST_WARNING);
-              //   //   }
-              //   // } else {
-              //   //
-              //   // }
-              // });
-              //
+              setState(() {
+                DateType mDateType = Global.checkIsToday(widget.selectedDate);
+
+                switch (mDateType) {
+                  case DateType.today:
+                    int hour = DateTime.now().hour;
+                    for (var element in alTimeModel) {
+                      element.isSelected = false;
+                      if (hour >= element.t24hr) {
+                        element.isEnable = false;
+                      }
+                    }
+                    if (mTimeModel.isEnable) {
+                      mTimeModel.isSelected = true;
+                      widget.onSelection(mTimeModel);
+                    } else {
+                      Global.showToastAlert(
+                          context: context,
+                          strTitle: "",
+                          strMsg: AppAlert.ALERT_PLEASE_SELECT_FUTURE_TIME,
+                          toastType: TOAST_TYPE.toastWarning);
+                    }
+                    break;
+                  case DateType.past:
+                    for (var element in alTimeModel) {
+                      element.isSelected = false;
+                      element.isEnable = false;
+                    }
+                    if (mTimeModel.isEnable) {
+                      mTimeModel.isSelected = true;
+                      widget.onSelection(mTimeModel);
+                    } else {
+                      Global.showToastAlert(
+                          context: context,
+                          strTitle: "",
+                          strMsg:
+                          AppAlert.ALERT_PLEASE_SELECT_FUTURE_DATE_AND_TIME,
+                          toastType: TOAST_TYPE.toastWarning);
+                    }
+
+                    break;
+                  case DateType.none:
+                    for (var element in alTimeModel) {
+                      element.isSelected = false;
+                    }
+                    mTimeModel.isSelected = true;
+                    widget.onSelection(mTimeModel);
+                    break;
+                }
+
+                // if (mDateType == DateType.TODAY) {
+                //   int hour = DateTime.now().hour;
+                //   alTimeModel.forEach((element) {
+                //     element.isSelected = false;
+                //     if (hour >= element.t24hr) {
+                //       element.isEnable = false;
+                //     }
+                //   });
+                //   if (mTimeModel.isEnable) {
+                //     mTimeModel.isSelected = true;
+                //     widget.onSelection(mTimeModel);
+                //   } else {
+                //     Global.showToastAlert(
+                //         context: context,
+                //         strTitle: "",
+                //         strMsg: AppAlert.ALERT_PLEASE_SELECT_FUTURE_TIME,
+                //         mTOAST_TYPE: TOAST_TYPE.TOAST_WARNING);
+                //   }
+                // } else {
+                //
+                // }
+              });
+
               },
           );
         },

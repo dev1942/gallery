@@ -1252,6 +1252,7 @@ class Global {
           time_24hr: time24HR,
           t24hr: mDateTime.hour,
           isSelected: isSelected);
+
       alTimeModel.add(mTimeModel);
       ++addedHR;
     }

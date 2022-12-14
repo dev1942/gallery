@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:logger/logger.dart';
-import 'package:otobucks/View/MyBookings/controller/estimation_list_controller.dart';
-import 'package:otobucks/View/MyBookings/view/estimation_invoice_screen.dart';
+
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
 import '../../../../../global/app_colors.dart';
@@ -14,7 +12,6 @@ import '../../../../global/constants.dart';
 import '../../../../global/global.dart';
 import '../../Models/AllBookingsModel.dart';
 import '../../controller/mybookings_controller.dart';
-import '../view_booking_screen.dart';
 
 class CancelledFragment extends GetView<MyBookingsController> {
   const CancelledFragment({
@@ -42,7 +39,7 @@ class CancelledFragment extends GetView<MyBookingsController> {
                       List inProcgressList =
                           snapshot.data!.result!.reversed.toList();
                       var data = inProcgressList[index];
-                      if (data.status == "cancelled" ||data.status == "declined") {
+                      if (data.status == "cancelled" || data.status == "declined") {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6.0),
                           child: Card(

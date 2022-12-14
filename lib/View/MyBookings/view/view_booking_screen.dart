@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:otobucks/View/MyBookings/Repo/decline_booking_Repo.dart';
+import 'package:otobucks/View/MyBookings/controller/reschedule_booking_controller.dart';
 
 import 'package:otobucks/View/MyBookings/widget/date_selector_view.dart';
+import 'package:otobucks/View/MyBookings/widget/time_selector_reshedule.dart';
 import 'package:otobucks/View/MyBookings/widget/time_selector_view.dart';
 import 'package:otobucks/controllers/estimation_sidebar_controllers/view_estimation_controller.dart';
 import 'package:otobucks/global/adaptive_helper.dart';
@@ -55,10 +57,17 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
 
 
   var controller = Get.put(ViewEstimationController());
+  var reScheduleController = Get.put(RescheduleBookingController());
   @override
   void initState() {
+    print("-----------------booking data -------------");
+    print(widget.mEstimatesModel.bookingDetails!.time);
+    print(widget.mEstimatesModel.bookingDetails!.date);
+    print(widget.mEstimatesModel.bookingDetails!.image);
+    print(widget.mEstimatesModel.bookingDetails!.video);
+    print(widget.mEstimatesModel.bookingDetails!.voiceNote);
     // controller.estimatesModel = widget.mEstimatesModel;
-    // controller.onInitScreen(widget.mEstimatesModel);
+    reScheduleController.onInitScreen(widget.mEstimatesModel);
     super.initState();
   }
   @override
@@ -82,8 +91,14 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
             //height: AppDimens.dimens_120,
             height: 0,
           ),
+
+          // GetBuilder<ViewEstimationController>(
+          //   builder: (value) =>
+          //       AppViews.showLoadingWithStatus(value.isShowLoader),
+          // ),
           ListView(
             children: [
+             /*---------------------------------Profile-----------------------*/
               Stack(
                 children: [
                   Container(
@@ -94,7 +109,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                 ],
               ),
               //video and images
-
+              /*---------------------------------Booking data-----------------------*/
               Container(
                   padding: EdgeInsets.symmetric(horizontal: wd(10)),
                   alignment: Alignment.centerLeft,
@@ -104,10 +119,10 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                     children: [
                       _uploadImagesSection(),
                       //Upload Video or Shoot a video
-                      _videoSection(),
-                      //Voice Note
-                      _voiceNoteSection(),
-                      //Leave Note (if any)
+                       _videoSection(),
+                      // //Voice Note
+                     _voiceNoteSection(),
+                      // //Leave Note (if any)
                       _anyNoteTextFiledSection(),
                       widget.isPending?
                         Row(
@@ -126,11 +141,9 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                     fontColor: AppColors.colorWhite,
                                    // width: size.width,
                                     onPressed: (){
-                                     Global.showAlert(context, "Something went wrong");
+                                      reScheduleController.reScheduleBooking(context,widget.mEstimatesModel.id.toString());
+                                      // Global.showAlert(context, "Something went wrong");
                                     },
-                                    // =>
-                                    //     controller.rebook(
-                                    //     context, widget.mEstimatesModel),
                                     strTitle: "Rescheduled"),
                               ),
                             ),
@@ -253,10 +266,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               // Expanded(child: Container()),
             ],
           ),
-          GetBuilder<ViewEstimationController>(
-            builder: (value) =>
-                AppViews.showLoadingWithStatus(value.isShowLoader),
-          )
+
         ],
       ),
     );
@@ -384,13 +394,14 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
   );
 
   _uploadImagesSection() {
-    return GetBuilder<ViewEstimationController>(
-        init: ViewEstimationController(),
+    return GetBuilder<RescheduleBookingController>(
+        init: RescheduleBookingController(),
         builder: (value) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              //-----------------------Service-------------------
               Container(
                 margin: EdgeInsets.symmetric(horizontal: wd(15)),
                 alignment: Alignment.center,
@@ -417,6 +428,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   ],
                 ),
               ),
+              //-----------------------Provider-------------------
               Container(
                 margin: const EdgeInsets.only(
                     top: AppDimens.dimens_10,
@@ -446,6 +458,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   ],
                 ),
               ),
+              //-----------------------Service Price Per Hour-------------------
               Container(
                 margin: const EdgeInsets.only(
                     top: AppDimens.dimens_10,
@@ -477,6 +490,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   ],
                 ),
               ),
+              //-----------------------Map get Location---------------------------
               Container(
                   margin: const EdgeInsets.only(
                       top: AppDimens.dimens_20,
@@ -488,6 +502,8 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                       onTap: (LatLng mLatLng_) =>
                           value.updateLatLang(mLatLng_))),
               _addressTextFiledSection(),
+
+              //-----------------------Date Time--------------------------
               Container(
                 margin: const EdgeInsets.only(
                   top: AppDimens.dimens_15,
@@ -511,12 +527,20 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   right: AppDimens.dimens_14,
                 ),
                 child: DateViewSelector(
-                    selectedDate: DateTime.parse(widget.mEstimatesModel.bookingDetails!.date!),
-                    onSelection: (String _selectedDate) {
-                      // print(_selectedDate);
+                 // selectedDate: value.selectedDate,
+                  selectedDate: DateTime.parse(widget.mEstimatesModel.bookingDetails!.date!),
+                  //selectedDate:DateTime.parse(value.selectedDate),
+          onSelection: (String _selectedDate) {
+            print(_selectedDate);
+            value.onSelectDate(_selectedDate);
+          }
 
-                     // value.onSelectDate(_selectedDate);
-                    },
+                   // selectedDate: DateTime.parse(widget.mEstimatesModel.bookingDetails!.date!),
+                   //  onSelection: (String _selectedDate) {
+                   //    // print(_selectedDate);
+                   //
+                   //    value.onSelectDate(_selectedDate);
+                   //  },
 
                 ),
               ),
@@ -543,12 +567,14 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   left: AppDimens.dimens_14,
                   right: AppDimens.dimens_14,
                 ),
-                child: TimeViewSelector(
-                    selectedDate: widget.mEstimatesModel.bookingDetails!.time!,//value.selectedDate,
-                    //mTimeModel: value.mTimeModel,
-                    onSelection: (TimeModel mtimeModel_)
-                    =>
-                        value.onSelectTime(mtimeModel_)),
+                child:  TimeRescheduleSelector(
+                    selectedDate: value.selectedDate??"",
+                   time:widget.mEstimatesModel.bookingDetails!.time??"",
+                   // mTimeModel: value.mTimeModel,
+                   //  onSelection: (TimeModel mtimeModel_) =>
+                   //      value.onSelectTime(mtimeModel_)
+                ),
+
               ),
           //     //Upload image or Take a photo
               Container(
@@ -991,9 +1017,9 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   fontSizeDelta: 0,
                   fontWeightDelta: 0,
                   context: context),
-              controller: controller.controllerNote,
+              controller: reScheduleController.controllerNote,
               textAlign: TextAlign.start,
-              readOnly: true,
+              //readOnly: true,
               decoration: InputDecoration(
                 prefixIconConstraints:
                 const BoxConstraints(minWidth: AppDimens.dimens_33),
@@ -1011,7 +1037,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                 disabledBorder: AppViews.textFieldRoundBorder(),
                 focusedErrorBorder: AppViews.textFieldRoundBorder(),
                 hintText: "Write a message...",
-                filled: true,
+               // filled: true,
                 fillColor: AppColors.colorGray2,
                 hintStyle: AppStyle.textViewStyleNormalBodyText2(
                     color: AppColors.colorTextFieldHint,
