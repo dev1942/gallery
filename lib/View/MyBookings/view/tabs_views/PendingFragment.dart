@@ -66,7 +66,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                      MainAxisAlignment.spaceBetween,
                                      children: [
                                        //------------------ column Image  amd view booking-----------------
-                                       Column(
+                                       Column(crossAxisAlignment: CrossAxisAlignment.center,
                                          children: [
                                            ImageWidget(
                                                imagePath:
@@ -76,23 +76,23 @@ class PendingFragment extends GetView<MyBookingsController> {
                                            ),
 //--------------------------------View booking--------------------------
                                            /// onclick of view booking
-                                           InkWell(
-                                             child: Container(
-                                                 child: Padding(
-                                                   padding: const EdgeInsets.only(
-                                                       left: 5.0),
-                                                   child: Text(
-                                                     Constants.TXT_VIEW_BOOKING,
-                                                     style:
-                                                     AppStyle.textViewStyleSmall(
-                                                         context: context,
-                                                         color: AppColors
-                                                             .colorTextBlue2,
-                                                         fontSizeDelta: 0,
-                                                         fontWeightDelta: 0),
-                                                   ),
-                                                 )),
-                                             onTap: () {
+                                           Padding(
+                                             padding: const EdgeInsets.only(right: 10.0),
+                                             child: InkWell(
+                                               child: Container(
+                                                   child: Center(
+                                                     child: Text(
+                                                       Constants.TXT_VIEW_BOOKING,
+                                                       style:
+                                                       AppStyle.textViewStyleSmall(
+                                                           context: context,
+                                                           color: AppColors
+                                                               .colorTextBlue2,
+                                                           fontSizeDelta: 0,
+                                                           fontWeightDelta: 0),
+                                                     ),
+                                                   )),
+                                               onTap: () {
                       if( data.status==
                       "pending"){
                         //reschedule and decline
@@ -102,8 +102,10 @@ class PendingFragment extends GetView<MyBookingsController> {
                         Get.to(ViewBookingEstimation(mEstimatesModel: data));
 
                       }
-                                             },
+                                               },
+                                             ),
                                            ),
+
                                          ],
                                        ),
                                        //..........................right side data column
@@ -246,18 +248,29 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                        color: data.estimation
                                                            ?.offerStatus ==
                                                            "accepted"
-                                                           ? Colors.green
+                                                           ? AppColors.colorSuccessBackground
                                                            : data.estimation
                                                            ?.offerStatus ==
                                                            "declined"
-                                                           ? Colors
-                                                           .pink
-                                                           : Colors
-                                                           .yellow,
+                                                           ? AppColors.colorCancelledBackground
+                                                           : AppColors.colorPendingBackground,
                                                        borderRadius:
                                                        BorderRadius
                                                            .circular(
                                                            2.0),
+                                                       border: Border.all(
+                                                         width: 2,
+                                                         color:
+                                                       data.estimation
+                                                           ?.offerStatus ==
+                                                           "accepted"
+                                                           ? AppColors.colorSuccessBorder
+                                                           : data.estimation
+                                                           ?.offerStatus ==
+                                                           "declined"
+                                                           ? AppColors.colorCancelledBorder
+                                                           : AppColors.colorPendingBorder,
+                                                       ),
                                                      ),
                                                      child: Center(
                                                        child: Text(
@@ -265,13 +278,15 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                              .toUpperCase() ??
                                                              "",
                                                          style: TextStyle(
-                                                           color: data.estimation
+                                                           color:  data.estimation
                                                                ?.offerStatus ==
                                                                "accepted"
-                                                               ? AppColors
-                                                               .colorWhite
-                                                               : Colors
-                                                               .black,
+                                                               ? AppColors.colorSuccessText
+                                                               : data.estimation
+                                                               ?.offerStatus ==
+                                                               "declined"
+                                                               ? AppColors.colorCancelledText
+                                                               : AppColors.colorPendingText,
                                                            fontSize: 10,
                                                            fontWeight:
                                                            FontWeight
@@ -438,7 +453,7 @@ class PendingFragment extends GetView<MyBookingsController> {
         child:
             // "AED ${mEstimatesModel.grandTotal}/-",
             GradientText(
-          "AED ${price} /-",
+          "AED ${price}",
           // Global.checkNull(mEstimatesModel
           //     .source
           //     ?.price)
@@ -454,7 +469,7 @@ class PendingFragment extends GetView<MyBookingsController> {
               context: Get.context!,
               color: AppColors.colorBlueStart,
               fontSizeDelta: 1,
-              fontWeightDelta: 1),
+              fontWeightDelta: 3),
         ));
   }
 

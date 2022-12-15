@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_style.dart';
+import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 
 import '../../../../global/app_images.dart';
@@ -38,8 +39,6 @@ class MyCarListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(
-          left: AppDimens.dimens_20,
-          right: AppDimens.dimens_20,
           bottom: AppDimens.dimens_5,
           top: AppDimens.dimens_5),
       padding: const EdgeInsets.all(AppDimens.dimens_20),
@@ -49,18 +48,12 @@ class MyCarListItem extends StatelessWidget {
             margin: const EdgeInsetsDirectional.only(
               end: AppDimens.dimens_20,
             ),
-            child: Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppDimens.dimens_10),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppDimens.dimens_10),
-                child: NetworkImageCustom(
-                    image: image,
-                    height: AppDimens.dimens_70,
-                    width: AppDimens.dimens_70),
-              ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(AppDimens.dimens_10),
+              child: NetworkImageCustom(
+                  image: image,
+                  height: AppDimens.dimens_70,
+                  width: AppDimens.dimens_80),
             ),
           ),
           Expanded(
@@ -73,7 +66,7 @@ class MyCarListItem extends StatelessWidget {
                     children: [
                      Row(children: [
                        Text(
-                         carBrand,
+                         carBrand.toUpperCase(),
                          style: AppStyle.textViewStyleNormalBodyText2(
                              context: context,
                              color: AppColors.colorBlueStart,
@@ -82,7 +75,7 @@ class MyCarListItem extends StatelessWidget {
                        ),
                        SizedBox(width: 10.0),
                        Text(
-                         modeYear,
+                         modeYear.toUpperCase(),
                          style: AppStyle.textViewStyleSmall(
                              context: context,
                              color: AppColors.colorBlack,
@@ -90,39 +83,42 @@ class MyCarListItem extends StatelessWidget {
                              fontWeightDelta: 0),
                        ),
                      ],),
+                      addHorizontalSpace(10),
                       Row(children: [
                         GestureDetector(
                           onTap: onEditTap,
-                          child: Image.asset(
-                              AppImages.ic_edit_profile_icon,
-                              color: AppColors.colorBlack,
-                              width: 18,
-                              height: 18),
+                          child:Icon(Icons.edit_calendar)
                         ),
-                        SizedBox(width: 20.0),
                        GestureDetector(
                            onTap: onDeleteTap,
                            child: Icon(Icons.delete)),
                       ],)
                     ],
                   ),
-                  Text(
-                    "${km} KM",
-                    style: AppStyle.textViewStyleSmall(
-                        context: context,
-                        color: AppColors.colorBlack,
-                        fontSizeDelta: -2,
-                        fontWeightDelta: 0),
+addVerticleSpace(10),
+                  Row(
+                    children: [
+                      Text(
+                        "${km} KM",
+                        style: AppStyle.textViewStyleSmall(
+                            context: context,
+                            color: AppColors.colorBlack,
+                            fontSizeDelta: -2,
+                            fontWeightDelta: 0),
+                      ),
+                      addHorizontalSpace(12),
+                      Text(
+                        color.toUpperCase(),
+                        style: AppStyle.textViewStyleSmall(
+                            context: context,
+                            color: AppColors.colorBlack,
+                            fontSizeDelta: -2,
+                            fontWeightDelta: 0),
+                      ),
+                    ],
                   ),
 
-                  Text(
-                    color,
-                    style: AppStyle.textViewStyleSmall(
-                        context: context,
-                        color: AppColors.colorBlack,
-                        fontSizeDelta: -2,
-                        fontWeightDelta: 0),
-                  ),
+Divider(thickness: 1,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

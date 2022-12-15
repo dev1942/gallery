@@ -68,7 +68,7 @@ class NotificationDetailsState extends State<NotificationDetails> {
                       margin: const EdgeInsets.only(
                           top: AppDimens.dimens_5, bottom: AppDimens.dimens_2),
                       child: Text(
-                        widget.userName,
+                        widget.userName.toUpperCase(),
                         style: AppStyle.textViewStyleNormalBodyText2(
                             context: context,
                             color: AppColors.colorWhite,
@@ -90,123 +90,130 @@ class NotificationDetailsState extends State<NotificationDetails> {
             ],
           ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: ContainerProperties.shadowDecoration(),
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
-              child: Text(
-                  'Details: ${widget.notificationModel.title.contains('submitted') ? 'Your Estimation has been submitted' : ''}',
-                  style: AppStyle.textViewStyleNormalBodyText2(
-                      context: context,
-                      color: HexColor('#1DCD24'),
-                      fontSizeDelta: 0,
-                      fontWeightDelta: 1)),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: ContainerProperties.shadowDecoration(),
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('From',
-                            style: AppStyle.textViewStyleNormalBodyText2(
-                              context: context,
-                              color: AppColors.colorBlueStart,
-                              fontSizeDelta: 0,
-                              fontWeightDelta: 1,
-                            )),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text('Date',
-                            style: AppStyle.textViewStyleNormalBodyText2(
-                              context: context,
-                              color: AppColors.colorBlueStart,
-                              fontSizeDelta: 0,
-                              fontWeightDelta: 1,
-                            )),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text('time',
-                            style: AppStyle.textViewStyleNormalBodyText2(
-                              context: context,
-                              color: AppColors.colorBlueStart,
-                              fontSizeDelta: 0,
-                              fontWeightDelta: 1,
-                            ))
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget.notificationModel.from),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(dateTime.toString().split(' ')[0]),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(getTimeFormat(dateTime.toString().split(' ')[1])),
-                      ],
-                    ),
-                  )
-                ],
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              addVerticleSpace(15),
+              Card(
+                elevation: 7,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  alignment: Alignment.center,
+                  child: Text(
+                      'Details: ${widget.notificationModel.title.contains('submitted') ? 'Your Estimation has been submitted' : ''}',
+                      style: AppStyle.textViewStyleNormalBodyText2(
+                          context: context,
+                          color: HexColor('#1DCD24'),
+                          fontSizeDelta: 0,
+                          fontWeightDelta: 1)),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            if (widget.notificationModel.type == 'estimate')
-              SizedBox(
-                width: 200,
-                child: PrimaryButton(
-                    label: const Text('Estimation Details'),
-                    onPress: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => EstimationDetailsPDFScreen(
-                      //               mEstimatesModel: EstimatesModel(
-                      //                 address: widget.notificationModel.,
-                      //                 cutomerNote: ,
-                      //                 date: ,
-                      //                 discount: ,
-                      //                 grandTotal: ,
-                      //                 id: ,
-                      //                 image: ,
-                      //                 mServiceProviderModel: ,
-                      //                 itemModel: ,
-                      //                 serviceTax: ,
-                      //                 source: ,
-                      //                 status: ,
-                      //                 subTotal: ,
-                      //                 time: ,
-                      //                 video: ,
-                      //                 voiceNote:
-                      //               ),
-                      //               callback: (bool isRefresh) {
-                      //                 setState(() {});
-                      //               },
-                      //             )));
-                    },
-                    color: null),
-              )
-          ],
+              Card(
+                elevation: 7,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.only(left: 20, right: 20),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('From',
+                                style: AppStyle.textViewStyleNormalBodyText2(
+                                  context: context,
+                                  color: AppColors.colorBlueStart,
+                                  fontSizeDelta: 0,
+                                  fontWeightDelta: 1,
+                                )),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text('Date',
+                                style: AppStyle.textViewStyleNormalBodyText2(
+                                  context: context,
+                                  color: AppColors.colorBlueStart,
+                                  fontSizeDelta: 0,
+                                  fontWeightDelta: 1,
+                                )),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text('time',
+                                style: AppStyle.textViewStyleNormalBodyText2(
+                                  context: context,
+                                  color: AppColors.colorBlueStart,
+                                  fontSizeDelta: 0,
+                                  fontWeightDelta: 1,
+                                ))
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(widget.notificationModel.from),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(dateTime.toString().split(' ')[0]),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(getTimeFormat(dateTime.toString().split(' ')[1])),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              if (widget.notificationModel.type == 'estimate')
+                SizedBox(
+                  width: 200,
+                  child: PrimaryButton(
+                      label: const Text('Estimation Details'),
+                      onPress: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => EstimationDetailsPDFScreen(
+                        //               mEstimatesModel: EstimatesModel(
+                        //                 address: widget.notificationModel.,
+                        //                 cutomerNote: ,
+                        //                 date: ,
+                        //                 discount: ,
+                        //                 grandTotal: ,
+                        //                 id: ,
+                        //                 image: ,
+                        //                 mServiceProviderModel: ,
+                        //                 itemModel: ,
+                        //                 serviceTax: ,
+                        //                 source: ,
+                        //                 status: ,
+                        //                 subTotal: ,
+                        //                 time: ,
+                        //                 video: ,
+                        //                 voiceNote:
+                        //               ),
+                        //               callback: (bool isRefresh) {
+                        //                 setState(() {});
+                        //               },
+                        //             )));
+                      },
+                      color: null),
+                )
+            ],
+          ),
         )
       ],
     );

@@ -17,7 +17,6 @@ class ProfileScreenController extends GetxController {
   List<GetCarModelResult> carList=[];
   bool connectionStatus = false;
   bool isShowLoader = false;
-
   TextEditingController controllerAddress = TextEditingController();
   TextEditingController controllerPhone = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();

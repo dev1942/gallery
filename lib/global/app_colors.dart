@@ -79,6 +79,19 @@ class AppColors {
   static Color grayDashboardText = HexColor("#B1B1B1");
   static Color colorGreen = HexColor("#009E52");
   static Color dartGrey = Colors.grey.shade500;
+  //..................Offers status colors.........................
+  //.pending
+  static Color colorPendingText=HexColor("#d4b106");
+  static Color colorPendingBackground=HexColor("#feffe6");
+  static Color colorPendingBorder=HexColor("#fffb8f");
+  // accepted
+  static Color colorSuccessText=HexColor("#389e0d");
+  static Color colorSuccessBackground=HexColor("#f6ffed");
+  static Color colorSuccessBorder=HexColor("#b7eb8f");
+// Cancel
+  static Color colorCancelledText=HexColor("#cf1322");
+  static Color colorCancelledBackground=HexColor("#fff1f0");
+  static Color colorCancelledBorder=HexColor("#ffa39e");
 
   static Color colorOrange = HexColor("#FF9700");
   static Color colorRED = HexColor("#E20001");

@@ -48,7 +48,7 @@ class PromotionBanner extends StatelessWidget {
                   Positioned(
                     child: SizedBox(
                         child: NetworkImageCustom(
-                          image: strImage,
+                          image: "https://images.pexels.com/photos/120049/pexels-photo-120049.jpeg?cs=srgb&dl=pexels-mike-b-120049.jpg&fm=jpg",
                           fit: BoxFit.cover,
                           height: double.infinity,
                           width: double.infinity,

@@ -27,7 +27,7 @@ class RatingRepo {
     }
     try {
       String response = await ReqListener.fetchPost(
-          strUrl: 'ratings/by-customer',
+          strUrl: 'ratings/booking/byCustomer',
           requestParams: requestParams,
           mReqType: ReqType.post,
           mParamType: ParamType.json);

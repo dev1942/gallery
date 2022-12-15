@@ -6,6 +6,7 @@ import 'package:otobucks/View/MyBookings/controller/estimation_list_controller.d
 import 'package:otobucks/View/MyBookings/controller/estimation_screen_controller.dart';
 import 'package:otobucks/View/MyBookings/view/estimation_invoice_screen.dart';
 import 'package:otobucks/global/enum.dart';
+import 'package:otobucks/page/rating/rating_page.dart';
 import 'package:otobucks/widgets/cancel_booking_dialog.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
@@ -83,7 +84,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                               child: Container(
                                                   child: Padding(
                                                 padding: const EdgeInsets.only(
-                                                    left: 5.0),
+                                                    right: 8.0),
                                                 child: Text(
                                                   Constants.TXT_VIEW_BOOKING,
                                                   style: AppStyle
@@ -188,7 +189,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                     MainAxisAlignment.start,
                                                 //     : MainAxisAlignment.center,
                                                 children: [
-                                                  ///on click view estimation
+                                                  //...................on click of give ratting
                                                   InkWell(
                                                     child: Container(
                                                         width: Get.width / 2.6,
@@ -221,7 +222,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                       //     false);false
                                                      print(data.id);
                                                        displayTextInputDialog(context,data.id);
-
+                                                  
                                                     },
                                                   ),
                                                   const SizedBox(
@@ -258,32 +259,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
 
   }
   displayTextInputDialog(BuildContext context,String bookingId) async {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return RatingDialogBox(
-            isDecline: true,
-            onTap: (String strReason,int rating) {
-              if (Global.checkNull(strReason)) {
-                print("str reasong and rating");
-                print(rating);
-                print(strReason);
-                estimationController.RatingBooking(
-                  context: context,
-                    id:bookingId,
-                    ratingstarts:rating,
-                    reason: strReason
-                );
-              } else {
-                Global.showToastAlert(
-                    context: context,
-                    strTitle: "",
-                    strMsg: AppAlert.ALERT_ENTER_FN,
-                    toastType: TOAST_TYPE.toastError);
-              }
-            },
-          );
-        });
+    Get.to(RatingScreen(bookingId: bookingId, ));
   }
 
 
@@ -363,7 +339,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
               context: Get.context!,
               color: AppColors.colorBlueStart,
               fontSizeDelta: 1,
-              fontWeightDelta: 1),
+              fontWeightDelta: 3),
         ));
   }
 

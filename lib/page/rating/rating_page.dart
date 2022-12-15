@@ -14,9 +14,8 @@ import '../../global/app_colors.dart';
 
 class RatingScreen extends StatefulWidget {
   final String bookingId;
-  final String providerId;
   const RatingScreen(
-      {Key? key, required this.bookingId, required this.providerId})
+      {Key? key, required this.bookingId, })
       : super(key: key);
 
   @override
@@ -150,12 +149,10 @@ class RatingScreenState extends State<RatingScreen> {
 
     HashMap<String, Object> requestParams = HashMap();
     requestParams['review'] = feedback.text;
-    requestParams['rating'] = rating.toString();
-    requestParams['booking'] = widget.bookingId;
-    requestParams['provider'] = widget.providerId;
+    requestParams['stars'] = rating.toString();
+    requestParams['bookingID'] = widget.bookingId;
 
     var categories = await RatingRepo().giveRating(requestParams);
-
     categories.fold((failure) {
       Global.showToastAlert(
           context: Get.overlayContext!,

@@ -77,7 +77,7 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                               child: Container(
                                                   child: Padding(
                                                 padding: const EdgeInsets.only(
-                                                    left: 5.0),
+                                                    right: 8.0),
                                                 child: Text(
                                                   Constants.TXT_VIEW_BOOKING,
                                                   style: AppStyle
@@ -306,7 +306,7 @@ class CancelledFragment extends GetView<MyBookingsController> {
         child:
             // "AED ${mEstimatesModel.grandTotal}/-",
             GradientText(
-          "AED ${price} /-",
+          "AED ${price}",
           // Global.checkNull(mEstimatesModel
           //     .source
           //     ?.price)
@@ -322,7 +322,7 @@ class CancelledFragment extends GetView<MyBookingsController> {
               context: Get.context!,
               color: AppColors.colorBlueStart,
               fontSizeDelta: 1,
-              fontWeightDelta: 1),
+              fontWeightDelta: 3),
         ));
   }
 

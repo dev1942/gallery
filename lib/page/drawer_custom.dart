@@ -44,7 +44,7 @@ Widget drawer(BuildContext context) {
                       left: AppDimens.dimens_5, right: AppDimens.dimens_5),
                   alignment: Alignment.center,
                   child: Image.asset(
-                    AppImages.icSplashScreenIcon,
+                    AppImages.appLogo,
                     fit: BoxFit.fitWidth,
                   )),
             ],

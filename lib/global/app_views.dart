@@ -1065,5 +1065,5 @@ addVerticleSpace(double height){
   return SizedBox(height: height,);
 }
 addHorizontalSpace(double width){
-  return SizedBox(height: width,);
+  return SizedBox(width: width,);
 }

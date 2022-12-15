@@ -436,7 +436,7 @@ class Constants {
   static const String STR_NAME = 'Name',
       STR_ADDRESS = 'Address',
       STR_ENTER_YOUR_CAR_DETAILS = 'Enter your car details',
-      STR_EMERGENCY_CONTACT_DETAIL = 'Emergency Contact detail',
+      STR_EMERGENCY_CONTACT_DETAIL = 'Add Emergency Contact Details',
       STR_CAR_BRAND = 'Car brand',
       STR_CAR_MODEL_YEAR = 'Car model year',
       STR_MILEAGE = 'KM',

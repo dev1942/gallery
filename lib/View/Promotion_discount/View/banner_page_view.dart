@@ -10,16 +10,13 @@ import 'package:otobucks/widgets/banner_component.dart';
 
 class BannerPageView extends StatefulWidget {
   final List<PromotionsModel> alPromotions;
-
   const BannerPageView({
     Key? key,
     required this.alPromotions,
   }) : super(key: key);
-
   @override
   BannerPageViewState createState() => BannerPageViewState();
 }
-
 class BannerPageViewState extends State<BannerPageView> {
   final PageController _pageController = PageController();
 
@@ -46,7 +43,6 @@ class BannerPageViewState extends State<BannerPageView> {
               itemBuilder: (context, index) {
                 String strImage = widget.alPromotions[index].getPromoImage();
                 PromotionsModel mPromotionsModel = widget.alPromotions[index];
-
                 return PromotionBanner(
                     buttonText: 'View Details',
                     onTap: () {
