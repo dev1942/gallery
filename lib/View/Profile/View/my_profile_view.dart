@@ -491,7 +491,112 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                             ),
                                           ],
                                         ),
+                                        addVerticleSpace(16),
+                                        // edit butons................
+                                        Visibility(
+                                          visible: isEditidTab,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                width:130,
+                                                child: CustomButton(
+                                                    isGradient: true,
+                                                    isRoundBorder: true,
+                                                    height: height,
+                                                    fontSize: -2,
+                                                    fontColor:
+                                                    AppColors.colorWhite,
+                                                    width: size.width,
+                                                    onPressed: () {
+                                                      controller
+                                                          .clearController();
+                                                      setState(() {
+                                                        isEditidTab=false;
+                                                      });
+                                                    },
+                                                    strTitle: "Cancel"),
+                                              ),
+                                              const SizedBox(width: 10.0),
+                                              SizedBox(
+                                                width:130,
+                                                child: CustomButton(
+                                                    isGradient: true,
+                                                    isRoundBorder: true,
+                                                    height: height,
+                                                    fontSize: -2,
+                                                    fontColor:
+                                                    AppColors.colorWhite,
+                                                    width: size.width / 2.2,
+                                                    onPressed: () {
+                                                      if (value.controllerCarBrand.text.isNotEmpty &&
+                                                          value
+                                                              .controllerColour
+                                                              .text
+                                                              .isNotEmpty &&
+                                                          value
+                                                              .controllerCarModelYear
+                                                              .text
+                                                              .isNotEmpty &&
+                                                          value
+                                                              .controllerMileage
+                                                              .text
+                                                              .isNotEmpty &&
+                                                          value
+                                                              .controllerCity
+                                                              .text
+                                                              .isNotEmpty &&
+                                                          value
+                                                              .controllerCode
+                                                              .text
+                                                              .isNotEmpty &&
+                                                          value
+                                                              .controllerNumber
+                                                              .text
+                                                              .isNotEmpty) {
+                                                        controller.UpdateCar(
 
+                                                            value
+                                                                .controllerCarBrand
+                                                                .text,
+                                                            value
+                                                                .controllerColour
+                                                                .text,
+                                                            value
+                                                                .controllerCarModelYear
+                                                                .text,
+                                                            value
+                                                                .controllerMileage
+                                                                .text,
+                                                            value.controllerCity
+                                                                .text,
+                                                            value.controllerCode
+                                                                .text,
+                                                            value
+                                                                .controllerNumber
+                                                                .text,
+                                                          editId!,
+                                                        );
+                                                        setState(() {
+                                                          IsAddCarTap = false;
+                                                        });
+                                                      } else {
+                                                        Global.showToastAlert(
+                                                            context: Get
+                                                                .overlayContext!,
+                                                            strTitle: "",
+                                                            strMsg:
+                                                            "Please Fill All Fields",
+                                                            toastType: TOAST_TYPE
+                                                                .toastError);
+                                                      }
+                                                    },
+                                                    strTitle: "Update"),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                         addVerticleSpace(12),
                                         Visibility(
                                           visible: !isEditidTab,
@@ -711,7 +816,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         },
                                       )
                                       : SizedBox(
-                                          width: size.width / 3,
+                                          width: size.width / 2.39,
                                           height: imgHeight,
                                           child: Stack(
                                             alignment: Alignment.center,
@@ -722,19 +827,19 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                       BorderRadius.circular(
                                                           AppDimens.dimens_5),
                                                 ),
-                                                width: size.width / 3,
+                                                width: size.width / 2.39,
                                                 child: Global.isURL(
                                                         value.imgMulkia)
                                                     ? NetworkImageCustom(
                                                         height: imgHeight,
-                                                        width: size.width / 3,
+                                                        width: size.width / 2.39,
                                                         image:
                                                             value.imgMulkia)
                                                     : ImageView(
                                                         strImage:
                                                             value.imgMulkia,
                                                         height: imgHeight,
-                                                        width: size.width / 3,
+                                                        width: size.width / 2.39,
                                                       ),
                                               ),
                                               Positioned(
@@ -808,7 +913,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         },
                                       )
                                       : SizedBox(
-                                          width: size.width / 3,
+                                          width: size.width / 2.39,
                                           height: imgHeight,
                                           child: Stack(
                                             alignment: Alignment.center,
@@ -819,19 +924,19 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                       BorderRadius.circular(
                                                           AppDimens.dimens_5),
                                                 ),
-                                                width: size.width / 3,
+                                                width: size.width / 2.39,
                                                 child: Global.isURL(value
                                                         .imgDrivingLicence)
                                                     ? NetworkImageCustom(
                                                         height: imgHeight,
-                                                        width: size.width / 3,
+                                                        width: size.width / 2.39,
                                                         image: value
                                                             .imgDrivingLicence)
                                                     : ImageView(
                                                         strImage: value
                                                             .imgDrivingLicence,
                                                         height: imgHeight,
-                                                        width: size.width / 3,
+                                                        width:size.width / 2.39,
                                                       ),
                                               ),
                                               Positioned(
@@ -911,7 +1016,7 @@ addVerticleSpace(9),
                                         },
                                       )
                                       : SizedBox(
-                                          width: size.width / 3,
+                                          width:size.width / 2.39,
                                           height: imgHeight,
                                           child: Stack(
                                             alignment: Alignment.center,
@@ -922,19 +1027,19 @@ addVerticleSpace(9),
                                                       BorderRadius.circular(
                                                           AppDimens.dimens_5),
                                                 ),
-                                                width: size.width / 3,
+                                                width: size.width / 2.39,
                                                 child: Global.isURL(
                                                         value.imgEmIdFront)
                                                     ? NetworkImageCustom(
                                                         height: imgHeight,
-                                                        width: size.width / 3,
+                                                        width: size.width / 2.39,
                                                         image: value
                                                             .imgEmIdFront)
                                                     : ImageView(
                                                         strImage: value
                                                             .imgEmIdFront,
                                                         height: imgHeight,
-                                                        width: size.width / 3,
+                                                        width: size.width / 2.39,
                                                       ),
                                               ),
                                               Positioned(
@@ -1013,7 +1118,7 @@ addVerticleSpace(9),
                                         },
                                       )
                                       : SizedBox(
-                                          width: size.width / 3,
+                                          width:size.width / 2.39,
                                           height: imgHeight,
                                           child: Stack(
                                             alignment: Alignment.center,
@@ -1024,19 +1129,19 @@ addVerticleSpace(9),
                                                       BorderRadius.circular(
                                                           AppDimens.dimens_5),
                                                 ),
-                                                width: size.width / 3,
+                                                width: size.width / 2.39,
                                                 child: Global.isURL(
                                                         value.imgEmIdBack)
                                                     ? NetworkImageCustom(
                                                         height: imgHeight,
-                                                        width: size.width / 3,
+                                                        width:size.width / 2.39,
                                                         image:
                                                             value.imgEmIdBack)
                                                     : ImageView(
                                                         strImage:
                                                             value.imgEmIdBack,
                                                         height: imgHeight,
-                                                        width: size.width / 3,
+                                                        width: size.width / 2.39,
                                                       ),
                                               ),
                                               Positioned(

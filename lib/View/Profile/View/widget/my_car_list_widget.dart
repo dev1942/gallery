@@ -43,6 +43,7 @@ class MyCarListItem extends StatelessWidget {
           top: AppDimens.dimens_5),
       padding: const EdgeInsets.all(AppDimens.dimens_20),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             margin: const EdgeInsetsDirectional.only(
@@ -59,8 +60,9 @@ class MyCarListItem extends StatelessWidget {
           Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // row 1
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -73,17 +75,9 @@ class MyCarListItem extends StatelessWidget {
                              fontSizeDelta: 0,
                              fontWeightDelta: 2),
                        ),
-                       SizedBox(width: 10.0),
-                       Text(
-                         modeYear.toUpperCase(),
-                         style: AppStyle.textViewStyleSmall(
-                             context: context,
-                             color: AppColors.colorBlack,
-                             fontSizeDelta: -2,
-                             fontWeightDelta: 0),
-                       ),
+
                      ],),
-                      addHorizontalSpace(10),
+                      SizedBox(),
                       Row(children: [
                         GestureDetector(
                           onTap: onEditTap,
@@ -92,31 +86,85 @@ class MyCarListItem extends StatelessWidget {
                        GestureDetector(
                            onTap: onDeleteTap,
                            child: Icon(Icons.delete)),
-                      ],)
+                      ],),
+
                     ],
                   ),
+
 addVerticleSpace(10),
+                  // row km color
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "${km} KM",
-                        style: AppStyle.textViewStyleSmall(
-                            context: context,
-                            color: AppColors.colorBlack,
-                            fontSizeDelta: -2,
-                            fontWeightDelta: 0),
+                      // column odel year
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Model",
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: Colors.red,
+                                fontSizeDelta: -2,
+                                fontWeightDelta: 0),
+                          ),
+                          Text(
+                            "$modeYear",
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: AppColors.colorBlack,
+                                fontSizeDelta: -2,
+                                fontWeightDelta: 0),
+                          ),
+                        ],
                       ),
-                      addHorizontalSpace(12),
-                      Text(
-                        color.toUpperCase(),
-                        style: AppStyle.textViewStyleSmall(
-                            context: context,
-                            color: AppColors.colorBlack,
-                            fontSizeDelta: -2,
-                            fontWeightDelta: 0),
+                      // column km
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "KM         ",
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: Colors.red,
+                                fontSizeDelta: -2,
+                                fontWeightDelta: 0),
+                          ),
+                          Text(
+                            "$km",
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: AppColors.colorBlack,
+                                fontSizeDelta: -2,
+                                fontWeightDelta: 0),
+                          ),
+                        ],
+                      ),
+                      // column colo
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Color     ",
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: Colors.red,
+                                fontSizeDelta: -2,
+                                fontWeightDelta: 0),
+                          ),
+                          Text(
+                            "$color",
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: AppColors.colorBlack,
+                                fontSizeDelta: -2,
+                                fontWeightDelta: 0),
+                          ),
+                        ],
                       ),
                     ],
                   ),
+
 
 Divider(thickness: 1,),
                   Row(
@@ -132,15 +180,15 @@ Divider(thickness: 1,),
         ],
       ),
       decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
         color: AppColors.grayDashboardItem,
-        borderRadius: BorderRadius.circular(AppDimens.dimens_20),
+        borderRadius: BorderRadius.circular(AppDimens.dimens_12),
       ),
     );
   }
 
   Widget CodeCityNumber(BuildContext context,heading,text){
     return   Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           heading,

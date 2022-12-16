@@ -13,7 +13,10 @@ import 'package:otobucks/View/MyBookings/controller/estimation_screen_controller
 import '../Models/AllBookingsModel.dart';
 
 class EstimationFragment extends StatefulWidget {
-   EstimationFragment({Key? key,}) : super(key: key);
+  EstimationFragment({
+    Key? key,
+  }) : super(key: key);
+
   @override
   EstimationFragmentState createState() => EstimationFragmentState();
 }
@@ -47,46 +50,100 @@ class EstimationFragmentState extends State<EstimationFragment>
                     children: [
                       Container(
                         color: AppColors.colorBlueStart,
-                        height: AppDimens.dimens_85,
+                        height: 70,
                       ),
                       Container(
-                        child: TabBar(
-                          onTap: (index) => value.changeIndex(index),
-                          labelStyle: AppStyle.textViewStyleNormalSubtitle2(
-                              context: context, color: AppColors.colorBlack),
-                          indicatorColor: AppColors.colorBlueEnd,
-                          isScrollable: true,
-                          indicatorPadding: const EdgeInsets.only(
-                              left: AppDimens.dimens_5,
-                              right: AppDimens.dimens_5),
-                          padding: EdgeInsets.zero,
-                          labelPadding: const EdgeInsets.only(
-                              left: AppDimens.dimens_5,
-                              right: AppDimens.dimens_5),
-                          labelColor: AppColors.colorWhite,
-                          unselectedLabelColor: AppColors.colorBlack2,
-                          indicator: AppViews.getRoundBorderDecor(
-                              mColor: Colors.white, mBorderRadius: 5),
-                          indicatorSize: TabBarIndicatorSize.tab,
-                          tabs: [
-                            tabButtons(
-                                title: "Pending",
-                                activeindex: value.activeTabIndex,
-                                id: 0),
-                            tabButtons(
-                                title: "In Progress",
-                                activeindex: value.activeTabIndex,
-                                id: 1),
-                            tabButtons(
-                                title: "Completed",
-                                activeindex: value.activeTabIndex,
-                                id: 2),
-                            tabButtons(
-                                title: "Cancelled",
-                                activeindex: value.activeTabIndex,
-                                id: 3),
+                        alignment: Alignment.center,
+                        child: Column(
+                          children: [
+                            TabBar(
+                              onTap: (index) => value.changeIndex(index),
+                              labelStyle: AppStyle.textViewStyleNormalSubtitle2(
+                                  context: context,
+                                  color: AppColors.colorBlack),
+                              indicatorColor: AppColors.colorBlueEnd,
+                              isScrollable: true,
+                              indicatorPadding: const EdgeInsets.only(
+                                  left: AppDimens.dimens_5,
+                                  right: AppDimens.dimens_5),
+                              padding: EdgeInsets.zero,
+                              labelPadding: const EdgeInsets.only(
+                                  left: AppDimens.dimens_5,
+                                  right: AppDimens.dimens_5),
+                              labelColor: AppColors.colorWhite,
+                              unselectedLabelColor: AppColors.colorBlack2,
+                              indicator: AppViews.getRoundBorderDecor(
+                                  mColor: Colors.white, mBorderRadius: 5),
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              tabs: [
+                                tabButtons(
+                                    title: "Pending",
+                                    activeindex: value.activeTabIndex,
+                                    id: 0),
+                                tabButtons(
+                                    title: "In Progress",
+                                    activeindex: value.activeTabIndex,
+                                    id: 1),
+                                tabButtons(
+                                    title: "Completed",
+                                    activeindex: value.activeTabIndex,
+                                    id: 2),
+                                tabButtons(
+                                    title: "Cancelled",
+                                    activeindex: value.activeTabIndex,
+                                    id: 3),
+                              ],
+                              controller: value.tabController,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: AppDimens.dimens_30,
+                                  left: AppDimens.dimens_7,
+                                  right: AppDimens.dimens_7),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.only(left: 8),
+                                        alignment: Alignment.centerLeft,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(3),
+                                        border: Border.all(color: Colors.grey)),
+                                  child: Text("Search by date",style: AppStyle.textViewStyleSmall(context: context, color: AppColors.lightGrey),),
+                                  ),
+
+                                  ),
+                                  addHorizontalSpace(AppDimens.dimens_8),
+                                  Expanded(
+                                    child: SizedBox(
+                                        height: 30,
+                                        child: TextFormField(
+                                          decoration: InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.all(10),
+                                              hintText: "Search by title",
+                                              hintStyle:
+                                                  AppStyle.textViewStyleSmall(
+                                                      context: context,
+                                                      color:
+                                                          AppColors.lightGrey),
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.grey)),
+                                              focusColor: Colors.yellow,
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.grey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          3))),
+                                        )),
+                                  )
+                                ],
+                              ),
+                            )
                           ],
-                          controller: value.tabController,
                         ),
                         margin: const EdgeInsets.only(
                             top: AppDimens.dimens_10, left: AppDimens.dimens_3),
@@ -97,11 +154,11 @@ class EstimationFragmentState extends State<EstimationFragment>
                     child: TabBarView(
                       controller: value.tabController,
                       physics: const NeverScrollableScrollPhysics(),
-                      children:  [
-                        PendingFragment(),
-                        InProgressFragment(),
+                      children: [
+                        const PendingFragment(),
+                        const InProgressFragment(),
                         CompletedFragment(),
-                        CancelledFragment(),
+                        const CancelledFragment(),
                       ],
                     ),
                   ), // Expanded(child: Container()),
