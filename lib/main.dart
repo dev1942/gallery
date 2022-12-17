@@ -1,3 +1,4 @@
+/*// @dart=2.9 */
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -13,9 +14,17 @@ import 'package:otobucks/page/home_page.dart';
 import 'package:otobucks/page/splash_screen.dart';
 import 'package:otobucks/services/localization/localization.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'global/adaptive_helper.dart';
 import 'global/constants.dart';
+// import 'dart:io';
+
+
+// import 'package:flutter/material.dart';
+// import 'package:network_to_file_image/network_to_file_image.dart';
+// import 'package:path/path.dart' as p;
+// import 'package:path_provider/path_provider.dart';
 
 class Controller extends GetxController {
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -29,6 +38,7 @@ class Controller extends GetxController {
   }
 }
 
+// late Directory appDocsDir;
 Future<void> main() async {
   Get.put(Controller());
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,7 +64,9 @@ Future<void> main() async {
   );
 
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
+  // You should get the Application Documents Directory only once.
+  // WidgetsFlutterBinding.ensureInitialized();
+  // appDocsDir = await getApplicationDocumentsDirectory();
   runApp(
     DevicePreview(
       enabled: false,

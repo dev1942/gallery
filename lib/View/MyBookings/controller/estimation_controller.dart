@@ -17,7 +17,6 @@ import 'package:otobucks/model/time_model.dart';
 import 'package:otobucks/page/services/profile/service_provider_profile_screen.dart';
 import 'package:otobucks/services/repository/estimates_repo.dart';
 
-
 class CreateEstimationController extends GetxController {
   bool connectionStatus = false;
   bool isShowLoader = false;
@@ -41,7 +40,7 @@ class CreateEstimationController extends GetxController {
     selectedDate = "";
     pickedImage = "";
     pickedVideo = "";
-    addressNote.text="";
+    addressNote.text = "";
     voiceNoteFile = "";
     mTimeModel = null;
     PermissionStatus _permissionGranted = await location.hasPermission();
@@ -50,13 +49,13 @@ class CreateEstimationController extends GetxController {
       var currentLocation = await location.getLocation();
       log(currentLocation.latitude.toString());
       LatLng _mLatLng =
-      LatLng(currentLocation.latitude!, currentLocation.longitude!);
+          LatLng(currentLocation.latitude!, currentLocation.longitude!);
       List<i.Placemark> placemarks = await i.placemarkFromCoordinates(
           _mLatLng.latitude, _mLatLng.longitude);
       addressNote.text =
-      '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
+          '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
 
-print("addresssssis${addressNote.text}");
+      print("addresssssis${addressNote.text}");
       mLatLng = _mLatLng;
     } else {
       Global.showToastAlert(
@@ -160,6 +159,7 @@ print("addresssssis${addressNote.text}");
 
     return true;
   }
+
   //
   // promotionPayment(BuildContext context) {
   //   Navigator.push(
@@ -173,6 +173,8 @@ print("addresssssis${addressNote.text}");
   // }
 //----------------------------Create Estimation--------------------
   createEstimation(BuildContext context) async {
+    log("create estimation--------------------------------ibrahim--------");
+    log(pickedImage.toString());
     if (Global.checkNull(pickedVideo)) {
       double fileSize = await Global.getFileSize(pickedVideo);
       if (fileSize > 10) {
@@ -196,7 +198,7 @@ print("addresssssis${addressNote.text}");
     // final gasGiants = {PARAMS.PARAM_SOURCE:  mServiceModel.id, PARAMS.PARAM_ADDRESS: addressNote.text};
 
     requestParams[PARAMS.PARAM_TIME] =
-    mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
+        mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
     requestParams[PARAMS.PARAM_CUTOMERNOTE] = strNote;
     requestParams[PARAMS.PARAM_ADDRESS] = addressNote.text;
     if (mLatLng != null) {
@@ -226,8 +228,7 @@ print("addresssssis${addressNote.text}");
 
     Logger().i(requestParamsImage);
     var categories = await EstimatesRepo()
-        .createEstimates(requestParams,requestParamsImage, ReqType.post);
-
+        .createEstimates(requestParams, requestParamsImage, ReqType.post);
 
     categories.fold((failure) {
       //.............Failure case............................
@@ -245,6 +246,7 @@ print("addresssssis${addressNote.text}");
       Get.offAll(() => const ThankYouFragment());
     });
   }
+
 //.............goto profile
   gotoProfile(BuildContext context) {
     Navigator.push(

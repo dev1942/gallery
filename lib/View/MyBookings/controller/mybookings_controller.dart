@@ -21,15 +21,13 @@ class MyBookingsController extends GetxController {
   @override
   //..................variabls..............................
   var log = Logger();
-  String ? token;
+  String? token;
 
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     getAllBookings();
     getToken();
-
-
   }
 
   @override
@@ -56,8 +54,9 @@ class MyBookingsController extends GetxController {
       'Authorization': "Bearer ${token}",
       "Content-Type": "application/json"
     };
-    final response = await http.get(Uri.parse(
-        "https://developmentapi-app.otobucks.com/v1/bookings/bookService"),
+    final response = await http.get(
+        Uri.parse(
+            "https://developmentapi-app.otobucks.com/v1/bookings/bookService"),
         headers: headers);
     var data = jsonDecode(response.body);
     if (response.statusCode == 200) {
