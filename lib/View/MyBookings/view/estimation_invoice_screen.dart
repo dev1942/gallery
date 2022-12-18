@@ -456,7 +456,8 @@ class EstimationDetailsPDFScreenState
                   ),
 
                   /*------------------------------values of Title Description Qty Price Amount--------------------------*/
-                  TableRow(
+                  ...List.generate( allBookingsModel.estimation!.items!.length, (index) =>
+      TableRow(
                     // decoration: BoxDecoration(color: AppColors.colorBlack3),
                     children: [
                       TableCell(
@@ -465,7 +466,7 @@ class EstimationDetailsPDFScreenState
                             margin: EdgeInsets.only(left: AppDimens.dimens_3),
                             alignment: Alignment.centerLeft,
                             child: Text(
-                                allBookingsModel.estimation!.items!.first.title
+                                allBookingsModel.estimation!.items![index].title
                                     .toString(),
                                 style: AppStyle.textViewStyleSmall(
                                     context: context,
@@ -484,7 +485,7 @@ class EstimationDetailsPDFScreenState
                             alignment: Alignment.centerLeft,
                             child: Text(
                                 allBookingsModel
-                                    .estimation!.items!.first.description
+                                    .estimation!.items![index].description
                                     .toString(),
                                 style: AppStyle.textViewStyleSmall(
                                     context: context,
@@ -501,7 +502,7 @@ class EstimationDetailsPDFScreenState
                             alignment: Alignment.center,
                             child: Text(
                                 allBookingsModel
-                                    .estimation!.items!.first.quantity
+                                    .estimation!.items![index].quantity
                                     .toString(),
                                 style: AppStyle.textViewStyleSmall(
                                     context: context,
@@ -517,7 +518,7 @@ class EstimationDetailsPDFScreenState
                           child: Container(
                             alignment: Alignment.center,
                             child: Text(
-                                allBookingsModel.estimation!.items!.first.price
+                                allBookingsModel.estimation!.items![index].price
                                     .toString(),
                                 style: AppStyle.textViewStyleSmall(
                                     context: context,
@@ -533,7 +534,7 @@ class EstimationDetailsPDFScreenState
                           child: Container(
                             alignment: Alignment.center,
                             child: Text(
-                                allBookingsModel.estimation!.items!.first.amount
+                                allBookingsModel.estimation!.items![index].amount
                                     .toString(),
                                 style: AppStyle.textViewStyleSmall(
                                     context: context,
@@ -544,6 +545,7 @@ class EstimationDetailsPDFScreenState
                           )),
                     ],
                   ),
+                      )
                 ],
                 columnWidths: const {
                   //0: FlexColumnWidth(2),
@@ -553,6 +555,7 @@ class EstimationDetailsPDFScreenState
                 },
               ),
             ),
+
             /*-----------------------------------------Table-----------------------*/
             Container(
               alignment: Alignment.centerRight,
@@ -757,24 +760,24 @@ class EstimationDetailsPDFScreenState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Contact information",
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: AppColors.colorBlack,
-                                fontWeightDelta: 1,
-                                fontSizeDelta: -2)),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Mobile: +971 1234567890",
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: AppColors.colorBlack,
-                                fontWeightDelta: 0,
-                                fontSizeDelta: -4)),
-                      ),
+                      // Container(
+                      //   alignment: Alignment.centerLeft,
+                      //   child: Text("Contact information",
+                      //       style: AppStyle.textViewStyleSmall(
+                      //           context: context,
+                      //           color: AppColors.colorBlack,
+                      //           fontWeightDelta: 1,
+                      //           fontSizeDelta: -2)),
+                      // ),
+                      // Container(
+                      //   alignment: Alignment.centerLeft,
+                      //   child: Text("Mobile: +971 1234567890",
+                      //       style: AppStyle.textViewStyleSmall(
+                      //           context: context,
+                      //           color: AppColors.colorBlack,
+                      //           fontWeightDelta: 0,
+                      //           fontSizeDelta: -4)),
+                      // ),
                       Container(
                         margin: const EdgeInsets.only(top: AppDimens.dimens_2),
                         alignment: Alignment.centerLeft,

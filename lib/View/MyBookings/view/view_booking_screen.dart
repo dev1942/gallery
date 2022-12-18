@@ -28,7 +28,6 @@ import '../../../global/app_images.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/google_map_view.dart';
 import '../../../widgets/media_button.dart';
-import '../../../widgets/voice_note_buttons.dart';
 import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart';
 
 
@@ -36,8 +35,10 @@ import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart';
 class ViewBookingEstimation extends StatefulWidget {
   final Result mEstimatesModel;
   final bool isPending;
+  final String? status;
   const ViewBookingEstimation({
     Key? key,
+    this.status,
     required this.mEstimatesModel,
     this.isPending = false,
   }) : super(key: key);
@@ -59,6 +60,8 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
   var reScheduleController = Get.put(RescheduleBookingController());
   @override
   void initState() {
+    print("status-----------");
+    print(widget.status);
     print("-----------------booking data ------------init data-");
     print(widget.mEstimatesModel.bookingDetails!.time);
     print(widget.mEstimatesModel.bookingDetails!.date);
@@ -99,6 +102,8 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
     super.initState();
   }
 
+
+
   getimageUrl(String ImageUrl) async {
     try {
       // Saved with this method.
@@ -117,6 +122,13 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
     } on PlatformException catch (error) {
       print(error);
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    ImageDownloader.cancel();
+    super.dispose();
   }
 
   @override
@@ -189,25 +201,40 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                         fontColor: AppColors.colorWhite,
                                         // width: size.width,
                                         onPressed: () {
-                                          print(
-                                              "image path--------dfgsdfsdfg-dg-dsf-g-sdg--");
-                                          //  Loader.show(context,progressIndicator:LinearProgressIndicator());
-                                          if (imagePaths.isNotEmpty) {
 
-                                            reScheduleController
+                                          if (imagePaths.isNotEmpty) {
+                                            if(reScheduleController.selectedDate==widget.mEstimatesModel.bookingDetails!.date!.substring(0,10)) {
+                                              Global.showToastAlert(
+                                                  context: Get.overlayContext!,
+                                                  strTitle: "",
+                                                  strMsg: "Please Select Another date",
+                                                  toastType: TOAST_TYPE
+                                                      .toastInfo);
+                                            }else{
+                                              reScheduleController
                                                 .reScheduleBooking(
                                                     context,
                                                     widget.mEstimatesModel.id
                                                         .toString(),
                                                     imagePath:
                                                         imagePaths.first);
-                                          } else {
-                                            reScheduleController
-                                                .reScheduleBooking(
-                                              context,
-                                              widget.mEstimatesModel.id
-                                                  .toString(),
-                                            );
+                                          }
+                                          }
+                                          else {
+                                            if(reScheduleController.selectedDate==widget.mEstimatesModel.bookingDetails!.date){
+                                              Global.showToastAlert(
+                                                  context: Get.overlayContext!,
+                                                  strTitle: "",
+                                                  strMsg: "Please Select Another date",
+                                                  toastType: TOAST_TYPE.toastInfo);
+                                            }else {
+                                              reScheduleController
+                                                  .reScheduleBooking(
+                                                context,
+                                                widget.mEstimatesModel.id
+                                                    .toString(),
+                                              );
+                                            }
                                           }
 
                                           // Global.showAlert(context, "Something went wrong");
@@ -255,7 +282,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                   // =>
                                   //     controller.rebook(
                                   //     context, widget.mEstimatesModel),
-                                  strTitle: "Booked"),
+                                  strTitle:widget.status=="completed"?"Completed":widget.status=="inProgress"?"InProgress":widget.status=="cancelled"?"Cancelled": "Booked"),
                             ),
 
                       // if (widget.screen == 'partial')
@@ -595,12 +622,14 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   right: AppDimens.dimens_14,
                 ),
                 child: DateViewSelector(
+                  isPending: widget.isPending,
                     // selectedDate: value.selectedDate,
                     selectedDate: DateTime.parse(
                         widget.mEstimatesModel.bookingDetails!.date!),
                     //selectedDate:DateTime.parse(value.selectedDate),
                     onSelection: (String _selectedDate) {
-                      value.onSelectDate(_selectedDate);
+
+                     value.onSelectDate(_selectedDate);
                     }
 
                     // selectedDate: DateTime.parse(widget.mEstimatesModel.bookingDetails!.date!),
@@ -636,6 +665,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   right: AppDimens.dimens_14,
                 ),
                 child: TimeRescheduleSelector(
+                  isPending: widget.isPending,
                   selectedDate: value.selectedDate ?? "",
                   time: widget.mEstimatesModel.bookingDetails!.time ?? "",
                   // mTimeModel: value.mTimeModel,
@@ -819,7 +849,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                   },
                                 ),
                               ),
-                              Positioned(
+                           widget.isPending ?  Positioned(
                                   right: 0,
                                   top: 0,
                                   child: InkWell(
@@ -827,7 +857,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                       onTap: () {
                                         value.onDeleteVideo();
                                       } //=>
-                                      ))
+                                      )):SizedBox(),
                             ],
                           ),
                         )),
@@ -838,19 +868,20 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                         children: [
                           MediaButton(
                             strImage: AppImages.ic_cloud,
-                            onPressed: () {
-
+                            onPressed:
+                            widget.isPending?
+                            () {
                               value.pickVideo(ImageSource.gallery);
-                            },
+                            }:(){},
                           ),
                           Container(
                             margin: const EdgeInsets.only(
                                 left: AppDimens.dimens_15),
                             child: MediaButton(
                               strImage: AppImages.ic_video_cam,
-                              onPressed: () {
+                              onPressed: widget.isPending? () {
                                 value.pickVideo(ImageSource.camera);
-                              },
+                              }:(){},
                             ),
                           ),
                         ],
@@ -911,6 +942,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                 right: AppDimens.dimens_14,
               ),
               child: VoiceRecordingViewButton(
+                isPending: widget.isPending,
                   // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
                   strVoiceNotePath: value.voiceNoteFile,
                   callback: (String filePath) {
@@ -1039,7 +1071,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   context: context),
               controller: reScheduleController.controllerNote,
               textAlign: TextAlign.start,
-              //readOnly: true,
+              readOnly:  widget.isPending?false:true,
               decoration: InputDecoration(
                 prefixIconConstraints:
                     const BoxConstraints(minWidth: AppDimens.dimens_33),
@@ -1087,8 +1119,9 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               ImagePreviews(imagePaths,
                   onDelete: _onDeleteImage, onSelect: _onSelectImage),
               //image
-              InkWell(
-                onTap: () async {
+              imagePaths.length > 0 ? SizedBox() : InkWell(
+                onTap:widget.isPending?
+                    () async {
                   await showDialog(
                       context: context,
                       builder: (context) {
@@ -1170,7 +1203,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                           ],
                         );
                       });
-                },
+                }:(){},
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(

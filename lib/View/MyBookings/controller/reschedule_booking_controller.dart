@@ -73,7 +73,6 @@ class RescheduleBookingController extends GetxController {
 
   TimeModel getTimeModel(String? time) {
     DateTime parseDate = DateFormat("hh:00").parse(time!.split(":")[0] + ":00");
-
     String time12HR = DateFormat('hh:00 aa').format(parseDate);
     String time24HR = DateFormat('HH:00').format(parseDate);
 

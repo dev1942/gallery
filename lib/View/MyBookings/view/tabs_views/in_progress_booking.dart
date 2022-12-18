@@ -99,12 +99,14 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                     //reschedule and decline
                                                     Get.to(
                                                         ViewBookingEstimation(
+                                                            status: "inProgress",
                                                             mEstimatesModel: data,
                                                             isPending: false)
                                                     );
                                                   } else {
                                                     Get.to(
                                                         ViewBookingEstimation(
+
                                                             mEstimatesModel: data));
                                                   }
                                               }),

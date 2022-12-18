@@ -41,9 +41,10 @@ enum AudioState {
 class VoiceRecordingViewButton extends StatefulWidget {
   final Function callback;
   final String strVoiceNotePath;
+  bool  isPending;
 
-  const VoiceRecordingViewButton(
-      {Key? key, required this.callback, required this.strVoiceNotePath})
+   VoiceRecordingViewButton(
+      {Key? key, required this.callback, required this.strVoiceNotePath,this.isPending=false})
       : super(key: key);
 
   @override
@@ -536,12 +537,12 @@ class VoiceRecordingViewButtonState extends State<VoiceRecordingViewButton> {
           Container(
             child: MediaButton(
               strImage: AppImages.ic_cloud,
-              onPressed: () {
+              onPressed:     widget.isPending? () {
                 if (!_isRecording) {
                   //pickFile();
                   Global.inProgressAlert(context);
                 } else {}
-              },
+              }:(){},
             ),
             margin: const EdgeInsetsDirectional.only(end: AppDimens.dimens_15),
           ),
@@ -578,7 +579,7 @@ class VoiceRecordingViewButtonState extends State<VoiceRecordingViewButton> {
                               width: AppDimens.dimens_50,
                               height: AppDimens.dimens_50,
                               child: TextButton(
-                                onPressed: onStartRecorderPressed(),
+                                onPressed:  widget.isPending?onStartRecorderPressed():(){},
                                 child: recorderIcon(),
                               ),
                             ),
@@ -671,7 +672,7 @@ class VoiceRecordingViewButtonState extends State<VoiceRecordingViewButton> {
               width: AppDimens.dimens_150,
               height: AppDimens.dimens_100,
             ),
-            Positioned(
+            widget.isPending? Positioned(
                 right: 0,
                 top: 0,
                 child: Visibility(
@@ -689,7 +690,7 @@ class VoiceRecordingViewButtonState extends State<VoiceRecordingViewButton> {
                     },
                   ),
                   visible: true,//isHideRemoveButton,
-                ))
+                )):SizedBox()
           ],
         ),
         width: AppDimens.dimens_150,

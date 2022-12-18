@@ -96,12 +96,14 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                   //reschedule and decline
                                                   Get.to(
                                                       ViewBookingEstimation(
+                                                          status: "cancelled",
                                                           mEstimatesModel: data,
                                                           isPending: false)
                                                   );
                                                 } else {
                                                   Get.to(
                                                       ViewBookingEstimation(
+
                                                           mEstimatesModel: data));
                                                 }
                                               },

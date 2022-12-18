@@ -33,14 +33,12 @@ class EstimationFragmentController extends GetxController {
     //});
 
     HashMap<String, Object> requestParams = HashMap();
-
     requestParams['bookingID'] = id;
     requestParams['review'] = reason??"";
     requestParams['stars'] = ratingstarts;
 
     var categories = await EstimatesRepo().ratingBookingRepo(
       requestParams);
-
     categories.fold((failure) {
       Global.showToastAlert(
           context: context,

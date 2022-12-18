@@ -436,6 +436,7 @@ class TransactionHistoryFragmentState
                                                                           )),
                                                                       onTap:
                                                                           () {
+
                                                                             Navigator.push(
                                                                                 context,
                                                                                 MaterialPageRoute(
