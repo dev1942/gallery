@@ -194,11 +194,10 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                   //...................on click of give ratting
                                                   InkWell(
                                                     child: Container(
-                                                        width: Get.width / 2.6,
                                                         padding:
                                                             const EdgeInsets
                                                                     .symmetric(
-                                                                horizontal: 6.0,
+                                                                horizontal: 7.0,
                                                                 vertical: 5.0),
                                                         decoration: AppViews
                                                             .getGradientBoxDecoration(
@@ -224,11 +223,44 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                       //     false);false
                                                      print(data.id);
                                                        displayTextInputDialog(context,data.id);
-                                                  
+
                                                     },
                                                   ),
                                                   const SizedBox(
-                                                    width: 3,
+                                                    width: 5,
+                                                  ),
+                                                  Expanded(
+                                                    child: InkWell(
+                                                      child: Container(
+                                                        margin: EdgeInsets.only(right: 5),
+                                                          padding:
+                                                          const EdgeInsets
+                                                              .symmetric(
+                                                              horizontal: 6.0,
+                                                              vertical: 5.0),
+                                                          decoration: AppViews
+                                                              .getGradientBoxDecoration(
+                                                              mBorderRadius:
+                                                              2),
+                                                          child: Center(
+                                                            child: Text(
+                                                              "View Estimation"
+                                                                  .toUpperCase(),
+                                                              style: TextStyle(
+                                                                  color: AppColors
+                                                                      .colorWhite,
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                            ),
+                                                          )),
+                                                      onTap: () {
+                                                        print(data.id);
+                                                        Get.to(EstimationDetailsPDFScreen(allBookingsModel: data));
+
+                                                      },
+                                                    ),
                                                   ),
                                                 ],
                                               ),

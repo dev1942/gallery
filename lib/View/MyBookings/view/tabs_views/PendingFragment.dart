@@ -182,11 +182,11 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                  ///on click view estimation
                                                  InkWell(
                                                    child: Container(
-                                                       width: 130,
+                                                       width: Get.width/3,
                                                        padding: const EdgeInsets
                                                            .symmetric(
                                                            horizontal: 6.0,
-                                                           vertical: 5.0),
+                                                           vertical: 6.0),
                                                        decoration: AppViews
                                                            .getGradientBoxDecoration(
                                                            mBorderRadius: 2),
@@ -196,7 +196,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                            data.status==
                                                                "submitted"
                                                                ? "View Estimation"
-                                                               : "Requested Estimation"
+                                                               : "Requested"
                                                                .toUpperCase(),
                                                            style: TextStyle(
                                                                color: AppColors
@@ -225,146 +225,147 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                    },
                                                  ),
                                                  const SizedBox(
-                                                   width: 3,
+                                                   width: 5,
                                                  ),
                                                  /// ofer Status button
                                                  data.estimation
                                                      ?.isOfferCreated ==
                                                      true
-                                                     ? InkWell(
+                                                     ? Expanded(
+                                                       child: InkWell(
                                                    child: Container(
-                                                     width: 110,
-                                                     padding:
-                                                     const EdgeInsets
-                                                         .symmetric(
-                                                         horizontal:
-                                                         6.0,
-                                                         vertical:
-                                                         5.0),
-                                                     decoration:
-                                                     BoxDecoration(
-                                                       color: data.estimation
-                                                           ?.offerStatus ==
-                                                           "accepted"
-                                                           ? AppColors.colorSuccessBackground
-                                                           : data.estimation
-                                                           ?.offerStatus ==
-                                                           "declined"
-                                                           ? AppColors.colorCancelledBackground
-                                                           : AppColors.colorPendingBackground,
-                                                       borderRadius:
-                                                       BorderRadius
-                                                           .circular(
-                                                           2.0),
-                                                       border: Border.all(
-                                                         width: 2,
-                                                         color:
-                                                       data.estimation
-                                                           ?.offerStatus ==
-                                                           "accepted"
-                                                           ? AppColors.colorSuccessBorder
-                                                           : data.estimation
-                                                           ?.offerStatus ==
-                                                           "declined"
-                                                           ? AppColors.colorCancelledBorder
-                                                           : AppColors.colorPendingBorder,
-                                                       ),
-                                                     ),
-                                                     child: Center(
-                                                       child: Text(
-                                                         "Offer ${data.estimation?.offerStatus}"
-                                                             .toUpperCase() ??
-                                                             "",
-                                                         style: TextStyle(
-                                                           color:  data.estimation
-                                                               ?.offerStatus ==
-                                                               "accepted"
-                                                               ? AppColors.colorSuccessText
-                                                               : data.estimation
-                                                               ?.offerStatus ==
-                                                               "declined"
-                                                               ? AppColors.colorCancelledText
-                                                               : AppColors.colorPendingText,
-                                                           fontSize: 10,
-                                                           fontWeight:
-                                                           FontWeight
-                                                               .w500,
+                                                       padding:
+                                                       const EdgeInsets
+                                                           .symmetric(
+                                                           horizontal:
+                                                           6.0,
+                                                           vertical:
+                                                           5.0),
+                                                       decoration:
+                                                       BoxDecoration(
+                                                         color: data.estimation
+                                                             ?.offerStatus ==
+                                                             "accepted"
+                                                             ? AppColors.colorSuccessBackground
+                                                             : data.estimation
+                                                             ?.offerStatus ==
+                                                             "declined"
+                                                             ? AppColors.colorCancelledBackground
+                                                             : AppColors.colorPendingBackground,
+                                                         borderRadius:
+                                                         BorderRadius
+                                                             .circular(
+                                                             2.0),
+                                                         border: Border.all(
+                                                           width: 1,
+                                                           color:
+                                                         data.estimation
+                                                             ?.offerStatus ==
+                                                             "accepted"
+                                                             ? AppColors.colorSuccessBorder
+                                                             : data.estimation
+                                                             ?.offerStatus ==
+                                                             "declined"
+                                                             ? AppColors.colorCancelledBorder
+                                                             : AppColors.colorPendingBorder,
                                                          ),
                                                        ),
-                                                     ),
+                                                       child: Center(
+                                                         child: Text(
+                                                           "Offer ${data.estimation?.offerStatus}"
+                                                               .toUpperCase() ??
+                                                               "",
+                                                           style: TextStyle(
+                                                             color:  data.estimation
+                                                                 ?.offerStatus ==
+                                                                 "accepted"
+                                                                 ? AppColors.colorSuccessText
+                                                                 : data.estimation
+                                                                 ?.offerStatus ==
+                                                                 "declined"
+                                                                 ? AppColors.colorCancelledText
+                                                                 : AppColors.colorPendingText,
+                                                             fontSize: 10,
+                                                             fontWeight:
+                                                             FontWeight
+                                                                 .w500,
+                                                           ),
+                                                         ),
+                                                       ),
                                                    ),
                                                    onTap: () {
-                                                     showDialog<String>(
-                                                         context: context,
-                                                         builder: (BuildContext
-                                                         context) =>
-                                                             AlertDialog(
-                                                               title:
-                                                               const Text(
-                                                                 ' Offering Amount ',
-                                                                 textAlign:
-                                                                 TextAlign
-                                                                     .center,
-                                                                 style: TextStyle(
-                                                                     fontWeight:
-                                                                     FontWeight.bold),
-                                                               ),
-                                                               content:
-                                                               Column(
-                                                                 mainAxisSize:
-                                                                 MainAxisSize
-                                                                     .min,
-                                                                 children: [
-                                                                   Text(
-                                                                     "${data.estimation?.grandTotal} AED",
-                                                                     style: AppStyle.textViewStyleSmall(
-                                                                         context: context,
-                                                                         color: AppColors.colorBlack,
-                                                                         fontSizeDelta: 8,
-                                                                         fontWeightDelta: 2),
-                                                                   ),
-                                                                   InkWell(
-                                                                     onTap:
-                                                                         () {
-                                                                       Navigator.pop(context);
-                                                                     },
-                                                                     child:
-                                                                     Padding(
-                                                                       padding:
-                                                                       const EdgeInsets.all(8.0),
+                                                       showDialog<String>(
+                                                           context: context,
+                                                           builder: (BuildContext
+                                                           context) =>
+                                                               AlertDialog(
+                                                                 title:
+                                                                 const Text(
+                                                                   ' Offering Amount ',
+                                                                   textAlign:
+                                                                   TextAlign
+                                                                       .center,
+                                                                   style: TextStyle(
+                                                                       fontWeight:
+                                                                       FontWeight.bold),
+                                                                 ),
+                                                                 content:
+                                                                 Column(
+                                                                   mainAxisSize:
+                                                                   MainAxisSize
+                                                                       .min,
+                                                                   children: [
+                                                                     Text(
+                                                                       "${data.estimation?.grandTotal} AED",
+                                                                       style: AppStyle.textViewStyleSmall(
+                                                                           context: context,
+                                                                           color: AppColors.colorBlack,
+                                                                           fontSizeDelta: 8,
+                                                                           fontWeightDelta: 2),
+                                                                     ),
+                                                                     InkWell(
+                                                                       onTap:
+                                                                           () {
+                                                                         Navigator.pop(context);
+                                                                       },
                                                                        child:
-                                                                       Container(
-                                                                         decoration: BoxDecoration(
-                                                                           gradient: LinearGradient(
-                                                                             begin: Alignment.topCenter,
-                                                                             end: Alignment.bottomCenter,
-                                                                             colors: [
-                                                                               AppColors.colorBlueEnd,
-                                                                               AppColors.colorBlueStart,
-                                                                             ],
+                                                                       Padding(
+                                                                         padding:
+                                                                         const EdgeInsets.all(8.0),
+                                                                         child:
+                                                                         Container(
+                                                                           decoration: BoxDecoration(
+                                                                             gradient: LinearGradient(
+                                                                               begin: Alignment.topCenter,
+                                                                               end: Alignment.bottomCenter,
+                                                                               colors: [
+                                                                                 AppColors.colorBlueEnd,
+                                                                                 AppColors.colorBlueStart,
+                                                                               ],
+                                                                             ),
+                                                                             borderRadius: BorderRadius.circular(5.0),
                                                                            ),
-                                                                           borderRadius: BorderRadius.circular(5.0),
-                                                                         ),
-                                                                         child: Padding(
-                                                                           padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
-                                                                           child: Text('Cancel', textAlign: TextAlign.center, style: AppStyle.textViewStyleNormalButton(context: context, color: Colors.white, fontSizeDelta: 0, fontWeightDelta: 2)),
+                                                                           child: Padding(
+                                                                             padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
+                                                                             child: Text('Cancel', textAlign: TextAlign.center, style: AppStyle.textViewStyleNormalButton(context: context, color: Colors.white, fontSizeDelta: 0, fontWeightDelta: 2)),
+                                                                           ),
                                                                          ),
                                                                        ),
                                                                      ),
-                                                                   ),
-                                                                 ],
-                                                               ),
-                                                             ));
+                                                                   ],
+                                                                 ),
+                                                               ));
 
-                                                     if (data.estimation?.offerStatus==
-                                                         'submitted') {
+                                                       if (data.estimation?.offerStatus==
+                                                           'submitted') {
 
-                                                       gotoViewEstimation(
-                                                           data,
-                                                           false);
-                                                     }
+                                                         gotoViewEstimation(
+                                                             data,
+                                                             false);
+                                                       }
                                                    },
-                                                 )
+                                                 ),
+                                                     )
                                                      : SizedBox()
                                                ],
                                              ),

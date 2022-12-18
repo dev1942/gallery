@@ -1198,9 +1198,7 @@ class Global {
     if (isPermissionGranted && _serviceEnabled) {
       location_selection.LocationData _locationData =
           await location.getLocation();
-
       mLatLngMain = LatLng(_locationData.latitude!, _locationData.longitude!);
-
       // prefManager.setDouble(
       //     SharedPrefKey.KEY_CURRENT_LONGITUDE, _locationData.longitude!);
       //
@@ -1210,7 +1208,6 @@ class Global {
     // }
     return mLatLngMain;
   }
-
   static showDateRangePicker(BuildContext mContext, int daysCount) async {
     // DateTimeRange? picked = await DateRangePicker.showDateRangePicker(
     //   initialDateRange: DateTimeRange(
@@ -1226,7 +1223,6 @@ class Global {
     //   return picked;
     // }
   }
-
   static getColourByStatus(String status) {
     if (checkNull(status)) {
       if (equalsIgnoreCase(status.toLowerCase(), "delivered")) {
