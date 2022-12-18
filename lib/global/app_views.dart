@@ -36,41 +36,44 @@ class AppViews {
           // });
           //Global.inProgressAlert(mContext);
         },
-        child: SizedBox(
-          // margin: const EdgeInsetsDirectional.only(end: AppDimens.dimens_20),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Image.asset(
-                AppImages.ic_sos,
-                height: 29,
-              ),
-              CircularText(
-                children: [
-                  TextItem(
-                    text: Text(
-                      "Emergency".toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: SizedBox(
+            // margin: const EdgeInsetsDirectional.only(end: AppDimens.dimens_20),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset(
+                  AppImages.ic_sos,
+                  height: 29,
+                ),
+                CircularText(
+                  children: [
+                    TextItem(
+                      text: Text(
+                        "Emergency".toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      space: 19,
+                      startAngle: -90,
+                      startAngleAlignment: StartAngleAlignment.center,
+                      direction: CircularTextDirection.clockwise,
                     ),
-                    space: 19,
-                    startAngle: -90,
-                    startAngleAlignment: StartAngleAlignment.center,
-                    direction: CircularTextDirection.clockwise,
-                  ),
-                ],
-                radius: 70,
-                position: CircularTextPosition.inside,
-                // backgroundPaint: Paint()..color = Colors.grey.shade200,
-              ),
-            ],
-          ),
+                  ],
+                  radius: 70,
+                  position: CircularTextPosition.inside,
+                  // backgroundPaint: Paint()..color = Colors.grey.shade200,
+                ),
+              ],
+            ),
 
-          height: 30,
-          width: 80,
+            height: 30,
+            width: 80,
+          ),
         ),
       ));
     }

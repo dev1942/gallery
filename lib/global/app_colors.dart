@@ -20,6 +20,7 @@ class AppColors {
   static Color colorText = HexColor(text_color_app);
   static Color selectButton = HexColor('#170E4A86');
   static Color colorPrimary = HexColor("#185DA3");
+  static Color colorYellowShade = Colors.yellow.shade700;
   static Color colorAccent = HexColor("#185DA3");
   static Color colorBlack = HexColor("#000000");
   static Color colorBlack2 = HexColor("#151515");

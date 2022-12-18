@@ -97,15 +97,19 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                 ),
                                               )),
                                               onTap: () {
-                                                // Navigator.push(
-                                                //     context,
-                                                //     MaterialPageRoute(
-                                                //         builder: (context) =>
-                                                //             ViewBookingEstimation(
-                                                //               //ViewEstimation(
-                                                //               mEstimatesModel:
-                                                //               mEstimatesModel,
-                                                //             )));
+                                                if (data.status ==
+                                                    "completed") {
+                                                  //reschedule and decline
+                                                  Get.to(
+                                                      ViewBookingEstimation(
+                                                          mEstimatesModel: data,
+                                                          isPending: false)
+                                                  );
+                                                } else {
+                                                  Get.to(
+                                                      ViewBookingEstimation(
+                                                          mEstimatesModel: data));
+                                                }
                                               },
                                             ),
                                           ],
@@ -181,9 +185,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                               ),
 
                                               ///........... estimation and status row button
-                                              const SizedBox(
-                                                height: 12,
-                                              ),
+                                           Divider(thickness: 1,),
                                               Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.start,

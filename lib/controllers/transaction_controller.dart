@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/global/enum.dart';
@@ -12,7 +13,9 @@ class TransactionController extends GetxController {
 
   bool connectionStatus = false;
   bool isShowLoader = false;
-
+  var endDate;
+  var startDate;
+  bool isRangePicked=false;
   List<TransactionModel> transactions = [];
 
   TextEditingController controllerName = TextEditingController();
@@ -48,5 +51,33 @@ class TransactionController extends GetxController {
       mShowData = ShowData.showData;
       update();
     });
+  }
+  //-------------------Date range picker---------------------------------
+  dateRangerPicker(){
+
+    showCustomDateRangePicker(
+      Get.context!,
+      dismissible: true,
+      minimumDate: DateTime.now(),
+      maximumDate: DateTime.now().add(const Duration(days: 30)),
+      endDate: endDate,
+      startDate: startDate,
+      onApplyClick: (start, end) {
+        isRangePicked=true;
+        endDate = end;
+        startDate = start;
+        DateTime now = DateTime.now();
+        startDate= new DateTime(now.year, now.month, now.day,);
+        endDate= new DateTime(now.year, now.month, now.day,);
+
+        update();
+      },
+      onCancelClick: () {
+        isRangePicked=false;
+        endDate = null;
+        startDate = null;
+        update();
+      },
+    );
   }
 }

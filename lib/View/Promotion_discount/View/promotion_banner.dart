@@ -19,14 +19,14 @@ class PromotionBanner extends StatelessWidget {
   final PromotionsModel mPromotionsModel;
   final Function onTap;
   bool isVisible;
+
   PromotionBanner(
       {Key? key,
-        required this.mPromotionsModel,
-        required this.strImage,
-        required this.onTap,
-        required this.buttonText,
-        this.isVisible=true
-      })
+      required this.mPromotionsModel,
+      required this.strImage,
+      required this.onTap,
+      required this.buttonText,
+      this.isVisible = true})
       : super(key: key);
 
   @override
@@ -48,7 +48,7 @@ class PromotionBanner extends StatelessWidget {
                   Positioned(
                     child: SizedBox(
                         child: NetworkImageCustom(
-                          image: "https://images.pexels.com/photos/120049/pexels-photo-120049.jpeg?cs=srgb&dl=pexels-mike-b-120049.jpg&fm=jpg",
+                          image:strImage,
                           fit: BoxFit.cover,
                           height: double.infinity,
                           width: double.infinity,
@@ -59,9 +59,9 @@ class PromotionBanner extends StatelessWidget {
                     top: 0,
                   ),
                   SizedBox(
-                    height:Get.height,
+                    height: Get.height,
                     child:
-                    Image.asset(AppImages.ic_banner_bg, fit: BoxFit.cover),
+                        Image.asset(AppImages.ic_banner_bg, fit: BoxFit.cover),
                   ),
                   Positioned(
                     child: Container(
@@ -82,12 +82,11 @@ class PromotionBanner extends StatelessWidget {
                               textAlign: TextAlign.left,
                               maxLines: 3,
                               style: AppStyle.textViewStyleXLarge(
-                                  context: context,
-                                  fontWeightDelta: 3,
-                                  color: AppColors.colorBlueEnd)
+                                      context: context,
+                                      fontWeightDelta: 3,
+                                      color: AppColors.colorBlueEnd)
                                   .copyWith(
-                                  fontSize: height * 0.09,
-                                  height: 1.2),
+                                      fontSize: height * 0.09, height: 1.2),
                             ),
                           ),
                           Expanded(
@@ -106,12 +105,12 @@ class PromotionBanner extends StatelessWidget {
                                         mPromotionsModel.previousPrice +
                                         "/hr",
                                     style: AppStyle.textViewStyleSmall(
-                                        context: context,
-                                        fontWeightDelta: 0,
-                                        fontSizeDelta: -1,
-                                        mDecoration:
-                                        TextDecoration.lineThrough,
-                                        color: AppColors.colorBlueEnd)
+                                            context: context,
+                                            fontWeightDelta: 0,
+                                            fontSizeDelta: -1,
+                                            mDecoration:
+                                                TextDecoration.lineThrough,
+                                            color: AppColors.colorBlueEnd)
                                         .copyWith(fontSize: height * 0.05),
                                   ),
                                 ),
@@ -124,10 +123,10 @@ class PromotionBanner extends StatelessWidget {
                                           mPromotionsModel.priceAfterDiscount +
                                           "/hr",
                                       style: AppStyle.textViewStyleSmall(
-                                          context: context,
-                                          fontWeightDelta: 2,
-                                          fontSizeDelta: 3,
-                                          color: AppColors.colorBlueEnd)
+                                              context: context,
+                                              fontWeightDelta: 2,
+                                              fontSizeDelta: 3,
+                                              color: AppColors.colorBlueEnd)
                                           .copyWith(fontSize: height * 0.06)),
                                 ),
                                 Container(
@@ -136,37 +135,54 @@ class PromotionBanner extends StatelessWidget {
                                   alignment: Alignment.centerLeft,
                                   child: Text("Validity Date",
                                       style: AppStyle.textViewStyleSmall(
-                                          context: context,
-                                          fontWeightDelta: -1,
-                                          fontSizeDelta: -2,
-                                          color: AppColors.colorBlueEnd)
+                                              context: context,
+                                              fontWeightDelta: -1,
+                                              fontSizeDelta: -2,
+                                              color: AppColors.colorBlueEnd)
                                           .copyWith(fontSize: height * 0.05)),
                                 ),
                                 Container(
                                   alignment: Alignment.centerLeft,
                                   child: Text(mPromotionsModel.getEndDate(),
                                       style: AppStyle.textViewStyleSmall(
-                                          context: context,
-                                          fontWeightDelta: 2,
-                                          fontSizeDelta: -1,
-                                          color: AppColors.colorBlueEnd)
+                                              context: context,
+                                              fontWeightDelta: 2,
+                                              fontSizeDelta: -1,
+                                              color: AppColors.colorBlueEnd)
                                           .copyWith(fontSize: height * 0.06)),
                                 ),
                                 SizedBox(
                                   height: height * 0.03,
                                 ),
+                                //-------------------VBView details buttons-----------------------
                                 Visibility(
                                   visible: this.isVisible,
-                                  child: CustomButton(
-                                      width: size.maxWidth / 3.3,
-                                      height: height / 8.5,
-                                      isRoundBorder: true,
-                                      isGradient: true,
-                                      textStyle: TextStyle(
-                                          fontSize: height * 0.04,
-                                          color: AppColors.colorWhite),
-                                      onPressed: () => onTap(),
-                                      strTitle: buttonText),
+                                  child: SizedBox(
+                                    width: Get.width / 3.3,
+                                    child: ElevatedButton(
+                                        child: Text(
+                                          "View Details",
+                                          style: TextStyle(
+                                                     fontSize: height * 0.05,
+                                                  color: AppColors.colorBlack)
+                                        ),
+                                        onPressed: () {onTap();},
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  AppColors.colorYellowShade),
+                                        )),
+                                  ),
+                                  // CustomButton(
+                                  //     width: size.maxWidth / 3.3,
+                                  //     height: height / 8.5,
+                                  //     isRoundBorder: true,
+                                  //     isGradient: true,
+                                  //     textStyle: TextStyle(
+                                  //         fontSize: height * 0.04,
+                                  //         color: AppColors.colorWhite),
+                                  //     onPressed: () => onTap(),
+                                  //     strTitle: buttonText),
                                 ),
                               ],
                             ),
@@ -188,21 +204,21 @@ class PromotionBanner extends StatelessWidget {
                       alignment: Alignment.center,
                       decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(AppImages.ic_offer_bg),
-                            fit: BoxFit.fill,
-                          )),
+                        image: AssetImage(AppImages.ic_offer_bg),
+                        fit: BoxFit.fill,
+                      )),
                       child: Text(
                         mPromotionsModel.discount + "%" "\n" + "OFF",
                         style: AppStyle.textViewStyleSmall(
-                            context: context,
-                            fontWeightDelta: 1,
-                            color: AppColors.colorWhite)
+                                context: context,
+                                fontWeightDelta: 1,
+                                color: AppColors.colorYellowShade)
                             .copyWith(fontSize: height * 0.04),
                       ),
                       height: height * 0.2,
                       width: height * 0.2,
                     ),
-                  )
+                  ),
                 ],
               ),
               color: AppColors.colorGray6,

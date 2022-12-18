@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:developer';
+import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as i;
 import 'package:get/get.dart';
@@ -21,6 +22,8 @@ import 'package:otobucks/services/repository/estimates_repo.dart';
 class CreateEstimationController extends GetxController {
   bool connectionStatus = false;
   bool isShowLoader = false;
+
+
   late ServiceModel mServiceModel;
   TextEditingController controllerNote = TextEditingController();
   TextEditingController addressNote = TextEditingController(text: "");
@@ -261,4 +264,5 @@ print("addresssssis${addressNote.text}");
     mLatLng = mLatLng_;
     getLocationAdress();
   }
+
 }

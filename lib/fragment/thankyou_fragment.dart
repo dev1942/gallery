@@ -72,14 +72,14 @@ class ThankYouFragmentState extends State<ThankYouFragment> {
                   top: AppDimens.dimens_20, bottom: AppDimens.dimens_20),
             ),
             Text(
-              'Thank you for booking. The vendor will get back to you shortly'
+              'Thank you for booking. \nThe vendor will get back to you shortly'
                   .tr,
               textAlign: TextAlign.center,
               style: AppStyle.textViewStyleSmall(
                   context: context,
-                  color: AppColors.colorBlack2.withOpacity(0.8),
-                  fontSizeDelta: -2,
-                  fontWeightDelta: -3),
+                  color: AppColors.colorYellowShade,
+                  fontSizeDelta: 1,
+                  fontWeightDelta: 0),
             ),
           ],
         ));

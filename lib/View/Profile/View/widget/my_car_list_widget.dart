@@ -170,7 +170,7 @@ Divider(thickness: 1,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                    CodeCityNumber(context,"Code",code),
+                    CodeCityNumber(context,"Code  ",code),
                     CodeCityNumber(context,"City",city),
                     CodeCityNumber(context,"Number",number),
                   ],)

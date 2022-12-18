@@ -95,17 +95,20 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                     ),
                                                   )),
                                               onTap: () {
-                                                // Navigator.push(
-                                                //     context,
-                                                //     MaterialPageRoute(
-                                                //         builder: (context) =>
-                                                //             ViewBookingEstimation(
-                                                //               //ViewEstimation(
-                                                //               mEstimatesModel:
-                                                //               mEstimatesModel,
-                                                //             )));
-                                              },
-                                            ),
+                                                  if (data.status ==
+                                                      "inProgress") {
+                                                    //reschedule and decline
+                                                    Get.to(
+                                                        ViewBookingEstimation(
+                                                            mEstimatesModel: data,
+                                                            isPending: false)
+                                                    );
+                                                  } else {
+                                                    Get.to(
+                                                        ViewBookingEstimation(
+                                                            mEstimatesModel: data));
+                                                  }
+                                              }),
                                           ],
                                         ),
                                         //..........................right side data column
@@ -142,13 +145,26 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                 children: [
                                                   Textwidget(
                                                       text:
-                                                      "Total Amount : ",
+                                                      "Price : ",
                                                       fontsize: 0,
                                                       fontweight:
                                                       0),
                                                   priceWidget(
                                                       data.totalprice.toString()),
                                                   Text("50% Paid",style: TextStyle(color: Colors.green),)
+
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Textwidget(
+                                                      text:
+                                                      "Paid  : ",
+                                                      fontsize: 0,
+                                                      fontweight:
+                                                      0),
+                                                  priceWidget(
+                                                     "${ data.totalprice/2}"),
 
                                                 ],
                                               ),
@@ -183,7 +199,7 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                 ],
                                               ),
                                               ///........... estimation and status row button
-                                              const SizedBox(height: 12,),
+                                             Divider(thickness: 1,),
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                 //     : MainAxisAlignment.center,
@@ -234,7 +250,7 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                   ),
                                                   const SizedBox(width: 15,),
                                                   //.................chat icon.................
-                                                  Icon(Icons.whatsapp,color: AppColors.colorAccent,),
+                                                  Icon(Icons.chat_bubble,color:Colors.yellow.shade700,size: AppDimens.dimens_27,),
 
                                                 ],
                                               ),
@@ -336,7 +352,6 @@ class InProgressFragment extends GetView<MyBookingsController> {
           //         .itemModel[0]
           //         .amount +
           //     "/-"
-
           style: AppStyle.textViewStyleNormalBodyText2(
               context: Get.context!,
               color: AppColors.colorBlueStart,

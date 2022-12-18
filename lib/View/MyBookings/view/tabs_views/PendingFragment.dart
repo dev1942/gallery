@@ -171,11 +171,9 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                  ),
                                                ],
                                              ),
-
+   Divider(thickness: 1,),
                                              ///........... estimation and status row button
-                                             const SizedBox(
-                                               height: 12,
-                                             ),
+
                                              Row(
                                                mainAxisAlignment:
                                                MainAxisAlignment.start,

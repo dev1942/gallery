@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 
+import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/global/enum.dart';
@@ -12,7 +13,9 @@ class EstimationFragmentController extends GetxController {
 
   bool connectionStatus = false;
   bool isShowLoader = false;
-
+  var endDate;
+  var startDate;
+  bool isRangePicked=false;
   int indexM = 0;
   int activeTabIndex = 0;
   TabController? tabController;
@@ -60,5 +63,32 @@ class EstimationFragmentController extends GetxController {
       //Get.find<EstimationListController>().getEstimation('submitted');
     });
   }
+  //............................Date range pcker............................
+  dateRangerPicker(){
 
+    showCustomDateRangePicker(
+      Get.context!,
+      dismissible: true,
+      minimumDate: DateTime.now(),
+      maximumDate: DateTime.now().add(const Duration(days: 30)),
+      endDate: endDate,
+      startDate: startDate,
+      onApplyClick: (start, end) {
+                 isRangePicked=true;
+        endDate = end;
+        startDate = start;
+                 DateTime now = DateTime.now();
+                 startDate= new DateTime(now.year, now.month, now.day,);
+                 endDate= new DateTime(now.year, now.month, now.day,);
+
+        update();
+      },
+      onCancelClick: () {
+isRangePicked=false;
+        endDate = null;
+        startDate = null;
+        update();
+      },
+    );
+  }
 }
