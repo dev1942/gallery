@@ -8,22 +8,18 @@ import 'package:otobucks/viewmodels/main_viewmodel.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../../../global/app_colors.dart';
 import '../../../../global/app_dimens.dart';
 import '../../../../global/app_style.dart';
 import '../../../../global/app_views.dart';
 import '../../../../global/global.dart';
 import '../page/transaction_detail_screen.dart';
-
 class TransactionHistoryFragment extends StatefulWidget {
   const TransactionHistoryFragment({Key? key}) : super(key: key);
-
   @override
   TransactionHistoryFragmentState createState() =>
       TransactionHistoryFragmentState();
 }
-
 class TransactionHistoryFragmentState
     extends State<TransactionHistoryFragment> {
   var controller = Get.put(TransactionController());
@@ -130,7 +126,84 @@ class TransactionHistoryFragmentState
                                       ],
                                     ),
                                   ),
-
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: AppDimens.dimens_30,
+                                        left: AppDimens.dimens_7,
+                                        right: AppDimens.dimens_7),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: GetBuilder<
+                                              TransactionController>(
+                                              builder: (context) {
+                                                return InkWell(
+                                                  onTap: () {
+                                                    value.dateRangerPicker();
+                                                  },
+                                                  child: Container(
+                                                    padding: EdgeInsets.only(
+                                                        left: 8,right: 8),
+                                                    alignment: Alignment
+                                                        .centerLeft,
+                                                    height: 30,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                        BorderRadius.circular(3),
+                                                        border:
+                                                        Border.all(
+                                                            color: Colors.grey)),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          value.isRangePicked == true
+                                                              ? "${value.startDate} to ${value.endDate}":
+                                                          "Search by date",
+                                                          style: AppStyle
+                                                              .textViewStyleSmall(
+                                                              context: Get.context!,
+                                                              color: AppColors
+                                                                  .lightGrey),
+                                                        ),
+                                                        Icon(Icons.calendar_today,size: AppDimens.dimens_18,color: Colors.yellow.shade700,)
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                          ),
+                                        ),
+                                        addHorizontalSpace(AppDimens.dimens_8),
+                                        Expanded(
+                                          child: SizedBox(
+                                              height: 30,
+                                              child: TextFormField(
+                                                decoration: InputDecoration(
+                                                    suffixIcon: Icon(Icons.title_outlined,size: AppDimens.dimens_18,color: Colors.yellow.shade700,),
+                                                    contentPadding:
+                                                    EdgeInsets.all(10),
+                                                    hintText: "Search by title",
+                                                    hintStyle:
+                                                    AppStyle.textViewStyleSmall(
+                                                        context: context,
+                                                        color:
+                                                        AppColors.lightGrey),
+                                                    enabledBorder: OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: Colors.grey)),
+                                                    focusColor: Colors.yellow,
+                                                    focusedBorder: OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: Colors.grey),
+                                                        borderRadius:
+                                                        BorderRadius.circular(
+                                                            3))),
+                                              )),
+                                        )
+                                      ],
+                                    ),
+                                  ),
                                   Expanded(
                                       child: ListView.builder(
                                           padding: const EdgeInsets.all(
@@ -230,7 +303,7 @@ class TransactionHistoryFragmentState
                                                                                 5,
                                                                             style: AppStyle.textViewStyleNormalBodyText2(
                                                                                 context: context,
-                                                                                color: AppColors.grayDashboardText,
+                                                                                color: AppColors.colorYellowShade,
                                                                                 fontSizeDelta: 0,
                                                                                 fontWeightDelta: 1),
                                                                           )),
@@ -286,6 +359,7 @@ class TransactionHistoryFragmentState
                                                                         fontWeightDelta:
                                                                             0),
                                                                   )),
+                                                              Text(transaction.createdAt),
                                                               Container(
                                                                   alignment:
                                                                       Alignment

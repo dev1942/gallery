@@ -12,6 +12,7 @@ import '../../../../global/constants.dart';
 import '../../../../global/global.dart';
 import '../../Models/AllBookingsModel.dart';
 import '../../controller/mybookings_controller.dart';
+import '../view_booking_screen.dart';
 
 class CancelledFragment extends GetView<MyBookingsController> {
   const CancelledFragment({
@@ -90,15 +91,19 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                 ),
                                               )),
                                               onTap: () {
-                                                // Navigator.push(
-                                                //     context,
-                                                //     MaterialPageRoute(
-                                                //         builder: (context) =>
-                                                //             ViewBookingEstimation(
-                                                //               //ViewEstimation(
-                                                //               mEstimatesModel:
-                                                //               mEstimatesModel,
-                                                //             )));
+                                                if (data.status ==
+                                                    "cancelled" || data.status == "declined") {
+                                                  //reschedule and decline
+                                                  Get.to(
+                                                      ViewBookingEstimation(
+                                                          mEstimatesModel: data,
+                                                          isPending: false)
+                                                  );
+                                                } else {
+                                                  Get.to(
+                                                      ViewBookingEstimation(
+                                                          mEstimatesModel: data));
+                                                }
                                               },
                                             ),
                                           ],

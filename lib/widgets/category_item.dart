@@ -66,8 +66,8 @@ class CategoryItem extends StatelessWidget {
                       strSubTitle,
                       style: AppStyle.textViewStyleSmall(
                           context: context,
-                          color: AppColors.grayDashboardText,
-                          fontSizeDelta: -2,
+                          color: AppColors.colorYellowShade,
+                          fontSizeDelta: -1,
                           fontWeightDelta: 0),
                     )),
               ],

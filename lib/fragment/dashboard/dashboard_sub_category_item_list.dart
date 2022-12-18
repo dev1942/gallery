@@ -74,9 +74,11 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
               Padding(
                 padding: const EdgeInsets.only(left: 20.0),
                 child: Text(
-                  "Sub Categories",
+                  "Categories",
                   style: AppStyle.textViewStyleLarge(
-                      context: context, color: AppColors.colorPrimary),
+                      fontWeightDelta: 1,
+                      fontSizeDelta: 2,
+                      context: context, color: AppColors.colorYellowShade),
                 ),
               ),
               TabBar(
@@ -108,16 +110,16 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
                               borderRadius:
                                   BorderRadius.circular(AppDimens.dimens_10)),
                           child: Container(
-                            padding: const EdgeInsets.all(4),
+                            padding: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
-                                color: AppColors.colorPrimary,
+                                color: AppColors.colorYellowShade,
                                 borderRadius:
                                     BorderRadius.circular(AppDimens.dimens_10)),
                             width: 80,
                             height: 80,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(
-                                AppDimens.dimens_10,
+                                AppDimens.dimens_8,
                               ),
                               child: NetworkImageCustom(
                                   image: mCategoryModel.image,
@@ -134,9 +136,11 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
               Padding(
                 padding: const EdgeInsets.only(left: 20.0),
                 child: Text(
-                  "Services",
+                  "Sub Categories",
                   style: AppStyle.textViewStyleLarge(
-                      context: context, color: AppColors.colorPrimary),
+                      context: context, color: AppColors.colorYellowShade,
+                  fontWeightDelta: 1,
+                  fontSizeDelta: 2),
                 ),
               ),
               IndexedStack(
