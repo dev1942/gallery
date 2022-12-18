@@ -94,6 +94,7 @@ class PromotionBanner extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
+                                // Text("Price Before",style: AppStyle.textViewStyleXSmall(context: context, color: Colors.black),),
                                 Container(
                                   width: height / 2,
                                   margin: const EdgeInsets.only(

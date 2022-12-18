@@ -46,7 +46,9 @@ class PendingFragment extends GetView<MyBookingsController> {
                        Padding(
                          padding: const EdgeInsets.symmetric(vertical: 6.0),
                          child: Card(
-                           elevation: AppDimens.dimens_8,
+                           elevation: AppDimens.dimens_6,
+                           shadowColor: Colors.white,
+                           surfaceTintColor: Colors.white,
                            shape: RoundedRectangleBorder(
                              borderRadius:
                              BorderRadius.circular(AppDimens.dimens_7),

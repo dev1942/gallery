@@ -73,7 +73,6 @@ dependencies:
   video_player: ^2.4.8
   basic_utils: ^4.4.1
   image_collapse: ^1.0.1
-  d_chart: ^0.0.4
   just_audio: ^0.9.28
   light_compressor: ^1.2.2
   image_downloader: ^0.31.0
@@ -103,6 +102,7 @@ dependencies:
   flutter_intro: ^3.0.2
   logger: ^1.1.0
   custom_date_range_picker: ^1.0.6
+  pie_chart: ^5.3.2
 
   #  flutter_date_picker_timeline: ^0.3.3
   #firebase_core: ^0.5.3

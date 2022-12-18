@@ -803,50 +803,48 @@ class EstimationDetailsPDFScreenState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
-                    child: SizedBox(
-                      child: CustomButton(
-                          isGradient: true,
-                          isRoundBorder: true,
-                          fontColor: AppColors.colorWhite,
-                          fontSize: -1,
-                          // width: size.width / 1.5,
-                          height: AppDimens.dimens_38,
-                          onPressed: () {
-                            if (widget
-                                    .allBookingsModel.estimation?.offerStatus ==
-                                "pending") {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CheckoutScreen(
-                                            isPartialPay: true,
-                                            bookingID: allBookingsModel.id,
-                                            amount: allBookingsModel
-                                                .estimation!.grandTotal
-                                                .toString(),
-                                            previousAmount: allBookingsModel
-                                                .estimation!.subTotal
-                                                .toString(),
-                                          )));
-                            }
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => const CheckoutScreen(
-                            //
-                            //             // sourceId:
-                            //             //     widget.mEstimatesModel.source!.id,
-                            //             // estimateId: widget.mEstimatesModel.id,
-                            //             // paymentStatus: 'partialPayment',
-                            //             )));
-                          },
-                          strTitle:
-                              widget.allBookingsModel.estimation?.offerStatus ==
-                                      'pending'
-                                  ? 'Pay 50%'
-                                  : "Make full Payment"),
-                      // width: size.width / 1.8,
-                    ),
+                    child: CustomButton(
+                        isGradient: true,
+                        isRoundBorder: true,
+                        fontColor: AppColors.colorWhite,
+                        fontSize: -1,
+                        fontWeight: 1,
+                        // width: size.width / 1.5,
+                        height: AppDimens.dimens_38,
+                        onPressed: () {
+                          if (widget
+                                  .allBookingsModel.estimation?.offerStatus ==
+                              "pending") {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CheckoutScreen(
+                                          isPartialPay: true,
+                                          bookingID: allBookingsModel.id,
+                                          amount: allBookingsModel
+                                              .estimation!.grandTotal
+                                              .toString(),
+                                          previousAmount: allBookingsModel
+                                              .estimation!.subTotal
+                                              .toString(),
+                                        )));
+                          }
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => const CheckoutScreen(
+                          //
+                          //             // sourceId:
+                          //             //     widget.mEstimatesModel.source!.id,
+                          //             // estimateId: widget.mEstimatesModel.id,
+                          //             // paymentStatus: 'partialPayment',
+                          //             )));
+                        },
+                        strTitle:
+                            widget.allBookingsModel.estimation?.offerStatus ==
+                                    'pending'
+                                ? 'Pay 50%'
+                                : "Make full Payment"),
                   ),
                   widget.allBookingsModel.estimation?.offerStatus == 'pending'
                       ? Flexible(
@@ -855,10 +853,11 @@ class EstimationDetailsPDFScreenState
                               padding: const EdgeInsets.all(5.0),
                               child: CustomButton(
                                   isGradient: false,
-                                  color: Colors.yellow,
+                                  color: AppColors.colorYellowShade,
                                   isRoundBorder: true,
                                   fontColor: AppColors.colorBlack,
-                                  fontSize: 0,
+                                  fontSize: -1,
+                                  fontWeight: 1,
                                   height: AppDimens.dimens_38,
                                   onPressed: allBookingsModel
                                               .estimation!.isOfferCreated ==
@@ -925,12 +924,12 @@ class EstimationDetailsPDFScreenState
                   Flexible(
                     child: SizedBox(
                       child: CustomButton(
-                          fontSize: 0,
+                          fontSize: -1,
+                          fontWeight: 1,
                           isGradient: true,
                           isRoundBorder: true,
                           // color: AppColors.greyDateBG,
                           fontColor: AppColors.colorWhite,
-                          width: size.width / 1.5,
                           height: AppDimens.dimens_38,
                           onPressed: () => displayTextInputDialog(),
                           strTitle: Constants.TXT_DECLINE),

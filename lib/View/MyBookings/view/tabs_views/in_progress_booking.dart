@@ -47,7 +47,9 @@ class InProgressFragment extends GetView<MyBookingsController> {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6.0),
                           child: Card(
-                            elevation: AppDimens.dimens_8,
+                            elevation: AppDimens.dimens_6,
+                            shadowColor: Colors.white,
+                            surfaceTintColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.circular(AppDimens.dimens_7),
@@ -152,11 +154,6 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                       fontweight: 0),
                                                   priceWidget(data.totalprice
                                                       .toString()),
-                                                  Text(
-                                                    "50% Paid",
-                                                    style: TextStyle(
-                                                        color: Colors.green),
-                                                  )
                                                 ],
                                               ),
                                               Row(
@@ -167,8 +164,12 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                       fontsize: 0,
                                                       fontweight:
                                                       0),
-                                                  priceWidget(
-                                                     "${ data.totalprice/2}"),
+                                                  Text(
+                                                     "AED ${ data.totalprice/2}/-",style:  AppStyle.textViewStyleNormalBodyText2(
+                                                      context: Get.context!,
+                                                      color: Colors.green,
+                                                      fontSizeDelta: 1,
+                                                      fontWeightDelta: 3),),
 
                                                 ],
                                               ),

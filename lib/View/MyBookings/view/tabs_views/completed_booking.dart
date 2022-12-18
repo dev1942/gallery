@@ -52,7 +52,9 @@ class CompletedFragment extends GetView<MyBookingsController> {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6.0),
                           child: Card(
-                            elevation: AppDimens.dimens_8,
+                            elevation: AppDimens.dimens_6,
+                            shadowColor: Colors.white,
+                            surfaceTintColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.circular(AppDimens.dimens_7),
@@ -149,7 +151,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                       text: "Price :  ",
                                                       fontsize: 0,
                                                       fontweight: 0),
-                                                  priceWidget(data.source!.price
+                                                  priceWidget(data.paymentCompleted
                                                       .toString()),
                                                   Text(
                                                     " Fully Paid",
@@ -192,43 +194,8 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                 //     : MainAxisAlignment.center,
                                                 children: [
                                                   //...................on click of give ratting
-                                                  InkWell(
-                                                    child: Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal: 7.0,
-                                                                vertical: 5.0),
-                                                        decoration: AppViews
-                                                            .getGradientBoxDecoration(
-                                                                mBorderRadius:
-                                                                    2),
-                                                        child: Center(
-                                                          child: Text(
-                                                            "Give rating"
-                                                                .toUpperCase(),
-                                                            style: TextStyle(
-                                                                color: AppColors
-                                                                    .colorWhite,
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                          ),
-                                                        )),
-                                                    onTap: () {
 
-                                                      // gotoViewEstimation(
-                                                      //     AllBookingsModel(),
-                                                      //     false);false
-                                                     print(data.id);
-                                                       displayTextInputDialog(context,data.id);
 
-                                                    },
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 5,
-                                                  ),
                                                   Expanded(
                                                     child: InkWell(
                                                       child: Container(
@@ -262,6 +229,42 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                       },
                                                     ),
                                                   ),
+                                                  const SizedBox(
+                                                    width: 4,
+                                                  ),
+                                                  InkWell(
+                                                    child: Container(
+                                                        padding:
+                                                        const EdgeInsets
+                                                            .symmetric(
+                                                            horizontal: 7.0,
+                                                            vertical: 5.0),
+                                                        decoration: BoxDecoration(
+                                                            color: AppColors.colorYellowShade
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            "Give rating"
+                                                                .toUpperCase(),
+                                                            style: TextStyle(
+                                                                color: Colors.black,
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                          ),
+                                                        )),
+                                                    onTap: () {
+
+                                                      // gotoViewEstimation(
+                                                      //     AllBookingsModel(),
+                                                      //     false);false
+                                                      print(data.id);
+                                                      displayTextInputDialog(context,data.id);
+
+                                                    },
+                                                  ),
+                                                  addHorizontalSpace(7)
                                                 ],
                                               ),
                                             ],

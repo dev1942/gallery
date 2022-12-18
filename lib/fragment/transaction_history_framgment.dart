@@ -197,8 +197,8 @@ class TransactionHistoryFragmentState
                                                           .yellow.shade700,
                                                     ),
                                                     contentPadding:
-                                                        EdgeInsets.all(10),
-                                                    hintText: "Search by Price",
+                                                        EdgeInsets.all(8),
+                                                    hintText: "Search by transaction Title",
                                                     hintStyle: AppStyle
                                                         .textViewStyleSmall(
                                                             context: context,
@@ -228,8 +228,9 @@ class TransactionHistoryFragmentState
                                   ),
                                   Expanded(
                                       child: ListView.builder(
-                                          padding: const EdgeInsets.all(
-                                              AppDimens.dimens_20),
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: AppDimens.dimens_20,
+                                              horizontal: 5),
                                           itemBuilder:
                                               (BuildContext contextM, index) {
                                             TransactionModel transaction =
@@ -241,6 +242,7 @@ class TransactionHistoryFragmentState
                                               color: Colors.transparent,
                                               child: Card(
                                                   elevation: AppDimens.dimens_3,
+                                                  shadowColor: Colors.white,
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -296,20 +298,28 @@ class TransactionHistoryFragmentState
                                                                       width: AppDimens
                                                                           .dimens_90),
                                                                 ),
-                                                                addVerticleSpace(6),
-                                                                Text(
-                                                                  transaction
-                                                                      .metadata
-                                                                      .type,
-                                                                  style: AppStyle.textViewStyleNormalBodyText2(
-                                                                      context:
-                                                                          context,
-                                                                      color: AppColors
-                                                                          .colorBlack,
-                                                                      fontSizeDelta:
-                                                                          0,
-                                                                      fontWeightDelta:
-                                                                          0),
+                                                                addVerticleSpace(
+                                                                    6),
+                                                                Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      left:
+                                                                          4.0),
+                                                                  child: Text(
+                                                                    transaction.metadata.type ==
+                                                                            "booking"
+                                                                        ? "Service ${transaction.metadata.type}"
+                                                                        : "Promotion ${transaction.metadata.type}",
+                                                                    style: AppStyle.textViewStyleNormalBodyText2(
+                                                                        context:
+                                                                            context,
+                                                                        color: AppColors
+                                                                            .colorBlack,
+                                                                        fontSizeDelta:
+                                                                            -3,
+                                                                        fontWeightDelta:
+                                                                            0),
+                                                                  ),
                                                                 )
                                                               ],
                                                             ),
@@ -370,30 +380,65 @@ class TransactionHistoryFragmentState
                                                                   alignment:
                                                                       Alignment
                                                                           .centerLeft,
-                                                                  child: Text(
-                                                                    transaction.metadata.service ==
-                                                                            null
-                                                                        ? ''
-                                                                        : transaction
-                                                                            .metadata
-                                                                            .service!
-                                                                            .title,
-                                                                    maxLines: 1,
-                                                                    style: AppStyle.textViewStyleSmall(
-                                                                        context:
-                                                                            context,
-                                                                        color: AppColors
-                                                                            .grayDashboardText,
-                                                                        fontSizeDelta:
-                                                                            -2,
-                                                                        fontWeightDelta:
-                                                                            0),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Text(
+                                                                        "Service Title : ",
+                                                                        style: AppStyle
+                                                                            .textViewStyleNormalBodyText2(
+                                                                          context:
+                                                                              Get.context!,
+                                                                          color:
+                                                                              AppColors.colorBlack2,
+                                                                          fontSizeDelta:
+                                                                              -1,
+                                                                          //1,
+                                                                          fontWeightDelta:
+                                                                              0,
+                                                                          //    1
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        transaction.metadata.service ==
+                                                                                null
+                                                                            ? ''
+                                                                            : transaction.metadata.service!.title,
+                                                                        maxLines:
+                                                                            1,
+                                                                        style: AppStyle
+                                                                            .textViewStyleNormalBodyText2(
+                                                                          context:
+                                                                              Get.context!,
+                                                                          color:
+                                                                              AppColors.colorBlack2,
+                                                                          fontSizeDelta:
+                                                                              -1,
+                                                                          //1,
+                                                                          fontWeightDelta:
+                                                                              0,
+                                                                          //    1
+                                                                        ),
+                                                                      ),
+                                                                    ],
                                                                   )),
                                                               Row(
-                                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .start,
                                                                 children: [
                                                                   Text(
-                                                                      "Amount : "),
+                                                                    "Amount : ",
+                                                                    style: AppStyle.textViewStyleNormalBodyText2(
+                                                                        context:
+                                                                            context,
+                                                                        color:
+                                                                            AppColors.colorBlack,
+                                                                    fontSizeDelta: -1,
+                                                                    fontWeightDelta: 0),
+                                                                  ),
                                                                   GradientText(
                                                                     Global.replaceCurrencySign(
                                                                             transaction.currency) +
@@ -411,7 +456,9 @@ class TransactionHistoryFragmentState
                                                                   ),
                                                                 ],
                                                               ),
-                                                              Divider(thickness: 1,),
+                                                              Divider(
+                                                                thickness: 1,
+                                                              ),
                                                               //-------------Buttons row ....................
                                                               Row(
                                                                 mainAxisAlignment:
@@ -436,19 +483,17 @@ class TransactionHistoryFragmentState
                                                                           )),
                                                                       onTap:
                                                                           () {
-                                                                            Navigator.push(
-                                                                                context,
-                                                                                MaterialPageRoute(
-                                                                                    builder: (context) =>
-                                                                                        TransactionDetailScreen(
-                                                                                          transactionModel:
-                                                                                          transaction,
-                                                                                        )));
-                                                                          },
+                                                                        Navigator.push(
+                                                                            context,
+                                                                            MaterialPageRoute(
+                                                                                builder: (context) => TransactionDetailScreen(
+                                                                                      transactionModel: transaction,
+                                                                                    )));
+                                                                      },
                                                                     ),
                                                                   ),
                                                                   const SizedBox(
-                                                                    width: 3,
+                                                                    width: 7,
                                                                   ),
                                                                   //............paid status
 
@@ -495,19 +540,17 @@ class TransactionHistoryFragmentState
                                                                 ],
                                                               ),
                                                               Container(
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .centerRight,
+                                                                alignment: Alignment
+                                                                    .centerRight,
                                                               ),
-                                                              addVerticleSpace(10),
+                                                              addVerticleSpace(
+                                                                  10),
                                                             ],
                                                           )),
                                                         ],
                                                       ),
                                                     ),
-                                                    onTap: () {
-
-                                                    },
+                                                    onTap: () {},
                                                   )),
                                             );
                                           },
