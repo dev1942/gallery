@@ -259,7 +259,6 @@ class Global {
       if (status && data.containsKey(Constants.RES_RESULT)) {
         dataObj = data[Constants.RES_RESULT];
         debugPrint("mapData: ${data[Constants.RES_RESULT]}");
-
       } else if (!status || data.containsKey(Constants.RES_ERROR)) {
         dataObj = data[Constants.RES_ERROR];
       }
@@ -430,7 +429,7 @@ class Global {
           break;
       }
     } else {
-      currency = "AED";//Constants.SYMBOL_DOLLAR;
+      currency = "AED"; //Constants.SYMBOL_DOLLAR;
     }
 
     return currency;
@@ -1119,17 +1118,27 @@ class Global {
       required double mRatioY,
       required int mMaxHeight,
       required int mMaxWidth}) async {
-    File? croppedFile = await ImageCropper().cropImage(
+    final croppedFile = await ImageCropper().cropImage(
         sourcePath: imagePath,
         aspectRatio: CropAspectRatio(ratioX: mRatioX, ratioY: mRatioY),
         maxHeight: mMaxHeight,
         maxWidth: mMaxWidth,
-        androidUiSettings: AndroidUiSettings(
-            toolbarTitle: 'Crop Image',
-            toolbarColor: AppColors.colorAccent,
-            toolbarWidgetColor: AppColors.colorWhite),
-        iosUiSettings: const IOSUiSettings(title: 'Crop Image'));
-
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: "Crop Image",
+            toolbarColor: AppColors.colorBlueEnd,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false,
+          ),
+          IOSUiSettings(minimumAspectRatio: 1.0),
+        ]
+    );
+    /*androidUiSettings: AndroidUiSettings(
+        toolbarTitle: 'Crop Image',
+        toolbarColor: AppColors.colorAccent,
+        toolbarWidgetColor: AppColors.colorWhite),
+    iosUiSettings: const IOSUiSettings(title: 'Crop Image'));*/
     return croppedFile;
   }
 
@@ -1433,6 +1442,7 @@ class Global {
   }
 
   static gotoVideoView(BuildContext context, String videoURL) {
+    print("vidoe gellary seldciton");
     Navigator.push(
         context,
         MaterialPageRoute(

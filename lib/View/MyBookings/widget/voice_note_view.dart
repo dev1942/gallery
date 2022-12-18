@@ -679,16 +679,16 @@ class VoiceRecordingViewButtonState extends State<VoiceRecordingViewButton> {
                     child: const Icon(Icons.close),
                     onTap: () {
                      print("close buttons");
-                      // setState(() {
-                      //   _path = "";
-                      //   isShowPlayView = false;
-                      //   isShowRecordButton = true;
-                      //}
-                     // );
-                     // updatePath();
+                      setState(() {
+                        _path = "";
+                        isShowPlayView = false;
+                        isShowRecordButton = true;
+                      }
+                     );
+                     updatePath();
                     },
                   ),
-                  visible: isHideRemoveButton,
+                  visible: true,//isHideRemoveButton,
                 ))
           ],
         ),

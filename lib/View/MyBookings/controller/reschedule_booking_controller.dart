@@ -1,4 +1,3 @@
-
 import 'dart:collection';
 import 'dart:developer';
 import 'package:flutter/material.dart';
@@ -18,17 +17,16 @@ import 'package:otobucks/model/estimates_model.dart';
 import 'package:otobucks/model/service/service_model.dart';
 import 'package:otobucks/model/time_model.dart';
 import 'package:otobucks/page/services/estimation/create_estimation_screen.dart';
+import 'package:otobucks/page/services/profile/service_provider_profile_screen.dart';
 import 'package:otobucks/services/repository/estimates_repo.dart';
 import '../Models/AllBookingsModel.dart';
-
-
 
 class RescheduleBookingController extends GetxController {
   bool connectionStatus = false;
   bool isShowLoader = false;
 
   // late EstimatesModel? estimatesModel;
-   Result? estimatesModel;
+  Result? estimatesModel;
   TextEditingController controllerNote = TextEditingController();
   TextEditingController addressNote = TextEditingController(text: '');
 
@@ -38,8 +36,8 @@ class RescheduleBookingController extends GetxController {
   String pickedImage = "";
   String pickedVideo = "";
   String voiceNoteFile = "";
-  String SelectedTime="";
-  String bookingid="";
+  String SelectedTime = "";
+  String bookingid = "";
   late LatLng? mLatLng;
 
   Location location = Location();
@@ -52,12 +50,21 @@ class RescheduleBookingController extends GetxController {
     if (estimatesModel != null) {
       estimatesModel = model;
       if (Global.checkNull(estimatesModel!.bookingDetails!.customerNote)) {
-        controllerNote.text = estimatesModel!.bookingDetails!.customerNote.toString();
+        controllerNote.text =
+            estimatesModel!.bookingDetails!.customerNote.toString();
       }
       // selectedDate= estimatesModel!.bookingDetails!.date.toString();// mEstimatesModel.getDateInFormate();
-      bookingid= estimatesModel!.id.toString();
+      bookingid = estimatesModel!.id.toString();
       pickedImage = estimatesModel!.bookingDetails!.image!.first;
-      pickedVideo =  estimatesModel!.bookingDetails!.video!.first;
+      print("estimatesModel!.bookingDetails!.video!.first");
+      // if (estimatesModel!.bookingDetails!.video!.isNotEmpty) {
+      //   print(model.bookingDetails!.video!.first);
+      //   pickedVideo = model.bookingDetails!.video!.first;
+      // }
+
+      print("pickedVideo------33---------");
+      print(pickedVideo);
+      //----------------------------------------
       mTimeModel = getTimeModel(estimatesModel!.bookingDetails!.time);
       update();
       getLocationAdress();
@@ -78,6 +85,7 @@ class RescheduleBookingController extends GetxController {
         time_12hr: time12HR);
     return mTimeModel;
   }
+
   getLocationAdress() async {
     Location location = Location();
     PermissionStatus _permissionGranted = await location.hasPermission();
@@ -86,11 +94,11 @@ class RescheduleBookingController extends GetxController {
       var currentLocation = await location.getLocation();
       log(currentLocation.latitude.toString());
       LatLng _mLatLng =
-      LatLng(currentLocation.latitude!, currentLocation.longitude!);
+          LatLng(currentLocation.latitude!, currentLocation.longitude!);
       List<i.Placemark> placemarks = await i.placemarkFromCoordinates(
           _mLatLng.latitude, _mLatLng.longitude);
       addressNote.text =
-      '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
+          '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
 
       mLatLng = _mLatLng;
     } else {
@@ -219,11 +227,11 @@ class RescheduleBookingController extends GetxController {
     }
   }*/
 
-
   updateLatLang(LatLng mLatLng_) async {
     mLatLng = mLatLng_;
     getLocationAdress();
   }
+
 /*
   rebook(BuildContext context, EstimatesModel estimatesModel) {
     Navigator.push(
@@ -260,13 +268,27 @@ class RescheduleBookingController extends GetxController {
             )));
   }
   */
-
-
+//.............goto profile
+  // gotoProfile(BuildContext context) {
+  //   Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => ServiceProviderProfileScreen(
+  //               rating: mServiceModel.rating.toDouble(),
+  //               totalRatings: mServiceModel.totalRatings.toDouble(),
+  //               mServiceProviderModel: mServiceModel.mServiceProviderModel,
+  //               title: mServiceModel.title)));
+  // }
 //----------------------------------Reschedule Booking----------------------------
-  reScheduleBooking(BuildContext context,String id) async {
+  reScheduleBooking(BuildContext context, String id,
+      {String? imagePath}) async {
+
     print(id);
-    print( selectedDate);
-    print( SelectedTime);
+    print(selectedDate);
+    print(SelectedTime);
+    print("picked image");
+    print(pickedVideo);
+    print( controllerNote.text);
     // if (Global.checkNull(pickedVideo)) {
     //   double fileSize = await Global.getFileSize(pickedVideo);
     //   if (fileSize > 10) {
@@ -278,6 +300,7 @@ class RescheduleBookingController extends GetxController {
     //     return "";
     //   }
     // }
+
     isShowLoader = true;
     update();
     String strNote = controllerNote.text.toString();
@@ -287,7 +310,11 @@ class RescheduleBookingController extends GetxController {
     requestParams["bookingID"] = id;
     requestParams[PARAMS.PARAM_DATE] = selectedDate;
     // final gasGiants = {PARAMS.PARAM_SOURCE:  mServiceModel.id, PARAMS.PARAM_ADDRESS: addressNote.text};
-    requestParams[PARAMS.PARAM_TIME] = SelectedTime?? "";
+    requestParams[PARAMS.PARAM_TIME] = SelectedTime ?? "";
+    if (imagePath != null) {
+      requestParamsImage[PARAMS.PARAM_IMAGE] = imagePath;
+    }
+
     // requestParams[PARAMS.PARAM_CUTOMERNOTE] = strNote;
     // requestParams[PARAMS.PARAM_ADDRESS] = addressNote.text;
     // if (mLatLng != null) {
@@ -302,23 +329,25 @@ class RescheduleBookingController extends GetxController {
     //       Global.mLatLng.longitude.toStringAsFixed(4);
     // }
 
-    // if (Global.checkNull(pickedImage)) {
-    //   requestParamsImage[PARAMS.PARAM_IMAGE] = pickedImage;
-    // }
+    if (Global.checkNull(pickedImage)) {
+      requestParamsImage[PARAMS.PARAM_IMAGE] = pickedImage;
+    }
     //
-    // if (Global.checkNull(pickedVideo)) {
-    //   requestParamsImage[PARAMS.PARAM_VIDEO] = pickedVideo;
-    // }
-    // if (Global.checkNull(voiceNoteFile)) {
-    //   requestParamsImage[PARAMS.PARAM_VOICE_NOTE] = voiceNoteFile;
-    // }
+    /*
+    if (Global.checkNull(pickedVideo)) {
+      requestParamsImage[PARAMS.PARAM_VIDEO] = pickedVideo;
+    }
+    if (Global.checkNull(voiceNoteFile)) {
+      requestParamsImage[PARAMS.PARAM_VOICE_NOTE] = voiceNoteFile;
+    }
+    */
     // requestParamsImage.addEntries(gasGiants.entries);
     //........Rrepo of create estimation...................
 
     //Logger().i(requestParamsImage);
 
     var categories = await EstimatesRepo()
-        .rescheduleEstimates(requestParams,requestParamsImage, ReqType.patch);
+        .rescheduleEstimates(requestParams, requestParamsImage, ReqType.patch);
 
     categories.fold((failure) {
       //.............Failure case............................
@@ -332,6 +361,7 @@ class RescheduleBookingController extends GetxController {
       update();
     }, (mResult) {
       isShowLoader = false;
+      update();
       Global.showToastAlert(
           context: Get.overlayContext!,
           strTitle: "",
@@ -340,7 +370,6 @@ class RescheduleBookingController extends GetxController {
       //................ goto Thank you......................
       Get.offAll(() => const ThankYouFragment());
     });
-
   }
 
 //--------------------------Rating Controller

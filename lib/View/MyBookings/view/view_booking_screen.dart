@@ -1,22 +1,22 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_downloader/image_downloader.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:otobucks/View/MyBookings/Repo/decline_booking_Repo.dart';
 import 'package:otobucks/View/MyBookings/controller/reschedule_booking_controller.dart';
-
 import 'package:otobucks/View/MyBookings/widget/date_selector_view.dart';
 import 'package:otobucks/View/MyBookings/widget/time_selector_reshedule.dart';
-import 'package:otobucks/View/MyBookings/widget/time_selector_view.dart';
+import 'package:otobucks/View/MyBookings/widget/voice_note_view.dart';
 import 'package:otobucks/controllers/estimation_sidebar_controllers/view_estimation_controller.dart';
 import 'package:otobucks/global/adaptive_helper.dart';
-import 'package:otobucks/model/estimates_model.dart';
-import 'package:otobucks/services/repository/estimates_repo.dart';
+import 'package:otobucks/widgets/Image_Select/image_utility.dart';
 import 'package:otobucks/widgets/cancel_booking_dialog.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
+import 'package:otobucks/widgets/image_preview_widget.dart';
 import '../../../../global/app_colors.dart';
 import '../../../../global/app_dimens.dart';
 import '../../../../global/app_style.dart';
@@ -25,51 +25,100 @@ import '../../../../global/constants.dart';
 import '../../../../global/enum.dart';
 import '../../../../global/global.dart';
 import '../../../global/app_images.dart';
-import '../../../model/failure.dart';
-import '../../../model/time_model.dart';
 import '../../../widgets/custom_button.dart';
-import '../../../widgets/date_selector.dart';
 import '../../../widgets/google_map_view.dart';
-import '../../../widgets/image_view.dart';
 import '../../../widgets/media_button.dart';
-import '../../../widgets/time_selector.dart';
 import '../../../widgets/voice_note_buttons.dart';
 import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart';
 
-import '../controller/estimation_controller.dart';
+
 
 class ViewBookingEstimation extends StatefulWidget {
   final Result mEstimatesModel;
   final bool isPending;
-  const ViewBookingEstimation(
-      {Key? key, required this.mEstimatesModel,
-        this.isPending=false,
-      })
-      : super(key: key);
+  const ViewBookingEstimation({
+    Key? key,
+    required this.mEstimatesModel,
+    this.isPending = false,
+  }) : super(key: key);
   @override
   ViewBookingEstimationState createState() => ViewBookingEstimationState();
 }
-class ViewBookingEstimationState extends State<ViewBookingEstimation> {
-  ShowData mShowData = ShowData.showLoading;
 
+class ViewBookingEstimationState extends State<ViewBookingEstimation> {
+  final ImagePicker _imagePicker = ImagePicker();
+  dynamic imagePickerPath = "";
+  List<String> imagePaths = [];
+  final ImagePickerUtility _imagePickerUtility = ImagePickerUtility();
+  ShowData mShowData = ShowData.showLoading;
   bool connectionStatus = false;
   bool isShowLoader = false;
-
-
+  bool imageLoader = false;
+  int _progress = 0;
   var controller = Get.put(ViewEstimationController());
   var reScheduleController = Get.put(RescheduleBookingController());
   @override
   void initState() {
-    print("-----------------booking data -------------");
+    print("-----------------booking data ------------init data-");
     print(widget.mEstimatesModel.bookingDetails!.time);
     print(widget.mEstimatesModel.bookingDetails!.date);
     print(widget.mEstimatesModel.bookingDetails!.image);
     print(widget.mEstimatesModel.bookingDetails!.video);
+    print(widget.mEstimatesModel.bookingDetails!.customerNote);
     print(widget.mEstimatesModel.bookingDetails!.voiceNote);
-    // controller.estimatesModel = widget.mEstimatesModel;
+    print("-----------voice notes------------");
+//-----------videos
+    if (widget.mEstimatesModel.bookingDetails!.video!.isNotEmpty) {
+      reScheduleController.pickedVideo =
+          widget.mEstimatesModel.bookingDetails!.video!.first;
+    }
+//-------------images--------
+    if (widget.mEstimatesModel.bookingDetails!.image!.isNotEmpty) {
+      imageLoader = true;
+      getimageUrl(widget.mEstimatesModel.bookingDetails!.image!.first);
+      ImageDownloader.callback(
+          onProgressUpdate: (String? imageId, int progress) {
+        setState(() {
+          _progress = progress;
+        });
+      });
+    }
+    //-------voice notes
+    if (widget.mEstimatesModel.bookingDetails!.voiceNote!.isNotEmpty) {
+      print("-----------voice notes--------1----");
+      reScheduleController.voiceNoteFile =
+          widget.mEstimatesModel.bookingDetails!.voiceNote!.first;
+    }
+    if (widget.mEstimatesModel.bookingDetails!.customerNote != null) {
+      reScheduleController.controllerNote.text =
+          widget.mEstimatesModel.bookingDetails!.customerNote.toString();
+    }
+   // print(widget.mEstimatesModel.bookingDetails!.voiceNote);
+
     reScheduleController.onInitScreen(widget.mEstimatesModel);
     super.initState();
   }
+
+  getimageUrl(String ImageUrl) async {
+    try {
+      // Saved with this method.
+      var imageId = await ImageDownloader.downloadImage(ImageUrl);
+      if (imageId == null) {
+        return;
+      }
+      // Below is a method of obtaining saved image information.
+      // var fileName = await ImageDownloader.findName(imageId);
+      var path = await ImageDownloader.findPath(imageId);
+      imagePaths.add(path!);
+      imageLoader = false;
+      setState(() {});
+      // var size = await ImageDownloader.findByteSize(imageId);
+      // var mimeType = await ImageDownloader.findMimeType(imageId);
+    } on PlatformException catch (error) {
+      print(error);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -88,17 +137,15 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
         children: [
           Container(
             color: AppColors.colorBlueStart,
-            //height: AppDimens.dimens_120,
             height: 0,
           ),
-
-          // GetBuilder<ViewEstimationController>(
-          //   builder: (value) =>
-          //       AppViews.showLoadingWithStatus(value.isShowLoader),
-          // ),
+          GetBuilder<RescheduleBookingController>(
+            builder: (value) =>
+                AppViews.showLoadingWithStatus(value.isShowLoader),
+          ),
           ListView(
             children: [
-             /*---------------------------------Profile-----------------------*/
+              /*---------------------------------Profile-----------------------*/
               Stack(
                 children: [
                   Container(
@@ -110,6 +157,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               ),
               //video and images
               /*---------------------------------Booking data-----------------------*/
+
               Container(
                   padding: EdgeInsets.symmetric(horizontal: wd(10)),
                   alignment: Alignment.centerLeft,
@@ -119,78 +167,96 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                     children: [
                       _uploadImagesSection(),
                       //Upload Video or Shoot a video
-                       _videoSection(),
+                      _videoSection(),
                       // //Voice Note
-                     _voiceNoteSection(),
-                      // //Leave Note (if any)
+                      _voiceNoteSection(),
+                      //Leave Note (if any)
                       _anyNoteTextFiledSection(),
-                      widget.isPending?
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                alignment: Alignment.center,
-                                margin: const EdgeInsets.only(
-                                    top: AppDimens.dimens_20,
-                                    bottom: AppDimens.dimens_20,
-                                    left: AppDimens.dimens_10,
-                                    right: AppDimens.dimens_10),
-                                child: CustomButton(
-                                    isGradient: true,
-                                    isRoundBorder: true,
-                                    fontColor: AppColors.colorWhite,
-                                   // width: size.width,
-                                    onPressed: (){
-                                      reScheduleController.reScheduleBooking(context,widget.mEstimatesModel.id.toString());
-                                      // Global.showAlert(context, "Something went wrong");
-                                    },
-                                    strTitle: "Rescheduled"),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                alignment: Alignment.center,
-                                margin: const EdgeInsets.only(
-                                    top: AppDimens.dimens_20,
-                                    bottom: AppDimens.dimens_20,
-                                    left: AppDimens.dimens_10,
-                                    right: AppDimens.dimens_10),
-                                child: CustomButton(
-                                    isGradient: true,
-                                    isRoundBorder: true,
-                                    fontColor: AppColors.colorWhite,
-                                    //width: size.width,
-                                    onPressed: (){
+                      widget.isPending
+                          ? Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    margin: const EdgeInsets.only(
+                                        top: AppDimens.dimens_20,
+                                        bottom: AppDimens.dimens_20,
+                                        left: AppDimens.dimens_10,
+                                        right: AppDimens.dimens_10),
+                                    child: CustomButton(
+                                        isGradient: true,
+                                        isRoundBorder: true,
+                                        fontColor: AppColors.colorWhite,
+                                        // width: size.width,
+                                        onPressed: () {
+                                          print(
+                                              "image path--------dfgsdfsdfg-dg-dsf-g-sdg--");
+                                          //  Loader.show(context,progressIndicator:LinearProgressIndicator());
+                                          if (imagePaths.isNotEmpty) {
 
-                                      displayTextInputDialog();
-                                    },
-                                    // =>
-                                    //     controller.rebook(
-                                    //     context, widget.mEstimatesModel),
-                                    strTitle: "Decline"),
-                              ),
+                                            reScheduleController
+                                                .reScheduleBooking(
+                                                    context,
+                                                    widget.mEstimatesModel.id
+                                                        .toString(),
+                                                    imagePath:
+                                                        imagePaths.first);
+                                          } else {
+                                            reScheduleController
+                                                .reScheduleBooking(
+                                              context,
+                                              widget.mEstimatesModel.id
+                                                  .toString(),
+                                            );
+                                          }
+
+                                          // Global.showAlert(context, "Something went wrong");
+                                        },
+                                        strTitle: "Rescheduled"),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    margin: const EdgeInsets.only(
+                                        top: AppDimens.dimens_20,
+                                        bottom: AppDimens.dimens_20,
+                                        left: AppDimens.dimens_10,
+                                        right: AppDimens.dimens_10),
+                                    child: CustomButton(
+                                        isGradient: true,
+                                        isRoundBorder: true,
+                                        fontColor: AppColors.colorWhite,
+                                        //width: size.width,
+                                        onPressed: () {
+                                          displayTextInputDialog();
+                                        },
+                                        // =>
+                                        //     controller.rebook(
+                                        //     context, widget.mEstimatesModel),
+                                        strTitle: "Canceled"),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Container(
+                              alignment: Alignment.center,
+                              margin: const EdgeInsets.only(
+                                  top: AppDimens.dimens_20,
+                                  bottom: AppDimens.dimens_20,
+                                  left: AppDimens.dimens_10,
+                                  right: AppDimens.dimens_10),
+                              child: CustomButton(
+                                  isGradient: true,
+                                  isRoundBorder: true,
+                                  fontColor: AppColors.colorWhite,
+                                  width: size.width,
+                                  onPressed: () {},
+                                  // =>
+                                  //     controller.rebook(
+                                  //     context, widget.mEstimatesModel),
+                                  strTitle: "Booked"),
                             ),
-                          ],
-                        ):
-                      Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.only(
-                              top: AppDimens.dimens_20,
-                              bottom: AppDimens.dimens_20,
-                              left: AppDimens.dimens_10,
-                              right: AppDimens.dimens_10),
-                          child: CustomButton(
-                              isGradient: true,
-                              isRoundBorder: true,
-                              fontColor: AppColors.colorWhite,
-                              width: size.width,
-                              onPressed: (){},
-                              // =>
-                              //     controller.rebook(
-                              //     context, widget.mEstimatesModel),
-                              strTitle: "Booked"),
-                      
-                      ),
 
                       // if (widget.screen == 'partial')
                       //   Container(
@@ -266,11 +332,11 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               // Expanded(child: Container()),
             ],
           ),
-
         ],
       ),
     );
   }
+
   displayTextInputDialog() async {
     return showDialog(
         context: context,
@@ -281,8 +347,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               if (Global.checkNull(strReason)) {
                 declineEstimation(
                     id: widget.mEstimatesModel.id.toString(),
-                    reason: strReason
-                );
+                    reason: strReason);
               } else {
                 Global.showToastAlert(
                     context: context,
@@ -294,8 +359,9 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
           );
         });
   }
+
 //-----------------------Decline Booking-------------------
-  declineEstimation({required String reason,required String id}) async {
+  declineEstimation({required String reason, required String id}) async {
     setState(() {
       mShowData = ShowData.showLoading;
       // isShowLoader = true;
@@ -307,7 +373,8 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
     requestParams['cancelReason'] = reason;
 
     var categories = await BookingDeclineRepo().declineBooking(
-      requestParams,);
+      requestParams,
+    );
 
     categories.fold((failure) {
       Global.showToastAlert(
@@ -331,32 +398,33 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
       //Get.find<EstimationListController>().getEstimation('submitted');
     });
   }
+
   _profileSection() => Container(
-    margin: const EdgeInsets.only(
-        left: AppDimens.dimens_30,
-        top: AppDimens.dimens_20,
-        bottom: AppDimens.dimens_30,
-        right: AppDimens.dimens_20),
-    alignment: Alignment.center,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(
-            right: AppDimens.dimens_20,
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(AppDimens.dimens_5),
-            child: NetworkImageCustom(
-                image: widget.mEstimatesModel.source!.image!.first,
-                fit: BoxFit.fill,
-                height: AppDimens.dimens_120,
-                width: AppDimens.dimens_120),
-          ),
-        ),
-        Expanded(
-            child: Column(
+        margin: const EdgeInsets.only(
+            left: AppDimens.dimens_30,
+            top: AppDimens.dimens_20,
+            bottom: AppDimens.dimens_30,
+            right: AppDimens.dimens_20),
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(
+                right: AppDimens.dimens_20,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+                child: NetworkImageCustom(
+                    image: widget.mEstimatesModel.source!.image!.first,
+                    fit: BoxFit.fill,
+                    height: AppDimens.dimens_120,
+                    width: AppDimens.dimens_120),
+              ),
+            ),
+            Expanded(
+                child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -384,14 +452,14 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                             fontWeightDelta: 0),
                       )),
                   onTap: () {
-                    controller.gotoProfile(context);
+                    // controller.gotoProfile(context);
                   },
                 ),
               ],
             ))
-      ],
-    ),
-  );
+          ],
+        ),
+      );
 
   _uploadImagesSection() {
     return GetBuilder<RescheduleBookingController>(
@@ -448,7 +516,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                       ),
                     ),
                     Text(
-                    widget.mEstimatesModel.provider!.firstName.toString(),
+                      widget.mEstimatesModel.provider!.firstName.toString(),
                       style: AppStyle.textViewStyleNormalSubtitle2(
                           context: context,
                           color: Colors.grey,
@@ -479,7 +547,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                     ),
                     GradientText(
                       Global.replaceCurrencySign(
-                          widget.mEstimatesModel.source!.currency!) +
+                              widget.mEstimatesModel.source!.currency!) +
                           widget.mEstimatesModel.source!.price!.toString(),
                       style: AppStyle.textViewStyleNormalSubtitle2(
                           context: context,
@@ -527,22 +595,22 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   right: AppDimens.dimens_14,
                 ),
                 child: DateViewSelector(
-                 // selectedDate: value.selectedDate,
-                  selectedDate: DateTime.parse(widget.mEstimatesModel.bookingDetails!.date!),
-                  //selectedDate:DateTime.parse(value.selectedDate),
-          onSelection: (String _selectedDate) {
-            print(_selectedDate);
-            value.onSelectDate(_selectedDate);
-          }
+                    // selectedDate: value.selectedDate,
+                    selectedDate: DateTime.parse(
+                        widget.mEstimatesModel.bookingDetails!.date!),
+                    //selectedDate:DateTime.parse(value.selectedDate),
+                    onSelection: (String _selectedDate) {
+                      value.onSelectDate(_selectedDate);
+                    }
 
-                   // selectedDate: DateTime.parse(widget.mEstimatesModel.bookingDetails!.date!),
-                   //  onSelection: (String _selectedDate) {
-                   //    // print(_selectedDate);
-                   //
-                   //    value.onSelectDate(_selectedDate);
-                   //  },
+                    // selectedDate: DateTime.parse(widget.mEstimatesModel.bookingDetails!.date!),
+                    //  onSelection: (String _selectedDate) {
+                    //    // print(_selectedDate);
+                    //
+                    //    value.onSelectDate(_selectedDate);
+                    //  },
 
-                ),
+                    ),
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -567,16 +635,15 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   left: AppDimens.dimens_14,
                   right: AppDimens.dimens_14,
                 ),
-                child:  TimeRescheduleSelector(
-                    selectedDate: value.selectedDate??"",
-                   time:widget.mEstimatesModel.bookingDetails!.time??"",
-                   // mTimeModel: value.mTimeModel,
-                   //  onSelection: (TimeModel mtimeModel_) =>
-                   //      value.onSelectTime(mtimeModel_)
+                child: TimeRescheduleSelector(
+                  selectedDate: value.selectedDate ?? "",
+                  time: widget.mEstimatesModel.bookingDetails!.time ?? "",
+                  // mTimeModel: value.mTimeModel,
+                  //  onSelection: (TimeModel mtimeModel_) =>
+                  //      value.onSelectTime(mtimeModel_)
                 ),
-
               ),
-          //     //Upload image or Take a photo
+              //---------------------------------------------------Upload image or Take a photo
               Container(
                 margin: const EdgeInsets.only(
                   top: AppDimens.dimens_15,
@@ -609,80 +676,26 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   ],
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(
-                  top: AppDimens.dimens_10,
-                  left: AppDimens.dimens_14,
-                  right: AppDimens.dimens_14,
-                ),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      Visibility(
-                        child: Container(
-                          margin:
-                          const EdgeInsets.only(right: AppDimens.dimens_15),
-                          height: AppDimens.dimens_100,
-                          width: AppDimens.dimens_100,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                  BorderRadius.circular(AppDimens.dimens_5),
-                                ),
-                                height: AppDimens.dimens_100,
-                                width: AppDimens.dimens_100,
-                                child: ImageView(strImage: value.pickedImage),
-                              ),
-                              Positioned(
-                                  right: 0,
-                                  top: 0,
-                                  child: InkWell(
-                                    child: const Icon(Icons.close),
-                                    onTap: ()=>
-          value.onDeleteImage(),
-                                  ))
-                            ],
-                          ),
-                        ),
-                        visible: Global.checkNull(value.pickedImage),
-                      ),
-                      Visibility(
-                          visible: !Global.checkNull(value.pickedImage),
-                          child: Row(
-                            children: [
-                              MediaButton(
-                                strImage: AppImages.ic_cloud,
-                                onPressed: () {
-                                  value.getImage(ImageSource.gallery);
-                                },
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    left: AppDimens.dimens_15),
-                                child: MediaButton(
-                                  strImage: AppImages.ic_camera,
-                                  onPressed: () {
-                                    value.getImage(ImageSource.camera);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ))
-                    ],
-                  ),
-                ),
-              ),
+
+              //upload and view image selection--
+              imageLoader
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                          height: 30.0, child: Text('Progress: $_progress %')),
+                    )
+                  : imageSlider(),
             ],
           );
         });
   }
 
   _videoSection() {
-    return GetBuilder<ViewEstimationController>(builder: (value) {
+    return GetBuilder<RescheduleBookingController>(builder: (value) {
+      print("picked videos----get builder------");
+      print(value.pickedVideo);
+      print("is compressed-------");
+      print(value.isVideoCompressed);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -717,6 +730,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               ],
             ),
           ),
+          //-----------------video uploading -progress bar -----------
           Visibility(
             visible: value.isVideoCompressed,
             child: StreamBuilder<double>(
@@ -744,7 +758,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                 context: context, color: AppColors.colorBlack),
                           ),
                           margin:
-                          const EdgeInsets.only(top: AppDimens.dimens_8),
+                              const EdgeInsets.only(top: AppDimens.dimens_8),
                         )
                       ],
                     ),
@@ -754,6 +768,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               },
             ),
           ),
+          // Text(value.pickedVideo.toString()),
           Container(
             margin: const EdgeInsets.only(
               top: AppDimens.dimens_10,
@@ -765,11 +780,12 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               child: Visibility(
                 child: Row(
                   children: [
+                    //----------------------video seleciton box------------
                     Visibility(
                         visible: Global.checkNull(value.pickedVideo),
                         child: Container(
                           margin:
-                          const EdgeInsets.only(right: AppDimens.dimens_15),
+                              const EdgeInsets.only(right: AppDimens.dimens_15),
                           height: AppDimens.dimens_100,
                           width: AppDimens.dimens_100,
                           child: Stack(
@@ -778,7 +794,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius:
-                                  BorderRadius.circular(AppDimens.dimens_5),
+                                      BorderRadius.circular(AppDimens.dimens_5),
                                 ),
                                 height: AppDimens.dimens_100,
                                 width: AppDimens.dimens_100,
@@ -807,12 +823,15 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                   right: 0,
                                   top: 0,
                                   child: InkWell(
-                                    child: const Icon(Icons.close),
-                                    onTap: () {}//=> value.onDeleteVideo(),
-                                  ))
+                                      child: const Icon(Icons.close),
+                                      onTap: () {
+                                        value.onDeleteVideo();
+                                      } //=>
+                                      ))
                             ],
                           ),
                         )),
+                    //----------------------Camera video selection----------
                     Visibility(
                       visible: !Global.checkNull(value.pickedVideo),
                       child: Row(
@@ -820,6 +839,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                           MediaButton(
                             strImage: AppImages.ic_cloud,
                             onPressed: () {
+
                               value.pickVideo(ImageSource.gallery);
                             },
                           ),
@@ -847,59 +867,59 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
     });
   }
 
-  _voiceNoteSection() => GetBuilder<ViewEstimationController>(builder: (value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(
-            top: AppDimens.dimens_20,
-            left: AppDimens.dimens_14,
-            right: AppDimens.dimens_14,
-          ),
-          child: Row(
-            children: [
-              Flexible(
-                child: Text(
-                  Constants.STR_LEAVE_VOICE_NOTE,
-                  style: AppStyle.textViewStyleNormalSubtitle2(
-                      context: context,
-                      color: AppColors.colorBlack2,
-                      fontWeightDelta: 1,
-                      fontSizeDelta: 0),
-                ),
-              ),
-              const SizedBox(width: AppDimens.dimens_5),
-              Text(
-                Constants.STR_MAX_SIZE,
-                style: AppStyle.textViewStyleNormalSubtitle2(
-                    context: context,
-                    color: AppColors.colorBlack2,
-                    fontWeightDelta: -1,
-                    fontSizeDelta: -4),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(
-            top: AppDimens.dimens_10,
-            left: AppDimens.dimens_14,
-            right: AppDimens.dimens_14,
-          ),
-          child: VoiceRecordingButton(
-            // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
-            strVoiceNotePath: value.voiceNoteFile,
-            callback: (String filePath) {
-              //value.onSelectVoiceNote(filePath);
+  _voiceNoteSection() => GetBuilder<RescheduleBookingController>(builder: (value) {
 
-    }
-          ),
-        ),
-      ],
-    );
-  });
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(
+                top: AppDimens.dimens_20,
+                left: AppDimens.dimens_14,
+                right: AppDimens.dimens_14,
+              ),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      Constants.STR_LEAVE_VOICE_NOTE,
+                      style: AppStyle.textViewStyleNormalSubtitle2(
+                          context: context,
+                          color: AppColors.colorBlack2,
+                          fontWeightDelta: 1,
+                          fontSizeDelta: 0),
+                    ),
+                  ),
+                  const SizedBox(width: AppDimens.dimens_5),
+                  Text(
+                    Constants.STR_MAX_SIZE,
+                    style: AppStyle.textViewStyleNormalSubtitle2(
+                        context: context,
+                        color: AppColors.colorBlack2,
+                        fontWeightDelta: -1,
+                        fontSizeDelta: -4),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(
+                top: AppDimens.dimens_10,
+                left: AppDimens.dimens_14,
+                right: AppDimens.dimens_14,
+              ),
+              child: VoiceRecordingViewButton(
+                  // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
+                  strVoiceNotePath: value.voiceNoteFile,
+                  callback: (String filePath) {
+                    value.onSelectVoiceNote(filePath);
+                  }),
+            ),
+          ],
+        );
+      });
 
   _addressTextFiledSection() {
     return Column(
@@ -940,14 +960,14 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   fontSizeDelta: 0,
                   fontWeightDelta: 0,
                   context: context),
-              controller: controller.addressNote,
+              controller: reScheduleController.addressNote,
               readOnly: true,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
                 prefixIconConstraints:
-                const BoxConstraints(minWidth: AppDimens.dimens_33),
+                    const BoxConstraints(minWidth: AppDimens.dimens_33),
                 suffixIconConstraints:
-                const BoxConstraints(minWidth: AppDimens.dimens_33),
+                    const BoxConstraints(minWidth: AppDimens.dimens_33),
                 suffixIcon: Container(
                   margin: const EdgeInsets.only(right: AppDimens.dimens_12),
                   alignment: Alignment.center,
@@ -972,7 +992,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
             height: AppDimens.dimens_50,
           ),
           decoration:
-          AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
+              AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
         )
       ],
     );
@@ -1022,9 +1042,9 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               //readOnly: true,
               decoration: InputDecoration(
                 prefixIconConstraints:
-                const BoxConstraints(minWidth: AppDimens.dimens_33),
+                    const BoxConstraints(minWidth: AppDimens.dimens_33),
                 suffixIconConstraints:
-                const BoxConstraints(minWidth: AppDimens.dimens_33),
+                    const BoxConstraints(minWidth: AppDimens.dimens_33),
                 suffixIcon: Container(
                   margin: const EdgeInsets.only(right: AppDimens.dimens_12),
                   alignment: Alignment.center,
@@ -1037,7 +1057,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                 disabledBorder: AppViews.textFieldRoundBorder(),
                 focusedErrorBorder: AppViews.textFieldRoundBorder(),
                 hintText: "Write a message...",
-               // filled: true,
+                // filled: true,
                 fillColor: AppColors.colorGray2,
                 hintStyle: AppStyle.textViewStyleNormalBodyText2(
                     color: AppColors.colorTextFieldHint,
@@ -1049,9 +1069,148 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
             height: AppDimens.dimens_50,
           ),
           decoration:
-          AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
+              AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
         )
       ],
     );
+  }
+
+/*-------------------------------------Upload Image A Take Photo Ibraim------------------------------ */
+  Widget imageSlider() {
+    return SizedBox(
+      height: 100,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          Row(
+            children: [
+              ImagePreviews(imagePaths,
+                  onDelete: _onDeleteImage, onSelect: _onSelectImage),
+              //image
+              InkWell(
+                onTap: () async {
+                  await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          contentPadding: EdgeInsets.zero,
+                          backgroundColor: AppColors.colorWhite,
+                          title: Text(
+                            'Select Image',
+                            textAlign: TextAlign.center,
+                            style: AppStyle.textViewStyleLarge(
+                                context: context,
+                                color: AppColors.colorBlack,
+                                fontWeightDelta: 1,
+                                fontSizeDelta: 3),
+                          ),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Divider(),
+                              ListTile(
+                                  onTap: () async {
+                                    Navigator.pop(context);
+                                    final pickedFile =
+                                        await _imagePicker.getImage(
+                                      source: ImageSource.camera,
+                                    );
+
+                                    if (pickedFile != null) {
+                                      setState(() {
+                                        imagePaths.add(pickedFile.path);
+                                        imagePickerPath = imagePaths.first;
+                                      });
+                                    }
+                                  },
+                                  title: Text(
+                                    'Take a Photo',
+                                    style:
+                                        AppStyle.textViewStyleNormalSubtitle2(
+                                            context: context,
+                                            color: AppColors.colorBlack,
+                                            fontWeightDelta: 1,
+                                            fontSizeDelta: 2),
+                                  )),
+                              ListTile(
+                                onTap: () async {
+                                  Navigator.pop(context);
+
+                                  final pickedFile =
+                                      await _imagePicker.getImage(
+                                    source: ImageSource.gallery,
+                                  );
+
+                                  if (pickedFile != null) {
+                                    setState(() {
+                                      imagePaths.add(pickedFile.path);
+                                      imagePickerPath = imagePaths.first;
+                                    });
+                                  }
+                                },
+                                title: Text(
+                                  'Upload Image',
+                                  style: AppStyle.textViewStyleNormalSubtitle2(
+                                      context: context,
+                                      color: AppColors.colorBlack,
+                                      fontWeightDelta: 1,
+                                      fontSizeDelta: 2),
+                                ),
+                              ),
+                            ],
+                          ),
+                          actions: [
+                            ElevatedButton(
+                                child: const Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                })
+                          ],
+                        );
+                      });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 80,
+                    width: 80,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      color: AppColors.colorGray2,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Icon(Icons.add, color: AppColors.colorGray),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _onDeleteImage(int position) {
+    setState(() {
+      if (position >= 0) {
+        if (position == 0) {
+          imagePickerPath = "";
+        } else {
+          imagePickerPath = imagePaths[position - 1];
+        }
+      }
+      imagePaths.removeAt(position);
+    });
+  }
+
+  void _onSelectImage(int index) {
+    setState(() {
+      imagePickerPath = imagePaths[index];
+      // imagePaths.removeAt(position);
+    });
   }
 }
