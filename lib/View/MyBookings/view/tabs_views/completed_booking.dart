@@ -104,12 +104,14 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                   //reschedule and decline
                                                   Get.to(
                                                       ViewBookingEstimation(
+                                                          status: "completed",
                                                           mEstimatesModel: data,
                                                           isPending: false)
                                                   );
                                                 } else {
                                                   Get.to(
                                                       ViewBookingEstimation(
+
                                                           mEstimatesModel: data));
                                                 }
                                               },
@@ -223,7 +225,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                             ),
                                                           )),
                                                       onTap: () {
-                                                        print(data.id);
+
                                                         Get.to(EstimationDetailsPDFScreen(allBookingsModel: data));
 
                                                       },

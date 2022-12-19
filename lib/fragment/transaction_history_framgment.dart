@@ -490,6 +490,10 @@ class TransactionHistoryFragmentState
                                                                                       transactionModel: transaction,
                                                                                     )));
                                                                       },
+
+
+                                                                        
+                                                                          },
                                                                     ),
                                                                   ),
                                                                   const SizedBox(

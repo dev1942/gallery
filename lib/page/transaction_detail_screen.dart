@@ -22,13 +22,16 @@ class TransactionDetailScreen extends StatefulWidget {
 }
 
 class TransactionDetailScreenState extends State<TransactionDetailScreen> {
-  ShowData mShowData = ShowData.showLoading;
+   ShowData mShowData = ShowData.showData;
+  // ShowData mShowData = ShowData.showLoading;
 
   bool connectionStatus = false;
   bool isShowLoader = false;
 
   @override
   void initState() {
+    print( widget.transactionModel.metadata
+        .service!.title);
     super.initState();
   }
 

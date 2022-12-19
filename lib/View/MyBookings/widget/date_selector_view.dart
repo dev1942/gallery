@@ -18,10 +18,12 @@ class DateViewSelector extends StatefulWidget {
   Function onSelection;
   Function? clearTimeSelection;
   DateTime? selectedDate;
+  bool isPending;
 
   DateViewSelector(
       {Key? key,
         required this.onSelection,
+        this.isPending=false,
         this.clearTimeSelection,
         this.selectedDate})
       : super(key: key);
@@ -188,7 +190,8 @@ class DateViewSelectorState extends State<DateViewSelector> {
                           ),
                         ],
                       ),
-                      onTap: () {
+                      onTap: widget.isPending?
+                          () {
 
 
                         DateType mDateType =
@@ -217,7 +220,7 @@ class DateViewSelectorState extends State<DateViewSelector> {
                             });
                             break;
                         }
-                      },
+                      } :(){},
                     ),
                   );
                 },

@@ -18,12 +18,13 @@ class TimeRescheduleSelector extends StatefulWidget {
   String selectedDate;
   //Function onSelection;
   String? time;
+  bool isPending;
 
   TimeRescheduleSelector(
       {Key? key,
 
         this.time,
-
+this.isPending=false,
         required this.selectedDate,
        // required this.onSelection
 
@@ -92,12 +93,14 @@ class TimeRescheduleSelectorState extends State<TimeRescheduleSelector> {
               maxLines: 1,
             ),
           ),
-          onTap: () {
+          onTap:widget.isPending ?
+              () {
             setState(() {
               selectedindex=index;
               reScheduleController.SelectedTime=timesList[selectedindex];
-            });
-          },
+            }
+            );
+          }:(){},
         );
       },
     );
