@@ -677,12 +677,13 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
                   child: InkWell(
                     child: const Icon(Icons.close),
                     onTap: () {
-                      setState(() {
-                        _path = "";
-                        isShowPlayView = false;
-                        isShowRecordButton = true;
-                      });
-                      updatePath();
+                      print("------close--------");
+                      // setState(() {
+                      //   _path = "";
+                      //   isShowPlayView = false;
+                      //   isShowRecordButton = true;
+                      // });
+                      // updatePath();
                     },
                   ),
                   visible: isHideRemoveButton,

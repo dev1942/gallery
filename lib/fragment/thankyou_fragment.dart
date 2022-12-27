@@ -9,6 +9,8 @@ import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/page/home_page.dart';
 import 'package:otobucks/widgets/custom_button.dart';
 
+import '../Utils/Navigation.dart';
+
 class ThankYouFragment extends StatefulWidget {
   const ThankYouFragment({Key? key}) : super(key: key);
 
@@ -20,13 +22,13 @@ class ThankYouFragmentState extends State<ThankYouFragment> {
   @override
   void initState() {
     super.initState();
-    startTime();
+   // startTime();
   }
 
-  startTime() async {
-    var _duration = const Duration(seconds: 2);
-    return Timer(_duration, navigateToHomePage);
-  }
+  // startTime() async {
+  //   var _duration = const Duration(seconds: 2);
+  //   return Timer(_duration, navigateToHomePage);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +50,12 @@ class ThankYouFragmentState extends State<ThankYouFragment> {
               fontColor: AppColors.colorWhite,
               width: size.width,
               onPressed: () {
+                Navigation().navigateToHomePage();
                 // if (value.isValid(context)) {
                 //   value.updateProfile(context);
                 // }
               },
-              strTitle: "GO TO BOOKING HISTORY"),
+              strTitle: "GO BACK HOME"),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -69,14 +72,14 @@ class ThankYouFragmentState extends State<ThankYouFragment> {
                   top: AppDimens.dimens_20, bottom: AppDimens.dimens_20),
             ),
             Text(
-              'Thank you for booking. The vendor will get back to you shortly'
+              'Thank you for booking. \nThe vendor will get back to you shortly'
                   .tr,
               textAlign: TextAlign.center,
               style: AppStyle.textViewStyleSmall(
                   context: context,
-                  color: AppColors.colorBlack2.withOpacity(0.8),
-                  fontSizeDelta: -2,
-                  fontWeightDelta: -3),
+                  color: AppColors.colorYellowShade,
+                  fontSizeDelta: 1,
+                  fontWeightDelta: 0),
             ),
           ],
         ));
@@ -90,7 +93,5 @@ class ThankYouFragmentState extends State<ThankYouFragment> {
     );
   }
 
-  void navigateToHomePage() {
-    Get.offAll(() => const HomePage());
-  }
+
 }

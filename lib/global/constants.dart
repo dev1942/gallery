@@ -34,7 +34,7 @@ class PARAMS {
       PARAM_CUTOMERNOTE = 'cutomerNote',
       PARAM_ADDRESS = 'address',
       PARAM_IMAGE = 'image',
-      PARAM_VOICE_NOTE = 'voice_note',
+      PARAM_VOICE_NOTE = 'voiceNote',
       PARAM_VIDEO = 'video';
 
   // update Profile
@@ -49,6 +49,9 @@ class PARAMS {
       PARAM_COLOR = 'color',
       PARAM_MODELYEAR = 'modelYear',
       PARAM_MILEAGE = 'mileage',
+      PARAM_CAR_CITY = 'carCity',
+      PARAM_CAR_CODE = 'carCode',
+      PARAM_CAR_NUMBER = 'carNumber',
       PARAM_SCANDRIVINGLISCENCE = 'scanDrivingLiscence',
       PARAM_SCANEMIRATESBACK = 'scanEmiratesBack',
       PARAM_SCANEMIRATESFRONT = 'scanEmiratesFront',
@@ -74,6 +77,7 @@ class PARAMS {
 
 class Constants {
   static const String APP_NAME = "Otobucks";
+  static const String SAVE = "Save";
   static String strTokenType = "Bearer";
   static String STATUS = "STATUS";
   static String STR_GOOGLE_API_KEY = 'AIzaSyAP_6eekLauLbXqRjwncBDUtIfVCzoWGyA';
@@ -122,7 +126,8 @@ class Constants {
       TAG_TERMS_CONDITIONS = 'Terms & Conditions',
       TAG_ABOUT_US = 'About Us',
       TAG_ENTER_YOUR_CAR_DETAILS = 'Enter your car details',
-      TAG_ESTIMATION = 'Estimation',
+  //it was Estimations then text is replaced by My Bookings in drawerremaininh navigationis with same name of estimation just text changed
+      TAG_ESTIMATION = 'My Booking',
       TAG_LOG_OUT = 'Log Out';
 
   // dashboard
@@ -431,11 +436,11 @@ class Constants {
   static const String STR_NAME = 'Name',
       STR_ADDRESS = 'Address',
       STR_ENTER_YOUR_CAR_DETAILS = 'Enter your car details',
-      STR_EMERGENCY_CONTACT_DETAIL = 'Emergency Contact detail',
+      STR_EMERGENCY_CONTACT_DETAIL = 'Add Emergency Contact Details',
       STR_CAR_BRAND = 'Car brand',
       STR_CAR_MODEL_YEAR = 'Car model year',
-      STR_MILEAGE = 'Milegae of car has gone',
-      STR_CAR_COLOUR = 'Car Colour',
+      STR_MILEAGE = 'KM',
+      STR_CAR_COLOUR = 'Color',
       STR_ADD_MULKIA = 'Add \n Mulkia',
       STR_ADD_DRIVING_LICENCE = 'Add \n Driving Licence',
       STR_ADD_EMIRATES_ID_FRONT = 'Add \n Emirates id front',

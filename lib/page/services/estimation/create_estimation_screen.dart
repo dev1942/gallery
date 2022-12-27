@@ -1,8 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:otobucks/controllers/services_controllers/create_estimation_controller.dart';
+import 'package:otobucks/View/MyBookings/controller/estimation_controller.dart';
+import 'package:http/http.dart'as http;
 import 'package:otobucks/global/adaptive_helper.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
@@ -13,6 +15,7 @@ import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/model/service/service_model.dart';
 import 'package:otobucks/model/time_model.dart';
+import 'package:otobucks/page/services/estimation/checkout_screen.dart';
 import 'package:otobucks/widgets/custom_button.dart';
 import 'package:otobucks/widgets/date_selector.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
@@ -22,6 +25,7 @@ import 'package:otobucks/widgets/image_view.dart';
 import 'package:otobucks/widgets/media_button.dart';
 import 'package:otobucks/widgets/time_selector.dart';
 import 'package:otobucks/widgets/voice_note_buttons.dart';
+import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 class CreateEstimationScreen extends StatefulWidget {
   final ServiceModel mServiceModel;
@@ -94,7 +98,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                     //Voice Note
                     if (widget.screenType != 'promotion') _voiceNoteSection(),
                     //Leave Note (if any)
-                    if (widget.screenType != 'promotion')
+                    //if (widget.screenType != 'promotion')
                       _anyNoteTextFiledSection(),
 
                     Container(
@@ -111,14 +115,29 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                           width: size.width,
                           onPressed: () {
                             if (controller.isValid()) {
-                              widget.screenType == 'promotion'
-                                  ? controller.promotionPayment(context)
-                                  : controller.createEstimation(context);
+                              if( widget.screenType == 'promotion'){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>  CheckoutScreen(
+                                          promotionID: widget.mServiceModel.id,
+                                          address:controller.addressNote.text.toString() ,
+                                          date:controller.selectedDate ,
+                                          time: controller.mTimeModel!.time_24hr,
+                                          amount:   controller.mServiceModel.price,
+                                           note: controller.controllerNote.text,
+                                           previousAmount: controller.mServiceModel.beforePrice,
+                                        discount: controller.mServiceModel.discount,
+                                        )));
+                              }else{
+                                controller.createEstimation(context);
+                              }
                             }
                           },
                           strTitle: widget.screenType == 'promotion'
                               ? 'Process To Payment'
-                              : Constants.TXT_REQUEST_ESTIMATION.tr),
+                              : Constants.TXT_REQUEST_ESTIMATION.tr
+                      ),
                     ),
                   ],
                 ),
@@ -281,7 +300,8 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                   ),
                 ),
                 GradientText(
-                  Global.replaceCurrencySign(value.mServiceModel.currency) +
+                //  Global.replaceCurrencySign(value.mServiceModel.currency) +
+                  "AED "+
                       value.mServiceModel.price,
                   style: AppStyle.textViewStyleNormalSubtitle2(
                       context: context,
@@ -317,6 +337,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                   fontSizeDelta: 0),
             ),
           ),
+
           Container(
             margin: const EdgeInsets.only(
               top: AppDimens.dimens_8,
@@ -838,4 +859,13 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
       ],
     );
   }
+  // Future  hitAPI() async {
+  //   final response=await http.get(Uri.parse('https://developmentapi-app.otobucks.com/v1/bookings/bookService'));
+  //   if(response.statusCode==200){
+  //     return print(response.body.toString());
+  //   }
+  //   else{
+  //     return print(response.body.toString());
+  //   }
+  // }
 }

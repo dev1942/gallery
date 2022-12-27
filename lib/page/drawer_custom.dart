@@ -19,7 +19,6 @@ Widget drawer(BuildContext context) {
   return Container(
     decoration: ContainerProperties.simpleDecoration(),
     // color: Colors.amber,
-
     width: Responsive.screenWidth / 1.4,
     height: Responsive.screenHeight,
     padding: const EdgeInsets.only(top: AppDimens.dimens_40),
@@ -45,7 +44,7 @@ Widget drawer(BuildContext context) {
                       left: AppDimens.dimens_5, right: AppDimens.dimens_5),
                   alignment: Alignment.center,
                   child: Image.asset(
-                    AppImages.icSplashScreenIcon,
+                    AppImages.appLogo,
                     fit: BoxFit.fitWidth,
                   )),
             ],
@@ -218,10 +217,7 @@ var alDrawerItem = [
       title: Constants.TAG_MY_PROFILE,
       icon: AppImages.ic_drawer_my_profile,
       pageType: PageType.myProfile),
-  DrawerItem(
-      title: Constants.TAG_BOOKING_HISTORY,
-      icon: AppImages.ic_drawer_booking_history,
-      pageType: PageType.bookingHistory),
+  //booking history deleted
   DrawerItem(
       title: Constants.TAG_ESTIMATION,
       icon: AppImages.ic_drawer_estimation,

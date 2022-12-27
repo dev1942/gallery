@@ -16,9 +16,10 @@ import 'package:otobucks/model/model_otp.dart';
 import 'package:otobucks/widgets/custom_button.dart';
 
 class OTPScreen extends StatefulWidget {
-  final ModelOTP mModelOTP;
+  final ModelOTP? mModelOTP;
+  final String? phoneNumber;
 
-  const OTPScreen({Key? key, required this.mModelOTP}) : super(key: key);
+  const OTPScreen({Key? key,  this.mModelOTP,this.phoneNumber}) : super(key: key);
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();
@@ -107,7 +108,7 @@ class _OTPScreenState extends State<OTPScreen> {
                                 ),
                               ),
                               Text(
-                                widget.mModelOTP.emailId, // "test@yopamil.com",
+                                widget.mModelOTP?.emailId??widget.phoneNumber??"", // "test@yopamil.com",
                                 textAlign: TextAlign.center,
                                 style: AppStyle.textViewStyleSmall(
                                     context: context,
@@ -153,14 +154,33 @@ class _OTPScreenState extends State<OTPScreen> {
                                     fontColor: AppColors.colorWhite,
                                     width: size.width / 1.5,
                                     onPressed: () {
-                                      controller.verifyOTPTask(
-                                          context, widget.mModelOTP);
+                                      if(widget.mModelOTP!=null){
+                                        controller.verifyOTPTask(
+                                            context, widget.mModelOTP!);
+                                      }else{
+                                        //phone number verification
+                                       // verifyNumberOTPTask
+                                        controller.verifyNumberOTPTask(
+                                            context, widget.phoneNumber
+                                        );
+                                      }
+
                                     },
                                     strTitle: Constants.TXT_SUBMIT.tr),
                               ),
                               TextButton(
-                                  onPressed: () => controller.sendOTPTask(
-                                      widget.mModelOTP.emailId, context),
+                                  onPressed: () {
+                                    if(widget.mModelOTP!=null){
+                                      controller.sendOTPTask(
+                                          widget.mModelOTP!.emailId, context);
+                                    }else{
+                                      //phone number verification
+                                      controller.sendNumberOTPTask(
+                                          widget.phoneNumber!,context
+                                      );
+                                    }
+                                  },
+
                                   child: const Text('Resend'))
                             ],
                           ),

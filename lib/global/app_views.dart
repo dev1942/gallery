@@ -29,44 +29,51 @@ class AppViews {
 
     if (isShowSOS) {
       actionsList.add(GestureDetector(
-        onTap: () {
-          Global.inProgressAlert(mContext);
+        onTap: () async{
+          print("click");
+          // await LocationHelper.getCurrentLocation(mContext, (p0, p1){
+          //   print("${p0}  ${p1}");
+          // });
+          //Global.inProgressAlert(mContext);
         },
-        child: SizedBox(
-          // margin: const EdgeInsetsDirectional.only(end: AppDimens.dimens_20),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Image.asset(
-                AppImages.ic_sos,
-                height: 29,
-              ),
-              CircularText(
-                children: [
-                  TextItem(
-                    text: Text(
-                      "Emergency".toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: SizedBox(
+            // margin: const EdgeInsetsDirectional.only(end: AppDimens.dimens_20),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset(
+                  AppImages.ic_sos,
+                  height: 29,
+                ),
+                CircularText(
+                  children: [
+                    TextItem(
+                      text: Text(
+                        "Emergency".toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      space: 19,
+                      startAngle: -90,
+                      startAngleAlignment: StartAngleAlignment.center,
+                      direction: CircularTextDirection.clockwise,
                     ),
-                    space: 19,
-                    startAngle: -90,
-                    startAngleAlignment: StartAngleAlignment.center,
-                    direction: CircularTextDirection.clockwise,
-                  ),
-                ],
-                radius: 70,
-                position: CircularTextPosition.inside,
-                // backgroundPaint: Paint()..color = Colors.grey.shade200,
-              ),
-            ],
-          ),
+                  ],
+                  radius: 70,
+                  position: CircularTextPosition.inside,
+                  // backgroundPaint: Paint()..color = Colors.grey.shade200,
+                ),
+              ],
+            ),
 
-          height: 30,
-          width: 80,
+            height: 30,
+            width: 80,
+          ),
         ),
       ));
     }
@@ -368,10 +375,8 @@ class AppViews {
           color: Theme.of(context).colorScheme.surface,
         );
         break;
-
       case ShowData.showData:
         widgetM = showWidget;
-
         break;
       case ShowData.showNoDataFound:
         widgetM = Center(
@@ -917,9 +922,9 @@ class AppViews {
 
   static textFieldRoundBorder() {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(5),
+      borderRadius: BorderRadius.circular(12),
       borderSide:  BorderSide(
-        width: 2,
+        width: 1,
         color: AppColors.colorAccent,
         style: BorderStyle.solid,
       ),
@@ -1058,4 +1063,10 @@ class AppViews {
       ),
     );
   }
+}
+addVerticleSpace(double height){
+  return SizedBox(height: height,);
+}
+addHorizontalSpace(double width){
+  return SizedBox(width: width,);
 }

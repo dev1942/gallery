@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/View/Promotion_discount/View/banner_page_view.dart';
 import 'package:otobucks/controllers/dashboard_controller/dashboard_controller.dart';
 import '../../global/app_colors.dart';
 import '../../global/app_dimens.dart';
@@ -26,7 +27,6 @@ class DashboardFragmentPageTwoState extends State<DashboardFragmentPageTwo> {
         body: Obx(() => AppViews.getSetData(
             context, controller.mShowData.value, mShowWidget(controller))));
   }
-
   Widget mShowWidget(controller) => ListView(
         children: [
           Stack(

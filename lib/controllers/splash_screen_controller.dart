@@ -34,7 +34,7 @@ class SplashScreenController extends GetxController {
     bool? isStatus = prefManager.getBool(Constants.STATUS) ?? true;
     bool? isLogin = prefManager.getBool(SharedPrefKey.KEY_IS_LOGIN) ?? false;
 
-    var _duration = const Duration(seconds: 2);
+    var _duration = const Duration(seconds: 8);
     if (!isStatus) return;
     if (isLogin) {
       // navigateToHomePage();

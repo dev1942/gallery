@@ -3,15 +3,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/View/Promotion_discount/View/promotion_detail_view.dart';
+import 'package:otobucks/View/Promotion_discount/model/promotion_model.dart';
 import 'package:otobucks/fragment/analytics_fragment.dart';
 import 'package:otobucks/fragment/booking_history_fragment.dart';
 import 'package:otobucks/fragment/chat_history_framgment.dart';
 import 'package:otobucks/fragment/dashboard/dashboard_fragment.dart';
 import 'package:otobucks/fragment/dashboard/dashboard_fragment_page_2.dart';
-import 'package:otobucks/fragment/dashboard/promotion_details_screen.dart';
-import 'package:otobucks/fragment/estimation_main_fragment.dart';
+// import 'package:otobucks/fragment/estimation_main_fragment.dart';
 import 'package:otobucks/fragment/invite_friend_fragment.dart';
-import 'package:otobucks/fragment/my_profile_framgment.dart';
+import 'package:otobucks/View/Profile/View/my_profile_view.dart';
 import 'package:otobucks/fragment/my_rating_fragment.dart';
 import 'package:otobucks/fragment/notification_framgment.dart';
 import 'package:otobucks/fragment/purchase_history_fragment.dart';
@@ -28,6 +29,8 @@ import 'package:otobucks/page/cart_screen.dart';
 import 'package:otobucks/services/navigation_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../View/MyBookings/view/estimation_screen.dart';
 
 class HomeScreenController extends GetxController {
   int indexM = 0;
@@ -115,7 +118,7 @@ class HomeScreenController extends GetxController {
         indexM = 0;
         break;
       case PageType.estimations:
-        navigationPage = const EstimationFragment();
+        navigationPage = EstimationFragment();
         strTitle = Constants.TAG_ESTIMATION;
         indexM = 0;
         break;

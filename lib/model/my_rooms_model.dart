@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/global.dart';
@@ -39,8 +40,7 @@ class MyRoomModel {
       // json["createdAt"],
       updatedAt: "",
       // json["updatedAt"],
-      serverChatModel:
-          data.isNotEmpty ? ServerChatModel.fromMap(data[0]) : null,
+      serverChatModel: data.isNotEmpty ? ServerChatModel.fromMap(data[0]) : null,
       unReadMessages: json["unReadMessages"] ?? 0,
       myRoomModelId: json["id"],
     );

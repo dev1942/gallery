@@ -11,6 +11,8 @@ class ServiceModel {
   String title;
   String description;
   String price;
+  String? beforePrice;
+  String? discount;
   String currency;
   int rating;
   int totalRatings;
@@ -24,6 +26,8 @@ class ServiceModel {
 
   ServiceModel({
     required this.id,
+    this.beforePrice,
+    this.discount,
     required this.title,
     required this.description,
     required this.price,

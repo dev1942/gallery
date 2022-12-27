@@ -152,7 +152,6 @@ class Order {
 
   String status;
   String date;
-
   factory Order.fromMap(Map<String, dynamic> json) => Order(
         status: json["status"],
         date: json["date"],

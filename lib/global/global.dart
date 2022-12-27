@@ -25,7 +25,6 @@ import 'package:quiver/time.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../custom_ui/bottom_sheet.dart';
 import '../model/country_code.dart';
 import '../model/date_model.dart';
@@ -40,7 +39,6 @@ import 'constants.dart';
 //Main Global class
 class Global {
   static LatLng mLatLng = const LatLng(25.2048, 55.2708);
-
   // All String
   static const String poppins = "poppins";
 
@@ -94,9 +92,7 @@ class Global {
       case TOAST_TYPE.toastInfo:
         bgColor = AppColors.curiousBlue.withOpacity(0.2);
         strIcon = AppImages.ic_alert_circle;
-
         break;
-
       case TOAST_TYPE.toastSuccess:
         bgColor = AppColors.colorLogoGreenLight;
         strIcon = AppImages.ic_check_circle;
@@ -262,9 +258,11 @@ class Global {
       dynamic dataObj;
       if (status && data.containsKey(Constants.RES_RESULT)) {
         dataObj = data[Constants.RES_RESULT];
+        debugPrint("mapData: ${data[Constants.RES_RESULT]}");
       } else if (!status || data.containsKey(Constants.RES_ERROR)) {
         dataObj = data[Constants.RES_ERROR];
       }
+      print("ResponseData ${dataObj}");
       return Result(
           responseStatus: status,
           responseMessage: strMessage,
@@ -431,7 +429,7 @@ class Global {
           break;
       }
     } else {
-      currency = Constants.SYMBOL_DOLLAR;
+      currency = "AED"; //Constants.SYMBOL_DOLLAR;
     }
 
     return currency;
@@ -741,7 +739,6 @@ class Global {
 
   static storeUserDetails(UserDetail mUserDetail) async {
     final prefManager = await SharedPreferences.getInstance();
-
     prefManager.setString(SharedPrefKey.KEY_USER_ID, mUserDetail.id);
     prefManager.setString(SharedPrefKey.KEY_FIRST_NAME, mUserDetail.firstName);
     prefManager.setString(SharedPrefKey.KEY_LAST_NAME, mUserDetail.lastName);
@@ -753,7 +750,6 @@ class Global {
       prefManager.setString(
           SharedPrefKey.KEY_ACCESS_TOKEN, mUserDetail.accessToken);
     }
-
     prefManager.setBool(SharedPrefKey.KEY_IS_LOGIN, true);
   }
 
@@ -1122,17 +1118,27 @@ class Global {
       required double mRatioY,
       required int mMaxHeight,
       required int mMaxWidth}) async {
-    File? croppedFile = await ImageCropper().cropImage(
+    final croppedFile = await ImageCropper().cropImage(
         sourcePath: imagePath,
         aspectRatio: CropAspectRatio(ratioX: mRatioX, ratioY: mRatioY),
         maxHeight: mMaxHeight,
         maxWidth: mMaxWidth,
-        androidUiSettings: AndroidUiSettings(
-            toolbarTitle: 'Crop Image',
-            toolbarColor: AppColors.colorAccent,
-            toolbarWidgetColor: AppColors.colorWhite),
-        iosUiSettings: const IOSUiSettings(title: 'Crop Image'));
-
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: "Crop Image",
+            toolbarColor: AppColors.colorBlueEnd,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false,
+          ),
+          IOSUiSettings(minimumAspectRatio: 1.0),
+        ]
+    );
+    /*androidUiSettings: AndroidUiSettings(
+        toolbarTitle: 'Crop Image',
+        toolbarColor: AppColors.colorAccent,
+        toolbarWidgetColor: AppColors.colorWhite),
+    iosUiSettings: const IOSUiSettings(title: 'Crop Image'));*/
     return croppedFile;
   }
 
@@ -1192,9 +1198,7 @@ class Global {
     if (isPermissionGranted && _serviceEnabled) {
       location_selection.LocationData _locationData =
           await location.getLocation();
-
       mLatLngMain = LatLng(_locationData.latitude!, _locationData.longitude!);
-
       // prefManager.setDouble(
       //     SharedPrefKey.KEY_CURRENT_LONGITUDE, _locationData.longitude!);
       //
@@ -1204,7 +1208,6 @@ class Global {
     // }
     return mLatLngMain;
   }
-
   static showDateRangePicker(BuildContext mContext, int daysCount) async {
     // DateTimeRange? picked = await DateRangePicker.showDateRangePicker(
     //   initialDateRange: DateTimeRange(
@@ -1220,7 +1223,6 @@ class Global {
     //   return picked;
     // }
   }
-
   static getColourByStatus(String status) {
     if (checkNull(status)) {
       if (equalsIgnoreCase(status.toLowerCase(), "delivered")) {
@@ -1255,6 +1257,7 @@ class Global {
           time_24hr: time24HR,
           t24hr: mDateTime.hour,
           isSelected: isSelected);
+
       alTimeModel.add(mTimeModel);
       ++addedHR;
     }
@@ -1435,6 +1438,7 @@ class Global {
   }
 
   static gotoVideoView(BuildContext context, String videoURL) {
+    print("vidoe gellary seldciton");
     Navigator.push(
         context,
         MaterialPageRoute(

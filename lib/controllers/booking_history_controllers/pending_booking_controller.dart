@@ -81,7 +81,6 @@ class PendingBookingController extends GetxController {
           MaterialPageRoute(
               builder: (context) => RatingScreen(
                     bookingId: getProviderBooking.bookingId,
-                    providerId: getProviderBooking.providerId,
                   )));
       mShowData = ShowData.showData;
 

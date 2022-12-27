@@ -18,7 +18,6 @@ class ReqListener {
       required ReqType mReqType,
       required ParamType mParamType}) async {
     HashMap<String, String> lHeaders = HashMap();
-
     final prefs = await SharedPreferences.getInstance();
     String? accesToken = prefs.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
     if (accesToken != null && accesToken.isNotEmpty) {
@@ -26,13 +25,11 @@ class ReqListener {
       accesToken = accesTokenType + " " + accesToken;
       lHeaders[PARAMS.PARAM_AUTHORIZATION] = accesToken;
     }
-
     if (mParamType == ParamType.json) {
       lHeaders["Content-Type"] = "application/json";
       lHeaders["Accept"] = "application/json";
     }
     late http.Response? response;
-
     switch (mReqType) {
       case ReqType.get:
         response = await http
@@ -77,12 +74,10 @@ class ReqListener {
             .timeout(const Duration(minutes: 3));
         break;
     }
-
     debugPrint("REQ. lHeaders : " + lHeaders.toString());
     debugPrint("REQ. PARAMS : " + requestParams.toString());
     debugPrint("REQ. URL : " + RequestBuilder.API_BASE_URL + strUrl);
     debugPrint("REQ. BODY : " + response.body.toString());
-
     return response.body;
   }
 
@@ -100,13 +95,11 @@ class ReqListener {
       accesToken = accesTokenType + " " + accesToken;
       lHeaders[PARAMS.PARAM_AUTHORIZATION] = accesToken;
     }
-
     if (mParamType == ParamType.json) {
       lHeaders["Content-Type"] = "application/json";
       lHeaders["Accept"] = "application/json";
     }
     late http.Response? response;
-
     switch (mReqType) {
       case ReqType.get:
         response = await http

@@ -70,7 +70,6 @@ class CancelBookingController extends GetxController {
           strTitle: "",
           strMsg: failure.MESSAGE,
           toastType: TOAST_TYPE.toastError);
-
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
@@ -81,7 +80,7 @@ class CancelBookingController extends GetxController {
           MaterialPageRoute(
               builder: (context) => RatingScreen(
                     bookingId: getProviderBooking.bookingId,
-                    providerId: getProviderBooking.providerId,
+
                   )));
       mShowData = ShowData.showData;
 

@@ -103,4 +103,103 @@ class OTPRepo {
           DATA: ""));
     }
   }
+
+//----------------------------
+  // /auth/users/send-phone-verification-token
+
+  //------------------------------Send To Number Otp-------------------
+  Future<Either<Failure, Success>> sentOTPToNumber(
+      HashMap<String, Object> requestParams) async {
+    bool connectionStatus = await ConnectivityStatus.isConnected();
+    if (!connectionStatus) {
+      return Left(Failure(
+          DATA: "",
+          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
+          STATUS: false));
+    }
+    try {
+      String response = await ReqListener.fetchPost(
+          strUrl: RequestBuilder.API_SEND_PHONE_VERIFICATION_TOKEN,
+          requestParams: requestParams,
+          mReqType: ReqType.patch,
+          mParamType: ParamType.json);
+      Result? mResponse;
+      if (response.isNotEmpty) {
+        mResponse = Global.getData(response);
+      } else {
+        return Left(
+            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+      }
+
+      if (mResponse?.responseStatus == true) {
+        Success mSuccess = Success(
+            responseStatus: mResponse!.responseStatus,
+            responseData: "",
+            responseMessage: mResponse.responseMessage);
+
+        return Right(mSuccess);
+      }
+
+      return Left(Failure(
+          MESSAGE: mResponse!.responseMessage,
+          STATUS: false,
+          DATA: mResponse.responseData != null
+              ? mResponse.responseData as Object
+              : ""));
+    } catch (e) {
+      return Left(Failure(
+          STATUS: false,
+          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
+          DATA: ""));
+    }
+  }
+
+  //------------------------------Verify Otp-------------------
+  Future<Either<Failure, Success>> verifyNumberOTP(
+      HashMap<String, Object> requestParams, String otp) async {
+    bool connectionStatus = await ConnectivityStatus.isConnected();
+    if (!connectionStatus) {
+      return Left(Failure(
+          DATA: "",
+          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
+          STATUS: false));
+    }
+    try {
+      String response = await ReqListener.fetchPost(
+          strUrl: RequestBuilder.API_VERIFY_PHONE + otp,
+          requestParams: requestParams,
+          mReqType: ReqType.patch,
+          mParamType: ParamType.json);
+      Result? mResponse;
+      if (response.isNotEmpty) {
+        mResponse = Global.getData(response);
+      } else {
+        return Left(
+            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+      }
+
+      if (mResponse?.responseStatus == true) {
+        Success mSuccess = Success(
+            responseStatus: mResponse!.responseStatus,
+            responseData: mResponse.responseData!,
+            responseMessage: mResponse.responseMessage);
+
+        return Right(mSuccess);
+      }
+
+      return Left(Failure(
+          MESSAGE: mResponse!.responseMessage,
+          STATUS: false,
+          DATA: mResponse.responseData != null
+              ? mResponse.responseData as Object
+              : ""));
+    } catch (e) {
+      return Left(Failure(
+          STATUS: false,
+          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
+          DATA: ""));
+    }
+  }
+
+
 }

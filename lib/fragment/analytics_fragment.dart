@@ -1,4 +1,3 @@
-import 'package:d_chart/d_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/controllers/analytics_controller.dart';
@@ -10,7 +9,7 @@ import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/widgets/round_dot.dart';
-
+import 'package:pie_chart/pie_chart.dart';
 class AnalyticsFragment extends StatefulWidget {
   const AnalyticsFragment({Key? key}) : super(key: key);
 
@@ -30,7 +29,13 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
   @override
   Widget build(BuildContext context) {
     Widget widgetM = Container();
-
+    Map<String, double> dataMap = {
+      "January": 10,
+      "February": 6,
+      "March": 2,
+      "April": 2,
+    };
+    List<Color>colorList=[AppColors.colorYellowShade,AppColors.colorPrimary,Colors.teal,Colors.pink];
     widgetM = SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -302,20 +307,34 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
             padding: const EdgeInsets.all(16),
             child: AspectRatio(
               aspectRatio: 16 / 9,
-              child: DChartLine(
-                data: const [
-                  {
-                    'id': 'Line',
-                    'data': [
-                      {'domain': 0, 'measure': 100},
-                      {'domain': 1, 'measure': 200},
-                      {'domain': 3, 'measure': 300},
-                      {'domain': 9, 'measure': 400},
-                    ],
-                  },
-                ],
-                includePoints: false,
-                lineColor: (lineData, index, id) => AppColors.colorBlueEnd,
+              child: PieChart(
+                dataMap: dataMap,
+                animationDuration: Duration(milliseconds: 800),
+                chartLegendSpacing: 45,
+                chartRadius: MediaQuery.of(context).size.width / 3,
+                colorList: colorList,
+                initialAngleInDegree: 0,
+                chartType: ChartType.ring,
+                ringStrokeWidth: 30,
+                centerText: "OTOBUCKS",
+                legendOptions: const LegendOptions(
+                  showLegendsInRow: false,
+                  legendPosition: LegendPosition.right,
+                  showLegends: true,
+                  legendShape: BoxShape.circle,
+                  legendTextStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                chartValuesOptions: const ChartValuesOptions(
+                  showChartValueBackground: true,
+                  showChartValues: false,
+                  showChartValuesInPercentage: false,
+                  showChartValuesOutside:true,
+                  decimalPlaces: 1,
+                ),
+                // gradientList: ---To add gradient colors---
+                // emptyColorGradient: ---Empty Color gradient---
               ),
             ),
           ),

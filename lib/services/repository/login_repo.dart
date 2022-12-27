@@ -24,6 +24,7 @@ class LoginRepo {
           MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
           STATUS: false));
     }
+
     try {
       String response = await ReqListener.fetchPost(
           strUrl: RequestBuilder.API_LOGIN,
@@ -46,7 +47,6 @@ class LoginRepo {
 
         var objData = data['data'];
         var user = objData['user'];
-
         String image = user['image'].toString();
         String id = user['id'].toString();
         String firstName = user['firstName'].toString();
@@ -54,7 +54,8 @@ class LoginRepo {
         String email = user['email'].toString();
         String phone = user['phone'].toString();
         String countryCode = user['countryCode'].toString();
-
+        bool isEmailVerified = user['isEmailVerified'];
+        bool isPhoneVerified = user['isPhoneVerified'];
         UserDetail mUserAddressDetail = UserDetail(
             avatar: image,
             firstName: firstName,
@@ -62,6 +63,8 @@ class LoginRepo {
             email: email,
             id: id,
             mobile: countryCode + phone,
+            isEmailVerified: isEmailVerified,
+            isPhoneVerified: isPhoneVerified,
             accessToken: token);
         await Global.storeUserDetails(mUserAddressDetail);
 

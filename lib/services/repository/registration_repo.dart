@@ -1,5 +1,4 @@
 import 'dart:collection';
-
 import 'package:dartz/dartz.dart';
 import 'package:otobucks/global/connectivity_status.dart';
 import 'package:otobucks/global/constants.dart';
@@ -10,6 +9,7 @@ import 'package:otobucks/model/failure.dart';
 import 'package:otobucks/model/result.dart';
 import 'package:otobucks/model/success.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
+
 
 class RegistrationRepo {
   Future<Either<Failure, Success>> registration(
@@ -40,7 +40,6 @@ class RegistrationRepo {
             responseStatus: mResponse!.responseStatus,
             responseData: "mUserAddressDetail",
             responseMessage: mResponse.responseMessage);
-
         return Right(mSuccess);
       }
       return Left(Failure(

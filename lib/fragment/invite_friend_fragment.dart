@@ -58,6 +58,7 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
               child: Image.asset(AppImages.ic_invite_friend_top_image,
                   height: size.maxWidth / 2),
             ),
+
             Container(
                 margin: const EdgeInsets.only(
                     top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
@@ -162,16 +163,20 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
                           height: AppDimens.dimens_20,
                           width: AppDimens.dimens_20,
                         ),
+                        addHorizontalSpace(9),
                         Image.asset(
                           'assets/images/ic_linked.png',
                           height: AppDimens.dimens_20,
                           width: AppDimens.dimens_20,
                         ),
+                        addHorizontalSpace(9),
+
                         Image.asset(
                           AppImages.ic_twitter,
                           height: AppDimens.dimens_20,
                           width: AppDimens.dimens_20,
                         ),
+                        addHorizontalSpace(9),
                         Image.asset(
                           AppImages.ic_whatsapp,
                           height: AppDimens.dimens_20,

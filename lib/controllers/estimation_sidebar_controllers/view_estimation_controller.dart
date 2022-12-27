@@ -129,6 +129,7 @@ class ViewEstimationController extends GetxController {
   }
 
   onSelectDate(String _selectedDate) {
+    print("date selected=========");
     selectedDate = _selectedDate;
     update();
   }
@@ -204,6 +205,7 @@ class ViewEstimationController extends GetxController {
     }
   }
 
+
   rescheduleEstimation(BuildContext context) async {
     if (Global.checkNull(pickedVideo)) {
       double fileSize = await Global.getFileSize(pickedVideo);
@@ -255,7 +257,7 @@ class ViewEstimationController extends GetxController {
     }
 
     var categories = await EstimatesRepo().rescheduleEstimates(
-        requestParams, requestParamsImage, ReqType.patch, estimatesModel!.id);
+        requestParams, requestParamsImage, ReqType.patch,);
 
     categories.fold((failure) {
       Global.showToastAlert(

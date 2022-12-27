@@ -10,7 +10,6 @@ class DashboardItemList extends StatelessWidget {
   }) : super(key: key);
 
   final controller = Get.put(DashboardController());
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

@@ -17,7 +17,6 @@ class CategoryItem extends StatelessWidget {
       required this.image,
       required this.onTap})
       : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,10 +37,9 @@ class CategoryItem extends StatelessWidget {
                 elevation: 4,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppDimens.dimens_10),
-
                 ),
                 child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppDimens.dimens_10),
+                  borderRadius: BorderRadius.circular(AppDimens.dimens_10),
                   child: NetworkImageCustom(
                       image: image,
                       height: AppDimens.dimens_70,
@@ -68,8 +66,8 @@ class CategoryItem extends StatelessWidget {
                       strSubTitle,
                       style: AppStyle.textViewStyleSmall(
                           context: context,
-                          color: AppColors.grayDashboardText,
-                          fontSizeDelta: -2,
+                          color: AppColors.colorYellowShade,
+                          fontSizeDelta: -1,
                           fontWeightDelta: 0),
                     )),
               ],

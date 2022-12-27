@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
@@ -48,6 +49,7 @@ class ChatRepo {
         // ignore: unnecessary_null_comparison
         if (data != null) {
           for (var dataItem in data) {
+
             MyRoomModel room = MyRoomModel.fromMap(dataItem);
             rooms.add(room);
           }
@@ -154,6 +156,7 @@ class ChatRepo {
           requestParams: requestParams,
           mReqType: ReqType.get,
           mParamType: ParamType.simple);
+
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
@@ -161,7 +164,6 @@ class ChatRepo {
         return Left(
             Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
-
       if (mResponse?.responseStatus == true) {
         List<ServerChatModel> chats = [];
         Map mapData = mResponse?.responseData as Map;
@@ -217,26 +219,35 @@ class ChatRepo {
           STATUS: false));
     }
     try {
-      String response = await ReqListener.fetchPost(
+      debugPrint("-----------------start----${requestParams}-------------------");
+
+      String? response = await ReqListener.fetchPost(
           strUrl: "chat/roomMessages/$roomId",
           requestParams: requestParams,
           mReqType: ReqType.get,
           mParamType: ParamType.simple);
+      debugPrint("------------------end----------------------");
+
       Result? mResponse;
+
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
-      } else {
+      }
+      else {
         return Left(
             Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
+      debugPrint("CheckDataSTep ${response}");
+
       Map<String, dynamic> mapData =
           mResponse?.responseData as Map<String, dynamic>;
-      debugPrint("mapData: ${mapData['result']}");
+      debugPrint("mapData: ${mapData}");
 
       if (mResponse?.responseStatus == true) {
         Map<String, dynamic> mapData =
             mResponse?.responseData as Map<String, dynamic>;
-        MyRoomModel myRoomModel = MyRoomModel.fromMap(mapData['result']);
+        var decode = (json.decode((response))['result']);
+        MyRoomModel myRoomModel = MyRoomModel.fromMap(decode);
 
         // ignore: unnecessary_null_comparison
         if (mapData != null) {
@@ -266,7 +277,7 @@ class ChatRepo {
               ? mResponse.responseData as Object
               : ""));
     } catch (e) {
-      log(e.toString());
+      log("chat/roomMessages/$roomId Error: ${e.toString()}");
       return Left(Failure(
           STATUS: false,
           MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,

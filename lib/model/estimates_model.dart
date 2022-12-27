@@ -1,5 +1,4 @@
 // ignore_for_file: empty_catches
-
 import 'dart:convert';
 
 import 'package:intl/intl.dart';
@@ -13,12 +12,15 @@ import '../global/global.dart';
 class EstimatesModel {
   String id;
   String status;
+  String? title;
   String time;
   Source? source;
   String date;
   String cutomerNote;
-
-  List<String> image;
+  bool offerCreated;
+  String offerStatus;
+  List<String>
+  image;
   List<String> voiceNote;
   List<String> video;
   List<String> address;
@@ -26,9 +28,9 @@ class EstimatesModel {
   ServiceProviderModel? mServiceProviderModel;
   String discount;
   String grandTotal;
-
   String serviceTax;
   String subTotal;
+  String offerAmount;
 
   EstimatesModel({
     required this.id,
@@ -36,6 +38,9 @@ class EstimatesModel {
     required this.time,
     required this.source,
     required this.date,
+    this.title,
+    required this.offerCreated,
+    required this.offerStatus,
     required this.cutomerNote,
     required this.image,
     required this.voiceNote,
@@ -47,6 +52,7 @@ class EstimatesModel {
     required this.grandTotal,
     required this.serviceTax,
     required this.subTotal,
+    required this.offerAmount,
   });
 
   factory EstimatesModel.fromJson(Map<String, dynamic> json) {
@@ -75,7 +81,7 @@ class EstimatesModel {
     } catch (exp) {}
 
     try {
-      var mVoiceNote = json['voice_note'];
+      var mVoiceNote = json['voiceNote'];
       for (var imageItem in mVoiceNote) {
         voiceNote.add(imageItem.toString());
       }
@@ -112,7 +118,7 @@ class EstimatesModel {
       status: json['status'].toString(),
       time: json['time'].toString(),
       source: mSource,
-      cutomerNote: json['cutomerNote'].toString(),
+      cutomerNote: json['customerNote'].toString(),
       image: image,
       voiceNote: voiceNote,
       video: video,
@@ -121,9 +127,12 @@ class EstimatesModel {
       mServiceProviderModel: mProvider,
       itemModel: alItems,
       discount: json['discount'].toString(),
+      offerCreated: json['createdAt'],
+      offerStatus: json['status'].toString(),
       grandTotal: json['grandTotal'].toString(),
       serviceTax: json['serviceTax'].toString(),
       subTotal: json['subTotal'].toString(),
+      offerAmount: json['offerAmount'].toString(),
     );
   }
 
@@ -218,7 +227,6 @@ class EstimatesModel {
     return mTimeModel;
   }
 }
-
 class Source {
   String id;
   String category;
@@ -295,9 +303,8 @@ class Source {
         features: features);
   }
 }
-
 // To parse this JSON data, do
-//
+
 //     final itemModel = itemModelFromMap(jsonString);
 
 class ItemModel {
@@ -316,7 +323,6 @@ class ItemModel {
   String price;
   String tax;
   double amount;
-
   factory ItemModel.fromJson(String str) => ItemModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());

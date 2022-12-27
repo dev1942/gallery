@@ -186,6 +186,8 @@ class DateSelectorState extends State<DateSelector> {
                         ],
                       ),
                       onTap: () {
+
+
                         DateType mDateType =
                             Global.checkIsToday(mTimeModel.getDateString());
 

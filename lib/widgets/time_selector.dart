@@ -20,9 +20,9 @@ class TimeSelector extends StatefulWidget {
 
   TimeSelector(
       {Key? key,
-      this.mTimeModel,
-      required this.selectedDate,
-      required this.onSelection})
+        this.mTimeModel,
+        required this.selectedDate,
+        required this.onSelection})
       : super(key: key);
 
   @override
@@ -138,7 +138,7 @@ class TimeSelectorState extends State<TimeSelector> {
                           context: context,
                           strTitle: "",
                           strMsg:
-                              AppAlert.ALERT_PLEASE_SELECT_FUTURE_DATE_AND_TIME,
+                          AppAlert.ALERT_PLEASE_SELECT_FUTURE_DATE_AND_TIME,
                           toastType: TOAST_TYPE.toastWarning);
                     }
 

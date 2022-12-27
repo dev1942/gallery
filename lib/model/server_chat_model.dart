@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/global.dart';
@@ -29,8 +30,8 @@ class ServerChatModel {
   From from;
   From to;
   String message;
-  String createdAt;
-  String updatedAt;
+  String? createdAt;
+  String? updatedAt;
 
   String serverChatModelId;
 
@@ -39,10 +40,11 @@ class ServerChatModel {
 
   String toJson() => json.encode(toMap());
 
-  factory ServerChatModel.fromMap(Map<String, dynamic> json) => ServerChatModel(
-        files: json["files"] == null
-            ? []
-            : List<String>.from(json["files"].map((x) => x)),
+  factory ServerChatModel.fromMap(Map<String, dynamic> json){
+    debugPrint("CheckDataSTep ${json["status"]} - ${json["_id"]} - ${json["chatRoom"]} - ${json["message"]} - ${json["createdAt"]} - ${json["updatedAt"]} - ${json["id"]}");
+
+    return ServerChatModel(
+        files: json["files"] == null ? [] : List<String>.from(json["files"].map((x) => x)),
         status: json["status"],
         id: json["_id"],
         chatRoom: json["chatRoom"],
@@ -52,7 +54,7 @@ class ServerChatModel {
         createdAt: json["createdAt"],
         updatedAt: json["updatedAt"],
         serverChatModelId: json["id"],
-      );
+      );}
 
   Map<String, dynamic> toMap() => {
         "files": List<dynamic>.from(files.map((x) => x)),
@@ -70,7 +72,7 @@ class ServerChatModel {
   getDateInFormate() {
     if (Global.checkNull(updatedAt)) {
       DateTime parseDate =
-          DateFormat(Constants.STRING_DB_DATE_FORMATE).parse(updatedAt);
+          DateFormat(Constants.STRING_DB_DATE_FORMATE).parse("${updatedAt}");
       DateTime local = DateTime.utc(parseDate.year, parseDate.month,
           parseDate.day, parseDate.hour, parseDate.minute);
 
@@ -79,6 +81,13 @@ class ServerChatModel {
       return DateTime.now();
     }
   }
+
+
+
+
+
+
+
 }
 
 class From {
