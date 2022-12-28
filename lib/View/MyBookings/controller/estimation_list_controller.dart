@@ -94,14 +94,14 @@ class EstimationListController extends GetxController {
   }
 
   //----------------------------Create Offer-post Api------------
- createAnOffer({String? estimateid,var offerAmount}) async {
+ createAnOffer({String? estimateid,var offerAmount,String? offerNote}) async {
     mShowData = ShowData.showLoading;
     update(); // isShowLoader = true;
 
     HashMap<String, Object> requestParams = HashMap();
     requestParams['bookingID'] = estimateid!;
     requestParams['offerAmount'] = offerAmount;
-    requestParams['offerNote'] = "This is Offer Note";
+    requestParams['offerNote'] = offerNote??"";
     var categories = await EstimatesRepo().CreateAnOfferEstimate(requestParams);
     categories.fold((failure) {
       Global.showToastAlert(

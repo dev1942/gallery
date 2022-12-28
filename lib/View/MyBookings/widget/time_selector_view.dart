@@ -9,7 +9,8 @@ import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
-import 'package:otobucks/model/time_model.dart';
+
+import '../../../global/Models/time_model.dart';
 
 
 

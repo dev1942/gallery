@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_text/circular_text.dart';
 import 'package:get/get.dart';
-import 'package:otobucks/custom_ui/loader/three_bounce.dart';
 import 'package:shimmer/shimmer.dart';
-
+import '../widgets/custom_ui/drop_down/dropdown_button2.dart';
+import '../widgets/custom_ui/loader/three_bounce.dart';
 import 'app_colors.dart';
 import 'app_dimens.dart';
 import 'app_images.dart';
@@ -11,10 +11,8 @@ import 'app_style.dart';
 import 'constants.dart';
 import 'enum.dart';
 import 'global.dart';
-
 class AppViews {
   // App bar inti
-
   static initAppBar({
     required BuildContext mContext,
     required String strTitle,
@@ -790,6 +788,7 @@ class AppViews {
                                 Global.checkNull(strLeftBtnText)
                                     ? TextButton(
                                         style: TextButton.styleFrom(
+
                                             foregroundColor:
                                                 AppColors.colorAccent,
                                             disabledForegroundColor:
@@ -824,6 +823,7 @@ class AppViews {
                                 Global.checkNull(strRightBtnText)
                                     ? TextButton(
                                         style: TextButton.styleFrom(
+
                                             foregroundColor:
                                                 AppColors.colorAccent,
                                             disabledForegroundColor: AppColors
@@ -894,6 +894,7 @@ class AppViews {
 
   static getGrayDecoration({double? mBorderRadius}) {
     return BoxDecoration(
+
         color: AppColors.greyOTPBg,
         borderRadius: BorderRadius.circular(mBorderRadius ?? 0));
   }
@@ -1063,10 +1064,76 @@ class AppViews {
       ),
     );
   }
+  //----------------drop down text field--------------------------
+  static Widget defaultDropDownInPutFieldButton(
+      {required List<String> itemsList,
+        required String? selectedValue,
+        required String? hintText}) {
+    return DropdownButtonFormField2(
+      buttonHeight: 45,
+      decoration: InputDecoration(
+        //Add isDense true and zero Padding.
+        //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
+          isDense: true,
+        hintStyle: AppStyle.textViewStyleNormalBodyText2(
+            color: AppColors.colorTextFieldHint,
+            fontSizeDelta: -5,
+            fontWeightDelta: -1,
+            context: Get.context!),
+        fillColor: Colors.white,
+          focusedBorder: AppViews.textFieldRoundBorder(),
+          border: AppViews.textFieldRoundBorder(),
+          disabledBorder: AppViews.textFieldRoundBorder(),
+          focusedErrorBorder: AppViews.textFieldRoundBorder(),          contentPadding: EdgeInsets.zero,
+          filled: true,
+        //Add more decoration as you want here
+        //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
+      ),
+      isExpanded: true,
+      hint: Text(
+        hintText!,
+      ),
+
+      icon: Icon(
+        Icons.arrow_drop_down,
+        color:
+          Colors.black
+      ),
+      iconSize: 30,
+      buttonPadding: const EdgeInsets.only(left: 20, right: 10),
+      dropdownDecoration: BoxDecoration(
+        color:
+            Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      items: itemsList
+          .map((item) => DropdownMenuItem<String>(
+        value: item,
+        child: Text(
+          item,
+          style:AppStyle.textViewStyleSmall(context: Get.context!, color: Colors.black),
+        ),
+      ))
+          .toList(),
+      // validator: (value) {
+      //   if (value == null) {
+      //     return 'Field can not empty';
+      //   }
+      // },
+
+      onChanged: (value) {
+        selectedValue = value.toString();
+      },
+      onSaved: (value) {
+        selectedValue = value.toString();
+      },
+    );
+  }
 }
 addVerticleSpace(double height){
   return SizedBox(height: height,);
 }
 addHorizontalSpace(double width){
   return SizedBox(width: width,);
+
 }

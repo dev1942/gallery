@@ -8,12 +8,12 @@ import 'package:otobucks/global/global.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
 import 'package:stacked/stacked.dart';
+import '../View/Home/Controllers/home_screen_controller.dart';
+import '../View/Transactions/Controllers/transaction_controller.dart';
+import '../View/Transactions/Models/transaction_model.dart';
+import '../View/Transactions/Views/transaction_detail_screen.dart';
 import '../app/locator.dart';
-import '../controllers/home_screen_controller.dart';
-import '../controllers/transaction_controller.dart';
-import '../model/transaction_model.dart';
-import '../page/transaction_detail_screen.dart';
-import '../viewmodels/main_viewmodel.dart';
+import '../global/Models/main_viewmodel.dart';
 class TransactionHistoryFragment extends StatefulWidget {
   const TransactionHistoryFragment({Key? key}) : super(key: key);
   @override

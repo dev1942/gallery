@@ -13,29 +13,28 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 // import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 import 'package:location/location.dart' as location_selection;
+import 'package:otobucks/global/Models/failure.dart';
+import 'package:otobucks/global/Models/time_model.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/enum.dart';
-import 'package:otobucks/model/failure.dart';
-import 'package:otobucks/model/result.dart';
-import 'package:otobucks/page/bot_sms.dart';
-import 'package:otobucks/page/show_video_screen.dart';
+import 'package:otobucks/View/Videos/Views/show_video_screen.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:quiver/time.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../custom_ui/bottom_sheet.dart';
-import '../model/country_code.dart';
-import '../model/date_model.dart';
-import '../model/time_model.dart';
-import '../model/user_detail.dart';
+import '../View/Auth/Models/country_code.dart';
+import '../widgets/custom_ui/bot_sms.dart';
+import '../widgets/custom_ui/bottom_sheet.dart';
+import 'Models/date_model.dart';
+import '../View/auth/Models/user_detail.dart';
+import 'Models/result.dart';
 import 'app_colors.dart';
 import 'app_dimens.dart';
 import 'app_images.dart';
 import 'app_views.dart';
 import 'constants.dart';
-
 //Main Global class
 class Global {
   static LatLng mLatLng = const LatLng(25.2048, 55.2708);

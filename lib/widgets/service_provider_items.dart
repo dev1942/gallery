@@ -8,7 +8,7 @@ import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/global/global.dart';
-import 'package:otobucks/model/service/service_model.dart';
+import 'package:otobucks/View/Services_All/Models/service_model.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 
 // ignore: must_be_immutable

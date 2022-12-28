@@ -6,7 +6,7 @@ import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/container_properties.dart';
 import 'package:otobucks/global/extensions.dart';
 import 'package:otobucks/global/text_styles.dart';
-import 'package:otobucks/model/rating_component_model.dart';
+import 'package:otobucks/View/Rating/model/rating_component_model.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 
 import '../global/enum.dart';

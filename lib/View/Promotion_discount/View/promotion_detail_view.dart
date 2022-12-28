@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:otobucks/View/Estimation/Views/create_estimation_screen.dart';
 import 'package:otobucks/View/Promotion_discount/View/promotion_banner.dart';
 import 'package:otobucks/View/Promotion_discount/model/promotion_model.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/extensions.dart';
-import 'package:otobucks/model/category_model.dart';
-import 'package:otobucks/model/promotion_model.dart';
-import 'package:otobucks/model/service/service_model.dart';
-import 'package:otobucks/page/services/estimation/create_estimation_screen.dart';
-import 'package:otobucks/widgets/banner_component.dart';
+import 'package:otobucks/View/Dashboard/Models/category_model.dart';
+import 'package:otobucks/View/Services_All/Models/service_model.dart';
 import 'package:otobucks/widgets/custom_button.dart';
-
 class PromotionDetailsScreen extends StatefulWidget {
   final PromotionsModel promotionsModel;
-
   const PromotionDetailsScreen({Key? key, required this.promotionsModel})
       : super(key: key);
-
   @override
   PromotionDetailsScreenState createState() => PromotionDetailsScreenState();
 }

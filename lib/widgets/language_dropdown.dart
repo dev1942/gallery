@@ -1,34 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:otobucks/controllers/home_screen_controller.dart';
+import 'package:otobucks/View/Home/Controllers/home_screen_controller.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
-
-import '../custom_ui/drop_down/dropdown_button2.dart';
 import '../global/app_style.dart';
-
+import 'custom_ui/drop_down/dropdown_button2.dart';
 class LanguageDropdown extends StatefulWidget {
   final Function? onCallBack;
   final bool isWhite;
-
   const LanguageDropdown({Key? key, required this.isWhite, this.onCallBack})
       : super(key: key);
-
   @override
   LanguageDropdownState createState() => LanguageDropdownState();
 }
-
 class LanguageDropdownState extends State<LanguageDropdown> {
   @override
   void initState() {
     super.initState();
   }
-
   @override
   void dispose() {
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeScreenController>(builder: (value) {

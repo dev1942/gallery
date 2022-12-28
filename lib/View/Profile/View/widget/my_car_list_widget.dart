@@ -16,11 +16,13 @@ class MyCarListItem extends StatelessWidget {
   final String code;
   final String city;
   final String number;
+  final bool isViewed;
   final Function() onEditTap;
   final Function() onDeleteTap;
 
   const MyCarListItem(
       {Key? key,
+        this.isViewed=false,
         required this.carBrand,
         required this.modeYear,
         required this.km,
@@ -78,7 +80,7 @@ class MyCarListItem extends StatelessWidget {
 
                      ],),
                       SizedBox(),
-                      Row(children: [
+                      this.isViewed ? SizedBox(): Row(children: [
                         GestureDetector(
                           onTap: onEditTap,
                           child:Icon(Icons.edit_calendar)

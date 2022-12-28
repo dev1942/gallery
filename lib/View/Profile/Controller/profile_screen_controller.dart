@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:otobucks/View/Profile/Model/car_list_model.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
-import 'package:otobucks/model/user_model.dart';
+import 'package:otobucks/View/auth/Models/user_model.dart';
 import 'package:otobucks/services/repository/user_repo.dart';
 import 'package:otobucks/widgets/image_selection_bottom_sheet.dart';
 

@@ -6,10 +6,10 @@ import 'package:otobucks/global/connectivity_status.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
-import 'package:otobucks/model/failure.dart';
-import 'package:otobucks/model/result.dart';
-import 'package:otobucks/model/success.dart';
-import 'package:otobucks/model/transaction_model.dart';
+import '../../global/Models/failure.dart';
+import '../../global/Models/result.dart';
+import '../../global/Models/success.dart';
+import 'package:otobucks/View/Transactions/Models/transaction_model.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
 
 class TransactionRepo {

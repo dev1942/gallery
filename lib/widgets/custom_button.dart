@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_style.dart';
-
 import '../global/app_views.dart';
 import '../global/global.dart';
 
@@ -112,6 +111,8 @@ class CustomButton extends StatelessWidget {
         height: height ?? 50,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
+            // primary: buttonColor,
+            //   onSurface: buttonColor,
               foregroundColor: buttonColor,
               backgroundColor: buttonColor,
               disabledForegroundColor: buttonColor.withOpacity(0.38),

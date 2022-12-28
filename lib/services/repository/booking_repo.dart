@@ -1,17 +1,18 @@
 import 'dart:collection';
 import 'dart:developer';
 import 'package:dartz/dartz.dart';
+import 'package:otobucks/View/Estimation/Models/estimation_detail_model.dart';
+import 'package:otobucks/global/Models/failure.dart';
 import 'package:otobucks/global/connectivity_status.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/global/url_collection.dart';
-import 'package:otobucks/model/failure.dart';
-import 'package:otobucks/model/result.dart';
-import 'package:otobucks/model/success.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
-import '../../model/estimates_model.dart';
-import '../../model/estimation_detail_model.dart';
+
+import '../../View/Estimation/Models/estimates_model.dart';
+import '../../global/Models/result.dart';
+import '../../global/Models/success.dart';
 class GetProviderBooking {
   String providerId;
   String bookingId;

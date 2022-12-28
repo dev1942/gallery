@@ -6,7 +6,7 @@ import 'package:otobucks/global/app_views.dart';
 import '../global/app_style.dart';
 import '../global/constants.dart';
 import '../global/global.dart';
-import '../model/country_code.dart';
+import '../View/Auth/Models/country_code.dart';
 
 class CountryCodeBottomSheet extends StatefulWidget {
   final Function onTap;

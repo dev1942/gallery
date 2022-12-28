@@ -31,7 +31,7 @@ class PARAMS {
       PARAM_TIME = 'time',
       PARAM_LATITUDE = 'latitude',
       PARAM_LONGITUDE = 'longitude',
-      PARAM_CUTOMERNOTE = 'cutomerNote',
+      PARAM_CUTOMERNOTE = 'customerNote',
       PARAM_ADDRESS = 'address',
       PARAM_IMAGE = 'image',
       PARAM_VOICE_NOTE = 'voiceNote',

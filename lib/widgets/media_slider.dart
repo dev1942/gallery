@@ -6,7 +6,7 @@ import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/video_view.dart';
 
-import '../model/media_model.dart';
+import '../global/Models/media_model.dart';
 
 class MediaSlider extends StatefulWidget {
   final List<MediaModel> alMediaModel;

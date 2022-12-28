@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:otobucks/controllers/auth_controllers/registration_controller.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/widgets/country_code_bottomsheet.dart';
 
-import '../custom_ui/bottom_sheet.dart';
+import '../View/auth/controllers/registration_controller.dart';
 import '../global/app_views.dart';
-import '../model/country_code.dart';
+import '../View/Auth/Models/country_code.dart';
+import 'custom_ui/bottom_sheet.dart';
 
 // ignore: must_be_immutable
 class CustomTextFieldMobile extends StatefulWidget {

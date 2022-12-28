@@ -8,30 +8,22 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:light_compressor/light_compressor.dart';
 import 'package:location/location.dart';
-import 'package:otobucks/fragment/thankyou_fragment.dart';
+import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart';
+import 'package:otobucks/View/ThankYou/Views/thankyou_fragment.dart';
+import 'package:otobucks/global/Models/time_model.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
-import 'package:otobucks/model/category_model.dart';
-import 'package:otobucks/model/estimates_model.dart';
-import 'package:otobucks/model/service/service_model.dart';
-import 'package:otobucks/model/time_model.dart';
-import 'package:otobucks/page/services/estimation/create_estimation_screen.dart';
-import 'package:otobucks/page/services/profile/service_provider_profile_screen.dart';
 import 'package:otobucks/services/repository/estimates_repo.dart';
-import '../Models/AllBookingsModel.dart';
-
+// import '../Models/AllBookingsModel.dart';
 class RescheduleBookingController extends GetxController {
   bool connectionStatus = false;
   bool isShowLoader = false;
-
   // late EstimatesModel? estimatesModel;
   Result? estimatesModel;
   TextEditingController controllerNote = TextEditingController();
   TextEditingController addressNote = TextEditingController(text: '');
-
   late TimeModel? mTimeModel;
-
   String selectedDate = "";
   String pickedImage = "";
   String pickedVideo = "";
@@ -302,7 +294,7 @@ class RescheduleBookingController extends GetxController {
 
     isShowLoader = true;
     update();
-    String strNote = controllerNote.text.toString();
+    String? strNote = controllerNote.text.toString();
     HashMap<String, String> requestParams = HashMap();
     HashMap<String, String> requestParamsImage = HashMap();
     // requestParamsImage["sourceID"]="62d461692e64f55c5c0802f3";
@@ -313,8 +305,10 @@ class RescheduleBookingController extends GetxController {
     if (imagePath != null) {
       requestParamsImage[PARAMS.PARAM_IMAGE] = imagePath;
     }
+    if (strNote != null) {
+      requestParams[PARAMS.PARAM_CUTOMERNOTE] = strNote;
+    }
 
-    // requestParams[PARAMS.PARAM_CUTOMERNOTE] = strNote;
     // requestParams[PARAMS.PARAM_ADDRESS] = addressNote.text;
     // if (mLatLng != null) {
     //   requestParams[PARAMS.PARAM_LATITUDE] =

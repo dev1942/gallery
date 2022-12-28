@@ -7,11 +7,13 @@ import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/global/url_collection.dart';
-import 'package:otobucks/model/auto_loan_model.dart';
-import 'package:otobucks/model/failure.dart';
-import 'package:otobucks/model/result.dart';
-import 'package:otobucks/model/success.dart';
+import 'package:otobucks/View/CatCarLoan/Models/auto_loan_model.dart';
+
 import 'package:otobucks/services/rest_api/request_listener.dart';
+
+import '../../global/Models/failure.dart';
+import '../../global/Models/result.dart';
+import '../../global/Models/success.dart';
 
 class AutoLoanRepo {
   Future<Either<Failure, Success>> getBanks(

@@ -6,13 +6,13 @@ import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/global/url_collection.dart';
-import 'package:otobucks/model/accessories/product_model.dart';
-import 'package:otobucks/model/accessories/store_model.dart';
-import 'package:otobucks/model/failure.dart';
-import 'package:otobucks/model/result.dart';
-import 'package:otobucks/model/success.dart';
+import 'package:otobucks/View/CatAssesories/Models/product_model.dart';
+import 'package:otobucks/View/CatAssesories/Models/store_model.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
 
+import '../../global/Models/failure.dart';
+import '../../global/Models/result.dart';
+import '../../global/Models/success.dart';
 class AccessoriesRepo {
   Future<Either<Failure, Success>> getStores(
       HashMap<String, Object> requestParams) async {
@@ -84,6 +84,12 @@ class AccessoriesRepo {
     }
     try {
       String response = await ReqListener.fetchPost(
+
+
+
+
+
+
           strUrl: 'products?storeId=$storeId',
           requestParams: requestParams,
           mReqType: ReqType.get,

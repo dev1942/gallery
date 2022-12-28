@@ -245,6 +245,7 @@ Result copyWith({  BookingDetails? bookingDetails,
 /// createdAt : "2022-12-10T08:55:17.916Z"
 
 class Estimation {
+
   Estimation({
       bool? isOfferCreated, 
       String? offerStatus, 
@@ -252,9 +253,12 @@ class Estimation {
       num? serviceTax, 
       String? invoiceNumber, 
       num? subTotal, 
-      num? grandTotal, 
+      num? grandTotal,
+      num? offerAmount,
+      String? offerNote,
       String? updatedAt, 
       String? createdAt,}){
+
     _isOfferCreated = isOfferCreated;
     _offerStatus = offerStatus;
     _items = items;
@@ -262,6 +266,8 @@ class Estimation {
     _invoiceNumber = invoiceNumber;
     _subTotal = subTotal;
     _grandTotal = grandTotal;
+    _offerAmount = offerAmount;
+    _offerNote = offerNote;
     _updatedAt = updatedAt;
     _createdAt = createdAt;
 }
@@ -279,6 +285,8 @@ class Estimation {
     _invoiceNumber = json['invoiceNumber'];
     _subTotal = json['subTotal'];
     _grandTotal = json['grandTotal'];
+    _offerAmount = json['offerAmount'];
+    _offerNote = json['offerNote'];
     _updatedAt = json['updatedAt'];
     _createdAt = json['createdAt'];
   }
@@ -289,8 +297,11 @@ class Estimation {
   String? _invoiceNumber;
   num? _subTotal;
   num? _grandTotal;
+  num? _offerAmount;
+  String? _offerNote;
   String? _updatedAt;
   String? _createdAt;
+
 Estimation copyWith({  bool? isOfferCreated,
   String? offerStatus,
   List<Items>? items,
@@ -298,6 +309,8 @@ Estimation copyWith({  bool? isOfferCreated,
   String? invoiceNumber,
   num? subTotal,
   num? grandTotal,
+  num? offerAmount,
+  String? offerNote,
   String? updatedAt,
   String? createdAt,
 }) => Estimation(  isOfferCreated: isOfferCreated ?? _isOfferCreated,
@@ -307,6 +320,8 @@ Estimation copyWith({  bool? isOfferCreated,
   invoiceNumber: invoiceNumber ?? _invoiceNumber,
   subTotal: subTotal ?? _subTotal,
   grandTotal: grandTotal ?? _grandTotal,
+  offerAmount:  offerAmount?? _offerAmount,
+  offerNote: offerNote ?? _offerNote,
   updatedAt: updatedAt ?? _updatedAt,
   createdAt: createdAt ?? _createdAt,
 );
@@ -317,6 +332,8 @@ Estimation copyWith({  bool? isOfferCreated,
   String? get invoiceNumber => _invoiceNumber;
   num? get subTotal => _subTotal;
   num? get grandTotal => _grandTotal;
+  num? get offerAmount => _offerAmount;
+  String? get offerNote => _offerNote;
   String? get updatedAt => _updatedAt;
   String? get createdAt => _createdAt;
 
@@ -331,6 +348,8 @@ Estimation copyWith({  bool? isOfferCreated,
     map['invoiceNumber'] = _invoiceNumber;
     map['subTotal'] = _subTotal;
     map['grandTotal'] = _grandTotal;
+    map['offerAmount'] = _offerAmount;
+    map['offerNote'] = _offerNote;
     map['updatedAt'] = _updatedAt;
     map['createdAt'] = _createdAt;
     return map;
@@ -778,6 +797,8 @@ Provider copyWith({  List<String>? country,
 /// customerNote : "Request Estimation Note"
 
 class BookingDetails {
+
+
   BookingDetails({
       String? time, 
       List<dynamic>? file, 
@@ -785,7 +806,8 @@ class BookingDetails {
       List<String>? voiceNote, 
       List<String>? video, 
       String? date, 
-      String? customerNote,}){
+      String? customerNote,
+  }){
     _time = time;
     _file = file;
     _image = image;
@@ -797,15 +819,14 @@ class BookingDetails {
 
   BookingDetails.fromJson(dynamic json) {
     _time = json['time'];
-
-
-
     _image = json['image'] != null ? json['image'].cast<String>() : [];
     _voiceNote = json['voiceNote'] != null ? json['voiceNote'].cast<String>() : [];
     _video = json['video'] != null ? json['video'].cast<String>() : [];
     _date = json['date'];
     _customerNote = json['customerNote'];
   }
+
+
   String? _time;
   List<dynamic>? _file;
   List<String>? _image;
@@ -813,6 +834,8 @@ class BookingDetails {
   List<String>? _video;
   String? _date;
   String? _customerNote;
+
+
 BookingDetails copyWith({  String? time,
   List<dynamic>? file,
   List<String>? image,
@@ -828,6 +851,11 @@ BookingDetails copyWith({  String? time,
   date: date ?? _date,
   customerNote: customerNote ?? _customerNote,
 );
+
+
+
+
+
   String? get time => _time;
   List<dynamic>? get file => _file;
   List<String>? get image => _image;

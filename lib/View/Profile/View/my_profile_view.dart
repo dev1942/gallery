@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Profile/View/widget/my_car_list_widget.dart';
 import 'package:otobucks/View/Profile/Controller/profile_screen_controller.dart';
-import 'package:otobucks/controllers/auth_controllers/otp_controller.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_images.dart';
@@ -12,37 +11,34 @@ import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/global/text_styles.dart';
-import 'package:otobucks/page/auth/otp_screen.dart';
 import 'package:otobucks/widgets/custom_button.dart';
 import 'package:otobucks/widgets/custom_textfield_mobile.dart';
 import 'package:otobucks/widgets/custom_textfield_with_icon.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/image_view.dart';
 import 'package:otobucks/widgets/small_button.dart';
-import 'package:otobucks/widgets/wallet/withdraw_money_dialog.dart';
+import '../../Wallet/Widgets/withdraw_money_dialog.dart';
+import '../../auth/View/otp_screen.dart';
+import '../../auth/controllers/otp_controller.dart';
 import '../Model/car_list_model.dart';
-
 class MyProfileFragment extends StatefulWidget {
   const MyProfileFragment({Key? key}) : super(key: key);
 
   @override
   MyProfileFragmentState createState() => MyProfileFragmentState();
 }
-
 class MyProfileFragmentState extends State<MyProfileFragment> {
   var controller = Get.put(ProfileScreenController());
   var Otpcontroller = Get.put(OtpController());
   bool IsAddCarTap = false;
   bool isEditidTab = false;
   String? editId;
-
   @override
   void initState() {
     controller.getCarList();
     controller.getProfile();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -718,7 +714,9 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                           (BuildContext contextM, index) {
                                         GetCarModelResult? mcarlistmodel =
                                             controller.carList[index];
-                                        return MyCarListItem(
+                                        return
+
+                                          MyCarListItem(
                                             carBrand: mcarlistmodel.brand ?? "",
                                             modeYear:
                                                 mcarlistmodel.modelYear ?? "",

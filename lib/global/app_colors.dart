@@ -55,7 +55,6 @@ class AppColors {
   static Color colorChatMsg = HexColor("#1B1A57");
 
   // Toast Color
-
   static Color colorLogoGreenLight = HexColor("#6aba6f");
   static Color colorLogoGreenDark = HexColor("#0d8f15");
   static Color orange = HexColor("#FF7A00");
@@ -70,7 +69,7 @@ class AppColors {
   static Color colorDividerDrawer = HexColor("#1F2326");
 
   static Color darkRed = const Color(0xffFF3A3A);
-
+//.....................colors......................
   static Color lightGrey = const Color(0xffa6a8ab);
   static Color silver2 = HexColor("#e6e7e8");
   static Color greyDateBG = HexColor("#EDEDED");

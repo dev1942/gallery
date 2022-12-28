@@ -5,12 +5,13 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart';
 import 'package:otobucks/View/MyBookings/Repo/decline_booking_Repo.dart';
 import 'package:otobucks/View/MyBookings/controller/reschedule_booking_controller.dart';
 import 'package:otobucks/View/MyBookings/widget/date_selector_view.dart';
 import 'package:otobucks/View/MyBookings/widget/time_selector_reshedule.dart';
 import 'package:otobucks/View/MyBookings/widget/voice_note_view.dart';
-import 'package:otobucks/controllers/estimation_sidebar_controllers/view_estimation_controller.dart';
+import 'package:otobucks/View/Profile/View/widget/my_car_list_widget.dart';
 import 'package:otobucks/global/adaptive_helper.dart';
 import 'package:otobucks/widgets/Image_Select/image_utility.dart';
 import 'package:otobucks/widgets/cancel_booking_dialog.dart';
@@ -28,19 +29,20 @@ import '../../../global/app_images.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/google_map_view.dart';
 import '../../../widgets/media_button.dart';
-import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart';
-
+import '../../Estimation/Controllers/estimation_sidebar_controllers/view_estimation_controller.dart';
 
 
 class ViewBookingEstimation extends StatefulWidget {
   final Result mEstimatesModel;
   final bool isPending;
   final String? status;
-  const ViewBookingEstimation({
+  bool isRebooked;
+   ViewBookingEstimation({
     Key? key,
     this.status,
     required this.mEstimatesModel,
     this.isPending = false,
+    this.isRebooked=false,
   }) : super(key: key);
   @override
   ViewBookingEstimationState createState() => ViewBookingEstimationState();
@@ -51,6 +53,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
   dynamic imagePickerPath = "";
   List<String> imagePaths = [];
   final ImagePickerUtility _imagePickerUtility = ImagePickerUtility();
+  late TextEditingController controllerNotes ;//TextEditingController(text:widget.mEstimatesModel.bookingDetails!.customerNote.toString() );
   ShowData mShowData = ShowData.showLoading;
   bool connectionStatus = false;
   bool isShowLoader = false;
@@ -60,21 +63,13 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
   var reScheduleController = Get.put(RescheduleBookingController());
   @override
   void initState() {
-    print("status-----------");
-    print(widget.status);
-    print("-----------------booking data ------------init data-");
-    print(widget.mEstimatesModel.bookingDetails!.time);
-    print(widget.mEstimatesModel.bookingDetails!.date);
-    print(widget.mEstimatesModel.bookingDetails!.image);
-    print(widget.mEstimatesModel.bookingDetails!.video);
-    print(widget.mEstimatesModel.bookingDetails!.customerNote);
-    print(widget.mEstimatesModel.bookingDetails!.voiceNote);
-    print("-----------voice notes------------");
+    controllerNotes = TextEditingController(text:widget.mEstimatesModel.bookingDetails!.customerNote.toString());
 //-----------videos
     if (widget.mEstimatesModel.bookingDetails!.video!.isNotEmpty) {
       reScheduleController.pickedVideo =
           widget.mEstimatesModel.bookingDetails!.video!.first;
     }
+
 //-------------images--------
     if (widget.mEstimatesModel.bookingDetails!.image!.isNotEmpty) {
       imageLoader = true;
@@ -88,7 +83,6 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
     }
     //-------voice notes
     if (widget.mEstimatesModel.bookingDetails!.voiceNote!.isNotEmpty) {
-      print("-----------voice notes--------1----");
       reScheduleController.voiceNoteFile =
           widget.mEstimatesModel.bookingDetails!.voiceNote!.first;
     }
@@ -98,7 +92,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
     }
    // print(widget.mEstimatesModel.bookingDetails!.voiceNote);
 
-    reScheduleController.onInitScreen(widget.mEstimatesModel);
+    reScheduleController.onInitScreen(widget.mEstimatesModel!);
     super.initState();
   }
 
@@ -169,7 +163,48 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               ),
               //video and images
               /*---------------------------------Booking data-----------------------*/
-
+/*
+ MyCarListItem(
+                                            carBrand: mcarlistmodel.brand ?? "",
+                                            modeYear:
+                                                mcarlistmodel.modelYear ?? "",
+                                            km: mcarlistmodel.mileage ?? "",
+                                            color: mcarlistmodel.color ?? "",
+                                            code: mcarlistmodel.carCode ?? "",
+                                            city: mcarlistmodel.carCity ?? "",
+                                            number:
+                                                mcarlistmodel.carNumber ?? "",
+                                            image:
+                                                "https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
+                                            onEditTap: () {
+                                              value.controllerCarBrand.text =
+                                                  mcarlistmodel.brand ?? "";
+                                              value.controllerColour.text =
+                                                  mcarlistmodel.color ?? "";
+                                              value.controllerCarModelYear
+                                                      .text =
+                                                  mcarlistmodel.modelYear ?? "";
+                                              value.controllerMileage.text =
+                                                  mcarlistmodel.mileage ?? "";
+                                              value.controllerCity.text =
+                                                  mcarlistmodel.carCity ?? "";
+                                              value.controllerCode.text =
+                                                  mcarlistmodel.carCode ?? "";
+                                              value.controllerNumber.text =
+                                                  mcarlistmodel.carNumber ?? "";
+                                              setState(() {
+                                                isEditidTab = true;
+                                                editId =
+                                                    mcarlistmodel.Id ?? "0";
+                                              });
+                                              // controller.onTapCategory(mCategoryModel);
+                                            },
+                                            onDeleteTap: () {
+                                              controller.deletecar(
+                                                  mcarlistmodel.Id ?? "0");
+                                              // });
+                                            });
+ */
               Container(
                   padding: EdgeInsets.symmetric(horizontal: wd(10)),
                   alignment: Alignment.centerLeft,
@@ -177,13 +212,70 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+
                       _uploadImagesSection(),
                       //Upload Video or Shoot a video
+
                       _videoSection(),
                       // //Voice Note
                       _voiceNoteSection(),
                       //Leave Note (if any)
-                      _anyNoteTextFiledSection(),
+                      _anyNoteTextFiledSection(reScheduleController.controllerNote),
+                      widget.isPending && widget.isRebooked?
+                      Container(
+                        alignment: Alignment.center,
+                        margin: const EdgeInsets.only(
+                            top: AppDimens.dimens_20,
+                            bottom: AppDimens.dimens_20,
+                            left: AppDimens.dimens_10,
+                            right: AppDimens.dimens_10),
+                        child: CustomButton(
+                            isGradient: true,
+                            isRoundBorder: true,
+                            fontColor: AppColors.colorWhite,
+                            width: size.width,
+                            onPressed: () {
+                              if (imagePaths.isNotEmpty) {
+                                if(reScheduleController.selectedDate==widget.mEstimatesModel.bookingDetails!.date!.substring(0,10)) {
+                                  Global.showToastAlert(
+                                      context: Get.overlayContext!,
+                                      strTitle: "",
+                                      strMsg: "Please Select Another date",
+                                      toastType: TOAST_TYPE
+                                          .toastInfo);
+                                }else{
+                                  reScheduleController
+                                      .reScheduleBooking(
+                                      context,
+                                      widget.mEstimatesModel.id
+                                          .toString(),
+                                      imagePath:
+                                      imagePaths.first);
+                                }
+                              }
+                              else {
+                                if(reScheduleController.selectedDate==widget.mEstimatesModel.bookingDetails!.date!.substring(0,10)){
+                                  Global.showToastAlert(
+                                      context: Get.overlayContext!,
+                                      strTitle: "",
+                                      strMsg: "Please Select Another date",
+                                      toastType: TOAST_TYPE.toastInfo);
+                                }else {
+                                  reScheduleController
+                                      .reScheduleBooking(
+                                    context,
+                                    widget.mEstimatesModel.id
+                                        .toString(),
+                                  );
+                                }
+                              }
+
+                            },
+                            // =>
+                            //     controller.rebook(
+                            //     context, widget.mEstimatesModel),
+                            strTitle:"RE-BOOKED"),
+                      ):
                       widget.isPending
                           ? Row(
                               children: [
@@ -221,7 +313,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                           }
                                           }
                                           else {
-                                            if(reScheduleController.selectedDate==widget.mEstimatesModel.bookingDetails!.date){
+                                            if(reScheduleController.selectedDate==widget.mEstimatesModel.bookingDetails!.date!.substring(0,10)){
                                               Global.showToastAlert(
                                                   context: Get.overlayContext!,
                                                   strTitle: "",
@@ -261,7 +353,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                         // =>
                                         //     controller.rebook(
                                         //     context, widget.mEstimatesModel),
-                                        strTitle: "Canceled"),
+                                        strTitle: "Cancelled"),
                                   ),
                                 ),
                               ],
@@ -284,75 +376,6 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                   //     context, widget.mEstimatesModel),
                                   strTitle:widget.status=="completed"?"Completed":widget.status=="inProgress"?"InProgress":widget.status=="cancelled"?"Cancelled": "Booked"),
                             ),
-
-                      // if (widget.screen == 'partial')
-                      //   Container(
-                      //     alignment: Alignment.center,
-                      //     margin: const EdgeInsets.only(
-                      //         top: AppDimens.dimens_20,
-                      //         bottom: AppDimens.dimens_20,
-                      //         left: AppDimens.dimens_10,
-                      //         right: AppDimens.dimens_10),
-                      //     child: CustomButton(
-                      //         isGradient: true,
-                      //         isRoundBorder: true,
-                      //         fontColor: AppColors.colorWhite,
-                      //         width: size.width,
-                      //         onPressed: () {
-                      //           Navigator.push(
-                      //               context,
-                      //               MaterialPageRoute(
-                      //                   builder: (context) => CheckoutScreen(
-                      //                     // estimateId:
-                      //                     //     widget.mEstimatesModel.id,
-                      //                     // sourceId: widget
-                      //                     //     .mEstimatesModel.source!.id,
-                      //                     // paymentStatus: 'completePayment',
-                      //                   )));
-                      //         },
-                      //         strTitle: "Make The Balance Payment"
-                      //
-                      //       //Constants.TXT_COMPLETED_ESTIMATION
-                      //     ),
-                      //   )
-                      // else if (widget.screen == 'pending')
-                      //   Container(
-                      //     alignment: Alignment.center,
-                      //     margin: const EdgeInsets.only(
-                      //         top: AppDimens.dimens_20,
-                      //         bottom: AppDimens.dimens_20,
-                      //         left: AppDimens.dimens_10,
-                      //         right: AppDimens.dimens_10),
-                      //     child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //       children: [
-                      //         SizedBox(
-                      //           child: CustomButton(
-                      //               isGradient: true,
-                      //               fontSize: -2,
-                      //               isRoundBorder: true,
-                      //               fontColor: AppColors.colorWhite,
-                      //               width: size.width,
-                      //               onPressed: () =>
-                      //                   controller.checkDateTime(context),
-                      //               strTitle: Constants.TXT_RESCHEDULE),
-                      //           width: size.width / 2.5,
-                      //         ),
-                      //         SizedBox(
-                      //           child: CustomButton(
-                      //               fontSize: -2,
-                      //               isGradient: false,
-                      //               isRoundBorder: true,
-                      //               color: AppColors.greyDateBG,
-                      //               fontColor: AppColors.colorBlack,
-                      //               width: size.width,
-                      //               onPressed: () => displayTextInputDialog(),
-                      //               strTitle: Constants.TXT_CANCEL),
-                      //           width: size.width / 2.5,
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   )
                     ],
                   ))
 
@@ -673,6 +696,43 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   //      value.onSelectTime(mtimeModel_)
                 ),
               ),
+
+              ///-------------------------------------carList
+              Container(
+                margin: const EdgeInsets.only(
+                  top: AppDimens.dimens_15,
+                  left: AppDimens.dimens_14,
+                  right: AppDimens.dimens_14,
+                ),
+                child: Text(
+                  "Car",
+                  style: AppStyle.textViewStyleNormalSubtitle2(
+                      context: context,
+                      color: AppColors.colorBlack2,
+                      fontWeightDelta: 1,
+                      fontSizeDelta: 0),
+                ),
+              ),
+
+ MyCarListItem(
+   isViewed: true,
+                                            carBrand:widget.mEstimatesModel.bookingDetails!.car!.brand ?? "",
+                                            modeYear:
+                                            widget.mEstimatesModel.bookingDetails!.car!.modelYear?? "",
+                                            km:  widget.mEstimatesModel.bookingDetails!.car!.mileage ?? "",
+                                            color:  widget.mEstimatesModel.bookingDetails!.car!.color ?? "",
+                                            code:   widget.mEstimatesModel.bookingDetails!.car!.carCode ?? "",
+                                            city:  widget.mEstimatesModel.bookingDetails!.car!.carCity  ?? "",
+                                            number:
+                                            widget.mEstimatesModel.bookingDetails!.car!.carNumber?? "",
+                                            image:
+                                                "https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
+                                            onEditTap: () {
+                                            },
+                                            onDeleteTap: () {
+
+                                            }),
+
               //---------------------------------------------------Upload image or Take a photo
               Container(
                 margin: const EdgeInsets.only(
@@ -722,10 +782,6 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
 
   _videoSection() {
     return GetBuilder<RescheduleBookingController>(builder: (value) {
-      print("picked videos----get builder------");
-      print(value.pickedVideo);
-      print("is compressed-------");
-      print(value.isVideoCompressed);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -1030,7 +1086,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
     );
   }
 
-  _anyNoteTextFiledSection() {
+  _anyNoteTextFiledSection(TextEditingController leaveNotesController) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -1056,49 +1112,52 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
             left: AppDimens.dimens_14,
             right: AppDimens.dimens_14,
           ),
-          child: SizedBox(
-            child: TextField(
-              onChanged: (String strvalue) {},
-              onSubmitted: (String? value) {
-                //onSubmit!(value!);
-              },
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.text,
-              style: AppStyle.textViewStyleNormalBodyText2(
-                  color: AppColors.colorBlack,
+          child: TextField(
+            onChanged: (String? strvalue) {
+              // print("-------------------");
+              // print(strvalue);
+              // reScheduleController.controllerNote.text=strvalue;
+            },
+            onSubmitted: (String? value) {
+             reScheduleController.controllerNote.text=value??"";
+              //onSubmit!(value!);
+            },
+            textInputAction: TextInputAction.done,
+            keyboardType: TextInputType.text,
+            maxLines: 3,
+            style: AppStyle.textViewStyleNormalBodyText2(
+                color: AppColors.colorBlack,
+                fontSizeDelta: 0,
+                fontWeightDelta: 0,
+                context: context),
+            controller: leaveNotesController,//reScheduleController.controllerNote,
+            textAlign: TextAlign.start,
+            readOnly:  widget.isPending?false:true,
+            decoration: InputDecoration(
+              prefixIconConstraints:
+                  const BoxConstraints(minWidth: AppDimens.dimens_33),
+              suffixIconConstraints:
+                  const BoxConstraints(minWidth: AppDimens.dimens_33),
+              suffixIcon: Container(
+                margin: const EdgeInsets.only(right: AppDimens.dimens_12),
+                alignment: Alignment.center,
+                width: AppDimens.dimens_50,
+              ),
+              contentPadding: const EdgeInsets.only(
+                  top: AppDimens.dimens_7, left: AppDimens.dimens_15),
+              focusedBorder: AppViews.textFieldRoundBorder(),
+              border: AppViews.textFieldRoundBorder(),
+              disabledBorder: AppViews.textFieldRoundBorder(),
+              focusedErrorBorder: AppViews.textFieldRoundBorder(),
+              hintText: "Write a message...",
+              // filled: true,
+              fillColor: AppColors.colorGray2,
+              hintStyle: AppStyle.textViewStyleNormalBodyText2(
+                  color: AppColors.colorTextFieldHint,
                   fontSizeDelta: 0,
                   fontWeightDelta: 0,
                   context: context),
-              controller: reScheduleController.controllerNote,
-              textAlign: TextAlign.start,
-              readOnly:  widget.isPending?false:true,
-              decoration: InputDecoration(
-                prefixIconConstraints:
-                    const BoxConstraints(minWidth: AppDimens.dimens_33),
-                suffixIconConstraints:
-                    const BoxConstraints(minWidth: AppDimens.dimens_33),
-                suffixIcon: Container(
-                  margin: const EdgeInsets.only(right: AppDimens.dimens_12),
-                  alignment: Alignment.center,
-                  width: AppDimens.dimens_50,
-                ),
-                contentPadding: const EdgeInsets.only(
-                    top: AppDimens.dimens_7, left: AppDimens.dimens_15),
-                focusedBorder: AppViews.textFieldRoundBorder(),
-                border: AppViews.textFieldRoundBorder(),
-                disabledBorder: AppViews.textFieldRoundBorder(),
-                focusedErrorBorder: AppViews.textFieldRoundBorder(),
-                hintText: "Write a message...",
-                // filled: true,
-                fillColor: AppColors.colorGray2,
-                hintStyle: AppStyle.textViewStyleNormalBodyText2(
-                    color: AppColors.colorTextFieldHint,
-                    fontSizeDelta: 0,
-                    fontWeightDelta: 0,
-                    context: context),
-              ),
             ),
-            height: AppDimens.dimens_50,
           ),
           decoration:
               AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),

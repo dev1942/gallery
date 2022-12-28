@@ -3,9 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Promotion_discount/View/promotion_banner.dart';
 import 'package:otobucks/View/Promotion_discount/model/promotion_model.dart';
-import 'package:otobucks/controllers/home_screen_controller.dart';
-import 'package:otobucks/model/promotion_model.dart';
-import 'package:otobucks/widgets/banner_component.dart';
+import 'package:otobucks/View/Home/Controllers/home_screen_controller.dart';
 
 
 class BannerPageView extends StatefulWidget {

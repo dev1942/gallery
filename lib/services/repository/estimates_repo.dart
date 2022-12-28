@@ -3,18 +3,18 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:logger/logger.dart';
+import 'package:otobucks/View/Estimation/Models/estimates_model.dart';
 import 'package:otobucks/global/connectivity_status.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/global/url_collection.dart';
-import 'package:otobucks/model/failure.dart';
-import 'package:otobucks/model/result.dart';
-import 'package:otobucks/model/success.dart';
+import '../../global/Models/failure.dart';
+import '../../global/Models/result.dart';
+import '../../global/Models/success.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
-import '../../model/category_model.dart';
-import '../../model/estimates_model.dart';
-import '../../model/estimation_detail_model.dart';
+import '../../View/Dashboard/Models/category_model.dart';
+import '../../View/Estimation/Models/estimation_detail_model.dart';
 import '../rest_api/request_listener_multipart.dart';
 class EstimatesRepo {
   //....................create estimation new API done......................

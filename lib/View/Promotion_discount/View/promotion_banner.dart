@@ -8,18 +8,14 @@ import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_images.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/global.dart';
-import 'package:otobucks/model/promotion_model.dart';
-import 'package:otobucks/widgets/custom_button.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
-
 class PromotionBanner extends StatelessWidget {
   final String buttonText;
   final String strImage;
   final PromotionsModel mPromotionsModel;
   final Function onTap;
   bool isVisible;
-
   PromotionBanner(
       {Key? key,
       required this.mPromotionsModel,

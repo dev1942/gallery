@@ -7,10 +7,10 @@ import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/constants.dart';
 
+import '../global/Models/time_model.dart';
 import '../global/app_views.dart';
 import '../global/enum.dart';
 import '../global/global.dart';
-import '../model/time_model.dart';
 
 // ignore: must_be_immutable
 class TimeSelector extends StatefulWidget {

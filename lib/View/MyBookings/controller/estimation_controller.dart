@@ -9,14 +9,16 @@ import 'package:image_picker/image_picker.dart';
 import 'package:light_compressor/light_compressor.dart';
 import 'package:location/location.dart';
 import 'package:logger/logger.dart';
-import 'package:otobucks/fragment/thankyou_fragment.dart';
+import 'package:otobucks/View/ThankYou/Views/thankyou_fragment.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
-import 'package:otobucks/model/service/service_model.dart';
-import 'package:otobucks/model/time_model.dart';
-import 'package:otobucks/page/services/profile/service_provider_profile_screen.dart';
+import 'package:otobucks/View/Services_All/Models/service_model.dart';
+import 'package:otobucks/View/Services_All/Views/service_provider_profile_screen.dart';
 import 'package:otobucks/services/repository/estimates_repo.dart';
+
+import '../../../global/Models/time_model.dart';
+import '../Models/AllBookingsModel.dart';
 
 class CreateEstimationController extends GetxController {
   bool connectionStatus = false;
@@ -175,7 +177,7 @@ class CreateEstimationController extends GetxController {
   //               )));
   // }
 //----------------------------Create Estimation--------------------
-  createEstimation(BuildContext context) async {
+  createEstimation(BuildContext context,String? carId) async {
     log("create estimation--------------------------------ibrahim--------");
     log(pickedImage.toString());
     if (Global.checkNull(pickedVideo)) {
@@ -189,7 +191,6 @@ class CreateEstimationController extends GetxController {
         return "";
       }
     }
-
     isShowLoader = true;
     update();
     String strNote = controllerNote.text.toString();
@@ -204,6 +205,7 @@ class CreateEstimationController extends GetxController {
         mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
     requestParams[PARAMS.PARAM_CUTOMERNOTE] = strNote;
     requestParams[PARAMS.PARAM_ADDRESS] = addressNote.text;
+    requestParams["car"] =carId??"63a2915f0fe25834cf690bbf";
     if (mLatLng != null) {
       requestParams[PARAMS.PARAM_LATITUDE] =
           mLatLng!.latitude.toStringAsFixed(4);

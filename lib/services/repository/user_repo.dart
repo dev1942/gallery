@@ -2,21 +2,19 @@
 
 import 'dart:collection';
 import 'dart:developer';
-
+import '../../global/Models/failure.dart';
+import '../../global/Models/result.dart';
+import '../../global/Models/success.dart';
 import 'package:dartz/dartz.dart';
 import 'package:otobucks/global/connectivity_status.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/global/url_collection.dart';
-import 'package:otobucks/model/failure.dart';
-import 'package:otobucks/model/invite_joiners_model.dart';
-import 'package:otobucks/model/result.dart';
-import 'package:otobucks/model/success.dart';
-import 'package:otobucks/model/user_detail.dart';
+import 'package:otobucks/View/InviteFriends/Models/invite_joiners_model.dart';
+import 'package:otobucks/View/auth/Models/user_detail.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
-
-import '../../model/user_model.dart';
+import '../../View/auth/Models/user_model.dart';
 import '../rest_api/request_listener_multipart.dart';
 
 class UserRepo {

@@ -7,13 +7,13 @@ import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/global/url_collection.dart';
-import 'package:otobucks/model/failure.dart';
-import 'package:otobucks/model/result.dart';
-import 'package:otobucks/model/success.dart';
+import '../../global/Models/failure.dart';
+import '../../global/Models/result.dart';
+import '../../global/Models/success.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
 
-import '../../model/category_model.dart';
-import '../../model/service/service_model.dart';
+import '../../View/Dashboard/Models/category_model.dart';
+import '../../View/Services_All/Models/service_model.dart';
 
 class ServicesRepo {
   Future<Either<Failure, Success>> getServices(

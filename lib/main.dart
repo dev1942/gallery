@@ -4,28 +4,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/View/auth/View/login_in_screen.dart';
 import 'package:otobucks/app/locator.dart';
-import 'package:otobucks/bindings/initial_binding.dart';
 import 'package:otobucks/global/theme_data/theme_data.dart';
 import 'package:otobucks/helper/local_notifications_helper.dart';
 import 'package:otobucks/services/navigation_service.dart';
-import 'package:otobucks/page/auth/login_in_screen.dart';
-import 'package:otobucks/page/home_page.dart';
-import 'package:otobucks/page/splash_screen.dart';
+import 'package:otobucks/View/Home/Views/home_page.dart';
+import 'package:otobucks/View/SplashScreen/Views/splash_screen.dart';
 import 'package:otobucks/services/localization/localization.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:path_provider/path_provider.dart';
-
+import 'app/bindings/initial_binding.dart';
 import 'global/adaptive_helper.dart';
 import 'global/constants.dart';
-// import 'dart:io';
-
-
-// import 'package:flutter/material.dart';
-// import 'package:network_to_file_image/network_to_file_image.dart';
-// import 'package:path/path.dart' as p;
-// import 'package:path_provider/path_provider.dart';
-
 class Controller extends GetxController {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 

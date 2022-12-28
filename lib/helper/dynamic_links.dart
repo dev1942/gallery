@@ -2,9 +2,10 @@ import 'dart:developer';
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:otobucks/global/constants.dart';
-import 'package:otobucks/page/auth/registation_screen.dart';
 import 'package:otobucks/services/navigation_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../View/auth/View/registation_screen.dart';
 
 class DynamicLinksApi {
   final dynamicLink = FirebaseDynamicLinks.instance;

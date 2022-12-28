@@ -8,12 +8,10 @@ import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/global/url_collection.dart';
-import 'package:otobucks/model/failure.dart';
-import 'package:otobucks/model/result.dart';
-import 'package:otobucks/model/success.dart';
+import '../../global/Models/failure.dart';
+import '../../global/Models/result.dart';
+import '../../global/Models/success.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
-
-import '../../model/promotion_model.dart';
 
 class PromotionsRepo {
   Future<Either<Failure, Success>> getPromotions(

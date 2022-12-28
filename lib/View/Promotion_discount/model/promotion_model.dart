@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:intl/intl.dart';
+import 'package:otobucks/View/Services_All/Models/service_provider_model.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/global.dart';
-import 'package:otobucks/model/service/service_provider_model.dart';
 
 
 

@@ -1,7 +1,7 @@
 
 import 'package:get/get.dart';
 
-import '../page/home_page.dart';
+import '../View/Home/Views/home_page.dart';
 
 class Navigation{
 

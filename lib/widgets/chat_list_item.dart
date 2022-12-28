@@ -8,7 +8,7 @@ import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 
 import '../global/app_images.dart';
-import '../model/local_chat_model.dart';
+import '../View/Chat/Models/local_chat_model.dart';
 
 class ChatListItem extends StatelessWidget {
   final LocalChatModel mChatModel;

@@ -10,7 +10,7 @@ import 'package:otobucks/global/enum.dart';
 import '../global/app_views.dart';
 import '../global/constants.dart';
 import '../global/global.dart';
-import '../model/date_model.dart';
+import '../global/Models/date_model.dart';
 
 // ignore: must_be_immutable
 class DateSelector extends StatefulWidget {

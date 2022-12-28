@@ -6,7 +6,9 @@ class LogoutOverlay extends StatefulWidget {
   void Function()? onSubmitTap;
   void Function()? onCancelTap;
   final TextEditingController? textcontroller;
-  LogoutOverlay({this.onSubmitTap,this.onCancelTap,this.textcontroller});
+  final TextEditingController? noteController;
+
+  LogoutOverlay({this.onSubmitTap,this.onCancelTap,this.textcontroller,this.noteController});
   @override
   State<StatefulWidget> createState() => LogoutOverlayState();
 }
@@ -43,7 +45,7 @@ class LogoutOverlayState extends State<LogoutOverlay>
           child: Container(
               margin:const  EdgeInsets.all(20.0),
               padding:const EdgeInsets.all(15.0),
-              height: 180.0,
+              height: 250.0,
               decoration: ShapeDecoration(
                color: Colors.white,
                 //   color: const Color.fromRGBO(41, 167, 77, 10),
@@ -71,6 +73,17 @@ class LogoutOverlayState extends State<LogoutOverlay>
                      ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 3.0),
+                    child: TextField(
+                      controller: widget.noteController,
+                     //keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                          label:Text( "Enter Note"),
+                          hintText: "note"
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 10.0),
                   Expanded(
                       child: Row(
@@ -93,7 +106,7 @@ class LogoutOverlayState extends State<LogoutOverlay>
                               child:  Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),
                                 child:Text(
-                                  'Cancel',
+                                  'Close',
                                   textAlign: TextAlign.center,
                                    style: AppStyle.textViewStyleNormalButton(
                                         context: context,
