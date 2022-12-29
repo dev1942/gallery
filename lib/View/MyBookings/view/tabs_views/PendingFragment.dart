@@ -44,7 +44,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                       List inProcgressList=snapshot.data!.result!.reversed.toList();
                       var data = inProcgressList[index];
 
-                   if(data.status=="submitted" || data.status=="pending" || data.status=="resubmitted"){
+                   if(data.status=="submitted" || data.status=="pending" || data.status=="reSubmitted"){
 
                      return
                        Padding(
@@ -420,15 +420,18 @@ class PendingFragment extends GetView<MyBookingsController> {
   }
 
   Widget Textwidget({String? text, double? fontsize, int? fontweight}) {
-    return Text(
-      text ?? "",
-      maxLines: 1,
-      style: AppStyle.textViewStyleNormalBodyText2(
-        context: Get.context!,
-        color: AppColors.colorBlack2,
-        fontSizeDelta: fontsize, //1,
-        fontWeightDelta: fontweight,
-        //    1
+    return Flexible(
+      child: Text(
+        text ?? "",
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: AppStyle.textViewStyleNormalBodyText2(
+          context: Get.context!,
+          color: AppColors.colorBlack2,
+          fontSizeDelta: fontsize, //1,
+          fontWeightDelta: fontweight,
+          //    1
+        ),
       ),
     );
   }

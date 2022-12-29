@@ -48,7 +48,6 @@ class ChatRepo {
         // ignore: unnecessary_null_comparison
         if (data != null) {
           for (var dataItem in data) {
-
             MyRoomModel room = MyRoomModel.fromMap(dataItem);
             rooms.add(room);
           }

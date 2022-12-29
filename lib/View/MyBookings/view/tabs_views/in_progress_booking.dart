@@ -41,7 +41,7 @@ class InProgressFragment extends GetView<MyBookingsController> {
                       List inProcgressList =
                           snapshot.data!.result!.reversed.toList();
                       var data = inProcgressList[index];
-                      if (data.status == "inProgress") {
+                      if (data.status== "inProgress") {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6.0),
                           child: Container(

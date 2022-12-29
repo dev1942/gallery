@@ -1132,7 +1132,7 @@ class Global {
           ),
           IOSUiSettings(minimumAspectRatio: 1.0),
         ]
-    );
+    ) ;
     /*androidUiSettings: AndroidUiSettings(
         toolbarTitle: 'Crop Image',
         toolbarColor: AppColors.colorAccent,

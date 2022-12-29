@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
@@ -38,7 +39,6 @@ class ImageSelectionState extends State<ImageSelection> {
   void dispose() {
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -152,7 +152,7 @@ class ImageSelectionState extends State<ImageSelection> {
     String strImagePath = "";
 
     if (widget.isCropImage) {
-      File croppedFile = await Global.getCropFile(
+      CroppedFile croppedFile = await Global.getCropFile(
           imagePath: image != null ? image.path : "",
           mRatioX: widget.mRatioX,
           mRatioY: widget.mRatioY,
