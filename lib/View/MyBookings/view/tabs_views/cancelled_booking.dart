@@ -83,7 +83,7 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                   padding: const EdgeInsets.only(
                                                       right: 8.0),
                                                   child: Text(
-                                                    Constants.TXT_VIEW_BOOKING,
+                                                    Constants.TXT_VIEW_BOOKING.tr,
                                                     style: AppStyle
                                                         .textViewStyleSmall(
                                                             context: context,
@@ -113,6 +113,7 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                               ),
                                             ],
                                           ),
+                                          addHorizontalSpace(8),
                                           //..........................right side data column
                                           Expanded(
                                             child: Column(
@@ -133,7 +134,7 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                 Row(
                                                   children: [
                                                     Textwidget(
-                                                        text: "Service Title: ",
+                                                        text: "Service Title: ".tr,
                                                         fontsize: 0,
                                                         fontweight: 0),
                                                     Textwidget(
@@ -146,14 +147,14 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                   ],
                                                 ),
                                                 Text(
-                                                  "Booking Cancelled",
+                                                  "Booking Cancelled".tr,
                                                   style: TextStyle(
                                                       color: AppColors.colorCancelledText),
                                                 ),
                                                 Row(
                                                   children: [
                                                     Textwidget(
-                                                        text: "Price :  ",
+                                                        text: "Price :  ".tr,
                                                         fontsize: 0,
                                                         fontweight: 0),
                                                     priceWidget(data.source!.price
@@ -163,7 +164,7 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      "Booking Date : ",
+                                                      "Booking Date : ".tr,
                                                       style: AppStyle
                                                           .textViewStyleSmall(
                                                               context: context,
@@ -211,7 +212,7 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                                       2),
                                                           child: Center(
                                                             child: Text(
-                                                              "re-book"
+                                                              "re-book".tr
                                                                   .toUpperCase(),
                                                               style: TextStyle(
                                                                   color: AppColors
@@ -259,7 +260,7 @@ class CancelledFragment extends GetView<MyBookingsController> {
                     },
                   );
                 } else if (snapshot.hasError) {
-                  const Center(child: Text("No data found"));
+                    Center(child: Text("No data found".tr));
                 }
                 return const Center(child: CircularProgressIndicator());
               }),

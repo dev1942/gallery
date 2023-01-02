@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../global/constants.dart';
 import '../../../global/url_collection.dart';
 import '../Models/AllBookingsModel.dart';
+import '../Models/view_booking_model.dart';
 class EstimationListController extends GetxController {
   ShowData mShowData = ShowData.showLoading;
   bool connectionStatus = false;

@@ -88,7 +88,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                   padding: const EdgeInsets.only(
                                                       right: 8.0),
                                                   child: Text(
-                                                    Constants.TXT_VIEW_BOOKING,
+                                                    Constants.TXT_VIEW_BOOKING.tr,
                                                     style: AppStyle
                                                         .textViewStyleSmall(
                                                             context: context,
@@ -118,6 +118,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                               ),
                                             ],
                                           ),
+                                          addHorizontalSpace(4),
                                           //..........................right side data column
                                           Expanded(
                                             child: Column(
@@ -156,7 +157,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                     priceWidget(data.paymentCompleted
                                                         .toString()),
                                                     Text(
-                                                      " Fully Paid",
+                                                      "Fully Paid".tr,
                                                       style: TextStyle(
                                                           color: Colors.green,fontSize: 12),
                                                     )
@@ -165,7 +166,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      "Booking Date : ",
+                                                      "Booking Date : ".tr,
                                                       style: AppStyle
                                                           .textViewStyleSmall(
                                                               context: context,
@@ -198,34 +199,36 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                     //...................on click of give ratting
 
 
-                                                    InkWell(
-                                                      child: Container(
-                                                        margin: EdgeInsets.only(right: 5),
-                                                          padding:
-                                                          const EdgeInsets
-                                                              .symmetric(
-                                                              horizontal: 6.0,
-                                                              vertical: 4.0),
-                                                          decoration: AppViews
-                                                              .getGradientBoxDecoration(
-                                                              mBorderRadius:
-                                                              2),
-                                                          child: Center(
-                                                            child: Text(
-                                                              "View Estimation"
-                                                                  .toUpperCase(),
-                                                              style: TextStyle(
-                                                                  color: AppColors
-                                                                      .colorWhite,
-                                                                  fontSize: 10,
-                                                                  fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                            ),
-                                                          )),
-                                                      onTap: () {
-                                                        Get.to(EstimationDetailsPDFScreen(allBookingsModel: data,isCompleted: true,));
-                                                      },
+                                                    Expanded(
+                                                      child: InkWell(
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(right: 5),
+                                                            padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 2.0,
+                                                                vertical: 4.0),
+                                                            decoration: AppViews
+                                                                .getGradientBoxDecoration(
+                                                                mBorderRadius:
+                                                                2),
+                                                            child: Center(
+                                                              child: Text(
+                                                                "View Estimation".tr
+                                                                    .toUpperCase(),
+                                                                style: TextStyle(
+                                                                    color: AppColors
+                                                                        .colorWhite,
+                                                                    fontSize: 10,
+                                                                    fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                              ),
+                                                            )),
+                                                        onTap: () {
+                                                          Get.to(EstimationDetailsPDFScreen(allBookingsModel: data,isCompleted: true,));
+                                                        },
+                                                      ),
                                                     ),
                                                     const SizedBox(
                                                       width: 4,
@@ -241,14 +244,14 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                             const EdgeInsets
                                                                 .symmetric(
                                                                 horizontal: 6.0,
-                                                                vertical: 5.0),
+                                                                vertical: 4.0),
                                                             decoration: BoxDecoration(
                                                                 color: AppColors.colorYellowShade,
                                                               borderRadius: BorderRadius.circular(2)
                                                             ),
                                                             child: Center(
                                                               child: Text(
-                                                               data.rated? "RATED": "Give rating"
+                                                               data.rated? "RATED".tr: "Give rating".tr
                                                                     .toUpperCase(),
                                                                 style: const TextStyle(
                                                                     color: Colors.black,
@@ -287,7 +290,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                     },
                   );
                 } else if (snapshot.hasError) {
-                  const Center(child: Text("No data found"));
+                    Center(child: Text("No data found".tr));
                 }
                 return const Center(child: CircularProgressIndicator());
               }),
@@ -305,7 +308,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
   Widget Textwidget({String? text, double? fontsize, int? fontweight}) {
     return Flexible(
       child: Text(
-        text ?? "",
+        text?.tr ?? "",
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
         style: AppStyle.textViewStyleNormalBodyText2(

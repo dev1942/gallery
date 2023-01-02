@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 import 'package:otobucks/View/CheckOut/Views/checkout_screen.dart';
 import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
@@ -13,6 +14,7 @@ import '../../../../global/constants.dart';
 import '../../../../global/global.dart';
 import '../../Models/AllBookingsModel.dart';
 import '../../controller/mybookings_controller.dart';
+import '../../widget/BlinkingIcon.dart';
 import '../view_booking_screen.dart';
 
 class InProgressFragment extends GetView<MyBookingsController> {
@@ -38,10 +40,10 @@ class InProgressFragment extends GetView<MyBookingsController> {
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     itemBuilder: (BuildContext contextM, index) {
-                      List inProcgressList =
+                      var inProcgressList =
                           snapshot.data!.result!.reversed.toList();
                       var data = inProcgressList[index];
-                      if (data.status== "inProgress") {
+                      if (data.status == "inProgress") {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6.0),
                           child: Container(
@@ -83,7 +85,7 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                             right: 8.0),
                                                     child: Text(
                                                       Constants
-                                                          .TXT_VIEW_BOOKING,
+                                                          .TXT_VIEW_BOOKING.tr,
                                                       style: AppStyle
                                                           .textViewStyleSmall(
                                                               context: context,
@@ -109,6 +111,7 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                               }),
                                         ],
                                       ),
+                                      addHorizontalSpace(8),
                                       //..........................right side data column
                                       Expanded(
                                         child: Column(
@@ -127,20 +130,23 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                             Row(
                                               children: [
                                                 Textwidget(
-                                                    text: "Service Title: ",
+                                                    text: "Service Title: ".tr,
                                                     fontsize: 0,
                                                     fontweight: 0),
-                                                Textwidget(
-                                                    text: data.source?.title ??
-                                                        "",
-                                                    fontsize: 0,
-                                                    fontweight: 0),
+                                                Flexible(
+                                                  child: Textwidget(
+                                                      text:
+                                                          data.source?.title ??
+                                                              "",
+                                                      fontsize: 0,
+                                                      fontweight: 0),
+                                                ),
                                               ],
                                             ),
                                             Row(
                                               children: [
                                                 Textwidget(
-                                                    text: "Price : ",
+                                                    text: "Price :  ".tr,
                                                     fontsize: 0,
                                                     fontweight: 0),
                                                 priceWidget(
@@ -150,11 +156,12 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                             Row(
                                               children: [
                                                 Textwidget(
-                                                    text: "Paid  : ",
+                                                    text: "Paid  : ".tr,
                                                     fontsize: 0,
                                                     fontweight: 0),
                                                 Text(
-                                                  "AED ${data.totalprice / 2}/-",
+                                                  "AED ${data.totalprice / 2}/-"
+                                                      .tr,
                                                   style: AppStyle
                                                       .textViewStyleNormalBodyText2(
                                                           context: Get.context!,
@@ -167,7 +174,7 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                             Row(
                                               children: [
                                                 Text(
-                                                  "Booking Date : ",
+                                                  "Booking Date : ".tr,
                                                   style: AppStyle
                                                       .textViewStyleSmall(
                                                           context: context,
@@ -214,7 +221,8 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                               mBorderRadius: 2),
                                                       child: Center(
                                                         child: Text(
-                                                          "Balance payment"
+                                                          "Balance Payment"
+                                                              .tr
                                                               .toUpperCase(),
                                                           style: TextStyle(
                                                               color: AppColors
@@ -222,8 +230,8 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                               fontSize: 12,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w500),
-                                                        ),
+                                                                     .w500),
+                                                         ),
                                                       )),
                                                   onTap: () {
                                                     Navigator.push(
@@ -252,20 +260,22 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                   width: 15,
                                                 ),
                                                 //.................chat icon.................
-
                                                 InkWell(
-                                                  onTap: (){
-
-                                                controller.createRoom(
-                                                        data.provider.id);
-
-                                                  },
-                                                  child: Icon(
-                                                    Icons.chat_bubble,
-                                                    color: Colors.yellow.shade700,
-                                                    size: AppDimens.dimens_27,
-                                                  ),
-                                                ),
+                                                    onTap: () {
+                                                      controller
+                                                          .launchWhatsappSendMessage(
+                                                              data.provider
+                                                                  ?.phone
+                                                                  ?.split(
+                                                                      " ")[0]
+                                                                  .toString(),
+                                                              "Hi ${data.provider?.firstName}! How Are You?");
+                                                      Logger().i(data
+                                                          .provider?.phone
+                                                          ?.split(" ")[0]
+                                                          .toString());
+                                                    },
+                                                    child: BlinkIcon()),
                                               ],
                                             ),
                                           ],
@@ -302,7 +312,8 @@ class InProgressFragment extends GetView<MyBookingsController> {
 
   Widget Textwidget({String? text, double? fontsize, int? fontweight}) {
     return Text(
-      text ?? "",
+      text?.tr ?? "".tr,
+      overflow: TextOverflow.ellipsis,
       maxLines: 1,
       style: AppStyle.textViewStyleNormalBodyText2(
         context: Get.context!,
@@ -317,7 +328,7 @@ class InProgressFragment extends GetView<MyBookingsController> {
   Widget UserNameWidget({String? userName}) {
     return Container(
         child: Text(
-      userName ?? "",
+      userName ?? "".tr,
       maxLines: 1,
       style: AppStyle.textViewStyleNormalBodyText2(
           context: Get.context!,
@@ -352,7 +363,7 @@ class InProgressFragment extends GetView<MyBookingsController> {
         child:
             // "AED ${mEstimatesModel.grandTotal}/-",
             GradientText(
-          "AED ${price} /-",
+          "AED ${price} /-".tr,
           // Global.checkNull(mEstimatesModel
           //     .source
           //     ?.price)

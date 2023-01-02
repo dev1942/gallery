@@ -1,5 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart'as viewBookingModel;
+import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart' as bookingResult;
 
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
@@ -9,6 +11,7 @@ import 'package:logger/logger.dart';
 import 'package:otobucks/View/Chat/Views/chat_detail_screen.dart';
 import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../Home/Controllers/home_screen_controller.dart';
 import '../../../global/app_views.dart';
 import '../../../global/connectivity_status.dart';
@@ -32,6 +35,7 @@ class MyBookingsController extends GetxController {
   bool chatNowLoading = false;
   bool isShowLoader = false;
   String chatNowRoomId = '';
+
   void onInit() {
     // TODO: implement onInit
     super.onInit();
@@ -52,8 +56,6 @@ class MyBookingsController extends GetxController {
   }
 
   //...............Get All Bookings...........................
-
-  // Future<AllBookingsModel> getAllBookings() async {
   Future<BookingModel> getAllBookings() async {
     final prefManager = await SharedPreferences.getInstance();
     token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
@@ -73,7 +75,6 @@ class MyBookingsController extends GetxController {
       log.i("Get booking API success");
       //log.i(data);
       return BookingModel.fromJson(data);
-
     } else {
       log.e("Get booking API Failed");
       log.e(response.body);
@@ -89,7 +90,8 @@ class MyBookingsController extends GetxController {
     token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
     //accessToken=token;
   }
-  //.................chating methods
+
+  //.................chating methods----------------------------------------------
   createRoom(String userId) async {
     chatNowLoading = true;
     update();
@@ -111,7 +113,7 @@ class MyBookingsController extends GetxController {
       getMessages(chatNowRoomId);
     });
   }
-
+//------------------------------------------------Get messages--------------------------------------
   getMessages(String roomId) async {
     HashMap<String, Object> requestParams = HashMap();
 
@@ -131,12 +133,37 @@ class MyBookingsController extends GetxController {
       MyRoomModel model = mResult.responseData as MyRoomModel;
       if (model.users[0].id == Get.find<HomeScreenController>().userId) {
         Get.to(
-                () => ChatDetailScreen(roomUser: model.users[1], roomId: roomId));
+            () => ChatDetailScreen(roomUser: model.users[1], roomId: roomId));
       } else {
         Get.to(
-                () => ChatDetailScreen(roomUser: model.users[0], roomId: roomId));
+            () => ChatDetailScreen(roomUser: model.users[0], roomId: roomId));
       }
       update();
     });
   }
+
+  //------------------------------------Launch whats app send message-----------------------------
+  launchWhatsappSendMessage(String? phoneNumber, String? message) {
+    var whatsappUrl =
+        "whatsapp://send?phone=${phoneNumber}" + "&text=${message}";
+    try {
+      launch(whatsappUrl);
+    } catch (e) {
+      //To handle error and display error message
+
+    }
+  }
+  //---------------------------Search booking------------------------------------------
+  List<Result> ?pendingsbookinglist;
+  void searchInShop(String query){
+    List<Result>? filteredBookingList=pendingsbookinglist!;
+    final suggestions=pendingsbookinglist?.where((filteredBooking){
+      final shopName=filteredBooking.source?.title?.toLowerCase();
+      final input=query.toLowerCase();
+      return shopName!.contains(input);
+    }).toList();
+    filteredBookingList=suggestions;
+    update();
+  }
+
 }
