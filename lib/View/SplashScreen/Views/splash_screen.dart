@@ -42,6 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
+
         return OrientationBuilder(
           builder: (context, orientation) {
             SizeConfig().init(constraints, orientation);
@@ -60,6 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ],
                 ),
               ),
+
 
               // ConstrainedBox(
               //   constraints: const BoxConstraints.expand(),
@@ -80,7 +82,9 @@ class _SplashScreenState extends State<SplashScreen> {
               // ),
             );
           },
+
         );
+
       },
     );
   }

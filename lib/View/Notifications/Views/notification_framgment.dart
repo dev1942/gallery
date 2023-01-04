@@ -1,9 +1,15 @@
 import 'dart:collection';
+
+import 'package:flutter/material.dart';
+import 'package:otobucks/global/container_properties.dart';
+import 'package:otobucks/View/Notifications/Views/notification_details_screen.dart';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:otobucks/View/Notifications/Views/notification_details_screen.dart';
 import 'package:otobucks/preferences/preferences.dart';
+
 import 'package:otobucks/services/repository/notification_repo.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,6 +31,10 @@ class NotificationFragment extends StatefulWidget {
 
 class NotificationFragmentState extends State<NotificationFragment> {
   ShowData mShowData = ShowData.showLoading;
+
+
+
+
   bool connectionStatus = false;
   bool isShowLoader = false;
   String userImage = "", userName = "";
@@ -32,17 +42,20 @@ class NotificationFragmentState extends State<NotificationFragment> {
       FlutterLocalNotificationsPlugin();
   Preferences preferences = Preferences();
 
+
   List<NotificationModel> alNotification = [];
 
   @override
   void initState() {
     super.initState();
+
     initConnectivity();
   }
 
   @override
   Widget build(BuildContext context) {
     Widget widgetM = Container();
+
     Widget mShowWidget = ListView(
       children: [
         // profile pic and name
@@ -92,10 +105,12 @@ class NotificationFragmentState extends State<NotificationFragment> {
             ],
           ),
         ),
+
         ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+
             itemBuilder: (BuildContext contextM, index) {
               NotificationModel mNotificationModel = alNotification[index];
               return Padding(
@@ -107,9 +122,11 @@ class NotificationFragmentState extends State<NotificationFragment> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.only(
+
                       top: 10, right: AppDimens.dimens_10, left: 10, bottom: 7),
                   margin: EdgeInsets.symmetric(horizontal: 5),
                   // margin: const EdgeInsets.only(bottom: AppDimens.dimens_14),
+
                   child: InkWell(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -125,8 +142,11 @@ class NotificationFragmentState extends State<NotificationFragment> {
                             borderRadius:
                                 BorderRadius.circular(AppDimens.dimens_5),
                             child: NetworkImageCustom(
+
+
                                 image: Global.checkNull(
                                         mNotificationModel.image)
+
                                     ? mNotificationModel.image
                                     : "https://qph.cf2.quoracdn.net/main-thumb-1278318002-200-ydzfegagslcexelzgsnplcklfkienzfr.jpeg",
                                 fit: BoxFit.fill,
@@ -179,7 +199,9 @@ class NotificationFragmentState extends State<NotificationFragment> {
                     ),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
+
                           builder: (_) => NotificationDetailsScreen(
+
                                 notificationModel: mNotificationModel,
                                 userImage: userImage,
                                 userName: userName,
@@ -194,6 +216,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
     );
     widgetM = AppViews.getSetDataNotification(context, mShowData, mShowWidget);
     return SafeArea(
+
       top: false,
       bottom: false,
       child: Scaffold(
@@ -213,6 +236,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
         ),
       ),
     );
+
   }
 
   Future<void> initConnectivity() async {
@@ -269,6 +293,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
       setState(() {
         alNotification = mResult.responseData as List<NotificationModel>;
 
+
         if (alNotification.isNotEmpty) {
           mShowData = ShowData.showData;
           if (preferences.getnotificationId() != alNotification.last.id) {
@@ -278,12 +303,14 @@ class NotificationFragmentState extends State<NotificationFragment> {
                 body: alNotification.last.title,
                 payload: alNotification.last.id);
           }
+
         } else {
           mShowData = ShowData.showNoDataFound;
         }
       });
     });
   }
+
 
   static void createanddisplaynotification(
       {required String title,
@@ -311,4 +338,5 @@ class NotificationFragmentState extends State<NotificationFragment> {
       print(e);
     }
   }
+
 }

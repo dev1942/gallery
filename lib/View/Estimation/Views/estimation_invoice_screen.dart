@@ -710,7 +710,8 @@ class EstimationDetailsPDFScreenState
                   right: AppDimens.dimens_20),
               child: Row(
                 children: [
-                  allBookingsModel.estimation!.estimationImage!=null? Container(
+                  allBookingsModel.estimation!.estimationImage!.length>0? Container(
+
                     height:50,
                     width: 100,
                     margin: const EdgeInsets.only(right: AppDimens.dimens_10),

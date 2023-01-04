@@ -41,6 +41,7 @@ class LoginController extends GetxController {
   String selectedValue = "English";
 
 
+
   @override
   void onInit() {
     getInitializeMessage();
@@ -66,6 +67,7 @@ class LoginController extends GetxController {
       },
     );
   }
+
 
   void changeRemember(bool value) {
     rememberMe = value;

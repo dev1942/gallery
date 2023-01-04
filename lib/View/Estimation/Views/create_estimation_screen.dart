@@ -849,11 +849,19 @@ String? selectedValue="";
                 left: AppDimens.dimens_14,
                 right: AppDimens.dimens_14,
               ),
-              child: VoiceRecordingButton(
-                // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
-                strVoiceNotePath: value.voiceNoteFile,
-                callback: (String filePath) =>
-                    value.onSelectVoiceNote(filePath),
+
+              child: InkWell(
+                onTap: (){
+
+                },
+                child: VoiceRecordingButton(
+                  // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
+                  strVoiceNotePath: value.voiceNoteFile,
+                  callback: (String filePath) =>
+                      value.onSelectVoiceNote(filePath),
+                ),
+
+
               ),
             ),
           ],

@@ -1,4 +1,6 @@
+
 import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Home/Controllers/home_screen_controller.dart';
@@ -19,6 +21,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var controller = Get.put(HomeScreenController());
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
+
+  @override
+  void initState() {
+    controller.getAccountName();
 
   void onMessage() {
     FirebaseMessaging.onMessage.listen(
@@ -54,6 +61,7 @@ class _HomePageState extends State<HomePage> {
     onMessage();
     onListen();
     onMessage();
+
     super.initState();
   }
 
