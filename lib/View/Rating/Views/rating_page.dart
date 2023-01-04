@@ -91,7 +91,9 @@ class RatingScreenState extends State<RatingScreen> {
             )),
         Center(
           child: Text(
-            'How was your experience',
+
+            'How was your experience'.tr,
+
             style: lightText(16),
           ),
         ),
@@ -103,7 +105,10 @@ class RatingScreenState extends State<RatingScreen> {
               controller: feedback,
               maxLines: 6,
               decoration: InputDecoration(
-                  hintText: 'Your FeedBack',
+
+
+
+                  hintText: 'Your FeedBack'.tr,
                   hintStyle: TextStyle(color: AppColors.grayDashboardText),
                   filled: true,
                   fillColor: HexColor('#FAFAFA'),
@@ -118,7 +123,11 @@ class RatingScreenState extends State<RatingScreen> {
             child: isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : PrimaryButton(
-                    label: const Text('Submit'),
+
+
+
+                    label:  Text('Submit'.tr),
+
                     onPress: () {
                       giveRating();
                     },

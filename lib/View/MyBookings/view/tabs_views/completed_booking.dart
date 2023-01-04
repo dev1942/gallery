@@ -251,7 +251,11 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                             ),
                                                             child: Center(
                                                               child: Text(
+
                                                                data.rated!? "RATED".tr: "Give rating".tr
+
+                                                              // data.rated? "RATED".tr: "Give rating".tr
+
                                                                     .toUpperCase(),
                                                                 style: const TextStyle(
                                                                     color: Colors.black,
@@ -280,7 +284,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                   top:5,
                                   child: InkWell(
                                       onTap: (){
-                                        controller.deleteBooking(bookingID: data.id);
+                                        //controller.deleteBooking(bookingID: data.id);
                                         controller.update();
                                       },
                                       child: Icon(Icons.delete_outline,color: AppColors.colorCancelledText,)))
