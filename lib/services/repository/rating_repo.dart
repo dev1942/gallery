@@ -109,52 +109,52 @@ class RatingRepo {
 
 
 
-         // ReviewModel mReviewModel = ReviewModel.fromMap(dataItem);
+          ReviewModel mReviewModel = ReviewModel.fromMap(dataItem);
 
-         // print(mReviewModel.customerToProvider!.review);
+          print(mReviewModel.customerToProvider!.review);
           switch (ratingType) {
             case RatingType.given:
-              // if (mReviewModel.customerToProvider != null) {
-              //   reviews.add(RatingComponentModel(
-              //       serviceType: '',
-              //       image: mReviewModel.provider!.image,
-              //       name: mReviewModel.provider!.firstName.toString() +
-              //           ' ' +
-              //           mReviewModel.provider!.lastName.toString(),
-              //       customerId: mReviewModel.customer!.id,
-              //       providerId: mReviewModel.provider!.id,
-              //       rating: mReviewModel.customerToProvider!.rating.toDouble(),
-              //       review: mReviewModel.customerToProvider!.review.toString(),
-              //       reviewId: mReviewModel.id));
-              // }
-            if (dataItem['customer_to_provider']!= null) {
+            if (mReviewModel.customerToProvider != null) {
               reviews.add(RatingComponentModel(
                   serviceType: '',
-                  image: dataItem['provider']['image'],//mReviewModel.provider!.image,
-                  name: dataItem['provider']['firstName'].toString() +
+                  image: mReviewModel.provider!.image,
+                  name: mReviewModel.provider!.firstName.toString() +
                       ' ' +
-                      dataItem['provider']['lastName'].toString(),
-                  customerId:  dataItem['customer'],//mReviewModel.customer!.id,
-                  providerId:  dataItem['provider']['_id'],//mReviewModel.provider!.id,
-                  rating:dataItem['customer_to_provider']['stars'].toDouble(), //mReviewModel.customerToProvider!.rating.toDouble(),
-                  review: dataItem['customer_to_provider']['review'].toString(),
-                  reviewId: dataItem['_id']));
+                      mReviewModel.provider!.lastName.toString(),
+                  customerId: mReviewModel.customer!.id,
+                  providerId: mReviewModel.provider!.id,
+                  rating: mReviewModel.customerToProvider!.rating.toDouble(),
+                  review: mReviewModel.customerToProvider!.review.toString(),
+                  reviewId: mReviewModel.id));
             }
+              if (dataItem['customer_to_provider']!= null) {
+                reviews.add(RatingComponentModel(
+                    serviceType: '',
+                    image: dataItem['provider']['image'],//mReviewModel.provider!.image,
+                    name: dataItem['provider']['firstName'].toString() +
+                        ' ' +
+                        dataItem['provider']['lastName'].toString(),
+                    customerId:  dataItem['customer'],//mReviewModel.customer!.id,
+                    providerId:  dataItem['provider']['_id'],//mReviewModel.provider!.id,
+                    rating:dataItem['customer_to_provider']['stars'].toDouble(), //mReviewModel.customerToProvider!.rating.toDouble(),
+                    review: dataItem['customer_to_provider']['review'].toString(),
+                    reviewId: dataItem['_id']));
+              }
               break;
             case RatingType.recieved:
-              // if (mReviewModel.providerToCustomer != null) {
-              //   reviews.add(RatingComponentModel(
-              //       serviceType: '',
-              //       image: mReviewModel.provider!.image,
-              //       name: mReviewModel.provider!.firstName.toString() +
-              //           ' ' +
-              //           mReviewModel.provider!.lastName.toString(),
-              //       customerId: mReviewModel.customer!.id,
-              //       providerId: mReviewModel.provider!.id,
-              //       rating: mReviewModel.providerToCustomer!.rating.toDouble(),
-              //       review: mReviewModel.providerToCustomer!.review.toString(),
-              //       reviewId: mReviewModel.id));
-              // }
+            if (mReviewModel.providerToCustomer != null) {
+              reviews.add(RatingComponentModel(
+                  serviceType: '',
+                  image: mReviewModel.provider!.image,
+                  name: mReviewModel.provider!.firstName.toString() +
+                      ' ' +
+                      mReviewModel.provider!.lastName.toString(),
+                  customerId: mReviewModel.customer!.id,
+                  providerId: mReviewModel.provider!.id,
+                  rating: mReviewModel.providerToCustomer!.rating.toDouble(),
+                  review: mReviewModel.providerToCustomer!.review.toString(),
+                  reviewId: mReviewModel.id));
+            }
               if (dataItem['provider_to_customer']!= null) {
                 reviews.add(RatingComponentModel(
                     serviceType: '',
@@ -229,7 +229,7 @@ class RatingRepo {
         if (data.isNotEmpty) {
           for (var dataItem in data) {
             AllProviderRatingModel mReviewModel =
-                AllProviderRatingModel.fromMap(dataItem);
+            AllProviderRatingModel.fromMap(dataItem);
             if (mReviewModel.customerToProvider != null &&
                 mReviewModel.customer != null) {
               reviews.add(RatingComponentModel(

@@ -130,6 +130,10 @@ class CreateEstimationController extends GetxController {
     pickedVideo = "";
     update();
   }
+  onDeleteVoice() {
+    voiceNoteFile = "";
+    update();
+  }
 
   onSelectVoiceNote(filePath) {
     voiceNoteFile = filePath;

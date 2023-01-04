@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_style.dart';

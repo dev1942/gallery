@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
+import 'package:get/get.dart';
+
 class PARAMS {
   static const int INT_TEXT_LIMIT_ADDRESS = 75;
   static const int RESULT_SUCCESS = 200,
@@ -111,7 +113,7 @@ class Constants {
           "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
           ")+";
 
-  static const String TAG_HOME = "Home",
+  static  String TAG_HOME = "Home",
       TAG_MY_PROFILE = 'My Profile',
       TAG_BOOKING_HISTORY = 'Booking History',
       TAG_PURCHASE_PRODUCT_HISTORY = 'Purchase Product History',
@@ -127,7 +129,7 @@ class Constants {
       TAG_ABOUT_US = 'About Us',
       TAG_ENTER_YOUR_CAR_DETAILS = 'Enter your car details',
   //it was Estimations then text is replaced by My Bookings in drawerremaininh navigationis with same name of estimation just text changed
-      TAG_ESTIMATION = 'My Booking',
+      TAG_ESTIMATION = 'My Booking'.tr,
       TAG_LOG_OUT = 'Log Out';
 
   // dashboard
@@ -210,7 +212,7 @@ class Constants {
       TXT_TOTAL_BUY_PRODUCTS = 'Total Buy Products';
 
   static const String TXT_SHARE_WITH_YOUR_FRIENDS = "Share with your friends:";
-  static const String TXT_USERNAME_EMAIL = "Username or email address",
+  static  String TXT_USERNAME_EMAIL = "Username or email address",
       TXT_NAME = "Enter Your Name",
       TXT_ENTER_NAME = "Enter Name",
       TXT_STATUS = "Status",
@@ -260,8 +262,8 @@ class Constants {
       TXT_CANCEL_BOOKING_REASON = "Reason for cancel booking",
       TXT_CANCEL_ESTIMATION_REASON = "Reason for decline estimation",
       TXT_ENTER_REASON = "enter your reason",
-      TXT_CANCEL = "Cancel",
-      TXT_DECLINE = "Decline",
+      TXT_CANCEL = "Cancel".tr,
+      TXT_DECLINE = "Decline".tr,
       TXT_REQUEST_ESTIMATION = "Request Estimation",
       TXT_ALREADY_HAVE_ACCOUNT = 'Already have an account?',
       TXT_I_ACCEPT_THE = "I accept the ",
@@ -315,22 +317,22 @@ class Constants {
   //
 
   static const String TXT_PLEASE_WAIT = "Please wait compressing video";
-  static const String TXT_CUSTOMER_ESTIMATION = "Customer Estimation",
+  static  String TXT_CUSTOMER_ESTIMATION = "Customer Estimation",
       TXT_TAX_INVOICE = "Tax Invoice",
       TXT_DOWNLOAD_INVOICE = "Download Invoice",
       TXT_CUSTOMER_NAME = "Customer name:  ",
-      TXT_DISCRIPTION = "Discription",
+      TXT_DISCRIPTION = "Description".tr,
       TXT_INVOICE_ID = "Invoice ID:  ",
       TXT_INVOICE_DATE = "Invoice Date:  ",
-      TXT_TITLE = "Title",
-      TXT_QTY = "Qty",
-      TXT_PRICE = "Price",
+      TXT_TITLE = "Title".tr,
+      TXT_QTY = "Qty".tr,
+      TXT_PRICE = "Price".tr,
       TXT_START_DATE_END_DATE = "Start Date - End Date",
-      TXT_AMOUNT = "Amount",
-      TXT_SUB_TOTAL = "Sub Total",
-      TXT_TOTAL = "Total",
-      TXT_DISCOUNT = "Discount",
-      TXT_THANKS_CONNECTING = "Thanks for Connecting with us";
+      TXT_AMOUNT = "Amount".tr,
+      TXT_SUB_TOTAL = "Sub Total".tr,
+      TXT_TOTAL = "Total".tr,
+      TXT_DISCOUNT = "Discount".tr,
+      TXT_THANKS_CONNECTING = "Thanks for Connecting with us".tr;
 
   static const int INTENT_CAT_DETAILS = 100,
       INTENT_PRODUCT_DETAILS = 105,

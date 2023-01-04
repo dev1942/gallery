@@ -679,7 +679,7 @@ class VoiceRecordingViewButtonState extends State<VoiceRecordingViewButton> {
                   child: InkWell(
                     child: const Icon(Icons.close),
                     onTap: () {
-                     print("close buttons");
+                     print("Cancel");
                       setState(() {
                         _path = "";
                         isShowPlayView = false;

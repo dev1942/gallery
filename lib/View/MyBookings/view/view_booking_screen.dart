@@ -257,8 +257,8 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                 if(reScheduleController.selectedDate==widget.mEstimatesModel.bookingDetails!.date!.substring(0,10)){
                                   Global.showToastAlert(
                                       context: Get.overlayContext!,
-                                      strTitle: "",
-                                      strMsg: "Please Select Another date",
+                                      strTitle: "".tr,
+                                      strMsg: "Please Select Another date".tr,
                                       toastType: TOAST_TYPE.toastInfo);
                                 }else {
                                   reScheduleController
@@ -274,7 +274,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                             // =>
                             //     controller.rebook(
                             //     context, widget.mEstimatesModel),
-                            strTitle:"RE-BOOKED"),
+                            strTitle:"re-book".tr.toUpperCase()),
                       ):
                       widget.isPending
                           ? Row(
@@ -298,8 +298,8 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                             if(reScheduleController.selectedDate==widget.mEstimatesModel.bookingDetails!.date!.substring(0,10)) {
                                               Global.showToastAlert(
                                                   context: Get.overlayContext!,
-                                                  strTitle: "",
-                                                  strMsg: "Please Select Another date",
+                                                  strTitle: "".tr,
+                                                  strMsg: "Please Select Another date".tr,
                                                   toastType: TOAST_TYPE
                                                       .toastInfo);
                                             }else{
@@ -317,7 +317,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                               Global.showToastAlert(
                                                   context: Get.overlayContext!,
                                                   strTitle: "",
-                                                  strMsg: "Please Select Another date",
+                                                  strMsg: "Please Select Another date".tr,
                                                   toastType: TOAST_TYPE.toastInfo);
                                             }else {
                                               reScheduleController
@@ -331,7 +331,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
 
                                           // Global.showAlert(context, "Something went wrong");
                                         },
-                                        strTitle: "Rescheduled"),
+                                        strTitle: "Reschedule".tr),
                                   ),
                                 ),
                                 Expanded(
@@ -353,7 +353,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                         // =>
                                         //     controller.rebook(
                                         //     context, widget.mEstimatesModel),
-                                        strTitle: "Cancelled"),
+                                        strTitle: "Cancelled".tr),
                                   ),
                                 ),
                               ],
@@ -374,7 +374,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                   // =>
                                   //     controller.rebook(
                                   //     context, widget.mEstimatesModel),
-                                  strTitle:widget.status=="completed"?"Completed":widget.status=="inProgress"?"InProgress":widget.status=="cancelled"?"Cancelled": "Booked"),
+                                  strTitle:widget.status=="completed"?"Completed".tr:widget.status=="inProgress"?"In Progress".tr:widget.status=="cancelled"?"Cancelled".tr: "Booked".tr),
                             ),
                     ],
                   ))
@@ -527,7 +527,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   children: [
                     Expanded(
                       child: Text(
-                        "Service",
+                        "Service".tr,
                         style: AppStyle.textViewStyleNormalSubtitle2(
                             context: context,
                             color: AppColors.colorGray,
@@ -557,7 +557,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   children: [
                     Expanded(
                       child: Text(
-                        "Provider",
+                        "Provider".tr,
                         style: AppStyle.textViewStyleNormalSubtitle2(
                             context: context,
                             color: AppColors.colorGray,
@@ -587,7 +587,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   children: [
                     Expanded(
                       child: Text(
-                        "Service Price per hour",
+                        "Service Price per hour".tr,
                         style: AppStyle.textViewStyleNormalSubtitle2(
                             context: context,
                             color: AppColors.colorGray,
@@ -629,7 +629,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   right: AppDimens.dimens_14,
                 ),
                 child: Text(
-                  "Date & Time",
+                  "Date & Time".tr,
                   style: AppStyle.textViewStyleNormalSubtitle2(
                       context: context,
                       color: AppColors.colorBlack2,
@@ -671,7 +671,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   right: AppDimens.dimens_14,
                 ),
                 child: Text(
-                  "Time",
+                  "Time".tr,
                   style: AppStyle.textViewStyleNormalSubtitle2(
                       context: context,
                       color: AppColors.colorBlack2,
@@ -705,7 +705,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   right: AppDimens.dimens_14,
                 ),
                 child: Text(
-                  "Car",
+                  "Car".tr,
                   style: AppStyle.textViewStyleNormalSubtitle2(
                       context: context,
                       color: AppColors.colorBlack2,
@@ -744,7 +744,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   children: [
                     Flexible(
                       child: Text(
-                        Constants.STR_IMAGE_MSG,
+                        Constants.STR_IMAGE_MSG.tr,
                         style: AppStyle.textViewStyleNormalSubtitle2(
                             context: context,
                             color: AppColors.colorBlack2,
@@ -772,7 +772,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   ? Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SizedBox(
-                          height: 30.0, child: Text('Progress: $_progress %')),
+                          height: 30.0, child: Text('Progress: $_progress %'.tr)),
                     )
                   : imageSlider(),
             ],
@@ -796,7 +796,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               children: [
                 Flexible(
                   child: Text(
-                    Constants.STR_VIDEO_MSG,
+                    Constants.STR_VIDEO_MSG.tr,
                     style: AppStyle.textViewStyleNormalSubtitle2(
                         context: context,
                         color: AppColors.colorBlack2,
@@ -806,7 +806,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                 ),
                 const SizedBox(width: AppDimens.dimens_5),
                 Text(
-                  Constants.STR_MAX_SIZE,
+                  Constants.STR_MAX_SIZE.tr,
                   style: AppStyle.textViewStyleNormalSubtitle2(
                       context: context,
                       color: AppColors.colorBlack2,
@@ -838,7 +838,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                         ),
                         Container(
                           child: Text(
-                            Constants.TXT_PLEASE_WAIT +
+                            Constants.TXT_PLEASE_WAIT .tr+
                                 ' ${snapshot.data.toStringAsFixed(0)}%',
                             style: AppStyle.textViewStyleSmall(
                                 context: context, color: AppColors.colorBlack),
@@ -971,7 +971,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                 children: [
                   Flexible(
                     child: Text(
-                      Constants.STR_LEAVE_VOICE_NOTE,
+                      Constants.STR_LEAVE_VOICE_NOTE.tr,
                       style: AppStyle.textViewStyleNormalSubtitle2(
                           context: context,
                           color: AppColors.colorBlack2,
@@ -981,7 +981,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   ),
                   const SizedBox(width: AppDimens.dimens_5),
                   Text(
-                    Constants.STR_MAX_SIZE,
+                    Constants.STR_MAX_SIZE.tr,
                     style: AppStyle.textViewStyleNormalSubtitle2(
                         context: context,
                         color: AppColors.colorBlack2,
@@ -1021,7 +1021,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
             right: AppDimens.dimens_14,
           ),
           child: Text(
-            Constants.STR_ADDRESS,
+            Constants.STR_ADDRESS.tr,
             style: AppStyle.textViewStyleNormalSubtitle2(
                 context: context,
                 color: AppColors.colorBlack2,
@@ -1067,7 +1067,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                 border: AppViews.textFieldRoundBorder(),
                 disabledBorder: AppViews.textFieldRoundBorder(),
                 focusedErrorBorder: AppViews.textFieldRoundBorder(),
-                hintText: "Adress",
+                hintText: "Address".tr,
                 filled: true,
                 fillColor: AppColors.colorGray2,
                 hintStyle: AppStyle.textViewStyleNormalBodyText2(
@@ -1098,7 +1098,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
             right: AppDimens.dimens_14,
           ),
           child: Text(
-            Constants.STR_LEAVE_NOTE,
+            Constants.STR_LEAVE_NOTE.tr,
             style: AppStyle.textViewStyleNormalSubtitle2(
                 context: context,
                 color: AppColors.colorBlack2,
@@ -1149,7 +1149,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               border: AppViews.textFieldRoundBorder(),
               disabledBorder: AppViews.textFieldRoundBorder(),
               focusedErrorBorder: AppViews.textFieldRoundBorder(),
-              hintText: "Write a message...",
+              hintText: "Write a message...".tr,
               // filled: true,
               fillColor: AppColors.colorGray2,
               hintStyle: AppStyle.textViewStyleNormalBodyText2(
@@ -1188,7 +1188,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                           contentPadding: EdgeInsets.zero,
                           backgroundColor: AppColors.colorWhite,
                           title: Text(
-                            'Select Image',
+                            'Select Image'.tr,
                             textAlign: TextAlign.center,
                             style: AppStyle.textViewStyleLarge(
                                 context: context,
@@ -1218,7 +1218,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                     }
                                   },
                                   title: Text(
-                                    'Take a Photo',
+                                    'Take a Photo'.tr,
                                     style:
                                         AppStyle.textViewStyleNormalSubtitle2(
                                             context: context,
@@ -1243,7 +1243,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                   }
                                 },
                                 title: Text(
-                                  'Upload Image',
+                                  'Upload Image'.tr,
                                   style: AppStyle.textViewStyleNormalSubtitle2(
                                       context: context,
                                       color: AppColors.colorBlack,
@@ -1255,7 +1255,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                           ),
                           actions: [
                             ElevatedButton(
-                                child: const Text('Cancel'),
+                                child:  Text('Cancel'.tr),
                                 onPressed: () {
                                   Navigator.pop(context);
                                 })

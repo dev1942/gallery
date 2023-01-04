@@ -678,12 +678,12 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
                     child: const Icon(Icons.close),
                     onTap: () {
                       print("------close--------");
-                      // setState(() {
-                      //   _path = "";
-                      //   isShowPlayView = false;
-                      //   isShowRecordButton = true;
-                      // });
-                      // updatePath();
+                      setState(() {
+                        _path = "";
+                        isShowPlayView = false;
+                        isShowRecordButton = true;
+                      });
+                      updatePath();
                     },
                   ),
                   visible: isHideRemoveButton,

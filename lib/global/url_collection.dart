@@ -3,7 +3,7 @@
 class RequestBuilder {
   static final String LIVE_URL = "https://developmentapi-app.otobucks.com/v1/";
   //https://developmentapi-app.otobucks.com/v1
-  static final String LOCAL_URL = "https://192.168.111.97:8000/v1/auth/";
+  static final String LOCAL_URL = "http://192.168.18.36:4001/v1/auth/";
   //https://api.otobucks.com/v1/auth/customers/login
   static String API_BASE_URL = LIVE_URL;
   static final String API_LOGIN = "auth/customers/login";
@@ -12,6 +12,7 @@ class RequestBuilder {
   static final String API_FORGOT_PASSWORD = "auth/customers/forgotPassword";
   static final String API_RESET_PASSWORD = "auth/customers/resetPassword/";
   static final String API_SIGN_UP = "auth/customers/register";
+  static final String API_DELETE_Booking = "bookings/bookService";
   static final String API_SEND_EMAIL_VERIFICATION_TOKEN =
       "auth/users/send-email-verification-token";
   static final String API_SEND_PHONE_VERIFICATION_TOKEN =
