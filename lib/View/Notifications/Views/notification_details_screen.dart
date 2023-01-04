@@ -9,11 +9,11 @@ import '../../../../../../global/app_style.dart';
 import '../../../../../../global/app_views.dart';
 import '../Models/notification_model.dart';
 
-class NotificationDetails extends StatefulWidget {
+class NotificationDetailsScreen extends StatefulWidget {
   final NotificationModel notificationModel;
   final String userName;
   final String userImage;
-  const NotificationDetails(
+  const NotificationDetailsScreen(
       {Key? key,
       required this.notificationModel,
       this.userName = '',
@@ -21,10 +21,10 @@ class NotificationDetails extends StatefulWidget {
       : super(key: key);
 
   @override
-  NotificationDetailsState createState() => NotificationDetailsState();
+  NotificationDetailsScreenState createState() => NotificationDetailsScreenState();
 }
 
-class NotificationDetailsState extends State<NotificationDetails> {
+class NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
   List<NotificationModel> alNotification = [];
 
   late DateTime dateTime;

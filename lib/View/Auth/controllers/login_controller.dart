@@ -40,6 +40,33 @@ class LoginController extends GetxController {
   final List<String> items = ['English', 'Arabic'];
   String selectedValue = "English";
 
+
+  @override
+  void onInit() {
+    getInitializeMessage();
+    super.onInit();
+  }
+
+  void getInitializeMessage() {
+    FirebaseMessaging.instance.getInitialMessage().then(
+      (message) {
+        print("FirebaseMessaging.instance.getInitialMessage");
+        if (message != null) {
+          print("New Notification");
+          // if (message.data['_id'] != null) {
+          //   Navigator.of(context).push(
+          //     MaterialPageRoute(
+          //       builder: (context) => DemoScreen(
+          //         id: message.data['_id'],
+          //       ),
+          //     ),
+          //   );
+          // }
+        }
+      },
+    );
+  }
+
   void changeRemember(bool value) {
     rememberMe = value;
     update();

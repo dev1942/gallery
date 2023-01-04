@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:otobucks/View/Notifications/Views/notification_details_screen.dart';
 import 'package:otobucks/View/auth/View/login_in_screen.dart';
 import 'package:otobucks/app/locator.dart';
 import 'package:otobucks/global/theme_data/theme_data.dart';
@@ -16,6 +18,7 @@ import 'package:overlay_support/overlay_support.dart';
 import 'app/bindings/initial_binding.dart';
 import 'global/adaptive_helper.dart';
 import 'global/constants.dart';
+
 class Controller extends GetxController {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -26,6 +29,11 @@ class Controller extends GetxController {
   void closeDrawer() {
     scaffoldKey.currentState?.openEndDrawer();
   }
+}
+
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print(message.data.toString());
+  print(message.notification!.title);
 }
 
 // late Directory appDocsDir;
@@ -39,7 +47,7 @@ Future<void> main() async {
       //     messagingSenderId: '443053986656',
       //     projectId: 'otobucks-43859')
       );
-
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   LocalNotificationChannel.initializer();
 
   // Get any initial links
@@ -57,6 +65,7 @@ Future<void> main() async {
   // You should get the Application Documents Directory only once.
   // WidgetsFlutterBinding.ensureInitialized();
   // appDocsDir = await getApplicationDocumentsDirectory();
+  await GetStorage.init();
   runApp(
     DevicePreview(
       enabled: false,
@@ -86,6 +95,7 @@ class BoosterMaterialApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           initialBinding: InitialBinding(),
           home: const SplashScreen(),
+          //home: NotificationDetails(notificationModel: notificationModel),
           builder: (context, child) {
             //ignore system scale factor
             return MediaQuery(
