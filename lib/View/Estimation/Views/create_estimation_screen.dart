@@ -849,6 +849,7 @@ String? selectedValue="";
                 left: AppDimens.dimens_14,
                 right: AppDimens.dimens_14,
               ),
+
               child: InkWell(
                 onTap: (){
 
@@ -859,6 +860,8 @@ String? selectedValue="";
                   callback: (String filePath) =>
                       value.onSelectVoiceNote(filePath),
                 ),
+
+
               ),
             ),
           ],

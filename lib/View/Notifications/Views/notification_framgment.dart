@@ -1,7 +1,15 @@
 import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:otobucks/global/container_properties.dart';
 import 'package:otobucks/View/Notifications/Views/notification_details_screen.dart';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:otobucks/View/Notifications/Views/notification_details_screen.dart';
+import 'package:otobucks/preferences/preferences.dart';
+
 import 'package:otobucks/services/repository/notification_repo.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,16 +32,23 @@ class NotificationFragment extends StatefulWidget {
 class NotificationFragmentState extends State<NotificationFragment> {
   ShowData mShowData = ShowData.showLoading;
 
+
+
+
   bool connectionStatus = false;
   bool isShowLoader = false;
   String userImage = "", userName = "";
+  static final FlutterLocalNotificationsPlugin _notificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  Preferences preferences = Preferences();
+
 
   List<NotificationModel> alNotification = [];
 
   @override
   void initState() {
     super.initState();
-//init
+
     initConnectivity();
   }
 
@@ -94,7 +109,8 @@ class NotificationFragmentState extends State<NotificationFragment> {
         ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+
             itemBuilder: (BuildContext contextM, index) {
               NotificationModel mNotificationModel = alNotification[index];
               return Padding(
@@ -106,12 +122,11 @@ class NotificationFragmentState extends State<NotificationFragment> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.only(
-                      top: 10,
-                      right: AppDimens.dimens_10,
-                      left: 10,
-                      bottom: 7),
+
+                      top: 10, right: AppDimens.dimens_10, left: 10, bottom: 7),
                   margin: EdgeInsets.symmetric(horizontal: 5),
-                 // margin: const EdgeInsets.only(bottom: AppDimens.dimens_14),
+                  // margin: const EdgeInsets.only(bottom: AppDimens.dimens_14),
+
                   child: InkWell(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -127,7 +142,11 @@ class NotificationFragmentState extends State<NotificationFragment> {
                             borderRadius:
                                 BorderRadius.circular(AppDimens.dimens_5),
                             child: NetworkImageCustom(
-                                image: Global.checkNull(mNotificationModel.image)
+
+
+                                image: Global.checkNull(
+                                        mNotificationModel.image)
+
                                     ? mNotificationModel.image
                                     : "https://qph.cf2.quoracdn.net/main-thumb-1278318002-200-ydzfegagslcexelzgsnplcklfkienzfr.jpeg",
                                 fit: BoxFit.fill,
@@ -180,7 +199,9 @@ class NotificationFragmentState extends State<NotificationFragment> {
                     ),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => NotificationDetails(
+
+                          builder: (_) => NotificationDetailsScreen(
+
                                 notificationModel: mNotificationModel,
                                 userImage: userImage,
                                 userName: userName,
@@ -195,23 +216,27 @@ class NotificationFragmentState extends State<NotificationFragment> {
     );
     widgetM = AppViews.getSetDataNotification(context, mShowData, mShowWidget);
     return SafeArea(
-        top: false,
-        bottom: false,
-        child: Scaffold(
-            resizeToAvoidBottomInset: true,
-            backgroundColor: AppColors.getMainBgColor(),
-            body: Stack(
-              children: [
-                Container(
-                  color: AppColors.colorBlueStart,
-                  //height: AppDimens.dimens_120,
-                  height: 0,
-                ),
-                // Container(height: size.height, child: widgetM),
-                widgetM,
-                AppViews.showLoadingWithStatus(isShowLoader)
-              ],
-            )));
+
+      top: false,
+      bottom: false,
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: AppColors.getMainBgColor(),
+        body: Stack(
+          children: [
+            Container(
+              color: AppColors.colorBlueStart,
+              //height: AppDimens.dimens_120,
+              height: 0,
+            ),
+            // Container(height: size.height, child: widgetM),
+            widgetM,
+            AppViews.showLoadingWithStatus(isShowLoader)
+          ],
+        ),
+      ),
+    );
+
   }
 
   Future<void> initConnectivity() async {
@@ -267,12 +292,51 @@ class NotificationFragmentState extends State<NotificationFragment> {
     }, (mResult) {
       setState(() {
         alNotification = mResult.responseData as List<NotificationModel>;
+
+
         if (alNotification.isNotEmpty) {
           mShowData = ShowData.showData;
+          if (preferences.getnotificationId() != alNotification.last.id) {
+            preferences.setNotificationId(alNotification.last.id);
+            createanddisplaynotification(
+                title: alNotification.last.title,
+                body: alNotification.last.title,
+                payload: alNotification.last.id);
+          }
+
         } else {
           mShowData = ShowData.showNoDataFound;
         }
       });
     });
   }
+
+
+  static void createanddisplaynotification(
+      {required String title,
+      required String body,
+      required String payload}) async {
+    try {
+      final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+      const NotificationDetails notificationDetails = NotificationDetails(
+        android: AndroidNotificationDetails(
+          "pushnotificationapp",
+          "pushnotificationappchannel",
+          importance: Importance.max,
+          priority: Priority.high,
+        ),
+      );
+
+      await _notificationsPlugin.show(
+        id,
+        title,
+        body,
+        notificationDetails,
+        payload: payload,
+      );
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+
 }

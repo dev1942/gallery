@@ -33,6 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
     _controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     Get.put(SplashScreenController(context: context));
@@ -41,26 +42,26 @@ class _SplashScreenState extends State<SplashScreen> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        return
-          OrientationBuilder(
+
+        return OrientationBuilder(
           builder: (context, orientation) {
             SizeConfig().init(constraints, orientation);
-            return
-              Scaffold(
+            return Scaffold(
               resizeToAvoidBottomInset: false,
               backgroundColor: AppColors.colorWhite,
-              body:SizedBox(
+              body: SizedBox(
                 height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Stack(
-              children: <Widget>[
-              VideoPlayer(_controller),
-              ClosedCaption(text: _controller.value.caption.text),
-           // _ControlsOverlay(controller: _controller),
-             // VideoProgressIndicator(_controller, allowScrubbing: false),
-              ],
+                width: MediaQuery.of(context).size.width,
+                child: Stack(
+                  children: <Widget>[
+                    VideoPlayer(_controller),
+                    ClosedCaption(text: _controller.value.caption.text),
+                    // _ControlsOverlay(controller: _controller),
+                    // VideoProgressIndicator(_controller, allowScrubbing: false),
+                  ],
+                ),
               ),
-              )
+
 
               // ConstrainedBox(
               //   constraints: const BoxConstraints.expand(),
@@ -81,7 +82,9 @@ class _SplashScreenState extends State<SplashScreen> {
               // ),
             );
           },
-     );
+
+        );
+
       },
     );
   }

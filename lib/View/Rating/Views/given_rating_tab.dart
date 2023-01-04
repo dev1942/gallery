@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
+
 import 'package:otobucks/View/Home/Controllers/home_screen_controller.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/View/Rating/model/rating_component_model.dart';
@@ -39,7 +39,9 @@ class GivenRatingTabState extends State<GivenRatingTab> {
   @override
   Widget build(BuildContext context) {
     Widget widgetM = Container();
-    Logger().e(alReviewModel.length);
+
+
+
     Widget mShowWidget = ListView.builder(
         padding: const EdgeInsets.all(AppDimens.dimens_10),
         itemBuilder: (BuildContext contextM, index) {
@@ -71,7 +73,8 @@ class GivenRatingTabState extends State<GivenRatingTab> {
         RatingType.given, Get.find<HomeScreenController>().userId);
 
     categories.fold((failure) {
-      Logger().e(":fail");
+
+
       Global.showToastAlert(
           context: context,
           strTitle: "",
@@ -82,7 +85,7 @@ class GivenRatingTabState extends State<GivenRatingTab> {
       });
     }, (mResult) {
       setState(() {
-        Logger().i(":success");
+
         alReviewModel = mResult.responseData as List<RatingComponentModel>;
         mShowData = ShowData.showData;
       });

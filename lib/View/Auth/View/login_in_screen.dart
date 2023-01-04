@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/controller/login_screen_controller.dart';
+
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_images.dart';
@@ -13,7 +15,9 @@ import 'package:otobucks/widgets/language_dropdown.dart';
 
 import '../controllers/login_controller.dart';
 
-class LogInScreen extends StatelessWidget {
+
+class LogInScreen extends GetView<LoginController> {
+
   const LogInScreen({Key? key}) : super(key: key);
 
   @override

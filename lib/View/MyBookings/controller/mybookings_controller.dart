@@ -165,49 +165,6 @@ class MyBookingsController extends GetxController {
     filteredBookingList=suggestions;
     update();
   }
-  /*----------------------Delete booking----------------------------------------*/
-  Future<void> deleteBooking({
-    String? bookingID,
-  }) async {
-    final prefManager = await SharedPreferences.getInstance();
-    String ? token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
-    try {
-      final body = json.encode({
-        "bookingID":bookingID
-      });
-      log.i("$token");
-      log.i("$body");
-      final headers = {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json'
-      };
-      var uriSaveCart = Uri.parse(RequestBuilder.API_DELETE_Booking);
-      http.Response response =
-      await http.delete(uriSaveCart, headers: headers, body: body);
-      log.i("BodyI sent when remover cart=======>${body}");
-      final message = json.decode(response.body.toString());
 
-      log.e("token befor remover cart${token}");
-      //ActivityIndicator().showProgressIndicatorDialog();
-      //..............Response Ok Part...................................................
-      if (response.statusCode == 200) {
-        log.i(response.statusCode);
-        log.i(
-            "Server Response to me while remover market shopis======>>${message["message"]}");
-       AppViews.showCustomAlert(context: Get.context!, strTitle: "Deleted", strMessage: "Deleted Successfully",);
-      }
-      //.........................not ok ...................................................
-      else {
-        AppViews.showCustomAlert(context: Get.context!, strTitle: "Error", strMessage: "Something went wrong",);
-        log.e(response.statusCode);
-        log.e(
-            "Server Response to me  while remover market shop is =====>>  ${response.body.toString()}");
-      }
-    } catch (e) {
-      AppViews.showCustomAlert(context: Get.context!, strTitle: "Sory", strMessage: "Something went wrong in our end",);
-
-      log.e("Exception is whileremover market shop  is=======>>${e.toString()}");
-    }
-  }
 
 }

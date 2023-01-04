@@ -1,3 +1,6 @@
+
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Home/Controllers/home_screen_controller.dart';
@@ -19,9 +22,46 @@ class _HomePageState extends State<HomePage> {
   var controller = Get.put(HomeScreenController());
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
+
   @override
   void initState() {
     controller.getAccountName();
+
+  void onMessage() {
+    FirebaseMessaging.onMessage.listen(
+      (message) {
+        print("FirebaseMessaging.onMessage.listen");
+        if (message.notification != null) {
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print("message.data11 ${message.data}");
+          // LocalNotificationService.display(message);
+
+        }
+      },
+    );
+  }
+
+  void onListen() {
+    FirebaseMessaging.onMessageOpenedApp.listen(
+      (message) {
+        print("FirebaseMessaging.onMessageOpenedApp.listen");
+        if (message.notification != null) {
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print("message.data22 ${message.data['_id']}");
+        }
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    controller.getAccountName();
+    onMessage();
+    onListen();
+    onMessage();
+
     super.initState();
   }
 

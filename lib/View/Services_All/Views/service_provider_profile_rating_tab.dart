@@ -52,6 +52,7 @@ class ServiceProviderProfileRatingTabState
         itemCount: alReviewModel.length);
 
     widgetM = AppViews.getSetData(context, mShowData, mShowWidget);
+
     return Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: AppColors.getMainBgColor(),
@@ -59,6 +60,7 @@ class ServiceProviderProfileRatingTabState
           children: [widgetM, AppViews.showLoadingWithStatus(isShowLoader)],
         ));
   }
+
   getRating() async {
     setState(() {
       mShowData = ShowData.showLoading;
