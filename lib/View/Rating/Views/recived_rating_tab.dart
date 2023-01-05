@@ -60,13 +60,9 @@ class RecievedRatingTabState extends State<RecievedRatingTab> {
   getRating() async {
     setState(() {
       mShowData = ShowData.showLoading;
-    });
-
-    HashMap<String, Object> requestParams = HashMap();
-
+    });    HashMap<String, Object> requestParams = HashMap();
     var categories = await RatingRepo().getRatingsIndividual(requestParams,
         RatingType.recieved, Get.find<HomeScreenController>().userId);
-
     categories.fold((failure) {
       Global.showToastAlert(
           context: context,

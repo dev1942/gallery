@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:otobucks/global/container_properties.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/small_button.dart';
 
@@ -12,8 +11,8 @@ import '../Models/notification_model.dart';
 
 class NotificationDetailsScreen extends StatefulWidget {
   final NotificationModel notificationModel;
-  final String userName;
-  final String userImage;
+  final String ?userName;
+  final String ?userImage;
   const NotificationDetailsScreen(
 
 
@@ -28,16 +27,8 @@ class NotificationDetailsScreen extends StatefulWidget {
 
   NotificationDetailsScreenState createState() => NotificationDetailsScreenState();
 }
-//
-// //class NotificationDetailsState extends State<NotificationDetails> {
-//
-//   NotificationDetailsScreenState createState() => NotificationDetailsScreenState();
-// }
-
 class NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
-
   List<NotificationModel> alNotification = [];
-
   late DateTime dateTime;
   @override
   void initState() {
@@ -62,7 +53,7 @@ class NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(AppDimens.dimens_50),
                   child: NetworkImageCustom(
-                      image: widget.userImage,
+                      image: widget.userImage!,
                       fit: BoxFit.fill,
                       height: AppDimens.dimens_60,
                       width: AppDimens.dimens_60),
@@ -79,7 +70,7 @@ class NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                       margin: const EdgeInsets.only(
                           top: AppDimens.dimens_5, bottom: AppDimens.dimens_2),
                       child: Text(
-                        widget.userName.toUpperCase(),
+                        widget.userName!.toUpperCase(),
                         style: AppStyle.textViewStyleNormalBodyText2(
                             context: context,
                             color: AppColors.colorWhite,
