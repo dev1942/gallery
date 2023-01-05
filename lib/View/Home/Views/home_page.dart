@@ -11,6 +11,7 @@ import '../../../global/app_views.dart';
 import '../../../global/enum.dart';
 import '../../../widgets/bottom_bar.dart';
 
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -23,9 +24,8 @@ class _HomePageState extends State<HomePage> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
 
-  @override
-  void initState() {
-    controller.getAccountName();
+
+   // controller.getAccountName();
 
   void onMessage() {
     FirebaseMessaging.onMessage.listen(

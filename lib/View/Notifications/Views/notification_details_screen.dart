@@ -10,17 +10,13 @@ import '../../../../../../global/app_views.dart';
 import '../Models/notification_model.dart';
 
 
-class NotificationDetails extends StatefulWidget {
-  final NotificationModel notificationModel;
-  final String userName;
-  final String userImage;
-  const NotificationDetails(
-
 class NotificationDetailsScreen extends StatefulWidget {
   final NotificationModel notificationModel;
   final String userName;
   final String userImage;
   const NotificationDetailsScreen(
+
+
 
       {Key? key,
       required this.notificationModel,
@@ -30,13 +26,13 @@ class NotificationDetailsScreen extends StatefulWidget {
 
   @override
 
-  NotificationDetailsState createState() => NotificationDetailsState();
-}
-
-class NotificationDetailsState extends State<NotificationDetails> {
-
   NotificationDetailsScreenState createState() => NotificationDetailsScreenState();
 }
+//
+// //class NotificationDetailsState extends State<NotificationDetails> {
+//
+//   NotificationDetailsScreenState createState() => NotificationDetailsScreenState();
+// }
 
 class NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
 
