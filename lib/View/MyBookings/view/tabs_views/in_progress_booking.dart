@@ -32,269 +32,273 @@ class InProgressFragment extends GetView<MyBookingsController> {
           resizeToAvoidBottomInset: true,
           backgroundColor: AppColors.getMainBgColor(),
           body: FutureBuilder<BookingModel>(
-              future: controller.getAllBookings(),
+              future: controller.futurBookings,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return ListView.builder(
-                    itemCount: snapshot.data?.result!.length,
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                    itemBuilder: (BuildContext contextM, index) {
-                      var inProcgressList =
-                          snapshot.data!.result!.reversed.toList();
-                      var data = inProcgressList[index];
-                      if (data.status == "inProgress") {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 6.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              color: AppColors.grayDashboardItem,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            padding: const EdgeInsets.only(
-                                top: 10,
-                                right: AppDimens.dimens_10,
-                                left: 10,
-                                bottom: 7),
-                            margin: EdgeInsets.symmetric(horizontal: 5),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      //------------------ column Image  amd view booking-----------------
-                                      Column(
-                                        children: [
-                                          ImageWidget(
-                                              imagePath:
-                                                  data.source?.image?.first),
-                                          const SizedBox(
-                                            height: AppDimens.dimens_12,
-                                          ),
+                  return RefreshIndicator(
+                    onRefresh: controller.getAllBookings,
 
-                                          /// onclick of view booking
-                                          InkWell(
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 8.0),
-                                                    child: Text(
-                                                      Constants
-                                                          .TXT_VIEW_BOOKING.tr,
-                                                      style: AppStyle
-                                                          .textViewStyleSmall(
-                                                              context: context,
-                                                              color: AppColors
-                                                                  .colorTextBlue2,
-                                                              fontSizeDelta: 0,
-                                                              fontWeightDelta:
-                                                                  0),
-                                                    ),
-                                                  )),
-                                              onTap: () {
-                                                if (data.status ==
-                                                    "inProgress") {
-                                                  //reschedule and decline
-                                                  Get.to(ViewBookingEstimation(
-                                                      status: "inProgress",
-                                                      mEstimatesModel: data,
-                                                      isPending: false));
-                                                } else {
-                                                  Get.to(ViewBookingEstimation(
-                                                      mEstimatesModel: data));
-                                                }
-                                              }),
-                                        ],
-                                      ),
-                                      addHorizontalSpace(8),
-                                      //..........................right side data column
-                                      Expanded(
-                                        child: Column(
+                    child: ListView.builder(
+                      itemCount: snapshot.data?.result!.length,
+                      padding:
+                          const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                      itemBuilder: (BuildContext contextM, index) {
+                        var inProcgressList =
+                            snapshot.data!.result!.reversed.toList();
+                        var data = inProcgressList[index];
+                        if (data.status == "inProgress") {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: AppColors.grayDashboardItem,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: const EdgeInsets.only(
+                                  top: 10,
+                                  right: AppDimens.dimens_10,
+                                  left: 10,
+                                  bottom: 7),
+                              margin: EdgeInsets.symmetric(horizontal: 5),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        //------------------ column Image  amd view booking-----------------
+                                        Column(
                                           children: [
-                                            Row(
-                                              children: [
-                                                //---------------UserName
-                                                Expanded(
-                                                  child: UserNameWidget(
-                                                      userName:
-                                                          "${data.customer?.firstName}"
-                                                          "${data.customer?.lastName} "),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Textwidget(
-                                                    text: "Service Title: ".tr,
-                                                    fontsize: 0,
-                                                    fontweight: 0),
-                                                Flexible(
-                                                  child: Textwidget(
-                                                      text:
-                                                          data.source?.title ??
-                                                              "",
-                                                      fontsize: 0,
-                                                      fontweight: 0),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Textwidget(
-                                                    text: "Price :  ".tr,
-                                                    fontsize: 0,
-                                                    fontweight: 0),
-                                                priceWidget(
-                                                    data.totalprice.toString()),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Textwidget(
-                                                    text: "Paid  : ".tr,
-                                                    fontsize: 0,
-                                                    fontweight: 0),
-                                                Text(
-                                                  "AED ${data.totalprice / 2}/-"
-                                                      .tr,
-                                                  style: AppStyle
-                                                      .textViewStyleNormalBodyText2(
-                                                          context: Get.context!,
-                                                          color: Colors.green,
-                                                          fontSizeDelta: 1,
-                                                          fontWeightDelta: 3),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "Booking Date : ".tr,
-                                                  style: AppStyle
-                                                      .textViewStyleSmall(
-                                                          context: context,
-                                                          color: AppColors
-                                                              .colorBlack,
-                                                          fontSizeDelta: -1,
-                                                          fontWeightDelta: 0),
-                                                ),
-                                                Text(
-                                                  getDate(data
-                                                      .bookingDetails!.date!),
-                                                  style: AppStyle
-                                                      .textViewStyleSmall(
-                                                          context: context,
-                                                          color: AppColors
-                                                              .colorBlack,
-                                                          fontSizeDelta: -1,
-                                                          fontWeightDelta: 0),
-                                                ),
-                                              ],
+                                            ImageWidget(
+                                                imagePath:
+                                                    data.source?.image?.first),
+                                            const SizedBox(
+                                              height: AppDimens.dimens_12,
                                             ),
 
-                                            ///........... estimation and status row button
-
-                                            Divider(
-                                              thickness: 1,
-                                            ),
-
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              //     : MainAxisAlignment.center,
-                                              children: [
-                                                ///on click view estimation
-                                                InkWell(
-                                                  child: Container(
-                                                      width: Get.width / 2.6,
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 6.0,
-                                                          vertical: 5.0),
-                                                      decoration: AppViews
-                                                          .getGradientBoxDecoration(
-                                                              mBorderRadius: 2),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "Balance Payment"
-                                                              .tr
-                                                              .toUpperCase(),
-                                                          style: TextStyle(
-                                                              color: AppColors
-                                                                  .colorWhite,
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-                                                      )),
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                CheckoutScreen(
-                                                                  isFullyPay:
-                                                                      true,
-                                                                  bookingID:
-                                                                      data.id,
-                                                                  amount: data
-                                                                      .paymentCompleted
-                                                                      .toString(),
-                                                                  previousAmount: data
-                                                                      .totalprice
-                                                                      .toString(),
-                                                                )));
-
-                                                    // gotoViewEstimation(
-                                                    //     AllBookingsModel(),
-                                                    //     false);false
-                                                  },
-                                                ),
-                                                const SizedBox(
-                                                  width: 15,
-                                                ),
-                                                //.................chat icon.................
-                                                InkWell(
-                                                    onTap: () {
-                                                      controller
-                                                          .launchWhatsappSendMessage(
-                                                              data.provider
-                                                                  ?.phone
-                                                                  ?.split(
-                                                                      " ")[0]
-                                                                  .toString(),
-                                                              "Hi ${data.provider?.firstName}! How Are You?");
-                                                      Logger().i(data
-                                                          .provider?.phone
-                                                          ?.split(" ")[0]
-                                                          .toString());
-                                                    },
-                                                    child: BlinkIcon()),
-                                              ],
-                                            ),
+                                            /// onclick of view booking
+                                            InkWell(
+                                                child: Container(
+                                                    alignment: Alignment.center,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 8.0),
+                                                      child: Text(
+                                                        Constants
+                                                            .TXT_VIEW_BOOKING.tr,
+                                                        style: AppStyle
+                                                            .textViewStyleSmall(
+                                                                context: context,
+                                                                color: AppColors
+                                                                    .colorTextBlue2,
+                                                                fontSizeDelta: 0,
+                                                                fontWeightDelta:
+                                                                    0),
+                                                      ),
+                                                    )),
+                                                onTap: () {
+                                                  if (data.status ==
+                                                      "inProgress") {
+                                                    //reschedule and decline
+                                                    Get.to(ViewBookingEstimation(
+                                                        status: "inProgress",
+                                                        mEstimatesModel: data,
+                                                        isPending: false));
+                                                  } else {
+                                                    Get.to(ViewBookingEstimation(
+                                                        mEstimatesModel: data));
+                                                  }
+                                                }),
                                           ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  //buttons
+                                        addHorizontalSpace(8),
+                                        //..........................right side data column
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  //---------------UserName
+                                                  Expanded(
+                                                    child: UserNameWidget(
+                                                        userName:
+                                                            "${data.customer?.firstName}"
+                                                            "${data.customer?.lastName} "),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Textwidget(
+                                                      text: "Service Title: ".tr,
+                                                      fontsize: 0,
+                                                      fontweight: 0),
+                                                  Flexible(
+                                                    child: Textwidget(
+                                                        text:
+                                                            data.source?.title ??
+                                                                "",
+                                                        fontsize: 0,
+                                                        fontweight: 0),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Textwidget(
+                                                      text: "Price :  ".tr,
+                                                      fontsize: 0,
+                                                      fontweight: 0),
+                                                  priceWidget(
+                                                      data.totalprice.toString()),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Textwidget(
+                                                      text: "Paid  : ".tr,
+                                                      fontsize: 0,
+                                                      fontweight: 0),
+                                                  Text(
+                                                    "AED ${data.totalprice / 2}/-"
+                                                        .tr,
+                                                    style: AppStyle
+                                                        .textViewStyleNormalBodyText2(
+                                                            context: Get.context!,
+                                                            color: Colors.green,
+                                                            fontSizeDelta: 1,
+                                                            fontWeightDelta: 3),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "Booking Date : ".tr,
+                                                    style: AppStyle
+                                                        .textViewStyleSmall(
+                                                            context: context,
+                                                            color: AppColors
+                                                                .colorBlack,
+                                                            fontSizeDelta: -1,
+                                                            fontWeightDelta: 0),
+                                                  ),
+                                                  Text(
+                                                    getDate(data
+                                                        .bookingDetails!.date!),
+                                                    style: AppStyle
+                                                        .textViewStyleSmall(
+                                                            context: context,
+                                                            color: AppColors
+                                                                .colorBlack,
+                                                            fontSizeDelta: -1,
+                                                            fontWeightDelta: 0),
+                                                  ),
+                                                ],
+                                              ),
 
-                                  const SizedBox(height: 3.0),
-                                ]),
-                          ),
-                        );
-                      } else {
-                        return SizedBox();
-                      }
+                                              ///........... estimation and status row button
 
-                      ///////////////////////////////// ////////////////////////////////////////////////////////////////
-                    },
+                                              Divider(
+                                                thickness: 1,
+                                              ),
+
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                //     : MainAxisAlignment.center,
+                                                children: [
+                                                  ///on click view estimation
+                                                  InkWell(
+                                                    child: Container(
+                                                        width: Get.width / 2.6,
+                                                        padding: const EdgeInsets
+                                                                .symmetric(
+                                                            horizontal: 6.0,
+                                                            vertical: 5.0),
+                                                        decoration: AppViews
+                                                            .getGradientBoxDecoration(
+                                                                mBorderRadius: 2),
+                                                        child: Center(
+                                                          child: Text(
+                                                            "Balance Payment"
+                                                                .tr
+                                                                .toUpperCase(),
+                                                            style: TextStyle(
+                                                                color: AppColors
+                                                                    .colorWhite,
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+                                                        )),
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  CheckoutScreen(
+                                                                    isFullyPay:
+                                                                        true,
+                                                                    bookingID:
+                                                                        data.id,
+                                                                    amount: data
+                                                                        .paymentCompleted
+                                                                        .toString(),
+                                                                    previousAmount: data
+                                                                        .totalprice
+                                                                        .toString(),
+                                                                  )));
+
+                                                      // gotoViewEstimation(
+                                                      //     AllBookingsModel(),
+                                                      //     false);false
+                                                    },
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 15,
+                                                  ),
+                                                  //.................chat icon.................
+                                                  InkWell(
+                                                      onTap: () {
+                                                        controller
+                                                            .launchWhatsappSendMessage(
+                                                                data.provider
+                                                                    ?.phone
+                                                                    ?.split(
+                                                                        " ")[0]
+                                                                    .toString(),
+                                                                "Hi ${data.provider?.firstName}! How Are You?");
+                                                        Logger().i(data
+                                                            .provider?.phone
+                                                            ?.split(" ")[0]
+                                                            .toString());
+                                                      },
+                                                      child: BlinkIcon()),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    //buttons
+
+                                    const SizedBox(height: 3.0),
+                                  ]),
+                            ),
+                          );
+                        } else {
+                          return SizedBox();
+                        }
+
+                        ///////////////////////////////// ////////////////////////////////////////////////////////////////
+                      },
+                    ),
                   );
                 } else if (snapshot.hasError) {
                   const Center(child: Text("No data found"));
