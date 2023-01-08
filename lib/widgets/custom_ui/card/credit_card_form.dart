@@ -175,7 +175,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
                     margin: const EdgeInsets.only(left: AppDimens.dimens_5),
                     child: Text(
                       Constants.TXT_CARD_HOLDER_NAME,
-                      style: AppStyle.textViewStyleNormalSubtitle2(
+                      style: AppStyle.textViewStyleNormalBodyText2(
                           context: context,
                           color: AppColors.colorBlack,
                           fontWeightDelta: 0,
@@ -188,31 +188,29 @@ class _CreditCardFormState extends State<CreditCardForm> {
                         right: AppDimens.dimens_5,
                         top: AppDimens.dimens_5,
                         left: AppDimens.dimens_5),
-                    decoration: AppViews.getRoundBorder(
-                        cBoxBgColor: AppColors.colorWhite,
-                        cBorderColor: AppColors.colorBorder2,
-                        dRadius: AppDimens.dimens_5,
-                        dBorderWidth: AppDimens.dimens_1),
-                    child: Container(
-                        margin: const EdgeInsets.only(top: AppDimens.dimens_5),
-                        child: CustomTextFieldWithIcon(
-                          height: AppDimens.dimens_36,
-                          textInputAction: TextInputAction.next,
-                          enabled: true,
-                          focusNode: cardHolderNode,
-                          controller: _cardHolderNameController,
-                          keyboardType: TextInputType.text,
-                          hintText: Constants.TXT_CARD_HOLDER_NAME,
-                          inputFormatters: const [],
-                          autofillHints: const <String>[
-                            AutofillHints.creditCardName
-                          ],
-                          onEditingComplete: () {
-                            FocusScope.of(context).requestFocus(cardNumberNode);
-                          },
-                          obscureText: false,
-                          onChanged: (String value) {},
-                        )),
+                    // decoration: AppViews.getRoundBorder(
+                    //     cBoxBgColor: AppColors.colorWhite,
+                    //     cBorderColor: AppColors.colorBorder2,
+                    //     dRadius: AppDimens.dimens_5,
+                    //     dBorderWidth: AppDimens.dimens_1),
+                    child: CustomTextFieldWithIcon(
+                      // height: AppDimens.dimens_36
+                      textInputAction: TextInputAction.next,
+                      enabled: true,
+                      focusNode: cardHolderNode,
+                      controller: _cardHolderNameController,
+                      keyboardType: TextInputType.text,
+                      hintText: Constants.TXT_CARD_HOLDER_NAME,
+                      inputFormatters: const [],
+                      autofillHints: const <String>[
+                        AutofillHints.creditCardName
+                      ],
+                      onEditingComplete: () {
+                        FocusScope.of(context).requestFocus(cardNumberNode);
+                      },
+                      obscureText: false,
+                      onChanged: (String value) {},
+                    ),
                   ),
                 ],
               )),
@@ -240,67 +238,60 @@ class _CreditCardFormState extends State<CreditCardForm> {
                         right: AppDimens.dimens_5,
                         top: AppDimens.dimens_5,
                         left: AppDimens.dimens_5),
-                    decoration: AppViews.getRoundBorder(
-                        cBoxBgColor: AppColors.colorWhite,
-                        cBorderColor: AppColors.colorBorder2,
-                        dRadius: AppDimens.dimens_5,
-                        dBorderWidth: AppDimens.dimens_1),
-                    child: Container(
-                        margin: const EdgeInsets.only(top: AppDimens.dimens_5),
-                        height: AppDimens.dimens_36,
-                        child: TextFormField(
-                          obscureText: widget.obscureNumber,
-                          controller: _cardNumberController,
-                          focusNode: cardNumberNode,
-                          onEditingComplete: () {
-                            FocusScope.of(context).requestFocus(expiryDateNode);
-                          },
-                          style: AppStyle.textViewStyleNormalBodyText2(
-                              color: AppColors.colorBlack,
-                              fontSizeDelta: 0,
-                              fontWeightDelta: 0,
-                              context: context),
-                          decoration: InputDecoration(
-                            counter: const SizedBox(
-                              height: 0,
-                              width: 0,
-                            ),
-                            counterText: "",
-                            errorStyle: AppStyle.textViewStyleXSmall(
-                                context: context,
-                                color: AppColors.colorRED,
-                                fontSizeDelta: -3),
-                            contentPadding: const EdgeInsets.only(
-                                top: AppDimens.dimens_7,
-                                left: AppDimens.dimens_15),
-                            focusedBorder: AppViews.textFieldRoundBorder(),
-                            border: AppViews.textFieldRoundBorder(),
-                            disabledBorder: AppViews.textFieldRoundBorder(),
-                            focusedErrorBorder: AppViews.textFieldRoundBorder(),
-                            hintText: Constants.TXT_CARD_NUMBER,
-                            filled: true,
-                            fillColor: AppColors.colorWhite,
-                            hintStyle: AppStyle.textViewStyleNormalBodyText2(
-                                color: AppColors.colorTextFieldHint,
-                                fontSizeDelta: 0,
-                                fontWeightDelta: 0,
-                                context: context),
-                          ),
-                          keyboardType: TextInputType.number,
-                          textInputAction: TextInputAction.next,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          autofillHints: const <String>[
-                            AutofillHints.creditCardNumber
-                          ],
-                          validator: (String? value) {
-                            // Validate less that 13 digits +3 white spaces
-                            if (value!.isEmpty ||
-                                value.replaceAll(" ", "").length < 16) {
-                              return widget.numberValidationMessage;
-                            }
-                            return null;
-                          },
-                        )),
+                    // decoration: AppViews.getRoundBorder(
+                    //     cBoxBgColor: AppColors.colorWhite,
+                    //     cBorderColor: AppColors.colorBorder2,
+                    //     dRadius: AppDimens.dimens_5,
+                    //     dBorderWidth: AppDimens.dimens_1),
+                    child: TextFormField(
+                      obscureText: widget.obscureNumber,
+                      controller: _cardNumberController,
+                      focusNode: cardNumberNode,
+                      onEditingComplete: () {
+                        FocusScope.of(context).requestFocus(expiryDateNode);
+                      },
+                      style: AppStyle.textViewStyleNormalBodyText2(
+                          color: AppColors.colorBlack,
+                          fontSizeDelta: 0,
+                          fontWeightDelta: 0,
+                          context: context),
+                      decoration: InputDecoration(
+                        counterText: "",
+                        errorStyle: AppStyle.textViewStyleXSmall(
+                            context: context,
+                            color: AppColors.colorRED,
+                            fontSizeDelta: -3),
+                        contentPadding: const EdgeInsets.only(
+                            top: AppDimens.dimens_7,
+                            left: AppDimens.dimens_15),
+                        focusedBorder: AppViews.textFieldRoundBorder(),
+                        border: AppViews.textFieldRoundBorder(),
+                        disabledBorder: AppViews.textFieldRoundBorder(),
+                        focusedErrorBorder: AppViews.textFieldRoundBorder(),
+                        hintText: Constants.TXT_CARD_NUMBER,
+                        filled: true,
+                        fillColor: AppColors.colorWhite,
+                        hintStyle: AppStyle.textViewStyleNormalBodyText2(
+                            color: AppColors.colorTextFieldHint,
+                            fontSizeDelta: 0,
+                            fontWeightDelta: 0,
+                            context: context),
+                      ),
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      autofillHints: const <String>[
+                        AutofillHints.creditCardNumber
+                      ],
+                      validator: (String? value) {
+                        // Validate less that 13 digits +3 white spaces
+                        if (value!.isEmpty ||
+                            value.replaceAll(" ", "").length < 16) {
+                          return widget.numberValidationMessage;
+                        }
+                        return null;
+                      },
+                    ),
                   ),
                 ],
               )),
@@ -331,15 +322,15 @@ class _CreditCardFormState extends State<CreditCardForm> {
                             right: AppDimens.dimens_5,
                             top: AppDimens.dimens_5,
                             left: AppDimens.dimens_5),
-                        decoration: AppViews.getRoundBorder(
-                            cBoxBgColor: AppColors.colorWhite,
-                            cBorderColor: AppColors.colorBorder2,
-                            dRadius: AppDimens.dimens_5,
-                            dBorderWidth: AppDimens.dimens_1),
+                        // decoration: AppViews.getRoundBorder(
+                        //     cBoxBgColor: AppColors.colorWhite,
+                        //     cBorderColor: AppColors.colorBorder2,
+                        //     dRadius: AppDimens.dimens_5,
+                        //     dBorderWidth: AppDimens.dimens_1),
                         child: Container(
                             margin:
-                                const EdgeInsets.only(top: AppDimens.dimens_5),
-                            height: AppDimens.dimens_36,
+                            const EdgeInsets.only(top: AppDimens.dimens_5),
+                            height: AppDimens.dimens_34,
                             child: TextFormField(
                               controller: _expiryDateController,
                               focusNode: expiryDateNode,
@@ -433,15 +424,15 @@ class _CreditCardFormState extends State<CreditCardForm> {
                           right: AppDimens.dimens_5,
                           top: AppDimens.dimens_5,
                           left: AppDimens.dimens_5),
-                      decoration: AppViews.getRoundBorder(
-                          cBoxBgColor: AppColors.colorWhite,
-                          cBorderColor: AppColors.colorBorder2,
-                          dRadius: AppDimens.dimens_5,
-                          dBorderWidth: AppDimens.dimens_1),
+                      // decoration: AppViews.getRoundBorder(
+                      //     cBoxBgColor: AppColors.colorWhite,
+                      //     cBorderColor: AppColors.colorBorder2,
+                      //     dRadius: AppDimens.dimens_5,
+                      //     dBorderWidth: AppDimens.dimens_1),
                       child: Container(
-                          margin:
-                              const EdgeInsets.only(top: AppDimens.dimens_5),
-                          height: AppDimens.dimens_36,
+                          // margin:
+                          //     const EdgeInsets.only(top: AppDimens.dimens_5),
+                          height: AppDimens.dimens_34,
                           child: TextFormField(
                             obscureText: widget.obscureCvv,
                             maxLength: 3,
@@ -459,10 +450,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
                             decoration: InputDecoration(
                               prefixIconConstraints: const BoxConstraints(
                                   minWidth: AppDimens.dimens_33),
-                              counter: const SizedBox(
-                                height: 0,
-                                width: 0,
-                              ),
+
                               counterText: "",
                               suffixIconConstraints: const BoxConstraints(
                                   minWidth: AppDimens.dimens_33),

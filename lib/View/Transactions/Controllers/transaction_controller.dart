@@ -17,7 +17,7 @@ class TransactionController extends GetxController {
   bool isShowLoader = false;
   var endDate;
   var startDate;
-  bool isRangePicked=false;
+  bool isRangePicked = false;
   List<TransactionModel> transactions = [];
 
   TextEditingController controllerName = TextEditingController();
@@ -54,9 +54,9 @@ class TransactionController extends GetxController {
       update();
     });
   }
-  //-------------------Date range picker---------------------------------
-  dateRangerPicker(){
 
+  //-------------------Date range picker---------------------------------
+  dateRangerPicker() {
     showCustomDateRangePicker(
       Get.context!,
       dismissible: true,
@@ -65,17 +65,19 @@ class TransactionController extends GetxController {
       endDate: endDate,
       startDate: startDate,
       onApplyClick: (start, end) {
-        isRangePicked=true;
+        isRangePicked = true;
         endDate = end;
         startDate = start;
         DateTime now = DateTime.now();
-        startDate= new DateTime(now.year, now.month, now.day,);
-        endDate= new DateTime(now.year, now.month, now.day,);
+        startDate = start;
+        endDate = end;
+        print("START DATE : $startDate");
+        print("END DATE : $endDate");
 
         update();
       },
       onCancelClick: () {
-        isRangePicked=false;
+        isRangePicked = false;
         endDate = null;
         startDate = null;
         update();
@@ -83,7 +85,6 @@ class TransactionController extends GetxController {
     );
   }
   //................Save and launch file...........................................
-
 
   Future<void> saveAndLaunchFile(List<int> bytes, String fileName) async {
     final path = (await getExternalStorageDirectory())?.path;

@@ -101,6 +101,7 @@ dependencies:
   open_file: ^3.2.1
   screenshot: ^1.2.3
   image_gallery_saver: ^1.7.1
+  flutter_background_service: 
 
 
   #  flutter_date_picker_timeline: ^0.3.3

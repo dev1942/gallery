@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:otobucks/View/MyBookings/controller/mybookings_controller.dart';
 import 'package:otobucks/View/MyBookings/view/tabs_views/PendingFragment.dart';
 import 'package:otobucks/View/MyBookings/view/tabs_views/cancelled_booking.dart';
@@ -25,6 +26,8 @@ class EstimationFragment extends StatefulWidget {
 class EstimationFragmentState extends State<EstimationFragment>
     with SingleTickerProviderStateMixin {
   var controller = Get.put(EstimationFragmentController());
+  final f = DateFormat('dd');
+
 
   @override
   void initState() {
@@ -130,7 +133,7 @@ class EstimationFragmentState extends State<EstimationFragment>
                                                       children: [
                                                         Text(
                                                           value.isRangePicked == true
-                                                              ? "${value.startDate} to ${value.endDate}".tr:
+                                                              ? "${f.format(value.startDate)} to ${f.format(value.endDate)}".tr:
                                                               "Search by date".tr,
                                                           style: AppStyle
                                                               .textViewStyleSmall(
@@ -151,25 +154,29 @@ class EstimationFragmentState extends State<EstimationFragment>
                                           child: SizedBox(
                                               height: 30,
                                               child: TextFormField(
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                ),
                                                 onChanged: (val){
                                                   Get.put(MyBookingsController()).searchInShop(val);
                                                 },
                                                 decoration: InputDecoration(
                                                   suffixIcon: Icon(Icons.title_outlined,size: AppDimens.dimens_18,color: Colors.yellow.shade700,),
                                                     contentPadding:
-                                                    EdgeInsets.all(10),
+                                                    const EdgeInsets.all(8),
+
                                                     hintText: "Search by title".tr,
                                                     hintStyle:
                                                     AppStyle.textViewStyleSmall(
                                                         context: context,
                                                         color:
                                                         AppColors.lightGrey),
-                                                    enabledBorder: OutlineInputBorder(
+                                                    enabledBorder: const OutlineInputBorder(
                                                         borderSide: BorderSide(
                                                             color: Colors.grey)),
                                                     focusColor: Colors.yellow,
                                                     focusedBorder: OutlineInputBorder(
-                                                        borderSide: BorderSide(
+                                                        borderSide: const BorderSide(
                                                             color: Colors.grey),
                                                         borderRadius:
                                                         BorderRadius.circular(

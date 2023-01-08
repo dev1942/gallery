@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:otobucks/View/Transactions/Views/transaction_detail_screen.dart';
 import 'package:otobucks/app/locator.dart';
 import 'package:otobucks/View/Home/Controllers/home_screen_controller.dart';
@@ -26,6 +27,8 @@ class TransactionHistoryFragment extends StatefulWidget {
 class TransactionHistoryFragmentState
     extends State<TransactionHistoryFragment> {
   var controller = Get.put(TransactionController());
+  final f = DateFormat('dd');
+
 
   @override
   void initState() {
@@ -160,10 +163,11 @@ class TransactionHistoryFragmentState
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
+                                                    //f.format(value.startDate)
                                                     Text(
                                                       value.isRangePicked ==
                                                               true
-                                                          ? "${value.startDate} to ${value.endDate}"
+                                                          ? "${f.format(value.startDate)} to ${f.format(value.endDate)}"
                                                           : "Search by date",
                                                       style: AppStyle
                                                           .textViewStyleSmall(
@@ -198,8 +202,7 @@ class TransactionHistoryFragmentState
                                                     ),
                                                     contentPadding:
                                                         const EdgeInsets.all(8),
-                                                    hintText:
-                                                        "By transaction",
+                                                    hintText: "By transaction",
                                                     hintStyle: AppStyle
                                                         .textViewStyleSmall(
                                                             context: context,
@@ -242,17 +245,23 @@ class TransactionHistoryFragmentState
                                                   bottom: AppDimens.dimens_14),
                                               color: Colors.transparent,
                                               child: Container(
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.rectangle,
-                                                  color: AppColors.grayDashboardItem,
-                                                  borderRadius: BorderRadius.circular(10),
-                                                ),
-                                                padding: const EdgeInsets.only(
-                                                    top: 10,
-                                                    right: AppDimens.dimens_10,
-                                                    left: 10,
-                                                    bottom: 7),
-                                                margin: EdgeInsets.symmetric(horizontal: 5),
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.rectangle,
+                                                    color: AppColors
+                                                        .grayDashboardItem,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 10,
+                                                          right: AppDimens
+                                                              .dimens_10,
+                                                          left: 10,
+                                                          bottom: 7),
+                                                  margin: EdgeInsets.symmetric(
+                                                      horizontal: 5),
                                                   child: InkWell(
                                                     child: Container(
                                                       alignment:

@@ -119,8 +119,8 @@ class WalletFragmentState extends State<WalletFragment> {
                             style: AppStyle.textViewStyleSmall(
                                 context: context,
                                 color: AppColors.colorBlack,
-                                fontSizeDelta: -2)),
-                      )
+                                fontSizeDelta: -2),),
+                      ),
                     ],
                   ),
                 ),
