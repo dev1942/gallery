@@ -14,7 +14,7 @@ class BookingModel {
         message = json['message'] as String?,
         result = (json['result'] as List?)?.map((dynamic e) => Result.fromJson(e as Map<String,dynamic>)).toList();
 
-  Map<String, dynamic> toJson() => {
+  Map<dynamic, dynamic> toJson() => {
     'status' : status,
     'message' : message,
     'result' : result?.map((e) => e.toJson()).toList()

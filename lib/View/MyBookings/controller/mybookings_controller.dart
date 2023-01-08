@@ -39,7 +39,7 @@ class MyBookingsController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    getAllBookings();
+    futurBookings=getAllBookings();
     getToken();
   }
 
@@ -54,13 +54,12 @@ class MyBookingsController extends GetxController {
     // TODO: implement onClose
     super.onClose();
   }
-
+late Future<BookingModel>futurBookings;
   //...............Get All Bookings...........................
   Future<BookingModel> getAllBookings() async {
     final prefManager = await SharedPreferences.getInstance();
     token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
     log.e("token at start is");
-
     log.e(token);
     final headers = {
       'Authorization': "Bearer ${token}",
@@ -164,6 +163,47 @@ class MyBookingsController extends GetxController {
     }).toList();
     filteredBookingList=suggestions;
     update();
+  }
+//-------------------------------------Delete booking API method-------------------
+  Future<void> deleteBooking({
+    String? bookingID,
+  }) async {
+    final prefManager = await SharedPreferences.getInstance();
+    String ? token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
+    try {
+      final body = json.encode({
+        "bookingID":bookingID
+      });
+      log.i("$token");
+      log.i("$body");
+      final headers = {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json'
+      };
+      var uriSaveCart = Uri.parse(RequestBuilder.API_DELETE_BOOKING);
+      http.Response response =
+      await http.delete(uriSaveCart, headers: headers, body: body);
+      log.i("BodyI sent when delete booking=======>${body}");
+      final message = json.decode(response.body.toString());
+      //..............Response Ok Part...................................................
+      if (response.statusCode == 200) {
+        log.i(response.statusCode);
+        log.i(
+            "Server Response to me while delete booking is======>>${message["message"]}");
+        Global.showToastAlert(context: Get.context!, strTitle: "Deleted", strMsg: message["message"].toString(),toastType: TOAST_TYPE.toastSuccess);
+      }
+      //.........................not ok ...................................................
+      else {
+        Global.showToastAlert(context: Get.context!, strTitle: "Message", strMsg: message["message"].toString(),toastType: TOAST_TYPE.toastError);
+        log.e(response.statusCode);
+        log.e(
+            "Server Response to me  while deleting booking =====>>  ${response.body.toString()}");
+      }
+    } catch (e) {
+      Global.showToastAlert(context: Get.context!, strTitle: "Deleted", strMsg: e.toString(),toastType: TOAST_TYPE.toastSuccess);
+
+      log.e("Exception is whileremover market shop  is=======>>${e.toString()}");
+    }
   }
 
 

@@ -1,5 +1,7 @@
 import 'dart:collection';
 import 'dart:developer';
+import 'package:logger/logger.dart';
+
 import '../../global/Models/failure.dart';
 import '../../global/Models/result.dart';
 import '../../global/Models/success.dart';
@@ -220,7 +222,7 @@ class RatingRepo {
           DATA: ""));
     }
   }
-
+//-------------------------------------Provider Rating---------------------------------------------------------------
   Future<Either<Failure, Success>> getAllRatingsProvider(
       HashMap<String, Object> requestParams, String providerId) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
@@ -293,7 +295,7 @@ class RatingRepo {
               ? mResponse.responseData as Object
               : ""));
     } catch (e) {
-      log(e.toString());
+      Logger().e(e.toString());
       return Left(Failure(
           STATUS: false,
           MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,

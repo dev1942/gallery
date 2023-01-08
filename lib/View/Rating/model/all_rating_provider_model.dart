@@ -111,14 +111,13 @@ class CustomerToProvider {
       CustomerToProvider.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
-
   factory CustomerToProvider.fromMap(Map<String, dynamic> json) =>
       CustomerToProvider(
         review: json["review"],
         rating: json["rating"],
       );
 
-  Map<String, dynamic> toMap() => {
+  Map<dynamic, dynamic> toMap() => {
         "review": review,
         "rating": rating,
       };

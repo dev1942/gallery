@@ -35,18 +35,14 @@ final bool isCompleted;
 class EstimationDetailsPDFScreenState
     extends State<EstimationDetailsPDFScreen> {
   ShowData mShowData = ShowData.showLoading;
-
   bool connectionStatus = false;
   bool isShowLoader = false;
   late Result allBookingsModel;
-
   int indexM = 0;
-
   EstimationListController _estimationListController =
       Get.put(EstimationListController());
   TextEditingController _textOffercontroller = TextEditingController();
   TextEditingController _textOfferNotecontroller = TextEditingController();
-
   @override
   void initState() {
     getEstimationDetails();

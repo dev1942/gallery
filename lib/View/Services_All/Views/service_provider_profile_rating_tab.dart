@@ -50,7 +50,6 @@ class ServiceProviderProfileRatingTabState
               mRatingType: RatingType.given);
         },
         itemCount: alReviewModel.length);
-
     widgetM = AppViews.getSetData(context, mShowData, mShowWidget);
 
     return Scaffold(

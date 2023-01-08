@@ -12,6 +12,7 @@ import 'package:otobucks/widgets/round_dot.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import '../../../widgets/custom_ui/loader/circle.dart';
+
 class AnalyticsFragment extends StatefulWidget {
   const AnalyticsFragment({Key? key}) : super(key: key);
 
@@ -22,22 +23,22 @@ class AnalyticsFragment extends StatefulWidget {
 class AnalyticsFragmentState extends State<AnalyticsFragment> {
   var controller = Get.put(AnalyticsController());
   var staticscontroller = Get.put(StaticesAnalyticsController());
-var apidata;
+  var apidata;
+
   @override
   void initState() {
     //controller.getAllData();
     apiData();
     super.initState();
   }
-Future<void> apiData()async {
-  print("------my data-----1--------");
-  var apidata= await staticscontroller.fetchdata();
-  print("------my data--------2-----");
-  print(apidata!.result!.promotionBookings);
-  print(apidata!.result!.serviceBookings);
+
+  Future<void> apiData() async {
+    print("------my data-----1--------");
+    var apidata = await staticscontroller.fetchdata();
+    print("------my data--------2-----");
+    print(apidata!.result!.promotionBookings);
+    print(apidata!.result!.serviceBookings);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,12 @@ Future<void> apiData()async {
     //   "April": 2,
     // };
 
-    List<Color>colorList=[AppColors.colorYellowShade,AppColors.colorPrimary,Colors.teal,Colors.pink];
+    List<Color> colorList = [
+      AppColors.colorYellowShade,
+      AppColors.colorPrimary,
+      Colors.teal,
+      Colors.pink
+    ];
     widgetM = SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -219,49 +225,50 @@ Future<void> apiData()async {
                   fontWeightDelta: 1),
             ),
           ),
-           Padding(
-              padding: const EdgeInsets.all(16),
-              child: AspectRatio(
-                aspectRatio: 16 / 9,
-                child: PieChart(
-                  dataMap: //dataMap,
+          addVerticleSpace(90),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: AspectRatio(
+              aspectRatio: 14 / 9,
+              child: PieChart(
+                dataMap: //dataMap,
 
-        {
-    "Promotion Bookings":apidata !=null?apidata!.result!.promotionBookings: 10,
-    "Service Bookings": apidata !=null?apidata!.result!.serviceBookings: 6,
-    "Invites": 0,
-
-    },
-                  animationDuration: Duration(milliseconds: 800),
-                  chartLegendSpacing: 45,
-                  chartRadius: MediaQuery.of(context).size.width / 3,
-                  colorList: colorList,
-                  initialAngleInDegree: 0,
-                  chartType: ChartType.ring,
-                  ringStrokeWidth: 30,
-                  centerText: "OTOBUCKS",
-                  legendOptions: const LegendOptions(
-                    showLegendsInRow: false,
-                    legendPosition: LegendPosition.right,
-                    showLegends: true,
-                    legendShape: BoxShape.circle,
-                    legendTextStyle: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    {
+                  "Promotion Bookings":
+                      apidata != null ? apidata!.result!.promotionBookings : 10,
+                  "Service Bookings":
+                      apidata != null ? apidata!.result!.serviceBookings : 6,
+                  "Invites": 0,
+                },
+                animationDuration: Duration(milliseconds: 800),
+                chartLegendSpacing: 80,
+                chartRadius: MediaQuery.of(context).size.width / 3,
+                colorList: colorList,
+                initialAngleInDegree: 0,
+                chartType: ChartType.ring,
+                ringStrokeWidth: 150,
+                centerText: "OTOBUCKS",
+                legendOptions: const LegendOptions(
+                  showLegendsInRow: false,
+                  legendPosition: LegendPosition.bottom,
+                  showLegends: true,
+                  legendShape: BoxShape.circle,
+                  legendTextStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
                   ),
-                  chartValuesOptions: const ChartValuesOptions(
-                    showChartValueBackground: true,
-                    showChartValues: true,
-                    showChartValuesInPercentage: true,
-                    showChartValuesOutside:true,
-                    decimalPlaces: 1,
-                  ),
-                  // gradientList: ---To add gradient colors---
-                  // emptyColorGradient: ---Empty Color gradient---
                 ),
+                chartValuesOptions: const ChartValuesOptions(
+                  showChartValueBackground: true,
+                  showChartValues: true,
+                  showChartValuesInPercentage: true,
+                  showChartValuesOutside: true,
+                  decimalPlaces: 1,
+                ),
+                // gradientList: ---To add gradient colors---
+                // emptyColorGradient: ---Empty Color gradient---
               ),
             ),
-
+          ),
         ],
       ),
     );

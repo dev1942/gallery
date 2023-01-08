@@ -86,58 +86,53 @@ class ServiceProviderProfileScreenState
             // AppViews.showLoadingWithStatus(isShowLoader)
           ],
         ),
-        Card(
-          elevation: AppDimens.dimens_8,
-          margin: const EdgeInsets.only(
-              left: AppDimens.dimens_90, right: AppDimens.dimens_90),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+                margin: const EdgeInsets.only(top: AppDimens.dimens_15),
+                alignment: Alignment.center,
+                child: Text(
+                  mServiceProviderModel.getName(),
+                  style: AppStyle.textViewStyleLarge(
+                      context: context,
+                      color: AppColors.colorBlack,
+                      fontSizeDelta: 3,
+                      fontWeightDelta: 0),
+                )),
+            if (widget.rating != 0)
               Container(
-                  margin: const EdgeInsets.only(top: AppDimens.dimens_15),
-                  alignment: Alignment.center,
-                  child: Text(
-                    mServiceProviderModel.getName(),
-                    style: AppStyle.textViewStyleLarge(
-                        context: context,
-                        color: AppColors.colorBlack,
-                        fontSizeDelta: 3,
-                        fontWeightDelta: 0),
-                  )),
-              if (widget.rating != 0)
-                Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.only(
-                      bottom: AppDimens.dimens_15, top: AppDimens.dimens_2),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                          margin:
-                              const EdgeInsets.only(right: AppDimens.dimens_4),
-                          child: RatingBarIndicator(
-                            rating: widget.rating,
-                            itemBuilder: (context, index) => Icon(
-                              Icons.star,
-                              color: AppColors.colorRating,
-                            ),
-                            itemCount: 5,
-                            itemSize: AppDimens.dimens_14,
-                            direction: Axis.horizontal,
-                          )),
-                      Text(
-                        "(${widget.totalRatings})",
-                        style: AppStyle.textViewStyleSmall(
-                            context: context,
-                            color: AppColors.colorBlack,
-                            fontSizeDelta: -2),
-                      ),
-                    ],
-                  ),
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(
+                    bottom: AppDimens.dimens_15, top: AppDimens.dimens_2),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                        margin:
+                            const EdgeInsets.only(right: AppDimens.dimens_4),
+                        child: RatingBarIndicator(
+                          rating: widget.rating,
+                          itemBuilder: (context, index) => Icon(
+                            Icons.star,
+                            color: AppColors.colorRating,
+                          ),
+                          itemCount: 5,
+                          itemSize: AppDimens.dimens_14,
+                          direction: Axis.horizontal,
+                        )),
+                    Text(
+                      "(${widget.totalRatings})",
+                      style: AppStyle.textViewStyleSmall(
+                          context: context,
+                          color: AppColors.colorBlack,
+                          fontSizeDelta: -2),
+                    ),
+                  ],
                 ),
-            ],
-          ),
+              ),
+          ],
         ),
         Container(
           padding: const EdgeInsets.only(
