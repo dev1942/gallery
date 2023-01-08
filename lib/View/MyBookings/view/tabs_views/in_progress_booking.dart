@@ -230,8 +230,8 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                               fontSize: 12,
                                                               fontWeight:
                                                                   FontWeight
-                                                                     .w500),
-                                                         ),
+                                                                      .w500),
+                                                        ),
                                                       )),
                                                   onTap: () {
                                                     Navigator.push(

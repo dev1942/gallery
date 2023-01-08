@@ -31,18 +31,17 @@ import '../../../widgets/google_map_view.dart';
 import '../../../widgets/media_button.dart';
 import '../../Estimation/Controllers/estimation_sidebar_controllers/view_estimation_controller.dart';
 
-
 class ViewBookingEstimation extends StatefulWidget {
   final Result mEstimatesModel;
   final bool isPending;
   final String? status;
   bool isRebooked;
-   ViewBookingEstimation({
+  ViewBookingEstimation({
     Key? key,
     this.status,
     required this.mEstimatesModel,
     this.isPending = false,
-    this.isRebooked=false,
+    this.isRebooked = false,
   }) : super(key: key);
   @override
   ViewBookingEstimationState createState() => ViewBookingEstimationState();
@@ -53,7 +52,8 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
   dynamic imagePickerPath = "";
   List<String> imagePaths = [];
   final ImagePickerUtility _imagePickerUtility = ImagePickerUtility();
-  late TextEditingController controllerNotes ;//TextEditingController(text:widget.mEstimatesModel.bookingDetails!.customerNote.toString() );
+  late TextEditingController
+      controllerNotes; //TextEditingController(text:widget.mEstimatesModel.bookingDetails!.customerNote.toString() );
   ShowData mShowData = ShowData.showLoading;
   bool connectionStatus = false;
   bool isShowLoader = false;
@@ -63,7 +63,8 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
   var reScheduleController = Get.put(RescheduleBookingController());
   @override
   void initState() {
-    controllerNotes = TextEditingController(text:widget.mEstimatesModel.bookingDetails!.customerNote.toString());
+    controllerNotes = TextEditingController(
+        text: widget.mEstimatesModel.bookingDetails!.customerNote.toString());
 //-----------videos
     if (widget.mEstimatesModel.bookingDetails!.video!.isNotEmpty) {
       reScheduleController.pickedVideo =
@@ -90,13 +91,11 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
       reScheduleController.controllerNote.text =
           widget.mEstimatesModel.bookingDetails!.customerNote.toString();
     }
-   // print(widget.mEstimatesModel.bookingDetails!.voiceNote);
+    // print(widget.mEstimatesModel.bookingDetails!.voiceNote);
 
     reScheduleController.onInitScreen(widget.mEstimatesModel!);
     super.initState();
   }
-
-
 
   getimageUrl(String ImageUrl) async {
     try {
@@ -133,7 +132,8 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
       appBar: AppViews.initAppBar(
         mContext: context,
         centerTitle: false,
-        strTitle: widget.mEstimatesModel.source!.title.toString() + " Detail",
+        strTitle:
+            widget.mEstimatesModel.source!.title.toString() + "wr4wr Detail",
         isShowNotification: false,
         isShowSOS: false,
       ),
@@ -158,7 +158,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                     color: AppColors.colorBlueStart,
                     height: AppDimens.dimens_120,
                   ),
-                  _profileSection()
+                 _profileSection()
                 ],
               ),
               //video and images
@@ -212,7 +212,6 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-
                       _uploadImagesSection(),
                       //Upload Video or Shoot a video
 
@@ -220,145 +219,10 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                       // //Voice Note
                       _voiceNoteSection(),
                       //Leave Note (if any)
-                      _anyNoteTextFiledSection(reScheduleController.controllerNote),
-                      widget.isPending && widget.isRebooked?
-                      Container(
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.only(
-                            top: AppDimens.dimens_20,
-                            bottom: AppDimens.dimens_20,
-                            left: AppDimens.dimens_10,
-                            right: AppDimens.dimens_10),
-                        child: CustomButton(
-                            isGradient: true,
-                            isRoundBorder: true,
-                            fontColor: AppColors.colorWhite,
-                            width: size.width,
-                            onPressed: () {
-                              if (imagePaths.isNotEmpty) {
-                                if(reScheduleController.selectedDate==widget.mEstimatesModel.bookingDetails!.date!.substring(0,10)) {
-                                  Global.showToastAlert(
-                                      context: Get.overlayContext!,
-                                      strTitle: "",
-                                      strMsg: "Please Select Another date",
-                                      toastType: TOAST_TYPE
-                                          .toastInfo);
-                                }else{
-                                  reScheduleController
-                                      .reScheduleBooking(
-                                      context,
-                                      widget.mEstimatesModel.id
-                                          .toString(),
-                                      imagePath:
-                                      imagePaths.first);
-                                }
-                              }
-                              else {
-                                if(reScheduleController.selectedDate==widget.mEstimatesModel.bookingDetails!.date!.substring(0,10)){
-                                  Global.showToastAlert(
-                                      context: Get.overlayContext!,
-                                      strTitle: "".tr,
-                                      strMsg: "Please Select Another date".tr,
-                                      toastType: TOAST_TYPE.toastInfo);
-                                }else {
-                                  reScheduleController
-                                      .reScheduleBooking(
-                                    context,
-                                    widget.mEstimatesModel.id
-                                        .toString(),
-                                  );
-                                }
-                              }
-
-                            },
-                            // =>
-                            //     controller.rebook(
-                            //     context, widget.mEstimatesModel),
-                            strTitle:"re-book".tr.toUpperCase()),
-                      ):
-                      widget.isPending
-                          ? Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    margin: const EdgeInsets.only(
-                                        top: AppDimens.dimens_20,
-                                        bottom: AppDimens.dimens_20,
-                                        left: AppDimens.dimens_10,
-                                        right: AppDimens.dimens_10),
-                                    child: CustomButton(
-                                        isGradient: true,
-                                        isRoundBorder: true,
-                                        fontColor: AppColors.colorWhite,
-                                        // width: size.width,
-                                        onPressed: () {
-
-                                          if (imagePaths.isNotEmpty) {
-                                            if(reScheduleController.selectedDate==widget.mEstimatesModel.bookingDetails!.date!.substring(0,10)) {
-                                              Global.showToastAlert(
-                                                  context: Get.overlayContext!,
-                                                  strTitle: "".tr,
-                                                  strMsg: "Please Select Another date".tr,
-                                                  toastType: TOAST_TYPE
-                                                      .toastInfo);
-                                            }else{
-                                              reScheduleController
-                                                .reScheduleBooking(
-                                                    context,
-                                                    widget.mEstimatesModel.id
-                                                        .toString(),
-                                                    imagePath:
-                                                        imagePaths.first);
-                                          }
-                                          }
-                                          else {
-                                            if(reScheduleController.selectedDate==widget.mEstimatesModel.bookingDetails!.date!.substring(0,10)){
-                                              Global.showToastAlert(
-                                                  context: Get.overlayContext!,
-                                                  strTitle: "",
-                                                  strMsg: "Please Select Another date".tr,
-                                                  toastType: TOAST_TYPE.toastInfo);
-                                            }else {
-                                              reScheduleController
-                                                  .reScheduleBooking(
-                                                context,
-                                                widget.mEstimatesModel.id
-                                                    .toString(),
-                                              );
-                                            }
-                                          }
-
-                                          // Global.showAlert(context, "Something went wrong");
-                                        },
-                                        strTitle: "Reschedule".tr),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    margin: const EdgeInsets.only(
-                                        top: AppDimens.dimens_20,
-                                        bottom: AppDimens.dimens_20,
-                                        left: AppDimens.dimens_10,
-                                        right: AppDimens.dimens_10),
-                                    child: CustomButton(
-                                        isGradient: true,
-                                        isRoundBorder: true,
-                                        fontColor: AppColors.colorWhite,
-                                        //width: size.width,
-                                        onPressed: () {
-                                          displayTextInputDialog();
-                                        },
-                                        // =>
-                                        //     controller.rebook(
-                                        //     context, widget.mEstimatesModel),
-                                        strTitle: "Cancelled".tr),
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Container(
+                      _anyNoteTextFiledSection(
+                          reScheduleController.controllerNote),
+                      widget.isPending && widget.isRebooked
+                          ? Container(
                               alignment: Alignment.center,
                               margin: const EdgeInsets.only(
                                   top: AppDimens.dimens_20,
@@ -370,12 +234,169 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                   isRoundBorder: true,
                                   fontColor: AppColors.colorWhite,
                                   width: size.width,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if (imagePaths.isNotEmpty) {
+                                      if (reScheduleController.selectedDate ==
+                                          widget.mEstimatesModel.bookingDetails!
+                                              .date!
+                                              .substring(0, 10)) {
+                                        Global.showToastAlert(
+                                            context: Get.overlayContext!,
+                                            strTitle: "",
+                                            strMsg:
+                                                "Please Select Another date",
+                                            toastType: TOAST_TYPE.toastInfo);
+                                      } else {
+                                        reScheduleController.reScheduleBooking(
+                                            context,
+                                            widget.mEstimatesModel.id
+                                                .toString(),
+                                            imagePath: imagePaths.first);
+                                      }
+                                    } else {
+                                      if (reScheduleController.selectedDate ==
+                                          widget.mEstimatesModel.bookingDetails!
+                                              .date!
+                                              .substring(0, 10)) {
+                                        Global.showToastAlert(
+                                            context: Get.overlayContext!,
+                                            strTitle: "".tr,
+                                            strMsg:
+                                                "Please Select Another date".tr,
+                                            toastType: TOAST_TYPE.toastInfo);
+                                      } else {
+                                        reScheduleController.reScheduleBooking(
+                                          context,
+                                          widget.mEstimatesModel.id.toString(),
+                                        );
+                                      }
+                                    }
+                                  },
                                   // =>
                                   //     controller.rebook(
                                   //     context, widget.mEstimatesModel),
-                                  strTitle:widget.status=="completed"?"Completed".tr:widget.status=="inProgress"?"In Progress".tr:widget.status=="cancelled"?"Cancelled".tr: "Booked".tr),
-                            ),
+                                  strTitle: "re-book".tr.toUpperCase()),
+                            )
+                          : widget.isPending
+                              ? Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        margin: const EdgeInsets.only(
+                                            top: AppDimens.dimens_20,
+                                            bottom: AppDimens.dimens_20,
+                                            left: AppDimens.dimens_10,
+                                            right: AppDimens.dimens_10),
+                                        child: CustomButton(
+                                            isGradient: true,
+                                            isRoundBorder: true,
+                                            fontColor: AppColors.colorWhite,
+                                            // width: size.width,
+                                            onPressed: () {
+                                              if (imagePaths.isNotEmpty) {
+                                                if (reScheduleController
+                                                        .selectedDate ==
+                                                    widget.mEstimatesModel
+                                                        .bookingDetails!.date!
+                                                        .substring(0, 10)) {
+                                                  Global.showToastAlert(
+                                                      context:
+                                                          Get.overlayContext!,
+                                                      strTitle: "".tr,
+                                                      strMsg:
+                                                          "Please Select Another date"
+                                                              .tr,
+                                                      toastType:
+                                                          TOAST_TYPE.toastInfo);
+                                                } else {
+                                                  reScheduleController
+                                                      .reScheduleBooking(
+                                                          context,
+                                                          widget.mEstimatesModel
+                                                              .id
+                                                              .toString(),
+                                                          imagePath:
+                                                              imagePaths.first);
+                                                }
+                                              } else {
+                                                if (reScheduleController
+                                                        .selectedDate ==
+                                                    widget.mEstimatesModel
+                                                        .bookingDetails!.date!
+                                                        .substring(0, 10)) {
+                                                  Global.showToastAlert(
+                                                      context:
+                                                          Get.overlayContext!,
+                                                      strTitle: "",
+                                                      strMsg:
+                                                          "Please Select Another date"
+                                                              .tr,
+                                                      toastType:
+                                                          TOAST_TYPE.toastInfo);
+                                                } else {
+                                                  reScheduleController
+                                                      .reScheduleBooking(
+                                                    context,
+                                                    widget.mEstimatesModel.id
+                                                        .toString(),
+                                                  );
+                                                }
+                                              }
+
+                                              // Global.showAlert(context, "Something went wrong");
+                                            },
+                                            strTitle: "Reschedule".tr),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        margin: const EdgeInsets.only(
+                                            top: AppDimens.dimens_20,
+                                            bottom: AppDimens.dimens_20,
+                                            left: AppDimens.dimens_10,
+                                            right: AppDimens.dimens_10),
+                                        child: CustomButton(
+                                            isGradient: true,
+                                            isRoundBorder: true,
+                                            fontColor: AppColors.colorWhite,
+                                            //width: size.width,
+                                            onPressed: () {
+                                              displayTextInputDialog();
+                                            },
+                                            // =>
+                                            //     controller.rebook(
+                                            //     context, widget.mEstimatesModel),
+                                            strTitle: "Cancelled".tr),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Container(
+                                  alignment: Alignment.center,
+                                  margin: const EdgeInsets.only(
+                                      top: AppDimens.dimens_20,
+                                      bottom: AppDimens.dimens_20,
+                                      left: AppDimens.dimens_10,
+                                      right: AppDimens.dimens_10),
+                                  child: CustomButton(
+                                      isGradient: true,
+                                      isRoundBorder: true,
+                                      fontColor: AppColors.colorWhite,
+                                      width: size.width,
+                                      onPressed: () {},
+                                      // =>
+                                      //     controller.rebook(
+                                      //     context, widget.mEstimatesModel),
+                                      strTitle: widget.status == "completed"
+                                          ? "Completed".tr
+                                          : widget.status == "inProgress"
+                                              ? "In Progress".tr
+                                              : widget.status == "cancelled"
+                                                  ? "Cancelled".tr
+                                                  : "Booked".tr),
+                                ),
                     ],
                   ))
 
@@ -645,14 +666,13 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   right: AppDimens.dimens_14,
                 ),
                 child: DateViewSelector(
-                  isPending: widget.isPending,
+                    isPending: widget.isPending,
                     // selectedDate: value.selectedDate,
                     selectedDate: DateTime.parse(
                         widget.mEstimatesModel.bookingDetails!.date!),
                     //selectedDate:DateTime.parse(value.selectedDate),
                     onSelection: (String _selectedDate) {
-
-                     value.onSelectDate(_selectedDate);
+                      value.onSelectDate(_selectedDate);
                     }
 
                     // selectedDate: DateTime.parse(widget.mEstimatesModel.bookingDetails!.date!),
@@ -714,24 +734,27 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                 ),
               ),
 
- MyCarListItem(
-   isViewed: true,
-                                            carBrand:widget.mEstimatesModel.bookingDetails!.car!.brand ?? "",
-                                            modeYear:
-                                            widget.mEstimatesModel.bookingDetails!.car!.modelYear?? "",
-                                            km:  widget.mEstimatesModel.bookingDetails!.car!.mileage ?? "",
-                                            color:  widget.mEstimatesModel.bookingDetails!.car!.color ?? "",
-                                            code:   widget.mEstimatesModel.bookingDetails!.car!.carCode ?? "",
-                                            city:  widget.mEstimatesModel.bookingDetails!.car!.carCity  ?? "",
-                                            number:
-                                            widget.mEstimatesModel.bookingDetails!.car!.carNumber?? "",
-                                            image:
-                                                "https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
-                                            onEditTap: () {
-                                            },
-                                            onDeleteTap: () {
-
-                                            }),
+              MyCarListItem(
+                  isViewed: true,
+                  carBrand:
+                      widget.mEstimatesModel.bookingDetails!.car!.brand ?? "",
+                  modeYear:
+                      widget.mEstimatesModel.bookingDetails!.car!.modelYear ??
+                          "",
+                  km: widget.mEstimatesModel.bookingDetails!.car!.mileage ?? "",
+                  color:
+                      widget.mEstimatesModel.bookingDetails!.car!.color ?? "",
+                  code:
+                      widget.mEstimatesModel.bookingDetails!.car!.carCode ?? "",
+                  city:
+                      widget.mEstimatesModel.bookingDetails!.car!.carCity ?? "",
+                  number:
+                      widget.mEstimatesModel.bookingDetails!.car!.carNumber ??
+                          "",
+                  image:
+                      "https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
+                  onEditTap: () {},
+                  onDeleteTap: () {}),
 
               //---------------------------------------------------Upload image or Take a photo
               Container(
@@ -772,7 +795,8 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   ? Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SizedBox(
-                          height: 30.0, child: Text('Progress: $_progress %'.tr)),
+                          height: 30.0,
+                          child: Text('Progress: $_progress %'.tr)),
                     )
                   : imageSlider(),
             ],
@@ -838,7 +862,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                         ),
                         Container(
                           child: Text(
-                            Constants.TXT_PLEASE_WAIT .tr+
+                            Constants.TXT_PLEASE_WAIT.tr +
                                 ' ${snapshot.data.toStringAsFixed(0)}%',
                             style: AppStyle.textViewStyleSmall(
                                 context: context, color: AppColors.colorBlack),
@@ -905,15 +929,17 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                   },
                                 ),
                               ),
-                           widget.isPending ?  Positioned(
-                                  right: 0,
-                                  top: 0,
-                                  child: InkWell(
-                                      child: const Icon(Icons.close),
-                                      onTap: () {
-                                        value.onDeleteVideo();
-                                      } //=>
-                                      )):SizedBox(),
+                              widget.isPending
+                                  ? Positioned(
+                                      right: 0,
+                                      top: 0,
+                                      child: InkWell(
+                                          child: const Icon(Icons.close),
+                                          onTap: () {
+                                            value.onDeleteVideo();
+                                          } //=>
+                                          ))
+                                  : SizedBox(),
                             ],
                           ),
                         )),
@@ -924,20 +950,22 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                         children: [
                           MediaButton(
                             strImage: AppImages.ic_cloud,
-                            onPressed:
-                            widget.isPending?
-                            () {
-                              value.pickVideo(ImageSource.gallery);
-                            }:(){},
+                            onPressed: widget.isPending
+                                ? () {
+                                    value.pickVideo(ImageSource.gallery);
+                                  }
+                                : () {},
                           ),
                           Container(
                             margin: const EdgeInsets.only(
                                 left: AppDimens.dimens_15),
                             child: MediaButton(
                               strImage: AppImages.ic_video_cam,
-                              onPressed: widget.isPending? () {
-                                value.pickVideo(ImageSource.camera);
-                              }:(){},
+                              onPressed: widget.isPending
+                                  ? () {
+                                      value.pickVideo(ImageSource.camera);
+                                    }
+                                  : () {},
                             ),
                           ),
                         ],
@@ -954,9 +982,8 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
     });
   }
 
-  _voiceNoteSection() => GetBuilder<RescheduleBookingController>(builder: (value) {
-
-
+  _voiceNoteSection() =>
+      GetBuilder<RescheduleBookingController>(builder: (value) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -998,7 +1025,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                 right: AppDimens.dimens_14,
               ),
               child: VoiceRecordingViewButton(
-                isPending: widget.isPending,
+                  isPending: widget.isPending,
                   // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
                   strVoiceNotePath: value.voiceNoteFile,
                   callback: (String filePath) {
@@ -1119,7 +1146,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               // reScheduleController.controllerNote.text=strvalue;
             },
             onSubmitted: (String? value) {
-             reScheduleController.controllerNote.text=value??"";
+              reScheduleController.controllerNote.text = value ?? "";
               //onSubmit!(value!);
             },
             textInputAction: TextInputAction.done,
@@ -1130,9 +1157,10 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                 fontSizeDelta: 0,
                 fontWeightDelta: 0,
                 context: context),
-            controller: leaveNotesController,//reScheduleController.controllerNote,
+            controller:
+                leaveNotesController, //reScheduleController.controllerNote,
             textAlign: TextAlign.start,
-            readOnly:  widget.isPending?false:true,
+            readOnly: widget.isPending ? false : true,
             decoration: InputDecoration(
               prefixIconConstraints:
                   const BoxConstraints(minWidth: AppDimens.dimens_33),
@@ -1178,107 +1206,119 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               ImagePreviews(imagePaths,
                   onDelete: _onDeleteImage, onSelect: _onSelectImage),
               //image
-              imagePaths.length > 0 ? SizedBox() : InkWell(
-                onTap:widget.isPending?
-                    () async {
-                  await showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          contentPadding: EdgeInsets.zero,
-                          backgroundColor: AppColors.colorWhite,
-                          title: Text(
-                            'Select Image'.tr,
-                            textAlign: TextAlign.center,
-                            style: AppStyle.textViewStyleLarge(
-                                context: context,
-                                color: AppColors.colorBlack,
-                                fontWeightDelta: 1,
-                                fontSizeDelta: 3),
-                          ),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Divider(),
-                              ListTile(
-                                  onTap: () async {
-                                    Navigator.pop(context);
-                                    final pickedFile =
-                                        await _imagePicker.getImage(
-                                      source: ImageSource.camera,
-                                    );
-
-                                    if (pickedFile != null) {
-                                      setState(() {
-                                        imagePaths.add(pickedFile.path);
-                                        imagePickerPath = imagePaths.first;
-                                      });
-                                    }
-                                  },
-                                  title: Text(
-                                    'Take a Photo'.tr,
-                                    style:
-                                        AppStyle.textViewStyleNormalSubtitle2(
+              imagePaths.length > 0
+                  ? SizedBox()
+                  : InkWell(
+                      onTap: widget.isPending
+                          ? () async {
+                              await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      contentPadding: EdgeInsets.zero,
+                                      backgroundColor: AppColors.colorWhite,
+                                      title: Text(
+                                        'Select Image'.tr,
+                                        textAlign: TextAlign.center,
+                                        style: AppStyle.textViewStyleLarge(
                                             context: context,
                                             color: AppColors.colorBlack,
                                             fontWeightDelta: 1,
-                                            fontSizeDelta: 2),
-                                  )),
-                              ListTile(
-                                onTap: () async {
-                                  Navigator.pop(context);
+                                            fontSizeDelta: 3),
+                                      ),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Divider(),
+                                          ListTile(
+                                              onTap: () async {
+                                                Navigator.pop(context);
+                                                final pickedFile =
+                                                    await _imagePicker.getImage(
+                                                  source: ImageSource.camera,
+                                                );
 
-                                  final pickedFile =
-                                      await _imagePicker.getImage(
-                                    source: ImageSource.gallery,
-                                  );
+                                                if (pickedFile != null) {
+                                                  setState(() {
+                                                    imagePaths
+                                                        .add(pickedFile.path);
+                                                    imagePickerPath =
+                                                        imagePaths.first;
+                                                  });
+                                                }
+                                              },
+                                              title: Text(
+                                                'Take a Photo'.tr,
+                                                style: AppStyle
+                                                    .textViewStyleNormalSubtitle2(
+                                                        context: context,
+                                                        color: AppColors
+                                                            .colorBlack,
+                                                        fontWeightDelta: 1,
+                                                        fontSizeDelta: 2),
+                                              )),
+                                          ListTile(
+                                            onTap: () async {
+                                              Navigator.pop(context);
 
-                                  if (pickedFile != null) {
-                                    setState(() {
-                                      imagePaths.add(pickedFile.path);
-                                      imagePickerPath = imagePaths.first;
-                                    });
-                                  }
-                                },
-                                title: Text(
-                                  'Upload Image'.tr,
-                                  style: AppStyle.textViewStyleNormalSubtitle2(
-                                      context: context,
-                                      color: AppColors.colorBlack,
-                                      fontWeightDelta: 1,
-                                      fontSizeDelta: 2),
-                                ),
-                              ),
-                            ],
+                                              final pickedFile =
+                                                  await _imagePicker.getImage(
+                                                source: ImageSource.gallery,
+                                              );
+
+                                              if (pickedFile != null) {
+                                                setState(() {
+                                                  imagePaths
+                                                      .add(pickedFile.path);
+                                                  imagePickerPath =
+                                                      imagePaths.first;
+                                                });
+                                              }
+                                            },
+                                            title: Text(
+                                              'Upload Image'.tr,
+                                              style: AppStyle
+                                                  .textViewStyleNormalSubtitle2(
+                                                      context: context,
+                                                      color:
+                                                          AppColors.colorBlack,
+                                                      fontWeightDelta: 1,
+                                                      fontSizeDelta: 2),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      actions: [
+                                        ElevatedButton(
+                                            child: Text('Cancel'.tr),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            })
+                                      ],
+                                    );
+                                  });
+                            }
+                          : () {},
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            color: AppColors.colorGray2,
                           ),
-                          actions: [
-                            ElevatedButton(
-                                child:  Text('Cancel'.tr),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                })
-                          ],
-                        );
-                      });
-                }:(){},
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 80,
-                    width: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      color: AppColors.colorGray2,
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(Icons.add, color: AppColors.colorGray),
+                          ),
+                        ),
+                      ),
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(Icons.add, color: AppColors.colorGray),
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ],

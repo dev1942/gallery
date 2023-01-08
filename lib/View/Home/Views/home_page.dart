@@ -90,6 +90,7 @@ class _HomePageState extends State<HomePage> {
                     }
                   },
                 ),
+                
                 resizeToAvoidBottomInset: false,
                 drawer: constraints.maxWidth > 600 ? null : drawer(context),
                 body: constraints.maxWidth > 600

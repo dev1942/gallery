@@ -75,9 +75,7 @@ class EstimationFragmentController extends GetxController {
                  isRangePicked=true;
         endDate = end;
         startDate = start;
-                 DateTime now = DateTime.now();
-                 startDate= new DateTime(now.year, now.month, now.day,);
-                 endDate= new DateTime(now.year, now.month, now.day,);
+
 
         update();
       },

@@ -15,9 +15,10 @@ import '../../Models/AllBookingsModel.dart';
 import 'package:otobucks/global/enum.dart';
 import '../../controller/mybookings_controller.dart';
 import '../view_booking_screen.dart';
-import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart'as viewBookingModel;
-import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart' as bookingResult;
-
+import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart'
+    as viewBookingModel;
+import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart'
+    as bookingResult;
 
 class PendingFragment extends GetView<MyBookingsController> {
   const PendingFragment({
@@ -26,7 +27,6 @@ class PendingFragment extends GetView<MyBookingsController> {
 
   @override
   Widget build(BuildContext context) {
-
     Get.put(MyBookingsController());
     return SafeArea(
         top: false,
@@ -34,32 +34,33 @@ class PendingFragment extends GetView<MyBookingsController> {
         child: Scaffold(
           resizeToAvoidBottomInset: true,
           backgroundColor: AppColors.getMainBgColor(),
-          body: GetBuilder<MyBookingsController>(
-            builder: (context) {
-              return FutureBuilder<BookingModel>(
-                  // body: FutureBuilder<AllBookingsModel>(
-                  future: controller.getAllBookings(),
-                  builder: (context, snapshot) {
-                    print(snapshot.hasData);
-                    print("----------------snapshot has data----------");
-                    if (snapshot.hasData) {
-                      return GetBuilder<MyBookingsController>(
-                        init:MyBookingsController(),
+          body: GetBuilder<MyBookingsController>(builder: (context) {
+            return FutureBuilder<BookingModel>(
+                // body: FutureBuilder<AllBookingsModel>(
+                future: controller.getAllBookings(),
+                builder: (context, snapshot) {
+                  print(snapshot.hasData);
+                  print("----------------snapshot has data----------");
+                  if (snapshot.hasData) {
+                    return GetBuilder<MyBookingsController>(
+                        init: MyBookingsController(),
                         builder: (context) {
                           return ListView.builder(
                             itemCount: snapshot.data?.result!.length,
-                            padding:
-                                const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 5),
                             itemBuilder: (BuildContext contextM, index) {
-                           controller. pendingsbookinglist=
-                                  snapshot.data!.result!.reversed.toList()as List<Result>;
+                              controller.pendingsbookinglist =
+                                  snapshot.data!.result!.reversed.toList()
+                                      as List<Result>;
                               var data = controller.pendingsbookinglist![index];
 
                               if (data.status == "submitted" ||
                                   data.status == "pending" ||
                                   data.status == "reSubmitted") {
                                 return Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 6.0),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 6.0),
                                   child: Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.rectangle,
@@ -73,7 +74,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                         bottom: 7),
                                     margin: EdgeInsets.symmetric(horizontal: 5),
                                     child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
                                           //Row left image and right data
                                           Row(
@@ -86,40 +88,51 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                     CrossAxisAlignment.center,
                                                 children: [
                                                   ImageWidget(
-                                                      imagePath:
-                                                          data.source?.image?.first),
+                                                      imagePath: data.source
+                                                          ?.image?.first),
                                                   const SizedBox(
                                                     height: AppDimens.dimens_12,
                                                   ),
 //--------------------------------View booking--------------------------
                                                   /// onclick of view booking
                                                   Padding(
-                                                    padding: const EdgeInsets.only(
-                                                        right: 10.0),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 10.0),
                                                     child: InkWell(
                                                       child: Container(
                                                           child: Center(
                                                         child: Text(
-                                                          Constants.TXT_VIEW_BOOKING.tr,
+                                                          Constants
+                                                              .TXT_VIEW_BOOKING
+                                                              .tr,
                                                           style: AppStyle
                                                               .textViewStyleSmall(
-                                                                  context:   Get.context!,
+                                                                  context: Get
+                                                                      .context!,
                                                                   color: AppColors
                                                                       .colorTextBlue2,
-                                                                  fontSizeDelta: 0,
-                                                                  fontWeightDelta: 0),
+                                                                  fontSizeDelta:
+                                                                      0,
+                                                                  fontWeightDelta:
+                                                                      0),
                                                         ),
                                                       )),
                                                       onTap: () {
-                                                        if (data.status == "pending") {
+                                                        if (data.status ==
+                                                            "pending") {
                                                           //reschedule and decline
                                                           // print(data.bookingDetails!.customerNote.toString());
                                                           Get.to(ViewBookingEstimation(
-                                                              mEstimatesModel: data as viewBookingModel.Result,
+                                                              mEstimatesModel: data
+                                                                  as viewBookingModel
+                                                                      .Result,
                                                               isPending: true));
                                                         } else {
                                                           Get.to(ViewBookingEstimation(
-                                                              mEstimatesModel: data as viewBookingModel.Result));
+                                                              mEstimatesModel: data
+                                                                  as viewBookingModel
+                                                                      .Result));
                                                         }
                                                       },
                                                     ),
@@ -146,11 +159,14 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                     Row(
                                                       children: [
                                                         Textwidget(
-                                                            text: "Service Title: ".tr,
+                                                            text:
+                                                                "Service Title: "
+                                                                    .tr,
                                                             fontsize: 0,
                                                             fontweight: 0),
                                                         Textwidget(
-                                                            text: data.source?.title ??
+                                                            text: data.source
+                                                                    ?.title ??
                                                                 "",
                                                             fontsize: 0,
                                                             fontweight: 0),
@@ -159,7 +175,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                     Row(
                                                       children: [
                                                         Textwidget(
-                                                            text: "Price :  ".tr,
+                                                            text:
+                                                                "Price :  ".tr,
                                                             fontsize: 0,
                                                             fontweight: 0),
                                                         priceWidget(
@@ -173,22 +190,29 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                           "Booking Date : ".tr,
                                                           style: AppStyle
                                                               .textViewStyleSmall(
-                                                                  context:   Get.context!,
+                                                                  context: Get
+                                                                      .context!,
                                                                   color: AppColors
                                                                       .colorBlack,
-                                                                  fontSizeDelta: -1,
-                                                                  fontWeightDelta: 0),
+                                                                  fontSizeDelta:
+                                                                      -1,
+                                                                  fontWeightDelta:
+                                                                      0),
                                                         ),
                                                         Text(
                                                           getDate(data
-                                                              .bookingDetails!.date!),
+                                                              .bookingDetails!
+                                                              .date!),
                                                           style: AppStyle
                                                               .textViewStyleSmall(
-                                                                  context:   Get.context!,
+                                                                  context: Get
+                                                                      .context!,
                                                                   color: AppColors
                                                                       .colorBlack,
-                                                                  fontSizeDelta: -1,
-                                                                  fontWeightDelta: 0),
+                                                                  fontSizeDelta:
+                                                                      -1,
+                                                                  fontWeightDelta:
+                                                                      0),
                                                         ),
                                                       ],
                                                     ),
@@ -200,33 +224,40 @@ class PendingFragment extends GetView<MyBookingsController> {
 
                                                     Row(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment.start,
+                                                          MainAxisAlignment
+                                                              .start,
                                                       //     : MainAxisAlignment.center,
                                                       children: [
                                                         ///on click view estimation
                                                         InkWell(
                                                           child: Container(
-                                                              width: Get.width / 3.2,
+                                                              width: Get.width /
+                                                                  3.2,
                                                               padding: const EdgeInsets
                                                                       .symmetric(
-                                                                  horizontal: 6.0,
-                                                                  vertical: 6.0),
+                                                                  horizontal:
+                                                                      6.0,
+                                                                  vertical:
+                                                                      6.0),
                                                               decoration: AppViews
                                                                   .getGradientBoxDecoration(
-                                                                      mBorderRadius: 2),
+                                                                      mBorderRadius:
+                                                                          2),
                                                               //.....estimation staus............
                                                               child: Center(
                                                                 child: Text(
                                                                   data.status ==
                                                                           "pending"
-                                                                      ? "Requested".tr
+                                                                      ? "Requested"
+                                                                          .tr
                                                                       : "View Estimation"
                                                                           .tr
                                                                           .toUpperCase(),
                                                                   style: TextStyle(
                                                                       color: AppColors
                                                                           .colorWhite,
-                                                                      fontSize: 10,
+                                                                      fontSize:
+                                                                          10,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w500),
@@ -243,15 +274,16 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                                   .estimation!
                                                                   .items!
                                                                   .isNotEmpty) {
-                                                                Get.to(
-                                                                    EstimationDetailsPDFScreen(
-                                                                        allBookingsModel:
-                                                                            data as viewBookingModel.Result));
+                                                                Get.to(EstimationDetailsPDFScreen(
+                                                                    allBookingsModel: data
+                                                                        as viewBookingModel
+                                                                            .Result));
                                                               } else {
                                                                 Global.showToastAlert(
                                                                     context: Get
                                                                         .overlayContext!,
-                                                                    strTitle: "",
+                                                                    strTitle:
+                                                                        "",
                                                                     strMsg:
                                                                         "Estimation Data incomplete",
                                                                     toastType:
@@ -272,107 +304,82 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                                 true
                                                             ? Expanded(
                                                                 child: InkWell(
-                                                                  child: Container(
-                                                                    padding:
-                                                                        const EdgeInsets
-                                                                                .symmetric(
-                                                                            horizontal:
-                                                                                6.0,
-                                                                            vertical:
-                                                                                5.0),
+                                                                  child:
+                                                                      Container(
+                                                                    padding: const EdgeInsets
+                                                                            .symmetric(
+                                                                        horizontal:
+                                                                            6.0,
+                                                                        vertical:
+                                                                            5.0),
                                                                     decoration:
                                                                         BoxDecoration(
-                                                                      color: data.estimation
-                                                                                  ?.offerStatus ==
+                                                                      color: data.estimation?.offerStatus ==
                                                                               "accepted"
                                                                           ? AppColors
                                                                               .colorSuccessBackground
-                                                                          : data.estimation
-                                                                                      ?.offerStatus ==
-                                                                                  "declined"
-                                                                              ? AppColors
-                                                                                  .colorCancelledBackground
-                                                                              : AppColors
-                                                                                  .colorPendingBackground,
+                                                                          : data.estimation?.offerStatus == "declined"
+                                                                              ? AppColors.colorCancelledBackground
+                                                                              : AppColors.colorPendingBackground,
                                                                       borderRadius:
-                                                                          BorderRadius
-                                                                              .circular(
-                                                                                  2.0),
+                                                                          BorderRadius.circular(
+                                                                              2.0),
                                                                       border:
-                                                                          Border.all(
-                                                                        width: 1,
-                                                                        color: data.estimation
-                                                                                    ?.offerStatus ==
+                                                                          Border
+                                                                              .all(
+                                                                        width:
+                                                                            1,
+                                                                        color: data.estimation?.offerStatus ==
                                                                                 "accepted"
-                                                                            ? AppColors
-                                                                                .colorSuccessBorder
-                                                                            : data.estimation?.offerStatus ==
-                                                                                    "declined"
-                                                                                ? AppColors
-                                                                                    .colorCancelledBorder
-                                                                                : AppColors
-                                                                                    .colorPendingBorder,
+                                                                            ? AppColors.colorSuccessBorder
+                                                                            : data.estimation?.offerStatus == "declined"
+                                                                                ? AppColors.colorCancelledBorder
+                                                                                : AppColors.colorPendingBorder,
                                                                       ),
                                                                     ),
-                                                                    child: Center(
-                                                                      child: Text(
-                                                                        "${data.estimation?.offerStatus}"
-                                                                                .tr
-                                                                                .toUpperCase() ??
+                                                                    child:
+                                                                        Center(
+                                                                      child:
+                                                                          Text(
+                                                                        "${data.estimation?.offerStatus}".tr.toUpperCase() ??
                                                                             "",
                                                                         style:
                                                                             TextStyle(
-                                                                          color: data.estimation
-                                                                                      ?.offerStatus ==
-                                                                                  "accepted"
-                                                                              ? AppColors
-                                                                                  .colorSuccessText
-                                                                              : data.estimation?.offerStatus ==
-                                                                                      "declined"
-                                                                                  ? AppColors
-                                                                                      .colorCancelledText
-                                                                                  : AppColors
-                                                                                      .colorPendingText,
-                                                                          fontSize: 10,
+                                                                          color: data.estimation?.offerStatus == "accepted"
+                                                                              ? AppColors.colorSuccessText
+                                                                              : data.estimation?.offerStatus == "declined"
+                                                                                  ? AppColors.colorCancelledText
+                                                                                  : AppColors.colorPendingText,
+                                                                          fontSize:
+                                                                              10,
                                                                           fontWeight:
-                                                                              FontWeight
-                                                                                  .w500,
+                                                                              FontWeight.w500,
                                                                         ),
                                                                       ),
                                                                     ),
                                                                   ),
                                                                   onTap: () {
-                                                                    showDialog<String>(
-                                                                        context:
-                                                                            Get.context!,
+                                                                    showDialog<
+                                                                            String>(
+                                                                        context: Get
+                                                                            .context!,
                                                                         builder: (BuildContext
                                                                                 context) =>
                                                                             AlertDialog(
-                                                                              title:
-                                                                                  const Text(
+                                                                              title: const Text(
                                                                                 'Offering Amount',
-                                                                                textAlign:
-                                                                                    TextAlign.center,
-                                                                                style: TextStyle(
-                                                                                    fontWeight:
-                                                                                        FontWeight.bold),
+                                                                                textAlign: TextAlign.center,
+                                                                                style: TextStyle(fontWeight: FontWeight.bold),
                                                                               ),
-                                                                              content:
-                                                                                  Column(
-                                                                                mainAxisSize:
-                                                                                    MainAxisSize.min,
+                                                                              content: Column(
+                                                                                mainAxisSize: MainAxisSize.min,
                                                                                 children: [
                                                                                   Text(
                                                                                     "${data.estimation?.offerAmount} AED".tr,
-                                                                                    style: AppStyle.textViewStyleSmall(
-                                                                                        context: context,
-                                                                                        color: AppColors.colorBlack,
-                                                                                        fontSizeDelta: 8,
-                                                                                        fontWeightDelta: 2),
+                                                                                    style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack, fontSizeDelta: 8, fontWeightDelta: 2),
                                                                                   ),
                                                                                   Container(
-                                                                                    child:
-                                                                                        Text(
+                                                                                    child: Text(
                                                                                       // " dsfjlasd ladjfl klfjl;asf l;sa lsjflks jlkdf lkdfkadjlfjal; fkdalkdf dlkfj;la sd",
                                                                                       "${data.estimation?.offerNote}",
                                                                                       textAlign: TextAlign.center,
@@ -380,12 +387,10 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                                                     ),
                                                                                   ),
                                                                                   InkWell(
-                                                                                    onTap:
-                                                                                        () {
+                                                                                    onTap: () {
                                                                                       Navigator.pop(context);
                                                                                     },
-                                                                                    child:
-                                                                                        Padding(
+                                                                                    child: Padding(
                                                                                       padding: const EdgeInsets.all(8.0),
                                                                                       child: Container(
                                                                                         decoration: BoxDecoration(
@@ -414,7 +419,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                                             ?.offerStatus ==
                                                                         'submitted') {
                                                                       gotoViewEstimation(
-                                                                          data, false);
+                                                                          data,
+                                                                          false);
                                                                     }
                                                                   },
                                                                 ),
@@ -437,15 +443,13 @@ class PendingFragment extends GetView<MyBookingsController> {
                               }
                             },
                           );
-                        }
-                      );
-                    } else if (snapshot.hasError) {
-                      const Center(child: Text("No data found"));
-                    }
-                    return const Center(child: CircularProgressIndicator());
-                  });
-            }
-          ),
+                        });
+                  } else if (snapshot.hasError) {
+                    const Center(child: Text("No data found"));
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                });
+          }),
         ));
   }
 

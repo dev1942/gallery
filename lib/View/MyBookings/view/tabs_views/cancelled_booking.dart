@@ -41,7 +41,8 @@ class CancelledFragment extends GetView<MyBookingsController> {
                       List inProcgressList =
                           snapshot.data!.result!.reversed.toList();
                       var data = inProcgressList[index];
-                      if (data.status == "cancelled" || data.status == "declined") {
+                      if (data.status == "cancelled" ||
+                          data.status == "declined") {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6.0),
                           child: Stack(
@@ -70,8 +71,8 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                           Column(
                                             children: [
                                               ImageWidget(
-                                                  imagePath:
-                                                      data.source?.image?.first),
+                                                  imagePath: data
+                                                      .source?.image?.first),
                                               const SizedBox(
                                                 height: AppDimens.dimens_12,
                                               ),
@@ -80,10 +81,12 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                               InkWell(
                                                 child: Container(
                                                     child: Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      right: 8.0),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 8.0),
                                                   child: Text(
-                                                    Constants.TXT_VIEW_BOOKING.tr,
+                                                    Constants
+                                                        .TXT_VIEW_BOOKING.tr,
                                                     style: AppStyle
                                                         .textViewStyleSmall(
                                                             context: context,
@@ -95,19 +98,21 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                 )),
                                                 onTap: () {
                                                   if (data.status ==
-                                                      "cancelled" || data.status == "declined") {
+                                                          "cancelled" ||
+                                                      data.status ==
+                                                          "declined") {
                                                     //reschedule and decline
                                                     Get.to(
                                                         ViewBookingEstimation(
                                                             status: "cancelled",
-                                                            mEstimatesModel: data,
-                                                            isPending: false)
-                                                    );
+                                                            mEstimatesModel:
+                                                                data,
+                                                            isPending: false));
                                                   } else {
                                                     Get.to(
                                                         ViewBookingEstimation(
-
-                                                            mEstimatesModel: data));
+                                                            mEstimatesModel:
+                                                                data));
                                                   }
                                                 },
                                               ),
@@ -134,14 +139,14 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                 Row(
                                                   children: [
                                                     Textwidget(
-                                                        text: "Service Title: ".tr,
+                                                        text: "Service Title: "
+                                                            .tr,
                                                         fontsize: 0,
                                                         fontweight: 0),
                                                     Textwidget(
-                                                        text:
-                                                            data.source?.title ??
-                                                                "",
-
+                                                        text: data.source
+                                                                ?.title ??
+                                                            "",
                                                         fontsize: 0,
                                                         fontweight: 0),
                                                   ],
@@ -149,7 +154,8 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                 Text(
                                                   "Booking Cancelled".tr,
                                                   style: TextStyle(
-                                                      color: AppColors.colorCancelledText),
+                                                      color: AppColors
+                                                          .colorCancelledText),
                                                 ),
                                                 Row(
                                                   children: [
@@ -157,7 +163,8 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                         text: "Price :  ".tr,
                                                         fontsize: 0,
                                                         fontweight: 0),
-                                                    priceWidget(data.source!.price
+                                                    priceWidget(data
+                                                        .source!.price
                                                         .toString()),
                                                   ],
                                                 ),
@@ -171,18 +178,21 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                               color: AppColors
                                                                   .colorBlack,
                                                               fontSizeDelta: -1,
-                                                              fontWeightDelta: 0),
+                                                              fontWeightDelta:
+                                                                  0),
                                                     ),
                                                     Text(
                                                       getDate(data
-                                                          .bookingDetails!.date.toString()),
+                                                          .bookingDetails!.date
+                                                          .toString()),
                                                       style: AppStyle
                                                           .textViewStyleSmall(
                                                               context: context,
                                                               color: AppColors
                                                                   .colorBlack,
                                                               fontSizeDelta: -1,
-                                                              fontWeightDelta: 0),
+                                                              fontWeightDelta:
+                                                                  0),
                                                     ),
                                                   ],
                                                 ),
@@ -200,19 +210,23 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                     ///rebook onclick
                                                     InkWell(
                                                       child: Container(
-                                                          width: Get.width / 2.6,
+                                                          width:
+                                                              Get.width / 2.6,
                                                           padding:
                                                               const EdgeInsets
                                                                       .symmetric(
-                                                                  horizontal: 6.0,
-                                                                  vertical: 5.0),
+                                                                  horizontal:
+                                                                      6.0,
+                                                                  vertical:
+                                                                      5.0),
                                                           decoration: AppViews
                                                               .getGradientBoxDecoration(
                                                                   mBorderRadius:
                                                                       2),
                                                           child: Center(
                                                             child: Text(
-                                                              "re-book".tr
+                                                              "re-book"
+                                                                  .tr
                                                                   .toUpperCase(),
                                                               style: TextStyle(
                                                                   color: AppColors
@@ -228,7 +242,12 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                         // gotoViewEstimation(
                                                         //     AllBookingsModel(),
                                                         //     false);false
-                                                        Get.to(ViewBookingEstimation(mEstimatesModel: data,isPending: true,isRebooked: true,));
+                                                        Get.to(
+                                                            ViewBookingEstimation(
+                                                          mEstimatesModel: data,
+                                                          isPending: true,
+                                                          isRebooked: true,
+                                                        ));
                                                       },
                                                     ),
                                                     const SizedBox(
@@ -248,8 +267,11 @@ class CancelledFragment extends GetView<MyBookingsController> {
                               ),
                               Positioned(
                                   right: 5,
-                                  top:5,
-                                  child: Icon(Icons.delete_outline,color: AppColors.colorCancelledText,))
+                                  top: 5,
+                                  child: Icon(
+                                    Icons.delete_outline,
+                                    color: AppColors.colorCancelledText,
+                                  ))
                             ],
                           ),
                         );
@@ -260,7 +282,7 @@ class CancelledFragment extends GetView<MyBookingsController> {
                     },
                   );
                 } else if (snapshot.hasError) {
-                    Center(child: Text("No data found".tr));
+                  Center(child: Text("No data found".tr));
                 }
                 return const Center(child: CircularProgressIndicator());
               }),
