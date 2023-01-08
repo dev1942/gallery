@@ -34,7 +34,9 @@ class DynamicLinksApi {
         title: 'Refer A Friend',
         description: 'Refer and earn',
         imageUrl:
-            Uri.parse('https://d23jwszswncmo3.cloudfront.net/otobuckslogo.jpg'),
+            Uri.parse('https:otobucks.com/static/media/logo.539db792e67834bc51f2.png'),
+
+        //  origionanal link >> https://d23jwszswncmo3.cloudfront.net/otobuckslogo.jpg
       ),
     );
 

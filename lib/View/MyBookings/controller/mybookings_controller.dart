@@ -112,6 +112,10 @@ late Future<BookingModel>futurBookings;
       getMessages(chatNowRoomId);
     });
   }
+  Future<void>refreshBookings()async {
+    onInit();
+    update();
+  }
 //------------------------------------------------Get messages--------------------------------------
   getMessages(String roomId) async {
     HashMap<String, Object> requestParams = HashMap();

@@ -51,10 +51,9 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
     // };
 
     List<Color> colorList = [
-      AppColors.colorYellowShade,
+      Colors.cyan.shade400,
       AppColors.colorPrimary,
-      Colors.teal,
-      Colors.pink
+      Colors.blue.shade500,
     ];
     widgetM = SingleChildScrollView(
       child: Column(
@@ -145,66 +144,66 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
                   ),
                 )),
                 const SizedBox(width: AppDimens.dimens_5, height: 0),
-                Expanded(
-                    child: Card(
-                  child: Container(
-                    padding: const EdgeInsets.all(AppDimens.dimens_8),
-                    alignment: Alignment.center,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            RoundDot(
-                                mColor: AppColors.colorOrange,
-                                size: AppDimens.dimens_8),
-                            Expanded(
-                              child: GetBuilder<AnalyticsController>(
-                                  builder: (value) {
-                                return AppViews.getSetDataCustomLoader(
-                                    context,
-                                    value.loadingWalletBalance,
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          left: AppDimens.dimens_4),
-                                      child: Text(
-                                        Global.replaceCurrencySign(
-                                                value.mWalletModel.currency) +
-                                            value.mWalletModel.earning,
-                                        style: AppStyle
-                                            .textViewStyleNormalSubtitle2(
-                                                context: context,
-                                                color: AppColors.colorOrange,
-                                                fontSizeDelta: 2,
-                                                fontWeightDelta: 3),
-                                      ),
-                                    ),
-                                    SpinKitCircle(
-                                      color: AppColors.colorAccent,
-                                      size: AppDimens.dimens_20,
-                                      key: const ValueKey('value'),
-                                    ),
-                                    '0');
-                              }),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          margin:
-                              const EdgeInsets.only(top: AppDimens.dimens_5),
-                          child: Text(Constants.TXT_TOTAL_EARNINGS,
-                              style: AppStyle.textViewStyleSmall(
-                                  context: context,
-                                  color: AppColors.colorBlack,
-                                  fontSizeDelta: -2)),
-                        )
-                      ],
-                    ),
-                  ),
-                )),
+                // Expanded(
+                //     child: Card(
+                //   child: Container(
+                //     padding: const EdgeInsets.all(AppDimens.dimens_8),
+                //     alignment: Alignment.center,
+                //     child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         // Row(
+                //         //   crossAxisAlignment: CrossAxisAlignment.center,
+                //         //   mainAxisAlignment: MainAxisAlignment.start,
+                //         //   children: [
+                //         //     RoundDot(
+                //         //         mColor: AppColors.colorOrange,
+                //         //         size: AppDimens.dimens_8),
+                //         //     Expanded(
+                //         //       child: GetBuilder<AnalyticsController>(
+                //         //           builder: (value) {
+                //         //         return AppViews.getSetDataCustomLoader(
+                //         //             context,
+                //         //             value.loadingWalletBalance,
+                //         //             Container(
+                //         //               margin: const EdgeInsets.only(
+                //         //                   left: AppDimens.dimens_4),
+                //         //               child: Text(
+                //         //                 Global.replaceCurrencySign(
+                //         //                         value.mWalletModel.currency) +
+                //         //                     value.mWalletModel.earning,
+                //         //                 style: AppStyle
+                //         //                     .textViewStyleNormalSubtitle2(
+                //         //                         context: context,
+                //         //                         color: AppColors.colorOrange,
+                //         //                         fontSizeDelta: 2,
+                //         //                         fontWeightDelta: 3),
+                //         //               ),
+                //         //             ),
+                //         //             SpinKitCircle(
+                //         //               color: AppColors.colorAccent,
+                //         //               size: AppDimens.dimens_20,
+                //         //               key: const ValueKey('value'),
+                //         //             ),
+                //         //             '0');
+                //         //       }),
+                //         //     ),
+                //         //   ],
+                //         // ),
+                //         // Container(
+                //         //   margin:
+                //         //       const EdgeInsets.only(top: AppDimens.dimens_5),
+                //         //   child: Text(Constants.TXT_TOTAL_EARNINGS,
+                //         //       style: AppStyle.textViewStyleSmall(
+                //         //           context: context,
+                //         //           color: AppColors.colorBlack,
+                //         //           fontSizeDelta: -2)),
+                //         // )
+                //       ],
+                //     ),
+                //   ),
+                // )),
               ],
             ),
           ),
@@ -229,7 +228,7 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: AspectRatio(
-              aspectRatio: 14 / 9,
+              aspectRatio: 11 / 9,
               child: PieChart(
                 dataMap: //dataMap,
 
@@ -241,7 +240,7 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
                   "Invites": 0,
                 },
                 animationDuration: Duration(milliseconds: 800),
-                chartLegendSpacing: 80,
+                chartLegendSpacing: 100,
                 chartRadius: MediaQuery.of(context).size.width / 3,
                 colorList: colorList,
                 initialAngleInDegree: 0,

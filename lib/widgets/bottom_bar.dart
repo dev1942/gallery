@@ -51,14 +51,14 @@ class BottomNavBarHelper {
             alignment: Alignment.center,
             child: bottomNavIcon(AppImages.ic_home_white),
           )),
-      BottomNavigationBarItem(
-          icon: bottomNavIcon(AppImages.ic_message),
-          label: "",
-          activeIcon: Container(
-            alignment: Alignment.center,
-            height: AppDimens.dimens_20,
-            child: bottomNavIcon(AppImages.ic_message),
-          )),
+      // BottomNavigationBarItem(
+      //     icon: bottomNavIcon(AppImages.ic_message),
+      //     label: "",
+      //     activeIcon: Container(
+      //       alignment: Alignment.center,
+      //       height: AppDimens.dimens_20,
+      //       child: bottomNavIcon(AppImages.ic_message),
+      //     )),
       BottomNavigationBarItem(
           icon: bottomNavIcon(AppImages.ic_cart),
           label: "",

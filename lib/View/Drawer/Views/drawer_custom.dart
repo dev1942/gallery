@@ -77,7 +77,7 @@ Widget drawer(BuildContext context) {
               ),
               GestureDetector(
                 onTap: () {
-                  _launchLink('https://www.linkedin.com/in/otobucksa4ba24b');
+                  _launchLink('https://www.linkedin.com/company/otobucks/');
                 },
                 child: Container(
                   margin: const EdgeInsets.only(
@@ -230,10 +230,10 @@ var alDrawerItem = [
       title: Constants.TAG_NOTIFICATION,
       icon: AppImages.ic_drawer_notification,
       pageType: PageType.notification),
-  DrawerItem(
-      title: Constants.TAG_INBOX,
-      icon: AppImages.ic_message,
-      pageType: PageType.inbox),
+  // DrawerItem(
+  //     title: Constants.TAG_INBOX,
+  //     icon: AppImages.ic_message,
+  //     pageType: PageType.inbox),
   DrawerItem(
       title: Constants.TAG_TRANSACTION_HISTORY,
       icon: AppImages.ic_drawer_transection_history,

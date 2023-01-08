@@ -30,122 +30,118 @@ class RatingScreenState extends State<RatingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget widgetM = ListView(
-      children: [
-        const SizedBox(
-          height: 50,
-        ),
-        Image.asset(
-          AppImages.ic_thank_you_service,
-          height: 170,
-        ),
-        const SizedBox(
-          height: 50,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              AppImages.ic_thank_you,
-              width: 190,
-            ),
-          ],
-        ),
-        Container(
-            alignment: Alignment.center,
-            margin:
-                const EdgeInsets.only(left: 30, right: 30, top: 30, bottom: 15),
-            height: 50,
-            child: RatingBar(
-              initialRating: 3,
-              direction: Axis.horizontal,
-              allowHalfRating: false,
-              itemCount: 5,
-              ratingWidget: RatingWidget(
-                full: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                      color: AppColors.colorBlueStart,
-                      borderRadius: BorderRadius.circular(100)),
-                  child: const Icon(
-                    Icons.star,
-                    color: Colors.white,
+
+
+    return Scaffold(
+      backgroundColor: AppColors.getMainBgColor(),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 50,
+              ),
+              Image.asset(
+                AppImages.ic_thank_you_service,
+                height: 170,
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppImages.ic_thank_you,
+                    width: 190,
                   ),
+                ],
+              ),
+              Container(
+                  alignment: Alignment.center,
+                  margin:
+                  const EdgeInsets.only(left: 30, right: 30, top: 30, bottom: 15),
+                  height: 50,
+                  child: RatingBar(
+                    initialRating: 3,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    itemCount: 5,
+                    ratingWidget: RatingWidget(
+                      full: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                            color: AppColors.colorBlueStart,
+                            borderRadius: BorderRadius.circular(100)),
+                        child: const Icon(
+                          Icons.star,
+                          color: Colors.white,
+                        ),
+                      ),
+                      half: const Icon(Icons.star),
+                      empty: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                            color: AppColors.grayDashboardText,
+                            borderRadius: BorderRadius.circular(100)),
+                        child: const Icon(
+                          Icons.star,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    onRatingUpdate: (r) {
+                      rating = r;
+                    },
+                  )),
+              Center(
+                child: Text(
+
+                  'How was your experience'.tr,
+
+                  style: lightText(16),
                 ),
-                half: const Icon(Icons.star),
-                empty: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                      color: AppColors.grayDashboardText,
-                      borderRadius: BorderRadius.circular(100)),
-                  child: const Icon(
-                    Icons.star,
-                    color: Colors.white,
+              ),
+              Center(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(vertical: 20),
+                  width: 300,
+                  child: TextField(
+                    controller: feedback,
+                    maxLines: 6,
+                    decoration: InputDecoration(
+                        hintText: 'Your FeedBack'.tr,
+                        hintStyle: TextStyle(color: AppColors.grayDashboardText),
+                        filled: true,
+                        fillColor: HexColor('#FAFAFA'),
+                        border: InputBorder.none),
                   ),
                 ),
               ),
-              itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-              onRatingUpdate: (r) {
-                rating = r;
-              },
-            )),
-        Center(
-          child: Text(
+              Center(
+                child: SizedBox(
+                  height: 40,
+                  width: 150,
+                  child: isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : PrimaryButton(
 
-            'How was your experience'.tr,
 
-            style: lightText(16),
+
+                      label:  Text('Submit'.tr),
+
+                      onPress: () {
+                        giveRating();
+                      },
+                      color: null),
+                ),
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+            ],
           ),
-        ),
-        Center(
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 20),
-            width: 300,
-            child: TextField(
-              controller: feedback,
-              maxLines: 6,
-              decoration: InputDecoration(
-
-
-
-                  hintText: 'Your FeedBack'.tr,
-                  hintStyle: TextStyle(color: AppColors.grayDashboardText),
-                  filled: true,
-                  fillColor: HexColor('#FAFAFA'),
-                  border: InputBorder.none),
-            ),
-          ),
-        ),
-        Center(
-          child: SizedBox(
-            height: 40,
-            width: 150,
-            child: isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : PrimaryButton(
-
-
-
-                    label:  Text('Submit'.tr),
-
-                    onPress: () {
-                      giveRating();
-                    },
-                    color: null),
-          ),
-        ),
-        const SizedBox(
-          height: 40,
-        ),
-      ],
-    );
-
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.getMainBgColor(),
-      body: SafeArea(
-        child: Center(
-          child: widgetM,
         ),
       ),
     );

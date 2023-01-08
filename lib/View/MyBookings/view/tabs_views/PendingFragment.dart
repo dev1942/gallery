@@ -46,7 +46,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                         init: MyBookingsController(),
                         builder: (context) {
                           return RefreshIndicator(
-                            onRefresh: controller.getAllBookings,
+                            onRefresh: controller.refreshBookings,
 
                             child: ListView.builder(
                               itemCount: snapshot.data?.result!.length,

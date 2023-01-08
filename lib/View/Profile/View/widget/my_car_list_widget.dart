@@ -53,8 +53,8 @@ class MyCarListItem extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(AppDimens.dimens_10),
-              child: NetworkImageCustom(
-                  image: image,
+              child: Image.asset(
+                  'assets/images/bmw2.png',
                   height: AppDimens.dimens_70,
                   width: AppDimens.dimens_80),
             ),
