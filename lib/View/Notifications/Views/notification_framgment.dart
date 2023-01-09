@@ -302,7 +302,7 @@ Get.put(NotificationsController()).numberOfNotifications=alNotification.length;
           if (preferences.getnotificationId() != alNotification.last.id) {
             preferences.setNotificationId(alNotification.last.id);
             createanddisplaynotification(
-                title: alNotification.last.title,
+                title: "Otobucks",
                 body: alNotification.last.title,
                 payload: alNotification.last.id);
           }
