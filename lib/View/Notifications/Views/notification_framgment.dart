@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:otobucks/global/container_properties.dart';
 import 'package:otobucks/View/Notifications/Views/notification_details_screen.dart';
 
@@ -21,6 +22,7 @@ import '../../../../../../global/enum.dart';
 import '../../../../../../global/global.dart';
 import '../../../global/constants.dart';
 import '../Models/notification_model.dart';
+import 'NotificationController.dart';
 
 class NotificationFragment extends StatefulWidget {
   const NotificationFragment({Key? key}) : super(key: key);
@@ -54,8 +56,9 @@ class NotificationFragmentState extends State<NotificationFragment> {
 
   @override
   Widget build(BuildContext context) {
+   // getNotifications();
     Widget widgetM = Container();
-
+Get.put(NotificationsController()).numberOfNotifications=alNotification.length;
     Widget mShowWidget = ListView(
       children: [
         // profile pic and name
