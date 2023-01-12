@@ -8,6 +8,7 @@ import 'package:otobucks/global/app_images.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/global/constants.dart';
+import 'package:otobucks/services/services.dart';
 import 'package:otobucks/widgets/custom_button.dart';
 import 'package:otobucks/widgets/custom_textfield_password.dart';
 import 'package:otobucks/widgets/custom_textfield_with_icon.dart';
@@ -15,9 +16,7 @@ import 'package:otobucks/widgets/language_dropdown.dart';
 
 import '../controllers/login_controller.dart';
 
-
 class LogInScreen extends GetView<LoginController> {
-
   const LogInScreen({Key? key}) : super(key: key);
 
   @override
@@ -30,6 +29,28 @@ class LogInScreen extends GetView<LoginController> {
             top: false,
             bottom: false,
             child: Scaffold(
+                appBar: AppBar(
+                  actions: [
+                    IconButton(
+                        onPressed: () {
+                          print("Test");
+                          var data = getDate(
+                              startDate: DateTime.now().toString(),
+                              endDate: DateTime.now().toString());
+                          print("::::::::::::::::::::::::::::::: $data");
+                        },
+                        icon: Icon(Icons.add))
+                  ],
+                ),
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () {
+                    print("Test");
+                    var data =
+                        getDate(startDate: "startDate", endDate: "endDate");
+                    print("::::::::::::::::::::::::::::::: $data");
+                  },
+                  child: Icon(Icons.add),
+                ),
                 resizeToAvoidBottomInset: true,
                 backgroundColor: AppColors.colorWhite,
                 body: Stack(

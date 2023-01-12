@@ -1,16 +1,15 @@
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Home/Controllers/home_screen_controller.dart';
 import 'package:otobucks/View/Drawer/Views/drawer_custom.dart';
+import 'package:otobucks/services/services.dart';
 
 import '../../../global/app_colors.dart';
 import '../../../global/app_views.dart';
 import '../../../global/enum.dart';
 import '../../../widgets/bottom_bar.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,9 +22,7 @@ class _HomePageState extends State<HomePage> {
   var controller = Get.put(HomeScreenController());
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
-
-
-   // controller.getAccountName();
+  // controller.getAccountName();
 
   void onMessage() {
     FirebaseMessaging.onMessage.listen(
@@ -74,6 +71,19 @@ class _HomePageState extends State<HomePage> {
             return Scaffold(
                 key: scaffoldKey,
                 backgroundColor: AppColors.colorWhite,
+                //Get Date Function++++++++++++++++++++++++++++++++++++++++++++
+                // floatingActionButton: FloatingActionButton(
+                //   onPressed: () async {
+                //     print("Test");
+                //     var data = await getDate(
+                //         startDate: DateTime.now().toString(),
+                //         endDate: DateTime.now().toString());
+                //     print(DateTime.now().toString());
+                //     print("::::::::::::::::::::::::::::::: ${data}");
+                //     print(
+                //         "::::::::::::::::::::::::::::::: ${data['result'][0]}");
+                //   },
+                // ),
                 appBar: AppViews.initAppBar(
                   icon: constraints.maxWidth < 600
                       ? null
@@ -98,7 +108,6 @@ class _HomePageState extends State<HomePage> {
                     }
                   },
                 ),
-                
                 resizeToAvoidBottomInset: false,
                 drawer: constraints.maxWidth > 600 ? null : drawer(context),
                 body: constraints.maxWidth > 600

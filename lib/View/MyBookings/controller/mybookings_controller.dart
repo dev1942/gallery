@@ -37,6 +37,7 @@ class MyBookingsController extends GetxController {
   String chatNowRoomId = '';
 
   void onInit() {
+    print("CHECKING FUNCTIUON");
     // TODO: implement onInit
     super.onInit();
     futurBookings=getAllBookings();
@@ -56,23 +57,32 @@ class MyBookingsController extends GetxController {
   }
 late Future<BookingModel>futurBookings;
   //...............Get All Bookings...........................
-  Future<BookingModel> getAllBookings() async {
+  Future<BookingModel> getAllBookings({startDate,endDate}) async {
+    print("CHECKING FUNCTIUON $startDate : $endDate");
     final prefManager = await SharedPreferences.getInstance();
     token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
     log.e("token at start is");
     log.e(token);
     final headers = {
-      'Authorization': "Bearer ${token}",
+      'Authorization': "Bearer $token",
       "Content-Type": "application/json"
     };
+    var urll = "";
+    if(startDate !=null){
+      urll = "https://developmentapi-app.otobucks.com/v1/bookings/bookService?startDate=$startDate&endDate=$endDate";
+    }else{
+      urll = "https://developmentapi-app.otobucks.com/v1/bookings/bookService";
+    }
     final response = await http.get(
-        Uri.parse(
-            "https://developmentapi-app.otobucks.com/v1/bookings/bookService"),
+        Uri.parse(urll),
+
         headers: headers);
     var data = jsonDecode(response.body);
     if (response.statusCode == 200) {
       log.i("Get booking API success");
-      //log.i(data);
+      // log.i(data);
+      //
+      //
       return BookingModel.fromJson(data);
     } else {
       log.e("Get booking API Failed");
@@ -82,6 +92,7 @@ late Future<BookingModel>futurBookings;
     update();
     return BookingModel.fromJson(data);
   }
+  
 
   //..................Get token...............................
   getToken() async {
@@ -209,6 +220,5 @@ late Future<BookingModel>futurBookings;
       log.e("Exception is whileremover market shop  is=======>>${e.toString()}");
     }
   }
-
 
 }

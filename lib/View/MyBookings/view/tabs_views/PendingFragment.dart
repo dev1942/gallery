@@ -27,6 +27,7 @@ class PendingFragment extends GetView<MyBookingsController> {
 
   @override
   Widget build(BuildContext context) {
+
     Get.put(MyBookingsController());
     return SafeArea(
         top: false,
@@ -37,17 +38,17 @@ class PendingFragment extends GetView<MyBookingsController> {
           body: GetBuilder<MyBookingsController>(builder: (context) {
             return FutureBuilder<BookingModel>(
                 // body: FutureBuilder<AllBookingsModel>(
-                future: controller.futurBookings,
+                future: controller.getAllBookings(),
                 builder: (context, snapshot) {
-                  print(snapshot.hasData);
+                  print("CHECKING DATA :: ${snapshot.hasData}");
                   print("----------------snapshot has data----------");
+                 
                   if (snapshot.hasData) {
                     return GetBuilder<MyBookingsController>(
                         init: MyBookingsController(),
                         builder: (context) {
                           return RefreshIndicator(
                             onRefresh: controller.refreshBookings,
-
                             child: ListView.builder(
                               itemCount: snapshot.data?.result!.length,
                               padding: const EdgeInsets.symmetric(
@@ -56,14 +57,14 @@ class PendingFragment extends GetView<MyBookingsController> {
                                 controller.pendingsbookinglist =
                                     snapshot.data!.result!.reversed.toList()
                                         as List<Result>;
-                                var data = controller.pendingsbookinglist![index];
-
+                                var data =
+                                    controller.pendingsbookinglist![index];
                                 if (data.status == "submitted" ||
                                     data.status == "pending" ||
                                     data.status == "reSubmitted") {
                                   return Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 6.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 6.0),
                                     child: Container(
                                       decoration: BoxDecoration(
                                         shape: BoxShape.rectangle,
@@ -75,7 +76,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                           right: AppDimens.dimens_10,
                                           left: 10,
                                           bottom: 7),
-                                      margin: EdgeInsets.symmetric(horizontal: 5),
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 5),
                                       child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
@@ -83,7 +85,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                             //Row left image and right data
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 //------------------ column Image  amd view booking-----------------
                                                 Column(
@@ -94,7 +97,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                         imagePath: data.source
                                                             ?.image?.first),
                                                     const SizedBox(
-                                                      height: AppDimens.dimens_12,
+                                                      height:
+                                                          AppDimens.dimens_12,
                                                     ),
 //--------------------------------View booking--------------------------
                                                     /// onclick of view booking
@@ -109,16 +113,15 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                             Constants
                                                                 .TXT_VIEW_BOOKING
                                                                 .tr,
-                                                            style: AppStyle
-                                                                .textViewStyleSmall(
-                                                                    context: Get
-                                                                        .context!,
-                                                                    color: AppColors
-                                                                        .colorTextBlue2,
-                                                                    fontSizeDelta:
-                                                                        0,
-                                                                    fontWeightDelta:
-                                                                        0),
+                                                            style: AppStyle.textViewStyleSmall(
+                                                                context: Get
+                                                                    .context!,
+                                                                color: AppColors
+                                                                    .colorTextBlue2,
+                                                                fontSizeDelta:
+                                                                    0,
+                                                                fontWeightDelta:
+                                                                    0),
                                                           ),
                                                         )),
                                                         onTap: () {
@@ -130,7 +133,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                                 mEstimatesModel: data
                                                                     as viewBookingModel
                                                                         .Result,
-                                                                isPending: true));
+                                                                isPending:
+                                                                    true));
                                                           } else {
                                                             Get.to(ViewBookingEstimation(
                                                                 mEstimatesModel: data
@@ -147,18 +151,17 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                 Expanded(
                                                   child: Column(
                                                     children: [
-                                                      Row(
-                                                        children: [
-                                                          //---------------UserName
-                                                          Expanded(
-                                                            child: UserNameWidget(
-                                                                userName:
-                                                                    "${data.provider?.firstName?.toUpperCase()}"
-                                                                    " "
-                                                                    "${data.provider?.lastName?.toUpperCase()} "),
-                                                          ),
-                                                        ],
-                                                      ),
+                                                      // Row(
+                                                      //   children: [
+                                                      //     //---------------UserName
+                                                      //     Expanded(
+                                                      //       child: UserNameWidget(
+                                                      //           userName: "${data.provider?.firstName?.toUpperCase()}"
+                                                      //               " "
+                                                      //               "${data.provider?.lastName?.toUpperCase()} "),
+                                                      //     ),
+                                                      //   ],
+                                                      // ),
                                                       Row(
                                                         children: [
                                                           Textwidget(
@@ -178,8 +181,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                       Row(
                                                         children: [
                                                           Textwidget(
-                                                              text:
-                                                                  "Price :  ".tr,
+                                                              text: "Price :  "
+                                                                  .tr,
                                                               fontsize: 0,
                                                               fontweight: 0),
                                                           priceWidget(
@@ -190,32 +193,31 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                       Row(
                                                         children: [
                                                           Text(
-                                                            "Booking Date : ".tr,
-                                                            style: AppStyle
-                                                                .textViewStyleSmall(
-                                                                    context: Get
-                                                                        .context!,
-                                                                    color: AppColors
-                                                                        .colorBlack,
-                                                                    fontSizeDelta:
-                                                                        -1,
-                                                                    fontWeightDelta:
-                                                                        0),
+                                                            "Booking Date : "
+                                                                .tr,
+                                                            style: AppStyle.textViewStyleSmall(
+                                                                context: Get
+                                                                    .context!,
+                                                                color: AppColors
+                                                                    .colorBlack,
+                                                                fontSizeDelta:
+                                                                    -1,
+                                                                fontWeightDelta:
+                                                                    0),
                                                           ),
                                                           Text(
                                                             getDate(data
                                                                 .bookingDetails!
                                                                 .date!),
-                                                            style: AppStyle
-                                                                .textViewStyleSmall(
-                                                                    context: Get
-                                                                        .context!,
-                                                                    color: AppColors
-                                                                        .colorBlack,
-                                                                    fontSizeDelta:
-                                                                        -1,
-                                                                    fontWeightDelta:
-                                                                        0),
+                                                            style: AppStyle.textViewStyleSmall(
+                                                                context: Get
+                                                                    .context!,
+                                                                color: AppColors
+                                                                    .colorBlack,
+                                                                fontSizeDelta:
+                                                                    -1,
+                                                                fontWeightDelta:
+                                                                    0),
                                                           ),
                                                         ],
                                                       ),
@@ -234,8 +236,9 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                           ///on click view estimation
                                                           InkWell(
                                                             child: Container(
-                                                                width: Get.width /
-                                                                    3.2,
+                                                                width:
+                                                                    Get.width /
+                                                                        3.2,
                                                                 padding: const EdgeInsets
                                                                         .symmetric(
                                                                     horizontal:
@@ -262,8 +265,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                                         fontSize:
                                                                             10,
                                                                         fontWeight:
-                                                                            FontWeight
-                                                                                .w500),
+                                                                            FontWeight.w500),
                                                                   ),
                                                                 )),
                                                             onTap: () {
@@ -306,7 +308,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                                       ?.isOfferCreated ==
                                                                   true
                                                               ? Expanded(
-                                                                  child: InkWell(
+                                                                  child:
+                                                                      InkWell(
                                                                     child:
                                                                         Container(
                                                                       padding: const EdgeInsets
@@ -319,21 +322,17 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                                           BoxDecoration(
                                                                         color: data.estimation?.offerStatus ==
                                                                                 "accepted"
-                                                                            ? AppColors
-                                                                                .colorSuccessBackground
+                                                                            ? AppColors.colorSuccessBackground
                                                                             : data.estimation?.offerStatus == "declined"
                                                                                 ? AppColors.colorCancelledBackground
                                                                                 : AppColors.colorPendingBackground,
                                                                         borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                2.0),
+                                                                            BorderRadius.circular(2.0),
                                                                         border:
-                                                                            Border
-                                                                                .all(
+                                                                            Border.all(
                                                                           width:
                                                                               1,
-                                                                          color: data.estimation?.offerStatus ==
-                                                                                  "accepted"
+                                                                          color: data.estimation?.offerStatus == "accepted"
                                                                               ? AppColors.colorSuccessBorder
                                                                               : data.estimation?.offerStatus == "declined"
                                                                                   ? AppColors.colorCancelledBorder
@@ -366,8 +365,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                                               String>(
                                                                           context: Get
                                                                               .context!,
-                                                                          builder: (BuildContext
-                                                                                  context) =>
+                                                                          builder: (BuildContext context) =>
                                                                               AlertDialog(
                                                                                 title: const Text(
                                                                                   'Offering Amount',

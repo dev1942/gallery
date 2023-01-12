@@ -8,6 +8,8 @@ import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/services/repository/estimates_repo.dart';
 
+import 'mybookings_controller.dart';
+
 class EstimationFragmentController extends GetxController {
   ShowData mShowData = ShowData.showLoading;
 
@@ -61,6 +63,8 @@ class EstimationFragmentController extends GetxController {
       //Get.find<EstimationListController>().getEstimation('submitted');
     });
   }
+  MyBookingsController bookingController = MyBookingsController();
+
   //............................Date range pcker............................
   dateRangerPicker(){
 
@@ -71,13 +75,13 @@ class EstimationFragmentController extends GetxController {
       maximumDate: DateTime.now().add(const Duration(days: 30)),
       endDate: endDate,
       startDate: startDate,
-      onApplyClick: (start, end) {
+      onApplyClick: (start, end) async {
                  isRangePicked=true;
         endDate = end;
         startDate = start;
-
-
+        await bookingController.getAllBookings(startDate: startDate,endDate: endDate);
         update();
+
       },
       onCancelClick: () {
 isRangePicked=false;

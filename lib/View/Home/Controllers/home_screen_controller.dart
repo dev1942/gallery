@@ -182,9 +182,6 @@ class HomeScreenController extends GetxController {
         await launchUrl(Uri.parse('https://wa.me/+971588038049'),
             mode: LaunchMode.externalApplication);
         break;
-      case PageType.bookingHistory:
-        // TODO: Handle this case.
-        break;
     }
 
     currentPage = navigationPage;
