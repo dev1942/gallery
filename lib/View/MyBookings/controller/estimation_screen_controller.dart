@@ -71,7 +71,7 @@ class EstimationFragmentController extends GetxController {
     showCustomDateRangePicker(
       Get.context!,
       dismissible: true,
-      minimumDate: DateTime.now(),
+      minimumDate: DateTime.now().subtract(Duration(days: 30)),
       maximumDate: DateTime.now().add(const Duration(days: 30)),
       endDate: endDate,
       startDate: startDate,

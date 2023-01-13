@@ -41,14 +41,19 @@ class CompletedFragment extends GetView<MyBookingsController> {
                       return RefreshIndicator(
                         onRefresh: controller.refreshBookings,
                         child: ListView.builder(
-                          itemCount: snapshot.data?.result!.length,
+                          itemCount: controller.isSearching == true
+                              ? controller.filteredBookingList!.length
+                              : snapshot.data?.result?.length,
                           padding: const EdgeInsets.symmetric(
                               vertical: 5, horizontal: 5),
                           itemBuilder: (BuildContext contextM, index) {
                             List inProcgressList =
                                 snapshot.data!.result!.reversed.toList();
-                            var data = inProcgressList[index];
-                            if (data.status == "completed") {
+                            var data =
+                            controller.isSearching==false?inProcgressList[index]
+                            :
+                            controller.filteredBookingList![index];
+                            if (data.status == "completed" && data.deleted==false) {
                               print("data rated-------");
                               print(data.rated);
                               return Padding(

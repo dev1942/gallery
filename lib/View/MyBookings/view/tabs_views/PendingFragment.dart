@@ -27,7 +27,6 @@ class PendingFragment extends GetView<MyBookingsController> {
 
   @override
   Widget build(BuildContext context) {
-
     Get.put(MyBookingsController());
     return SafeArea(
         top: false,
@@ -38,11 +37,11 @@ class PendingFragment extends GetView<MyBookingsController> {
           body: GetBuilder<MyBookingsController>(builder: (context) {
             return FutureBuilder<BookingModel>(
                 // body: FutureBuilder<AllBookingsModel>(
-                future: controller.getAllBookings(),
+                future: controller.futurBookings,
                 builder: (context, snapshot) {
                   print("CHECKING DATA :: ${snapshot.hasData}");
                   print("----------------snapshot has data----------");
-                 
+                  controller.pendingsbookinglist = snapshot.data?.result;
                   if (snapshot.hasData) {
                     return GetBuilder<MyBookingsController>(
                         init: MyBookingsController(),
@@ -50,7 +49,9 @@ class PendingFragment extends GetView<MyBookingsController> {
                           return RefreshIndicator(
                             onRefresh: controller.refreshBookings,
                             child: ListView.builder(
-                              itemCount: snapshot.data?.result!.length,
+                              itemCount: controller.isSearching == true
+                                  ? controller.filteredBookingList!.length
+                                  : snapshot.data?.result?.length,
                               padding: const EdgeInsets.symmetric(
                                   vertical: 5, horizontal: 5),
                               itemBuilder: (BuildContext contextM, index) {
@@ -58,7 +59,9 @@ class PendingFragment extends GetView<MyBookingsController> {
                                     snapshot.data!.result!.reversed.toList()
                                         as List<Result>;
                                 var data =
-                                    controller.pendingsbookinglist![index];
+                                controller.isSearching==false?
+                                    controller.pendingsbookinglist![index]:
+                                controller.filteredBookingList![index];
                                 if (data.status == "submitted" ||
                                     data.status == "pending" ||
                                     data.status == "reSubmitted") {

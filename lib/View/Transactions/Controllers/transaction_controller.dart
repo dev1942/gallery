@@ -17,6 +17,7 @@ class TransactionController extends GetxController {
   bool isShowLoader = false;
   var endDate;
   var startDate;
+  bool isSearching=false;
   bool isRangePicked = false;
   List<TransactionModel> transactions = [];
 
@@ -55,34 +56,27 @@ class TransactionController extends GetxController {
     });
   }
 
-  //-------------------Date range picker---------------------------------
-  dateRangerPicker() {
-    showCustomDateRangePicker(
-      Get.context!,
-      dismissible: true,
-      minimumDate: DateTime.now(),
-      maximumDate: DateTime.now().add(const Duration(days: 30)),
-      endDate: endDate,
-      startDate: startDate,
-      onApplyClick: (start, end) {
-        isRangePicked = true;
-        endDate = end;
-        startDate = start;
-        DateTime now = DateTime.now();
-        startDate = start;
-        endDate = end;
-        print("START DATE : $startDate");
-        print("END DATE : $endDate");
-
-        update();
-      },
-      onCancelClick: () {
-        isRangePicked = false;
-        endDate = null;
-        startDate = null;
-        update();
-      },
-    );
+  //-------------------Search filteres---------------------------------
+  List<TransactionModel>? filteredBookingList;
+  void searchInShop(String query){
+    filteredBookingList=transactions;
+    final suggestions=transactions.where((filteredBooking){
+      final shopName=filteredBooking.amount.toString().toLowerCase();
+      final input=query.toLowerCase();
+      return shopName.contains(input);
+    }).toList();
+    filteredBookingList=suggestions;
+    update();
+  }
+  void searchbyDate(String query){
+    filteredBookingList=transactions;
+    final suggestions=transactions.where((filteredBooking){
+      final shopName=filteredBooking.createdAt.toLowerCase();
+      final input=query.toLowerCase();
+      return shopName!.contains(input);
+    }).toList();
+    filteredBookingList=suggestions;
+    update();
   }
   //................Save and launch file...........................................
 

@@ -35,7 +35,7 @@ class MyBookingsController extends GetxController {
   bool chatNowLoading = false;
   bool isShowLoader = false;
   String chatNowRoomId = '';
-
+bool isSearching=false;
   void onInit() {
     print("CHECKING FUNCTIUON");
     // TODO: implement onInit
@@ -169,10 +169,21 @@ late Future<BookingModel>futurBookings;
   }
   //---------------------------Search booking------------------------------------------
   List<Result> ?pendingsbookinglist;
+  List<Result>? filteredBookingList;
   void searchInShop(String query){
-    List<Result>? filteredBookingList=pendingsbookinglist!;
+    filteredBookingList=pendingsbookinglist;
     final suggestions=pendingsbookinglist?.where((filteredBooking){
-      final shopName=filteredBooking.source?.title?.toLowerCase();
+      String? shopName=filteredBooking.source?.title?.toString().toLowerCase();
+      final input=query.toLowerCase();
+      return shopName!.contains(input);
+    }).toList();
+    filteredBookingList=suggestions;
+    update();
+  }
+  void searchbyDate(String query){
+    filteredBookingList=pendingsbookinglist;
+    final suggestions=pendingsbookinglist?.where((filteredBooking){
+      final shopName=filteredBooking.bookingDetails?.date?.toLowerCase();
       final input=query.toLowerCase();
       return shopName!.contains(input);
     }).toList();
@@ -181,7 +192,7 @@ late Future<BookingModel>futurBookings;
   }
 //-------------------------------------Delete booking API method-------------------
   Future<void> deleteBooking({
-    String? bookingID,
+    String? bookingID,m
   }) async {
     final prefManager = await SharedPreferences.getInstance();
     String ? token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
@@ -195,7 +206,7 @@ late Future<BookingModel>futurBookings;
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json'
       };
-      var uriSaveCart = Uri.parse(RequestBuilder.API_DELETE_BOOKING);
+      var uriSaveCart = Uri.parse("${RequestBuilder.API_DELETE_BOOKING}/${bookingID}");
       http.Response response =
       await http.delete(uriSaveCart, headers: headers, body: body);
       log.i("BodyI sent when delete booking=======>${body}");

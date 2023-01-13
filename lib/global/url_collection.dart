@@ -6,7 +6,7 @@ class RequestBuilder {
   static final String LOCAL_URL = "http://192.168.18.36:4001/v1/auth/";
   //https://api.otobucks.com/v1/auth/customers/login
   static String API_BASE_URL = LIVE_URL;
-  static String API_DELETE_BOOKING="https://developmentapi-app.otobucks.com/v1/bookings/bookService/63b5cec6870dcf1488b013bb";
+  static String API_DELETE_BOOKING="${LIVE_URL}bookings/bookService";
   static final String API_LOGIN = "auth/customers/login";
   static final String API_CURRENT_USER = "auth/users/currentUser";
   static final String API_UPDATE_USER = "auth/customers/updateMe";

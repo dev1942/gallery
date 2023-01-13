@@ -29,7 +29,6 @@ class TransactionHistoryFragmentState
   var controller = Get.put(TransactionController());
   final f = DateFormat('dd');
 
-
   @override
   void initState() {
     controller.getTransactions();
@@ -140,69 +139,75 @@ class TransactionHistoryFragmentState
                                     child: Row(
                                       children: [
                                         Expanded(
-                                          child:
-                                              GetBuilder<TransactionController>(
-                                                  builder: (context) {
-                                            return InkWell(
-                                              onTap: () {
-                                                value.dateRangerPicker();
-                                              },
-                                              child: Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 8, right: 8),
-                                                alignment: Alignment.centerLeft,
-                                                height: 30,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            3),
-                                                    border: Border.all(
-                                                        color: Colors.grey)),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    //f.format(value.startDate)
-                                                    Text(
-                                                      value.isRangePicked ==
-                                                              true
-                                                          ? "${f.format(value.startDate)} to ${f.format(value.endDate)}"
-                                                          : "Search by date",
-                                                      style: AppStyle
-                                                          .textViewStyleSmall(
-                                                              context:
-                                                                  Get.context!,
-                                                              color: AppColors
-                                                                  .lightGrey),
-                                                    ),
-                                                    Icon(
-                                                      Icons.calendar_today,
-                                                      size: AppDimens.dimens_18,
-                                                      color: Colors
-                                                          .yellow.shade700,
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          }),
-                                        ),
-                                        addHorizontalSpace(AppDimens.dimens_8),
-                                        Expanded(
                                           child: SizedBox(
                                               height: 30,
                                               child: TextFormField(
+                                                keyboardType:
+                                                    TextInputType.datetime,
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                                onChanged: (val) {
+                                                  controller.isSearching = true;
+                                                  controller.searchbyDate(val);
+                                                },
                                                 decoration: InputDecoration(
                                                     suffixIcon: Icon(
-                                                      Icons.title_outlined,
+                                                      Icons.calendar_month,
                                                       size: AppDimens.dimens_18,
                                                       color: Colors
                                                           .yellow.shade700,
                                                     ),
                                                     contentPadding:
                                                         const EdgeInsets.all(8),
-                                                    hintText: "By transaction",
+                                                    hintText: "2023-01-13".tr,
+                                                    hintStyle: AppStyle
+                                                        .textViewStyleSmall(
+                                                            context: context,
+                                                            color: AppColors
+                                                                .lightGrey),
+                                                    enabledBorder:
+                                                        const OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                                    color: Colors
+                                                                        .grey)),
+                                                    focusColor: Colors.yellow,
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                            borderSide:
+                                                                const BorderSide(
+                                                                    color:
+                                                                        Colors
+                                                                            .grey),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        3))),
+                                              )),
+                                        ),
+                                        addHorizontalSpace(AppDimens.dimens_8),
+                                        Expanded(
+                                          child: SizedBox(
+                                              height: 30,
+                                              child: TextFormField(
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                                onChanged: (val) {
+                                                  controller.isSearching = true;
+                                                  controller.searchInShop(val);
+                                                },
+                                                decoration: InputDecoration(
+                                                    suffixIcon: Icon(
+                                                      Icons.monetization_on,
+                                                      size: AppDimens.dimens_18,
+                                                      color: Colors
+                                                          .yellow.shade700,
+                                                    ),
+                                                    contentPadding:
+                                                        const EdgeInsets.all(8),
+                                                    hintText: "Amount".tr,
                                                     hintStyle: AppStyle
                                                         .textViewStyleSmall(
                                                             context: context,
@@ -238,8 +243,13 @@ class TransactionHistoryFragmentState
                                               horizontal: 5),
                                           itemBuilder:
                                               (BuildContext contextM, index) {
-                                            TransactionModel transaction =
-                                                value.transactions[index];
+                                            TransactionModel transaction = value
+                                                        .isSearching ==
+                                                    false
+                                                ? value.transactions[index]
+
+                                                     : value.filteredBookingList![
+                                                    index];
                                             return Container(
                                               margin: const EdgeInsets.only(
                                                   bottom: AppDimens.dimens_14),
@@ -570,7 +580,10 @@ class TransactionHistoryFragmentState
                                                   )),
                                             );
                                           },
-                                          itemCount: value.transactions.length))
+                                          itemCount: value.isSearching == false
+                                              ? value.transactions.length
+                                              : value
+                                                  .filteredBookingList!.length))
                                 ],
                               ));
                         })

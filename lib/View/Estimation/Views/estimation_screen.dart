@@ -106,49 +106,50 @@ class EstimationFragmentState extends State<EstimationFragment>
                                 child: Row(
                                   children: [
                                     Expanded(
-                                      child: GetBuilder<
-                                              EstimationFragmentController>(
-                                          builder: (context) {
-                                        return InkWell(
-                                          onTap: () {
-                                            value.dateRangerPicker();
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.only(
-                                                left: 8, right: 8),
-                                            alignment: Alignment.centerLeft,
-                                            height: 30,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(3),
-                                                border: Border.all(
-                                                    color: Colors.grey)),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  value.isRangePicked == true
-                                                      ? "${f.format(value.startDate)} to ${f.format(value.endDate)}"
-                                                          .tr
-                                                      : "Search by date".tr,
-                                                  style: AppStyle
-                                                      .textViewStyleSmall(
-                                                          context: Get.context!,
-                                                          color: AppColors
-                                                              .lightGrey),
-                                                ),
-                                                Icon(
-                                                  Icons.calendar_today,
+                                      child: SizedBox(
+                                          height: 30,
+                                          child: TextFormField(
+                                            keyboardType: TextInputType.datetime,
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                            ),
+                                            onChanged: (val) {
+                                              Get.put(MyBookingsController())
+                                                  .isSearching = true;
+                                              Get.put(MyBookingsController())
+                                                  .searchbyDate(val);
+                                            },
+                                            decoration: InputDecoration(
+
+                                                suffixIcon: Icon(
+                                                  Icons.calendar_month,
                                                   size: AppDimens.dimens_18,
                                                   color: Colors.yellow.shade700,
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      }),
+                                                ),
+                                                contentPadding:
+                                                    const EdgeInsets.all(8),
+                                                hintText: "2023-01-13".tr,
+                                                hintStyle:
+                                                    AppStyle.textViewStyleSmall(
+                                                        context: context,
+                                                        color: AppColors
+                                                            .lightGrey),
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color:
+                                                                Colors.grey)),
+                                                focusColor: Colors.yellow,
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                        borderSide:
+                                                            const BorderSide(
+                                                                color: Colors
+                                                                    .grey),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(3))),
+                                          )),
                                     ),
                                     addHorizontalSpace(AppDimens.dimens_8),
                                     Expanded(
@@ -160,8 +161,9 @@ class EstimationFragmentState extends State<EstimationFragment>
                                             ),
                                             onChanged: (val) {
                                               Get.put(MyBookingsController())
+                                                  .isSearching = true;
+                                              Get.put(MyBookingsController())
                                                   .searchInShop(val);
-
                                             },
                                             decoration: InputDecoration(
                                                 suffixIcon: Icon(

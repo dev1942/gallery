@@ -30,6 +30,7 @@ class Result {
   final String? status;
   final String? id;
   final bool? rated;
+  final bool? deleted;
   final Provider? provider;
   final Customer? customer;
   final String? type;
@@ -49,6 +50,7 @@ class Result {
     this.status,
     this.id,
     this.rated,
+    this.deleted,
     this.provider,
     this.customer,
     this.type,
@@ -69,6 +71,7 @@ class Result {
         status = json['status'] as String?,
         id = json['_id'] as String?,
         rated = json['rated'] as bool?,
+        deleted = json['deleted'] as bool?,
         provider = (json['provider'] as Map<String,dynamic>?) != null ? Provider.fromJson(json['provider'] as Map<String,dynamic>) : null,
         customer = (json['customer'] as Map<String,dynamic>?) != null ? Customer.fromJson(json['customer'] as Map<String,dynamic>) : null,
         type = json['type'] as String?,

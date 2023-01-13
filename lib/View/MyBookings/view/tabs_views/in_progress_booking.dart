@@ -39,15 +39,19 @@ class InProgressFragment extends GetView<MyBookingsController> {
                     if (snapshot.hasData) {
                       return RefreshIndicator(
                         onRefresh: controller.refreshBookings,
-
                         child: ListView.builder(
-                          itemCount: snapshot.data?.result!.length,
-                          padding:
-                              const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                          itemCount: controller.isSearching == true
+                              ? controller.filteredBookingList!.length
+                              : snapshot.data?.result?.length,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 5),
                           itemBuilder: (BuildContext contextM, index) {
-                            var inProcgressList =
-                                snapshot.data!.result!.reversed.toList();
-                            var data = inProcgressList[index];
+                            controller.pendingsbookinglist =
+                            snapshot.data!.result!.reversed.toList();
+                            var data =
+                            controller.isSearching==false?
+                            controller.pendingsbookinglist![index]:
+                            controller.filteredBookingList![index];
                             if (data.status == "inProgress") {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 6.0),
