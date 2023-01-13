@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 
-import '../View/Notifications/Views/NotificationController.dart';
 import '../global/app_images.dart';
 
 class BottomBar extends StatelessWidget {
@@ -54,14 +51,14 @@ class BottomNavBarHelper {
             alignment: Alignment.center,
             child: bottomNavIcon(AppImages.ic_home_white),
           )),
-      BottomNavigationBarItem(
-          icon: bottomNavIcon(AppImages.ic_message),
-          label: "",
-          activeIcon: Container(
-            alignment: Alignment.center,
-            height: AppDimens.dimens_20,
-            child: bottomNavIcon(AppImages.ic_message),
-          )),
+      // BottomNavigationBarItem(
+      //     icon: bottomNavIcon(AppImages.ic_message),
+      //     label: "",
+      //     activeIcon: Container(
+      //       alignment: Alignment.center,
+      //       height: AppDimens.dimens_20,
+      //       child: bottomNavIcon(AppImages.ic_message),
+      //     )),
       BottomNavigationBarItem(
           icon: bottomNavIcon(AppImages.ic_cart),
           label: "",
@@ -73,12 +70,12 @@ class BottomNavBarHelper {
       BottomNavigationBarItem(
           icon: Stack(children: <Widget>[
             bottomNavIcon(AppImages.ic_notification),
-             Positioned(
+            const Positioned(
               // draw a red marble
               top: 0.0,
-              right: 5.0,
+              right: 0.0,
               child:
-                  Text(Get.put(NotificationsController()).numberOfNotifications.toString(),style: TextStyle(color: Colors.redAccent,fontSize: 12,fontWeight: FontWeight.bold),),
+                  Icon(Icons.brightness_1, size: 10.0, color: Colors.redAccent),
             )
           ]),
           label: "",

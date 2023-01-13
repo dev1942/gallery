@@ -82,13 +82,20 @@ getNotifications() async {
       if (preferences.getnotificationId() != alNotification.last.id) {
         preferences.setNotificationId(alNotification.last.id);
         createanddisplaynotification(
-            title: "Otobucks",
             body: alNotification.last.title,
             payload: alNotification.last.id);
       }
     } else {}
   });
 }
+
+// void onStart() {
+//   WidgetsFlutterBinding.ensureInitialized();
+//
+//   final service = FlutterBackgroundService();
+//   service.setForegroundMode(false);
+//
+// }
 
 void onStart() {
   WidgetsFlutterBinding.ensureInitialized();

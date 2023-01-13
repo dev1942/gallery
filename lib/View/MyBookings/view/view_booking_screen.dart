@@ -59,6 +59,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
   bool isShowLoader = false;
   bool imageLoader = false;
   int _progress = 0;
+  
   var controller = Get.put(ViewEstimationController());
   var reScheduleController = Get.put(RescheduleBookingController());
   @override
@@ -127,7 +128,6 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppViews.initAppBar(
         mContext: context,
