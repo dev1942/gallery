@@ -24,7 +24,6 @@ class CreateEstimationController extends GetxController {
   bool connectionStatus = false;
   bool isShowLoader = false;
 
-
   late ServiceModel mServiceModel;
   TextEditingController controllerNote = TextEditingController();
   TextEditingController addressNote = TextEditingController(text: "");
@@ -34,7 +33,7 @@ class CreateEstimationController extends GetxController {
   String pickedImage = "";
   String pickedVideo = "";
   String voiceNoteFile = "";
-  late LatLng? mLatLng;
+  LatLng? mLatLng;
   Location location = Location();
   LightCompressor lightCompressor = LightCompressor();
   bool isVideoCompressed = false;
@@ -49,25 +48,17 @@ class CreateEstimationController extends GetxController {
     voiceNoteFile = "";
     mTimeModel = null;
     PermissionStatus _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.granted ||
-        _permissionGranted == PermissionStatus.grantedLimited) {
+    if (_permissionGranted == PermissionStatus.granted || _permissionGranted == PermissionStatus.grantedLimited) {
       var currentLocation = await location.getLocation();
       log(currentLocation.latitude.toString());
-      LatLng _mLatLng =
-          LatLng(currentLocation.latitude!, currentLocation.longitude!);
-      List<i.Placemark> placemarks = await i.placemarkFromCoordinates(
-          _mLatLng.latitude, _mLatLng.longitude);
-      addressNote.text =
-          '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
+      LatLng _mLatLng = LatLng(currentLocation.latitude!, currentLocation.longitude!);
+      List<i.Placemark> placemarks = await i.placemarkFromCoordinates(_mLatLng.latitude, _mLatLng.longitude);
+      addressNote.text = '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
 
       print("addresssssis${addressNote.text}");
       mLatLng = _mLatLng;
     } else {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: 'Enable Location From setting!',
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Enable Location From setting!', toastType: TOAST_TYPE.toastError);
       mLatLng = Global.mLatLng;
     }
     update();
@@ -75,8 +66,7 @@ class CreateEstimationController extends GetxController {
 
   Future getImage(ImageSource imageSource) async {
     // ignore: invalid_use_of_visible_for_testing_member
-    var image = await ImagePicker.platform
-        .pickImage(source: imageSource, imageQuality: 70);
+    var image = await ImagePicker.platform.pickImage(source: imageSource, imageQuality: 70);
 
     pickedImage = image!.path;
     update();
@@ -84,19 +74,14 @@ class CreateEstimationController extends GetxController {
 
   Future pickVideo(ImageSource imageSource) async {
     // ignore: invalid_use_of_visible_for_testing_member
-    var image = await ImagePicker.platform.pickVideo(
-        source: imageSource, maxDuration: const Duration(seconds: 30));
+    var image = await ImagePicker.platform.pickVideo(source: imageSource, maxDuration: const Duration(seconds: 30));
 
     if (image != null) {
       isVideoCompressed = true;
       update();
       String _desFile = await Global.destinationFile("mp4");
       final dynamic response = await lightCompressor.compressVideo(
-          path: image.path,
-          destinationPath: _desFile,
-          videoQuality: VideoQuality.very_low,
-          isMinBitrateCheckEnabled: false,
-          iosSaveInGallery: false);
+          path: image.path, destinationPath: _desFile, videoQuality: VideoQuality.very_low, isMinBitrateCheckEnabled: false, iosSaveInGallery: false);
 
       if (response is OnSuccess) {
         pickedVideo = response.destinationPath;
@@ -130,6 +115,7 @@ class CreateEstimationController extends GetxController {
     pickedVideo = "";
     update();
   }
+
   onDeleteVoice() {
     voiceNoteFile = "";
     update();
@@ -143,26 +129,14 @@ class CreateEstimationController extends GetxController {
 
   isValid() {
     if (!Global.checkNull(addressNote.text)) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: 'Please Enter Address',
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Please Enter Address', toastType: TOAST_TYPE.toastError);
       return false;
     }
     if (!Global.checkNull(selectedDate)) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_SELECT_DATE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_SELECT_DATE, toastType: TOAST_TYPE.toastError);
       return false;
     } else if (mTimeModel == null) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_SELECT_TIME,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_SELECT_TIME, toastType: TOAST_TYPE.toastError);
       return false;
     }
 
@@ -181,17 +155,14 @@ class CreateEstimationController extends GetxController {
   //               )));
   // }
 //----------------------------Create Estimation--------------------
-  createEstimation(BuildContext context,String? carId) async {
+  createEstimation(BuildContext context, String? carId) async {
     log("create estimation--------------------------------ibrahim--------");
+
     log(pickedImage.toString());
     if (Global.checkNull(pickedVideo)) {
       double fileSize = await Global.getFileSize(pickedVideo);
       if (fileSize > 10) {
-        Global.showToastAlert(
-            context: Get.overlayContext!,
-            strTitle: "",
-            strMsg: AppAlert.ALERT_FILE_SIZE,
-            toastType: TOAST_TYPE.toastError);
+        Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_FILE_SIZE, toastType: TOAST_TYPE.toastError);
         return "";
       }
     }
@@ -205,21 +176,16 @@ class CreateEstimationController extends GetxController {
     requestParams[PARAMS.PARAM_DATE] = selectedDate;
     // final gasGiants = {PARAMS.PARAM_SOURCE:  mServiceModel.id, PARAMS.PARAM_ADDRESS: addressNote.text};
 
-    requestParams[PARAMS.PARAM_TIME] =
-        mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
+    requestParams[PARAMS.PARAM_TIME] = mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
     requestParams[PARAMS.PARAM_CUTOMERNOTE] = strNote;
     requestParams[PARAMS.PARAM_ADDRESS] = addressNote.text;
-    requestParams["car"] =carId??"63a2915f0fe25834cf690bbf";
+    requestParams["car"] = carId ?? "63a2915f0fe25834cf690bbf";
     if (mLatLng != null) {
-      requestParams[PARAMS.PARAM_LATITUDE] =
-          mLatLng!.latitude.toStringAsFixed(4);
-      requestParams[PARAMS.PARAM_LONGITUDE] =
-          mLatLng!.longitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LATITUDE] = mLatLng!.latitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LONGITUDE] = mLatLng!.longitude.toStringAsFixed(4);
     } else {
-      requestParams[PARAMS.PARAM_LATITUDE] =
-          Global.mLatLng.latitude.toStringAsFixed(4);
-      requestParams[PARAMS.PARAM_LONGITUDE] =
-          Global.mLatLng.longitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LATITUDE] = Global.mLatLng.latitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LONGITUDE] = Global.mLatLng.longitude.toStringAsFixed(4);
     }
 
     if (Global.checkNull(pickedImage)) {
@@ -236,16 +202,11 @@ class CreateEstimationController extends GetxController {
     //........Rrepo of create estimation...................
 
     Logger().i(requestParamsImage);
-    var categories = await EstimatesRepo()
-        .createEstimates(requestParams, requestParamsImage, ReqType.post);
+    var categories = await EstimatesRepo().createEstimates(requestParams, requestParamsImage, ReqType.post);
 
     categories.fold((failure) {
       //.............Failure case............................
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
 
       isShowLoader = false;
       update();
@@ -272,5 +233,4 @@ class CreateEstimationController extends GetxController {
     mLatLng = mLatLng_;
     getLocationAdress();
   }
-
 }

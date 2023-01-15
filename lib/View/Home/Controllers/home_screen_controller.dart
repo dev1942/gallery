@@ -105,7 +105,7 @@ class HomeScreenController extends GetxController {
 
       case PageType.myProfile:
         navigationPage = const MyProfileFragment();
-        indexM = 4;
+        indexM = 3;
         strTitle = Constants.TXT_PROFILE;
         break;
       case PageType.estimations:
@@ -116,7 +116,7 @@ class HomeScreenController extends GetxController {
 
       case PageType.notification:
         navigationPage = const NotificationFragment();
-        indexM = 3;
+        indexM = 2;
         strTitle = Constants.STR_NOTIFICATION;
         break;
 
@@ -170,7 +170,7 @@ class HomeScreenController extends GetxController {
         // Global.inProgressAlert(Get.overlayContext!);
         navigationPage = const CartScreen();
         strTitle = 'Cart';
-        indexM = 2;
+        indexM = 1;
         break;
       case PageType.promotions:
         break;
@@ -179,8 +179,7 @@ class HomeScreenController extends GetxController {
         navigationPage = const DashboardFragment();
         indexM = 0;
         strTitle = ' Hello ';
-        await launchUrl(Uri.parse('https://wa.me/+971588038049'),
-            mode: LaunchMode.externalApplication);
+        await launchUrl(Uri.parse('https://wa.me/+971588038049'), mode: LaunchMode.externalApplication);
         break;
     }
 
@@ -195,18 +194,18 @@ class HomeScreenController extends GetxController {
       case 0:
         callback(PageType.home);
         break;
+      // case 1:
+      //   callback(PageType.inbox);
+      //   break;
       case 1:
-        callback(PageType.inbox);
-        break;
-      case 2:
         callback(PageType.cart);
         //callback(PageType.THANK_YOU);
         // gotoDemo();
         break;
-      case 3:
+      case 2:
         callback(PageType.notification);
         break;
-      case 4:
+      case 3:
         callback(PageType.myProfile);
         break;
     }

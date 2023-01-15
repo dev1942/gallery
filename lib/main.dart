@@ -14,6 +14,7 @@ import 'package:otobucks/View/Notifications/Models/notification_model.dart';
 import 'package:otobucks/View/auth/View/login_in_screen.dart';
 import 'package:otobucks/app/locator.dart';
 import 'package:otobucks/global/theme_data/theme_data.dart';
+import 'package:otobucks/helper/firebase_utils.dart';
 import 'package:otobucks/helper/local_notifications_helper.dart';
 import 'package:otobucks/preferences/preferences.dart';
 import 'package:otobucks/services/navigation_service.dart';
@@ -44,11 +45,9 @@ Future<void> backgroundHandler(RemoteMessage message) async {
 }
 
 Preferences preferences = Preferences();
-final FlutterLocalNotificationsPlugin _notificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin _notificationsPlugin = FlutterLocalNotificationsPlugin();
 
-void createanddisplaynotification(
-    {String title, String body, String payload}) async {
+void createanddisplaynotification({String title, String body, String payload}) async {
   try {
     final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     const NotificationDetails notificationDetails = NotificationDetails(
@@ -81,9 +80,7 @@ getNotifications() async {
     if (alNotification.isNotEmpty) {
       if (preferences.getnotificationId() != alNotification.last.id) {
         preferences.setNotificationId(alNotification.last.id);
-        createanddisplaynotification(
-            body: alNotification.last.title,
-            payload: alNotification.last.id);
+        createanddisplaynotification(body: alNotification.last.title, payload: alNotification.last.id);
       }
     } else {}
   });
@@ -108,11 +105,14 @@ void onStart() {
   });
 }
 
+
 // late Directory appDocsDir;
 Future<void> main() async {
   Get.put(Controller());
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
+
       // options: const FirebaseOptions(
       //     apiKey: 'AIzaSyDC4XfvaeaCZWtDL1x4ofgou9V8vOQvkBg',
       //     appId: '1:443053986656:web:a3aa37766cd5063690c405',
@@ -142,8 +142,7 @@ Future<void> main() async {
   runApp(
     DevicePreview(
       enabled: false,
-      builder: (context) =>
-          const OverlaySupport(child: BoosterMaterialApp()), // Wrap your app
+      builder: (context) => const OverlaySupport(child: BoosterMaterialApp()), // Wrap your app
     ),
   );
 }

@@ -49,5 +49,16 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+			<!-- Permission options for the `location` group -->
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Need location when in use for locating service centers</string>
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>Always and when in use for locating service centers</string>
+		<key>NSLocationUsageDescription</key>
+		<string>Older devices need location for locating service centers</string>
+		<key>NSCameraUsageDescription</key>
+		<string>Need to upload profile picture</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Need to upload profile picture</string>
 	</dict>
 </plist>

@@ -18,9 +18,7 @@ class ServiceScreen extends StatefulWidget {
   final CategoryModel mSubCategoryModel;
   final CategoryModel mCategoryModel;
 
-  const ServiceScreen(
-      {Key? key, required this.mSubCategoryModel, required this.mCategoryModel})
-      : super(key: key);
+  const ServiceScreen({Key? key, required this.mSubCategoryModel, required this.mCategoryModel}) : super(key: key);
 
   @override
   ServiceScreenState createState() => ServiceScreenState();
@@ -31,8 +29,7 @@ class ServiceScreenState extends State<ServiceScreen> {
 
   @override
   void initState() {
-    controller.getServiceProvider(
-        widget.mCategoryModel.id, widget.mSubCategoryModel.id);
+    controller.getServiceProvider(widget.mCategoryModel.id, widget.mSubCategoryModel.id);
 
     super.initState();
   }
@@ -76,11 +73,9 @@ class ServiceScreenState extends State<ServiceScreen> {
   _searchFiled() {
     return Container(
       alignment: Alignment.centerLeft,
-      margin: const EdgeInsets.only(
-          left: AppDimens.dimens_20,
-          bottom: AppDimens.dimens_6,
-          right: AppDimens.dimens_10),
+      margin: const EdgeInsets.only(left: AppDimens.dimens_20, bottom: AppDimens.dimens_6, right: AppDimens.dimens_10),
       child: Card(
+        color: AppColors.colorBlueStart,
         child: CustomTextFieldWithIcon(
           textInputAction: TextInputAction.next,
           enabled: true,
@@ -107,38 +102,25 @@ class ServiceScreenState extends State<ServiceScreen> {
 
   _nearMeText() => Container(
         alignment: AlignmentDirectional.centerStart,
-        margin: const EdgeInsets.only(
-            left: AppDimens.dimens_20,
-            bottom: AppDimens.dimens_6,
-            right: AppDimens.dimens_10),
+        margin: const EdgeInsets.only(left: AppDimens.dimens_20, bottom: AppDimens.dimens_6, right: AppDimens.dimens_10),
         child: Text(
           '${widget.mSubCategoryModel.title} ${"near me".tr}',
           maxLines: 2,
           softWrap: true,
           // textAlign: TextAlign.center,
-          style: AppStyle.textViewStyleNormalSubtitle2(
-              context: context,
-              color: AppColors.colorWhite,
-              fontWeightDelta: 1),
+          style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorWhite, fontWeightDelta: 1),
         ),
       );
 
   _viewMore() => Container(
-        margin: const EdgeInsets.only(
-            top: AppDimens.dimens_15,
-            left: AppDimens.dimens_15,
-            right: AppDimens.dimens_15),
+        margin: const EdgeInsets.only(top: AppDimens.dimens_15, left: AppDimens.dimens_15, right: AppDimens.dimens_15),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               "Popular " + widget.mSubCategoryModel.title.toLowerCase(),
-              style: AppStyle.textViewStyleSmall(
-                  context: context,
-                  color: AppColors.colorBlack,
-                  fontWeightDelta: 2,
-                  fontSizeDelta: 0),
+              style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack, fontWeightDelta: 2, fontSizeDelta: 0),
             ),
             // InkWell(
             //   child: Text(
@@ -157,21 +139,14 @@ class ServiceScreenState extends State<ServiceScreen> {
         ),
       );
   _nearByText() => Container(
-        margin: const EdgeInsets.only(
-            top: AppDimens.dimens_15,
-            left: AppDimens.dimens_15,
-            right: AppDimens.dimens_15),
+        margin: const EdgeInsets.only(top: AppDimens.dimens_15, left: AppDimens.dimens_15, right: AppDimens.dimens_15),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               "Nearby " + widget.mSubCategoryModel.title.toLowerCase(),
-              style: AppStyle.textViewStyleSmall(
-                  context: context,
-                  color: AppColors.colorBlack,
-                  fontWeightDelta: 2,
-                  fontSizeDelta: 0),
+              style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack, fontWeightDelta: 2, fontSizeDelta: 0),
             ),
           ],
         ),
@@ -202,10 +177,7 @@ class ServiceScreenState extends State<ServiceScreen> {
 
   _providerPopular() => GetBuilder<ServiceScreenController>(builder: (value) {
         return Container(
-            margin: const EdgeInsets.only(
-                top: AppDimens.dimens_10,
-                left: AppDimens.dimens_5,
-                right: AppDimens.dimens_10),
+            margin: const EdgeInsets.only(top: AppDimens.dimens_10, left: AppDimens.dimens_5, right: AppDimens.dimens_10),
             child: AppViews.getSetData(
                 context,
                 value.mShowData,
