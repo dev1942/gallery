@@ -177,66 +177,76 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                   )),
                               addVerticleSpace(16),
                               //............................Text filedmobile number.............................
-                              CustomTextFieldMobile(
-                                strCountyCode: value.strCountyCode,
-                                textInputAction: TextInputAction.done,
-                                readonly: true,
-                                // enabled: false,
-                                //  enabled: true,
-                                height: 42,
-                                controller: value.controllerPhone,
-                                focusNode: value.mFocusNodePhone,
-                                suffixIcon: InkWell(
-                                  onTap: () {
-                                    showDialog<String>(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
-                                              title: const Text('Edit Number'),
-                                              content: TextField(
-                                                controller:
-                                                    value.controllerPhone,
-                                              ),
-                                              actions: <Widget>[
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          context, 'Cancel'),
-                                                  child: const Text('Cancel'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(
-                                                        context, 'OK');
-                                                  },
-                                                  child: const Text('Submit'),
-                                                ),
-                                              ],
-                                            ));
-                                  },
-                                  child: value.isPhoneVerified &&
-                                          value.oldPhoneNumebr ==
-                                              value.controllerPhone.text
-                                      ? Icon(Icons.mobile_friendly,
-                                          color: value.isPhoneVerified &&
-                                                  value.oldPhoneNumebr ==
-                                                      value.controllerPhone.text
-                                              ? Colors.green
-                                              : AppColors.lightGrey)
-                                      : SizedBox(
-                                          height: 30,
-                                          width: 50,
-                                          child: PrimaryButton(
-                                            color: null,
-                                            label: const Text('verify'),
-                                            onPress: () {
-                                              gotoMobileOTPScreen(context,
-                                                  value.controllerPhone.text);
-                                            },
-                                          ),
-                                        ),
-                                ),
-                              ),
+                             Stack(
+                               children: [
+                                 CustomTextFieldMobile(
+                                   strCountyCode: value.strCountyCode,
+                                   textInputAction: TextInputAction.done,
+                                   readonly: true,
+                                   // enabled: false,
+                                   //  enabled: true,
+                                   height: 42,
+                                   controller: value.controllerPhone,
+                                   focusNode: value.mFocusNodePhone,
+
+                                 ),
+                                 Positioned(
+                                   top: 6,
+                                   right: 4,
+                                   child:
+                                 InkWell(
+                                     onTap: () {
+                  showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) =>
+                  AlertDialog(
+                  title: const Text('Edit Number'),
+                  content: TextField(
+                  controller:
+                  value.controllerPhone,
+                  ),
+                  actions: <Widget>[
+                  TextButton(
+                  onPressed: () =>
+                  Navigator.pop(
+                  context, 'Cancel'),
+                  child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                  onPressed: () {
+                  Navigator.pop(
+                  context, 'OK');
+                  },
+                  child: const Text('Submit'),
+                  ),
+                  ],
+                  ));
+                  },
+                    child: value.isPhoneVerified &&
+                        value.oldPhoneNumebr ==
+                            value.controllerPhone.text
+                        ? Icon(Icons.mobile_friendly,
+                        color: value.isPhoneVerified &&
+                            value.oldPhoneNumebr ==
+                                value.controllerPhone.text
+                            ? Colors.green
+                            : AppColors.lightGrey)
+                        : SizedBox(
+                      height: 30,
+                      width: 50,
+                      child: PrimaryButton(
+                        color: null,
+                        label: const Text('verify'),
+                        onPress: () {
+                          gotoMobileOTPScreen(context,
+                              value.controllerPhone.text);
+                        },
+                      ),
+                    ),
+                  ),
+                                 )
+                               ],
+                             ),
                               addVerticleSpace(AppDimens.dimens_16),
                               //.....................Email Section..................
                               Container(

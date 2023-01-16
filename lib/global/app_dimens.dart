@@ -2,7 +2,7 @@
 
 class AppDimens {
   // margin Start
-  static const double bottom_bar_height = dimens_60;
+  static const double bottom_bar_height = dimens_35;
   // margin Start
   static const double margin_xx_large = dimens_19;
   static const double margin_x_large = dimens_17;

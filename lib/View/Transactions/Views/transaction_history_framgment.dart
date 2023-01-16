@@ -16,6 +16,8 @@ import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../MyBookings/controller/mybookings_controller.dart';
+
 class TransactionHistoryFragment extends StatefulWidget {
   const TransactionHistoryFragment({Key? key}) : super(key: key);
 
@@ -142,25 +144,31 @@ class TransactionHistoryFragmentState
                                           child: SizedBox(
                                               height: 30,
                                               child: TextFormField(
+                                                controller:value.datePickerController,
                                                 keyboardType:
                                                     TextInputType.datetime,
                                                 style: const TextStyle(
                                                   fontSize: 12,
                                                 ),
                                                 onChanged: (val) {
-                                                  controller.isSearching = true;
-                                                  controller.searchbyDate(val);
+                                                  value.isSearching = true;
+                                                  value.searchbyDate(val);
                                                 },
                                                 decoration: InputDecoration(
-                                                    suffixIcon: Icon(
-                                                      Icons.calendar_month,
-                                                      size: AppDimens.dimens_18,
-                                                      color: Colors
-                                                          .yellow.shade700,
+                                                    suffixIcon: InkWell(
+                                                      onTap: (){
+                                                        value.selectDate(Get.context!);
+                                                      },
+                                                      child: Icon(
+                                                        Icons.calendar_month,
+                                                        size: AppDimens.dimens_18,
+                                                        color: Colors.yellow.shade700,
+                                                      ),
                                                     ),
                                                     contentPadding:
                                                         const EdgeInsets.all(8),
                                                     hintText: "2023-01-13".tr,
+
                                                     hintStyle: AppStyle
                                                         .textViewStyleSmall(
                                                             context: context,

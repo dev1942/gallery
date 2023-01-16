@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Dashboard/Controllers/dashboard_controller.dart';
@@ -22,6 +23,7 @@ class DashboardFragmentPageTwoState extends State<DashboardFragmentPageTwo> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(DashboardController()).isHomePage=false;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.getMainBgColor(),

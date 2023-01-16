@@ -27,6 +27,7 @@ class DashboardFragmentState extends State<DashboardFragment> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(DashboardController()).isHomePage=true;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.getMainBgColor(),

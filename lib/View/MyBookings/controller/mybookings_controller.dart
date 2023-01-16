@@ -1,7 +1,12 @@
 import 'dart:collection';
 import 'dart:convert';
-import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart'as viewBookingModel;
-import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart' as bookingResult;
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart'
+    as viewBookingModel;
+import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart'
+    as bookingResult;
 
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
@@ -10,6 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:otobucks/View/Chat/Views/chat_detail_screen.dart';
 import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart';
+import 'package:otobucks/View/Transactions/Controllers/transaction_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../Home/Controllers/home_screen_controller.dart';
@@ -35,12 +41,13 @@ class MyBookingsController extends GetxController {
   bool chatNowLoading = false;
   bool isShowLoader = false;
   String chatNowRoomId = '';
-bool isSearching=false;
+  bool isSearching = false;
+
   void onInit() {
     print("CHECKING FUNCTIUON");
     // TODO: implement onInit
     super.onInit();
-    futurBookings=getAllBookings();
+    futurBookings = getAllBookings();
     getToken();
   }
 
@@ -55,9 +62,11 @@ bool isSearching=false;
     // TODO: implement onClose
     super.onClose();
   }
-late Future<BookingModel>futurBookings;
+
+  late Future<BookingModel> futurBookings;
+
   //...............Get All Bookings...........................
-  Future<BookingModel> getAllBookings({startDate,endDate}) async {
+  Future<BookingModel> getAllBookings({startDate, endDate}) async {
     print("CHECKING FUNCTIUON $startDate : $endDate");
     final prefManager = await SharedPreferences.getInstance();
     token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
@@ -68,15 +77,13 @@ late Future<BookingModel>futurBookings;
       "Content-Type": "application/json"
     };
     var urll = "";
-    if(startDate !=null){
-      urll = "https://developmentapi-app.otobucks.com/v1/bookings/bookService?startDate=$startDate&endDate=$endDate";
-    }else{
+    if (startDate != null) {
+      urll =
+          "https://developmentapi-app.otobucks.com/v1/bookings/bookService?startDate=$startDate&endDate=$endDate";
+    } else {
       urll = "https://developmentapi-app.otobucks.com/v1/bookings/bookService";
     }
-    final response = await http.get(
-        Uri.parse(urll),
-
-        headers: headers);
+    final response = await http.get(Uri.parse(urll), headers: headers);
     var data = jsonDecode(response.body);
     if (response.statusCode == 200) {
       log.i("Get booking API success");
@@ -92,7 +99,6 @@ late Future<BookingModel>futurBookings;
     update();
     return BookingModel.fromJson(data);
   }
-  
 
   //..................Get token...............................
   getToken() async {
@@ -123,10 +129,12 @@ late Future<BookingModel>futurBookings;
       getMessages(chatNowRoomId);
     });
   }
-  Future<void>refreshBookings()async {
+
+  Future<void> refreshBookings() async {
     onInit();
     update();
   }
+
 //------------------------------------------------Get messages--------------------------------------
   getMessages(String roomId) async {
     HashMap<String, Object> requestParams = HashMap();
@@ -167,48 +175,50 @@ late Future<BookingModel>futurBookings;
 
     }
   }
+
   //---------------------------Search booking------------------------------------------
-  List<Result> ?pendingsbookinglist;
+  List<Result>? pendingsbookinglist;
   List<Result>? filteredBookingList;
-  void searchInShop(String query){
-    filteredBookingList=pendingsbookinglist;
-    final suggestions=pendingsbookinglist?.where((filteredBooking){
-      String? shopName=filteredBooking.source?.title?.toString().toLowerCase();
-      final input=query.toLowerCase();
+
+  void searchInShop(String query) {
+    filteredBookingList = pendingsbookinglist;
+    final suggestions = pendingsbookinglist?.where((filteredBooking) {
+      String? shopName =
+          filteredBooking.source?.title?.toString().toLowerCase();
+      final input = query.toLowerCase();
       return shopName!.contains(input);
     }).toList();
-    filteredBookingList=suggestions;
+    filteredBookingList = suggestions;
     update();
   }
-  void searchbyDate(String query){
-    filteredBookingList=pendingsbookinglist;
-    final suggestions=pendingsbookinglist?.where((filteredBooking){
-      final shopName=filteredBooking.bookingDetails?.date?.toLowerCase();
-      final input=query.toLowerCase();
+
+  void searchbyDate(String query) {
+    filteredBookingList = pendingsbookinglist;
+    final suggestions = pendingsbookinglist?.where((filteredBooking) {
+      final shopName = filteredBooking.bookingDetails?.date?.toLowerCase();
+      final input = query.toLowerCase();
       return shopName!.contains(input);
     }).toList();
-    filteredBookingList=suggestions;
+    filteredBookingList = suggestions;
     update();
   }
+
 //-------------------------------------Delete booking API method-------------------
-  Future<void> deleteBooking({
-    String? bookingID,m
-  }) async {
+  Future<void> deleteBooking({String? bookingID, m}) async {
     final prefManager = await SharedPreferences.getInstance();
-    String ? token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
+    String? token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
     try {
-      final body = json.encode({
-        "bookingID":bookingID
-      });
+      final body = json.encode({"bookingID": bookingID});
       log.i("$token");
       log.i("$body");
       final headers = {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json'
       };
-      var uriSaveCart = Uri.parse("${RequestBuilder.API_DELETE_BOOKING}/${bookingID}");
+      var uriSaveCart =
+          Uri.parse("${RequestBuilder.API_DELETE_BOOKING}/${bookingID}");
       http.Response response =
-      await http.delete(uriSaveCart, headers: headers, body: body);
+          await http.delete(uriSaveCart, headers: headers, body: body);
       log.i("BodyI sent when delete booking=======>${body}");
       final message = json.decode(response.body.toString());
       //..............Response Ok Part...................................................
@@ -216,20 +226,56 @@ late Future<BookingModel>futurBookings;
         log.i(response.statusCode);
         log.i(
             "Server Response to me while delete booking is======>>${message["message"]}");
-        Global.showToastAlert(context: Get.context!, strTitle: "Deleted", strMsg: message["message"].toString(),toastType: TOAST_TYPE.toastSuccess);
+        Global.showToastAlert(
+            context: Get.context!,
+            strTitle: "Deleted",
+            strMsg: message["message"].toString(),
+            toastType: TOAST_TYPE.toastSuccess);
       }
       //.........................not ok ...................................................
       else {
-        Global.showToastAlert(context: Get.context!, strTitle: "Message", strMsg: message["message"].toString(),toastType: TOAST_TYPE.toastError);
+        Global.showToastAlert(
+            context: Get.context!,
+            strTitle: "Message",
+            strMsg: message["message"].toString(),
+            toastType: TOAST_TYPE.toastError);
         log.e(response.statusCode);
         log.e(
             "Server Response to me  while deleting booking =====>>  ${response.body.toString()}");
       }
     } catch (e) {
-      Global.showToastAlert(context: Get.context!, strTitle: "Deleted", strMsg: e.toString(),toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(
+          context: Get.context!,
+          strTitle: "Deleted",
+          strMsg: e.toString(),
+          toastType: TOAST_TYPE.toastSuccess);
 
-      log.e("Exception is whileremover market shop  is=======>>${e.toString()}");
+      log.e(
+          "Exception is whileremover market shop  is=======>>${e.toString()}");
     }
   }
 
+//------------------------Date picker -------------------------------------
+  DateTime selectedDate = DateTime.now();
+  TextEditingController datePickerController = TextEditingController();
+
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      selectedDate = picked;
+
+      //----
+
+      final DateFormat formatter = DateFormat('yyyy-MM-dd');
+      final String formatted = formatter.format(selectedDate);
+      datePickerController.text = formatted;
+    isSearching = true;
+    searchbyDate(datePickerController.text);
+      update();
+    }
+  }
 }

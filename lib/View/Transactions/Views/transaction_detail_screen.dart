@@ -501,7 +501,7 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
         "AED${widget.transactionModel.amount.toString()} /-".split('T')[0];
     grid.draw(
         page: document.pages.add(), bounds: const Rect.fromLTWH(0, 0, 0, 0));
-    List<int> bytes = document.save();
+    List<int> bytes = await document.save();
     document.dispose();
     Get.put(TransactionController()).saveAndLaunchFile(bytes, 'OtoBucks.pdf');
   }

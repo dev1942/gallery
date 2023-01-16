@@ -109,47 +109,54 @@ class EstimationFragmentState extends State<EstimationFragment>
                                       child: SizedBox(
                                           height: 30,
                                           child: TextFormField(
-                                            keyboardType: TextInputType.datetime,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                            onChanged: (val) {
-                                              Get.put(MyBookingsController())
-                                                  .isSearching = true;
-                                              Get.put(MyBookingsController())
-                                                  .searchbyDate(val);
-                                            },
-                                            decoration: InputDecoration(
-
-                                                suffixIcon: Icon(
-                                                  Icons.calendar_month,
-                                                  size: AppDimens.dimens_18,
-                                                  color: Colors.yellow.shade700,
+                                                keyboardType: TextInputType.datetime,
+                                                style: const TextStyle(
+                                                  fontSize: 12,
                                                 ),
-                                                contentPadding:
-                                                    const EdgeInsets.all(8),
-                                                hintText: "2023-01-13".tr,
-                                                hintStyle:
-                                                    AppStyle.textViewStyleSmall(
-                                                        context: context,
-                                                        color: AppColors
-                                                            .lightGrey),
-                                                enabledBorder:
-                                                    const OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color:
-                                                                Colors.grey)),
-                                                focusColor: Colors.yellow,
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
-                                                                color: Colors
-                                                                    .grey),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(3))),
-                                          )),
+                                                controller:   Get.put(MyBookingsController()).datePickerController,
+                                                onChanged: (val) {
+                                                  Get.put(MyBookingsController())
+                                                      .isSearching = true;
+                                                  Get.put(MyBookingsController())
+                                                      .searchbyDate(val);
+                                                },
+                                                decoration: InputDecoration(
+
+                                                    suffixIcon: InkWell(
+                                                      onTap: (){
+                                                        Get.put(MyBookingsController()).selectDate(Get.context!);
+                                                      },
+                                                      child: Icon(
+                                                        Icons.calendar_month,
+                                                        size: AppDimens.dimens_18,
+                                                        color: Colors.yellow.shade700,
+                                                      ),
+                                                    ),
+                                                    contentPadding:
+                                                        const EdgeInsets.all(8),
+                                                    hintText: "2023-01-13".tr,
+                                                    hintStyle:
+                                                        AppStyle.textViewStyleSmall(
+                                                            context: Get.context!,
+                                                            color: AppColors
+                                                                .lightGrey),
+                                                    enabledBorder:
+                                                        const OutlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color:
+                                                                    Colors.grey)),
+                                                    focusColor: Colors.yellow,
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                            borderSide:
+                                                                const BorderSide(
+                                                                    color: Colors
+                                                                        .grey),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(3))),
+                                              )
+                                           ),
                                     ),
                                     addHorizontalSpace(AppDimens.dimens_8),
                                     Expanded(

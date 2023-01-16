@@ -20,7 +20,7 @@ class DashboardController extends GetxController {
   bool connectionStatus = false;
 
   late TabController tabcontroller;
-
+bool isHomePage=true;
   final PageController controller = PageController();
   int intCurrentPage = 0;
   int intTabPosition = 0;

@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
@@ -85,5 +86,26 @@ class TransactionController extends GetxController {
     final file = File('$path/$fileName');
     await file.writeAsBytes(bytes, flush: true);
     OpenFile.open('$path/$fileName');
+
+  }
+  DateTime selectedDate = DateTime.now();
+  TextEditingController datePickerController = TextEditingController();
+
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      selectedDate = picked;
+      //----
+      final DateFormat formatter = DateFormat('yyyy-MM-dd');
+      final String formatted = formatter.format(selectedDate);
+      datePickerController.text = formatted;
+      isSearching = true;
+      searchbyDate(datePickerController.text);
+      update();
+    }
   }
 }
