@@ -66,7 +66,6 @@ class BannerPageViewState extends State<BannerPageView> {
               physics: const BouncingScrollPhysics(),
               controller: _pageController,
               itemBuilder: (context, index) {
-                String strImage = widget.alPromotions[index].getPromoImage();
                 var promotionList=
                 Get.put(DashboardController()).isHomePage==true?
                 widget.alPromotions.where((element) => element.location=='homePage').toList():

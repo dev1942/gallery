@@ -64,31 +64,4 @@ class EstimationFragmentController extends GetxController {
     });
   }
   MyBookingsController bookingController = MyBookingsController();
-
-  //............................Date range pcker............................
-  dateRangerPicker(){
-
-    showCustomDateRangePicker(
-      Get.context!,
-      dismissible: true,
-      minimumDate: DateTime.now().subtract(Duration(days: 30)),
-      maximumDate: DateTime.now().add(const Duration(days: 30)),
-      endDate: endDate,
-      startDate: startDate,
-      onApplyClick: (start, end) async {
-                 isRangePicked=true;
-        endDate = end;
-        startDate = start;
-        await bookingController.getAllBookings(startDate: startDate,endDate: endDate);
-        update();
-
-      },
-      onCancelClick: () {
-isRangePicked=false;
-        endDate = null;
-        startDate = null;
-        update();
-      },
-    );
-  }
 }

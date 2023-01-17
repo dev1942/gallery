@@ -15,20 +15,16 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:otobucks/View/Chat/Views/chat_detail_screen.dart';
 import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart';
-import 'package:otobucks/View/Transactions/Controllers/transaction_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../Home/Controllers/home_screen_controller.dart';
-import '../../../global/app_views.dart';
-import '../../../global/connectivity_status.dart';
 import '../../../global/constants.dart';
 import '../../../global/enum.dart';
 import '../../../global/global.dart';
 import '../../../global/url_collection.dart';
 import '../../Chat/Models/my_rooms_model.dart';
 import '../../../services/repository/chat_repo.dart';
-import '../../../services/rest_api/request_listener.dart';
-import '../Models/AllBookingsModel.dart';
+import '../Models/PromotionBookingModel.dart';
 
 class MyBookingsController extends GetxController {
   @override
@@ -44,10 +40,10 @@ class MyBookingsController extends GetxController {
   bool isSearching = false;
 
   void onInit() {
-    print("CHECKING FUNCTIUON");
     // TODO: implement onInit
     super.onInit();
     futurBookings = getAllBookings();
+    futurePromotionBookings=getAllPromotionBookings();
     getToken();
   }
 
@@ -64,10 +60,10 @@ class MyBookingsController extends GetxController {
   }
 
   late Future<BookingModel> futurBookings;
+  late Future<PromotionBookingHistory> futurePromotionBookings;
 
   //...............Get All Bookings...........................
-  Future<BookingModel> getAllBookings({startDate, endDate}) async {
-    print("CHECKING FUNCTIUON $startDate : $endDate");
+  Future<BookingModel> getAllBookings() async {
     final prefManager = await SharedPreferences.getInstance();
     token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
     log.e("token at start is");
@@ -76,14 +72,7 @@ class MyBookingsController extends GetxController {
       'Authorization': "Bearer $token",
       "Content-Type": "application/json"
     };
-    var urll = "";
-    if (startDate != null) {
-      urll =
-          "https://developmentapi-app.otobucks.com/v1/bookings/bookService?startDate=$startDate&endDate=$endDate";
-    } else {
-      urll = "https://developmentapi-app.otobucks.com/v1/bookings/bookService";
-    }
-    final response = await http.get(Uri.parse(urll), headers: headers);
+    final response = await http.get(Uri.parse(RequestBuilder.API_GET_ALL_BOOKINGS), headers: headers);
     var data = jsonDecode(response.body);
     if (response.statusCode == 200) {
       log.i("Get booking API success");
@@ -98,6 +87,26 @@ class MyBookingsController extends GetxController {
     }
     update();
     return BookingModel.fromJson(data);
+  }
+  //...............Get All Promotion  Bookings...........................
+  Future<PromotionBookingHistory> getAllPromotionBookings() async {
+    final prefManager = await SharedPreferences.getInstance();
+    token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
+    final headers = {
+      'Authorization': "Bearer $token",
+      "Content-Type": "application/json"
+    };
+    final response = await http.get(Uri.parse(RequestBuilder.API_GET_PROMOTIONS_HISTORY), headers: headers);
+    var data = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      log.i("Promotion booking success");
+      return PromotionBookingHistory.fromJson(data);
+    } else {
+      log.e("Get promotion booking API Failed");
+      log.e(response.body);
+      log.w(token.toString());
+    }
+    return PromotionBookingHistory.fromJson(data);
   }
 
   //..................Get token...............................

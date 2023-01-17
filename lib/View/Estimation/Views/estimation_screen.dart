@@ -11,8 +11,7 @@ import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/View/MyBookings/controller/estimation_screen_controller.dart';
-
-import '../../MyBookings/Models/AllBookingsModel.dart';
+import '../../MyBookings/view/tabs_views/promotions_booking.dart';
 
 class EstimationFragment extends StatefulWidget {
   EstimationFragment({
@@ -30,7 +29,7 @@ class EstimationFragmentState extends State<EstimationFragment>
 
   @override
   void initState() {
-    controller.tabController = TabController(length: 4, vsync: this);
+    controller.tabController = TabController(length: 5, vsync: this);
     controller.activeTabIndex = 0;
     super.initState();
   }
@@ -92,9 +91,13 @@ class EstimationFragmentState extends State<EstimationFragment>
                                       activeindex: value.activeTabIndex,
                                       id: 2),
                                   tabButtons(
-                                      title: "Cancelled",
+                                      title: "Promotions",
                                       activeindex: value.activeTabIndex,
                                       id: 3),
+                                  tabButtons(
+                                      title: "Cancelled",
+                                      activeindex: value.activeTabIndex,
+                                      id: 4),
                                 ],
                                 controller: value.tabController,
                               ),
@@ -109,54 +112,58 @@ class EstimationFragmentState extends State<EstimationFragment>
                                       child: SizedBox(
                                           height: 30,
                                           child: TextFormField(
-                                                keyboardType: TextInputType.datetime,
-                                                style: const TextStyle(
-                                                  fontSize: 12,
+                                            keyboardType:
+                                                TextInputType.datetime,
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                            ),
+                                            controller:
+                                                Get.put(MyBookingsController())
+                                                    .datePickerController,
+                                            onChanged: (val) {
+                                              Get.put(MyBookingsController())
+                                                  .isSearching = true;
+                                              Get.put(MyBookingsController())
+                                                  .searchbyDate(val);
+                                            },
+                                            decoration: InputDecoration(
+                                                suffixIcon: InkWell(
+                                                  onTap: () {
+                                                    Get.put(MyBookingsController())
+                                                        .selectDate(
+                                                            Get.context!);
+                                                  },
+                                                  child: Icon(
+                                                    Icons.calendar_month,
+                                                    size: AppDimens.dimens_18,
+                                                    color:
+                                                        Colors.yellow.shade700,
+                                                  ),
                                                 ),
-                                                controller:   Get.put(MyBookingsController()).datePickerController,
-                                                onChanged: (val) {
-                                                  Get.put(MyBookingsController())
-                                                      .isSearching = true;
-                                                  Get.put(MyBookingsController())
-                                                      .searchbyDate(val);
-                                                },
-                                                decoration: InputDecoration(
-
-                                                    suffixIcon: InkWell(
-                                                      onTap: (){
-                                                        Get.put(MyBookingsController()).selectDate(Get.context!);
-                                                      },
-                                                      child: Icon(
-                                                        Icons.calendar_month,
-                                                        size: AppDimens.dimens_18,
-                                                        color: Colors.yellow.shade700,
-                                                      ),
-                                                    ),
-                                                    contentPadding:
-                                                        const EdgeInsets.all(8),
-                                                    hintText: "2023-01-13".tr,
-                                                    hintStyle:
-                                                        AppStyle.textViewStyleSmall(
-                                                            context: Get.context!,
-                                                            color: AppColors
-                                                                .lightGrey),
-                                                    enabledBorder:
-                                                        const OutlineInputBorder(
-                                                            borderSide: BorderSide(
-                                                                color:
-                                                                    Colors.grey)),
-                                                    focusColor: Colors.yellow,
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                            borderSide:
-                                                                const BorderSide(
-                                                                    color: Colors
-                                                                        .grey),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(3))),
-                                              )
-                                           ),
+                                                contentPadding:
+                                                    const EdgeInsets.all(8),
+                                                hintText: "2023-01-13".tr,
+                                                hintStyle:
+                                                    AppStyle.textViewStyleSmall(
+                                                        context: Get.context!,
+                                                        color: AppColors
+                                                            .lightGrey),
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color:
+                                                                Colors.grey)),
+                                                focusColor: Colors.yellow,
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                        borderSide:
+                                                            const BorderSide(
+                                                                color: Colors
+                                                                    .grey),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(3))),
+                                          )),
                                     ),
                                     addHorizontalSpace(AppDimens.dimens_8),
                                     Expanded(
@@ -222,6 +229,7 @@ class EstimationFragmentState extends State<EstimationFragment>
                         const PendingFragment(),
                         const InProgressFragment(),
                         CompletedFragment(),
+                        const PromotionsBookingView(),
                         const CancelledFragment(),
                       ],
                     ),

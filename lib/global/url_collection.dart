@@ -30,6 +30,7 @@ class RequestBuilder {
   static final String API_DELETE_CAR_= "auth/customers/cars/";
   //Promotions
   static final String API_GET_PROMOTIONS = "promotions";
+  static final String API_GET_PROMOTIONS_HISTORY = "${LIVE_URL}promotions/getPromotionHistory";
   //notifications
   static final String API_GET_NOTIFICATIONS = "notifications";
   //wallet
