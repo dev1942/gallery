@@ -27,6 +27,9 @@ class PendingFragment extends GetView<MyBookingsController> {
 
   @override
   Widget build(BuildContext context) {
+
+    controller.isSearching=false;
+    controller.isSearchingTypePromotion=false;
     Get.put(MyBookingsController());
     return SafeArea(
         top: false,
@@ -275,29 +278,11 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                               if (data.status !=
                                                                   "pending") {
                                                                 //items data isEmpty or Not
-                                                                if (snapshot
-                                                                    .data!
-                                                                    .result!
-                                                                    .first
-                                                                    .estimation!
-                                                                    .items!
-                                                                    .isNotEmpty) {
                                                                   Get.to(EstimationDetailsPDFScreen(
                                                                       allBookingsModel: data
                                                                           as viewBookingModel
                                                                               .Result));
-                                                                } else {
-                                                                  Global.showToastAlert(
-                                                                      context: Get
-                                                                          .overlayContext!,
-                                                                      strTitle:
-                                                                          "",
-                                                                      strMsg:
-                                                                          "Estimation Data incomplete",
-                                                                      toastType:
-                                                                          TOAST_TYPE
-                                                                              .toastInfo);
-                                                                }
+
                                                                 //
                                                               }
                                                             },

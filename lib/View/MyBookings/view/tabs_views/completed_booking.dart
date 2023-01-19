@@ -25,6 +25,8 @@ class CompletedFragment extends GetView<MyBookingsController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.isSearching=false;
+    controller.isSearchingTypePromotion=false;
     Get.put(MyBookingsController());
     return SafeArea(
         top: false,
@@ -293,21 +295,25 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                                               .circular(
                                                                                   2)),
                                                                   child: Center(
-                                                                    child: Text(
-                                                                      data.rated
-                                                                          ? "RATED"
-                                                                              .tr
-                                                                          : "Give rating"
-                                                                              .tr
-                                                                              .toUpperCase(),
-                                                                      style: const TextStyle(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontWeight:
-                                                                              FontWeight
-                                                                                  .w500),
+                                                                    child: GetBuilder<MyBookingsController>(
+                                                                      builder: (context) {
+                                                                        return Text(
+                                                                          data.rated
+                                                                              ? "RATED"
+                                                                                  .tr
+                                                                              : "Give rating"
+                                                                                  .tr
+                                                                                  .toUpperCase(),
+                                                                          style: const TextStyle(
+                                                                              color: Colors
+                                                                                  .black,
+                                                                              fontSize:
+                                                                                  10,
+                                                                              fontWeight:
+                                                                                  FontWeight
+                                                                                      .w500),
+                                                                        );
+                                                                      }
                                                                     ),
                                                                   )),
                                                             ),

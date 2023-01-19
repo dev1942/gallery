@@ -22,6 +22,8 @@ class CancelledFragment extends GetView<MyBookingsController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.isSearching=false;
+    controller.isSearchingTypePromotion=false;
     Get.put(MyBookingsController());
     return SafeArea(
         top: false,
@@ -295,10 +297,8 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                     top: 5,
                                     child: InkWell(
                                       onTap: () {
-                                        controller.deleteBooking(
-                                            bookingID: data.id);
-                                        snapshot.data?.result?.removeWhere(
-                                                (element) => element.id == data.id);
+                                        controller.deleteBooking(bookingID: data.id);
+                                        snapshot.data?.result?.removeWhere((element) => element.id == data.id);
                                         controller.update();
                                       },
                                       child: Icon(

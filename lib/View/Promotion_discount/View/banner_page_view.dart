@@ -37,7 +37,7 @@ class BannerPageViewState extends State<BannerPageView> {
       _pageController.animateToPage(
         _currentPage,
         duration: Duration(milliseconds: 800),
-        curve: Curves.easeIn,
+        curve: Curves.linear,
       );
     });
   }

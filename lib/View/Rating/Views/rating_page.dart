@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/View/MyBookings/controller/mybookings_controller.dart';
 import 'package:otobucks/global/app_images.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
@@ -133,6 +134,7 @@ class RatingScreenState extends State<RatingScreen> {
 
                       onPress: () {
                         giveRating();
+                        Get.put(MyBookingsController()).refreshBookings();
                       },
                       color: null),
                 ),

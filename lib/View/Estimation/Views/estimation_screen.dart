@@ -123,8 +123,12 @@ class EstimationFragmentState extends State<EstimationFragment>
                                             onChanged: (val) {
                                               Get.put(MyBookingsController())
                                                   .isSearching = true;
+                                              //===================
                                               Get.put(MyBookingsController())
-                                                  .searchbyDate(val);
+                                                  .isSearchingTypePromotion== false?
+                                              Get.put(MyBookingsController())
+                                                  .searchbyDate(val):Get.put(MyBookingsController())
+                                                  .searchbyDatePromotion(val);
                                             },
                                             decoration: InputDecoration(
                                                 suffixIcon: InkWell(
@@ -176,8 +180,12 @@ class EstimationFragmentState extends State<EstimationFragment>
                                             onChanged: (val) {
                                               Get.put(MyBookingsController())
                                                   .isSearching = true;
+                                              //=================================
                                               Get.put(MyBookingsController())
-                                                  .searchInShop(val);
+                                                  .isSearchingTypePromotion== false?
+                                              Get.put(MyBookingsController())
+                                                  .searchInShop(val):Get.put(MyBookingsController())
+                                                  .searchInShopPromotion(val);
                                             },
                                             decoration: InputDecoration(
                                                 suffixIcon: Icon(

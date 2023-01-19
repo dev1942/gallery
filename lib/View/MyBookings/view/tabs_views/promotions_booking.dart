@@ -26,6 +26,8 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.isSearching=false;
+    controller.isSearchingTypePromotion=true;
     Get.put(MyBookingsController());
     return SafeArea(
         top: false,
@@ -37,236 +39,229 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
             return FutureBuilder<PromotionBookingHistory>(
                 future: controller.futurePromotionBookings,
                 builder: (context, snapshot) {
+                  controller.promotionBookingList = snapshot.data?.result;
                   if (snapshot.hasData) {
                     return RefreshIndicator(
                       onRefresh: controller.refreshBookings,
                       child: ListView.builder(
                         itemCount:
-                        // controller.isSearching == true
-                        //     ? controller.filteredBookingList!.length
-                        //     :
-                        snapshot.data?.result?.length,
+                             controller.isSearching == true
+                             ? controller.filteredPromotionBookingList!.length
+                             :
+                            snapshot.data?.result?.length,
                         padding: const EdgeInsets.symmetric(
                             vertical: 5, horizontal: 5),
                         itemBuilder: (BuildContext contextM, index) {
-                          var data=snapshot.data?.result![index];
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 6.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  color: AppColors.grayDashboardItem,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                padding: const EdgeInsets.only(
-                                    top: 10,
-                                    right: AppDimens.dimens_10,
-                                    left: 10,
-                                    bottom: 7),
-                                margin: EdgeInsets.symmetric(horizontal: 5),
-                                child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          //------------------ column Image  amd view booking-----------------
-                                          Column(
+                          var data =
+
+                          controller.isSearching==false?
+                          snapshot.data?.result![index]:
+                          controller.filteredPromotionBookingList![index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: AppColors.grayDashboardItem,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: const EdgeInsets.only(
+                                  top: 10,
+                                  right: AppDimens.dimens_10,
+                                  left: 10,
+                                  bottom: 7),
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        //------------------ column Image  amd view booking-----------------
+                                        Column(
+                                          children: [
+                                            ImageWidget(
+                                                imagePath: data?.promotion?.promoImg?.first.toString()),
+                                            const SizedBox(
+                                              height: AppDimens.dimens_12,
+                                            ),
+
+                                            /// onclick of view booking
+                                            // InkWell(
+                                            //     child: Container(
+                                            //         alignment:
+                                            //             Alignment.center,
+                                            //         child: Padding(
+                                            //           padding:
+                                            //               const EdgeInsets
+                                            //                       .only(
+                                            //                   right: 8.0),
+                                            //           child: Text(
+                                            //                 "Promotion Booking"
+                                            //                 .tr,
+                                            //             style: AppStyle
+                                            //                 .textViewStyleSmall(
+                                            //                     context:
+                                            //                         context,
+                                            //                     color: AppColors
+                                            //                         .colorTextBlue2,
+                                            //                     fontSizeDelta:
+                                            //                         0,
+                                            //                     fontWeightDelta:
+                                            //                         0),
+                                            //           ),
+                                            //         )),
+                                            //     onTap: () {
+                                            //       // if (data.status ==
+                                            //       //     "inProgress") {
+                                            //       //   //reschedule and decline
+                                            //       //   Get.to(
+                                            //       //       ViewBookingEstimation(
+                                            //       //           status:
+                                            //       //               "inProgress",
+                                            //       //           mEstimatesModel:
+                                            //       //               data,
+                                            //       //           isPending:
+                                            //       //               false));
+                                            //       // } else {
+                                            //       //   Get.to(
+                                            //       //       ViewBookingEstimation(
+                                            //       //           mEstimatesModel:
+                                            //       //               data));
+                                            //       // }
+                                            //     }),
+                                          ],
+                                        ),
+                                        addHorizontalSpace(8),
+                                        //..........................right side data column
+                                        Expanded(
+                                          child: Column(
                                             children: [
-                                              Container(
-                                                width: 60,
-                                                height: 60,
-                                                child: Icon(Icons.car_rental,size: 40,),
+                                              Row(
+                                                children: [
+                                                  //---------------UserName
+                                                  Expanded(
+                                                    child: UserNameWidget(
+                                                        userName:
+                                                            "${data?.provider?.firstName}"
+                                                            " "
+                                                            "${data?.provider?.lastName} "),
+                                                  ),
+                                                ],
                                               ),
-                                              // ImageWidget(
-                                              //     imagePath: data
-                                              //         .source?.image?.first),
-                                              const SizedBox(
-                                                height: AppDimens.dimens_12,
+                                              Row(
+                                                children: [
+                                                  Textwidget(
+                                                      text:
+                                                          "Promotion Title: ".tr,
+                                                      fontsize: 0,
+                                                      fontweight: 0),
+                                                  Flexible(
+                                                    child: Textwidget(
+                                                        text: "${data?.promotion?.title}",
+                                                        fontsize: 0,
+                                                        fontweight: 0),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Textwidget(
+                                                      text: "Paid  : ".tr,
+                                                      fontsize: 0,
+                                                      fontweight: 0),
+                                                  Text(
+                                                    "AED ${data?.totalprice}/-"
+                                                        .tr,
+                                                    style: AppStyle
+                                                        .textViewStyleNormalBodyText2(
+                                                            context:
+                                                                Get.context!,
+                                                            color: Colors.green,
+                                                            fontSizeDelta: 1,
+                                                            fontWeightDelta: 3),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "Booking Date : ".tr,
+                                                    style: AppStyle
+                                                        .textViewStyleSmall(
+                                                            context: context,
+                                                            color: AppColors
+                                                                .colorBlack,
+                                                            fontSizeDelta: -1,
+                                                            fontWeightDelta: 0),
+                                                  ),
+                                                  Text(
+                                                    getDate(data!.createdAt!),
+                                                    style: AppStyle
+                                                        .textViewStyleSmall(
+                                                            context: context,
+                                                            color: AppColors
+                                                                .colorBlack,
+                                                            fontSizeDelta: -1,
+                                                            fontWeightDelta: 0),
+                                                  ),
+                                                ],
                                               ),
 
-                                              /// onclick of view booking
+                                              ///........... estimation and status row button
+
+                                              const Divider(
+                                                thickness: 1,
+                                              ),
                                               // InkWell(
-                                              //     child: Container(
-                                              //         alignment:
-                                              //             Alignment.center,
-                                              //         child: Padding(
-                                              //           padding:
-                                              //               const EdgeInsets
-                                              //                       .only(
-                                              //                   right: 8.0),
-                                              //           child: Text(
-                                              //                 "Promotion Booking"
-                                              //                 .tr,
-                                              //             style: AppStyle
-                                              //                 .textViewStyleSmall(
-                                              //                     context:
-                                              //                         context,
-                                              //                     color: AppColors
-                                              //                         .colorTextBlue2,
-                                              //                     fontSizeDelta:
-                                              //                         0,
-                                              //                     fontWeightDelta:
-                                              //                         0),
-                                              //           ),
-                                              //         )),
-                                              //     onTap: () {
-                                              //       // if (data.status ==
-                                              //       //     "inProgress") {
-                                              //       //   //reschedule and decline
-                                              //       //   Get.to(
-                                              //       //       ViewBookingEstimation(
-                                              //       //           status:
-                                              //       //               "inProgress",
-                                              //       //           mEstimatesModel:
-                                              //       //               data,
-                                              //       //           isPending:
-                                              //       //               false));
-                                              //       // } else {
-                                              //       //   Get.to(
-                                              //       //       ViewBookingEstimation(
-                                              //       //           mEstimatesModel:
-                                              //       //               data));
-                                              //       // }
-                                              //     }),
+                                              //   onTap: () {
+                                              //     displayTextInputDialog(
+                                              //         context,
+                                              //         data.sId!);
+                                              //   },
+                                              //   child: Container(
+                                              //       padding: const EdgeInsets
+                                              //           .symmetric(
+                                              //           horizontal:
+                                              //           6.0,
+                                              //           vertical:
+                                              //           4.0),
+                                              //       decoration: BoxDecoration(
+                                              //           color: AppColors
+                                              //               .colorYellowShade,
+                                              //           borderRadius:
+                                              //           BorderRadius
+                                              //               .circular(
+                                              //               2)),
+                                              //       child: Center(
+                                              //         child: Text(
+                                              //                "Give rating"
+                                              //               .tr
+                                              //               .toUpperCase(),
+                                              //           style: const TextStyle(
+                                              //               color: Colors
+                                              //                   .black,
+                                              //               fontSize:
+                                              //               10,
+                                              //               fontWeight:
+                                              //               FontWeight
+                                              //                   .w500),
+                                              //         ),
+                                              //       )),
+                                              // ),
+                                              ///
                                             ],
                                           ),
-                                          addHorizontalSpace(8),
-                                          //..........................right side data column
-                                          Expanded(
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    //---------------UserName
-                                                    Expanded(
-                                                      child: UserNameWidget(
-                                                          userName:
-                                                              "${data?.provider?.firstName}" " "
-                                                              "${data?.provider?.lastName} "),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Textwidget(
-                                                        text: "Service Title: "
-                                                            .tr,
-                                                        fontsize: 0,
-                                                        fontweight: 0),
-                                                    Flexible(
-                                                      child: Textwidget(
-                                                          text:
-                                                              "--",
-                                                          fontsize: 0,
-                                                          fontweight: 0),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Textwidget(
-                                                        text: "Paid  : ".tr,
-                                                        fontsize: 0,
-                                                        fontweight: 0),
-                                                    Text(
-                                                      "AED ${data?.totalprice}/-"
-                                                          .tr,
-                                                      style: AppStyle
-                                                          .textViewStyleNormalBodyText2(
-                                                              context:
-                                                                  Get.context!,
-                                                              color:
-                                                                  Colors.green,
-                                                              fontSizeDelta: 1,
-                                                              fontWeightDelta:
-                                                                  3),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      "Booking Date : ".tr,
-                                                      style: AppStyle
-                                                          .textViewStyleSmall(
-                                                              context: context,
-                                                              color: AppColors
-                                                                  .colorBlack,
-                                                              fontSizeDelta: -1,
-                                                              fontWeightDelta:
-                                                                  0),
-                                                    ),
-                                                    Text(
-                                                      getDate(data!.createdAt!),
-                                                      style: AppStyle
-                                                          .textViewStyleSmall(
-                                                              context: context,
-                                                              color: AppColors
-                                                                  .colorBlack,
-                                                              fontSizeDelta: -1,
-                                                              fontWeightDelta:
-                                                                  0),
-                                                    ),
-                                                  ],
-                                                ),
+                                        ),
+                                      ],
+                                    ),
+                                    //buttons
 
-                                                ///........... estimation and status row button
-
-                                                Divider(
-                                                  thickness: 1,
-                                                ),
-                                                // InkWell(
-                                                //   onTap: () {
-                                                //     displayTextInputDialog(
-                                                //         context,
-                                                //         data.sId!);
-                                                //   },
-                                                //   child: Container(
-                                                //       padding: const EdgeInsets
-                                                //           .symmetric(
-                                                //           horizontal:
-                                                //           6.0,
-                                                //           vertical:
-                                                //           4.0),
-                                                //       decoration: BoxDecoration(
-                                                //           color: AppColors
-                                                //               .colorYellowShade,
-                                                //           borderRadius:
-                                                //           BorderRadius
-                                                //               .circular(
-                                                //               2)),
-                                                //       child: Center(
-                                                //         child: Text(
-                                                //                "Give rating"
-                                                //               .tr
-                                                //               .toUpperCase(),
-                                                //           style: const TextStyle(
-                                                //               color: Colors
-                                                //                   .black,
-                                                //               fontSize:
-                                                //               10,
-                                                //               fontWeight:
-                                                //               FontWeight
-                                                //                   .w500),
-                                                //         ),
-                                                //       )),
-                                                // ),
-                                              ///
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      //buttons
-
-                                      const SizedBox(height: 3.0),
-                                    ]),
-                              ),
-                            );
-
+                                    const SizedBox(height: 3.0),
+                                  ]),
+                            ),
+                          );
 
                           ///////////////////////////////// ////////////////////////////////////////////////////////////////
                         },

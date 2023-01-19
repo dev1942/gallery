@@ -3,12 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart'
-    as viewBookingModel;
-import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart'
-    as bookingResult;
 
-import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:http/http.dart' as http;
@@ -38,6 +33,7 @@ class MyBookingsController extends GetxController {
   bool isShowLoader = false;
   String chatNowRoomId = '';
   bool isSearching = false;
+  bool isSearchingTypePromotion = false;
 
   void onInit() {
     // TODO: implement onInit
@@ -212,6 +208,32 @@ class MyBookingsController extends GetxController {
     update();
   }
 
+  List<ProotionResult>? promotionBookingList;
+  List<ProotionResult>? filteredPromotionBookingList;
+
+  void searchInShopPromotion(String query) {
+    filteredPromotionBookingList = promotionBookingList;
+    final suggestions = promotionBookingList?.where((filteredBooking) {
+      String? shopName =
+      filteredBooking.promotion?.title?.toString().toLowerCase();
+      final input = query.toLowerCase();
+      return shopName!.contains(input);
+    }).toList();
+    filteredPromotionBookingList = suggestions;
+    update();
+  }
+
+  void searchbyDatePromotion(String query) {
+    filteredPromotionBookingList = promotionBookingList;
+    final suggestions = promotionBookingList?.where((filteredBooking) {
+      final shopName = filteredBooking.bookingDetails?.date?.toLowerCase();
+      final input = query.toLowerCase();
+      return shopName!.contains(input);
+    }).toList();
+    filteredPromotionBookingList = suggestions;
+    update();
+  }
+
 //-------------------------------------Delete booking API method-------------------
   Future<void> deleteBooking({String? bookingID, m}) async {
     final prefManager = await SharedPreferences.getInstance();
@@ -284,6 +306,7 @@ class MyBookingsController extends GetxController {
       datePickerController.text = formatted;
     isSearching = true;
     searchbyDate(datePickerController.text);
+    searchbyDatePromotion(datePickerController.text);
       update();
     }
   }
