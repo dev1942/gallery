@@ -25,6 +25,8 @@ class PendingFragment extends GetView<MyBookingsController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.isSearching=false;
+    controller.isSearchingTypePromotion=false;
     Get.put(MyBookingsController());
     return SafeArea(
         top: false,
@@ -47,11 +49,15 @@ class PendingFragment extends GetView<MyBookingsController> {
                           return RefreshIndicator(
                             onRefresh: controller.refreshBookings,
                             child: ListView.builder(
-                              itemCount: snapshot.data?.result!.length,
+                              itemCount: controller.isSearching == true
+                                  ? controller.filteredBookingList!.length
+                                  : snapshot.data?.result?.length,
                               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                               itemBuilder: (BuildContext contextM, index) {
-                                controller.pendingsbookinglist = snapshot.data!.result!.reversed.toList() as List<Result>;
-                                var data = controller.pendingsbookinglist![index];
+                                controller.pendingsbookinglist = snapshot.data!.result!.reversed.toList();
+                                var data =  controller.isSearching==false?
+                                controller.pendingsbookinglist![index]:
+                                controller.filteredBookingList![index];
                                 if (data.status == "submitted" || data.status == "pending" || data.status == "reSubmitted") {
                                   return Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 6.0),

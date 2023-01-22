@@ -24,6 +24,7 @@ class InProgressFragment extends GetView<MyBookingsController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.isSearching=false;
     controller.isSearchingTypePromotion=false;
     Get.put(MyBookingsController());
     return SafeArea(
