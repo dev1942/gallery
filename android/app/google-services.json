@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "443053986656-enjvko8f28qu5tate1m4s6m3gkdl3rp2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.otobucks.app",
+            "certificate_hash": "a2f2026bcf3e2a14915041b931090fcaac7115ed"
+          }
+        },
+        {
           "client_id": "443053986656-varik0ef367jlkksk10c5ek63qi97he7.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "443053986656-varik0ef367jlkksk10c5ek63qi97he7.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "443053986656-b2fl9ftjtdovtddb6tiq8dua53ja6eh1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.otobucksapp.app"
+              }
             }
           ]
         }
