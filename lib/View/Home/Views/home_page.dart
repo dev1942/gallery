@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:otobucks/View/Drawer/Views/drawer_custom.dart';
 import 'package:otobucks/services/services.dart';
 
 import '../../../global/app_colors.dart';
+import '../../../global/app_images.dart';
 import '../../../global/app_views.dart';
 import '../../../global/enum.dart';
 import '../../../widgets/bottom_bar.dart';
@@ -29,9 +32,9 @@ class _HomePageState extends State<HomePage> {
       (message) {
         print("FirebaseMessaging.onMessage.listen");
         if (message.notification != null) {
-          print(message.notification!.title);
-          print(message.notification!.body);
-          print("message.data11 ${message.data}");
+          log(message.notification!.title.toString());
+          log(message.notification!.body.toString());
+          log("message.data11 ${message.data}");
           // LocalNotificationService.display(message);
 
         }
@@ -42,11 +45,11 @@ class _HomePageState extends State<HomePage> {
   void onListen() {
     FirebaseMessaging.onMessageOpenedApp.listen(
       (message) {
-        print("FirebaseMessaging.onMessageOpenedApp.listen");
+        log("FirebaseMessaging.onMessageOpenedApp.listen");
         if (message.notification != null) {
-          print(message.notification!.title);
-          print(message.notification!.body);
-          print("message.data22 ${message.data['_id']}");
+          log(message.notification!.title.toString());
+          log(message.notification!.body.toString());
+          log("message.data22 ${message.data['_id']}");
         }
       },
     );
@@ -85,23 +88,16 @@ class _HomePageState extends State<HomePage> {
                 //   },
                 // ),
                 appBar: AppViews.initAppBar(
-                  icon: constraints.maxWidth < 600
-                      ? null
-                      : const Icon(Icons.keyboard_arrow_left),
+                  icon: constraints.maxWidth < 600 ? null : const Icon(Icons.keyboard_arrow_left),
                   mContext: context,
-                  centerTitle: controller.currentPageType == PageType.home ||
-                          controller.currentPageType == PageType.home2
-                      ? true
-                      : false,
-                  strTitle: controller.currentPageType == PageType.home ||
-                          controller.currentPageType == PageType.home2
+                  centerTitle: controller.currentPageType == PageType.home || controller.currentPageType == PageType.home2 ? true : false,
+                  strTitle: controller.currentPageType == PageType.home || controller.currentPageType == PageType.home2
                       ? controller.strTitle.tr + controller.firstName
                       : controller.strTitle.tr,
                   isShowNotification: true,
                   isShowSOS: true,
                   menuTap: () {
-                    if (controller.currentPageType == PageType.home ||
-                        controller.currentPageType == PageType.home2) {
+                    if (controller.currentPageType == PageType.home || controller.currentPageType == PageType.home2) {
                       scaffoldKey.currentState!.openDrawer();
                     } else {
                       controller.callback(PageType.home);
@@ -121,9 +117,35 @@ class _HomePageState extends State<HomePage> {
                         ],
                       )
                     : value.currentPage,
-                bottomNavigationBar: BottomBar(
-                    indexM: value.indexM,
-                    onTap: (int index) => value.onChangeBottomBar(index)));
+                bottomNavigationBar: BottomBarDefault(
+                  color: AppColors.colorWhite.withOpacity(0.6),
+                  items: const [
+                    TabItem(
+                      icon: Icons.home,
+                    ),
+                    TabItem(
+                      icon: Icons.shopping_basket,
+                    ),
+                    TabItem(
+                      icon: Icons.notifications,
+                    ),
+                    TabItem(
+                      icon: Icons.person,
+                    ),
+                  ],
+                  backgroundColor: AppColors.colorBlueStart,
+                  colorSelected: AppColors.colorWhite,
+                  animated: true,
+                  indexSelected: value.indexM,
+                  iconSize: 25,
+                  top: 15,
+                  bottom: 10,
+                  onTap: (val) {
+                    log(value.indexM.toString());
+                    log(val.toString());
+                    value.onChangeBottomBar(val);
+                  },
+                ));
           }));
     });
   }

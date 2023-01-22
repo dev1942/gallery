@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:otobucks/global/container_properties.dart';
@@ -32,16 +33,11 @@ class NotificationFragment extends StatefulWidget {
 class NotificationFragmentState extends State<NotificationFragment> {
   ShowData mShowData = ShowData.showLoading;
 
-
-
-
   bool connectionStatus = false;
   bool isShowLoader = false;
   String userImage = "", userName = "";
-  static final FlutterLocalNotificationsPlugin _notificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  static final FlutterLocalNotificationsPlugin _notificationsPlugin = FlutterLocalNotificationsPlugin();
   Preferences preferences = Preferences();
-
 
   List<NotificationModel> alNotification = [];
 
@@ -60,10 +56,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
       children: [
         // profile pic and name
         Container(
-          padding: const EdgeInsets.only(
-              left: AppDimens.dimens_50,
-              top: AppDimens.dimens_25,
-              bottom: AppDimens.dimens_32),
+          padding: const EdgeInsets.only(left: AppDimens.dimens_50, top: AppDimens.dimens_25, bottom: AppDimens.dimens_32),
           alignment: Alignment.center,
           color: AppColors.colorBlueStart,
           child: Row(
@@ -71,11 +64,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
               Container(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(AppDimens.dimens_50),
-                  child: NetworkImageCustom(
-                      image: userImage,
-                      fit: BoxFit.fill,
-                      height: AppDimens.dimens_74,
-                      width: AppDimens.dimens_74),
+                  child: NetworkImageCustom(image: userImage, fit: BoxFit.fill, height: AppDimens.dimens_74, width: AppDimens.dimens_74),
                 ),
                 margin: const EdgeInsets.only(right: AppDimens.dimens_10),
               ),
@@ -86,19 +75,12 @@ class NotificationFragmentState extends State<NotificationFragment> {
                 children: [
                   Text(
                     userName,
-                    style: AppStyle.textViewStyleNormalBodyText2(
-                        context: context,
-                        color: AppColors.colorWhite,
-                        fontSizeDelta: 0,
-                        fontWeightDelta: 1),
+                    style: AppStyle.textViewStyleNormalBodyText2(context: context, color: AppColors.colorWhite, fontSizeDelta: 0, fontWeightDelta: 1),
                   ),
                   Text(
                     "Car Owner",
                     style: AppStyle.textViewStyleSmall(
-                        context: context,
-                        color: AppColors.colorWhite.withOpacity(0.7),
-                        fontSizeDelta: -1,
-                        fontWeightDelta: 1),
+                        context: context, color: AppColors.colorWhite.withOpacity(0.7), fontSizeDelta: -1, fontWeightDelta: 1),
                   ),
                 ],
               )),
@@ -110,7 +92,6 @@ class NotificationFragmentState extends State<NotificationFragment> {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-
             itemBuilder: (BuildContext contextM, index) {
               NotificationModel mNotificationModel = alNotification[index];
               return Padding(
@@ -121,9 +102,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
                     color: AppColors.grayDashboardItem,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: const EdgeInsets.only(
-
-                      top: 10, right: AppDimens.dimens_10, left: 10, bottom: 7),
+                  padding: const EdgeInsets.only(top: 10, right: AppDimens.dimens_10, left: 10, bottom: 7),
                   margin: EdgeInsets.symmetric(horizontal: 5),
                   // margin: const EdgeInsets.only(bottom: AppDimens.dimens_14),
 
@@ -139,14 +118,9 @@ class NotificationFragmentState extends State<NotificationFragment> {
                             right: AppDimens.dimens_10,
                           ),
                           child: ClipRRect(
-                            borderRadius:
-                                BorderRadius.circular(AppDimens.dimens_5),
+                            borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                             child: NetworkImageCustom(
-
-
-                                image: Global.checkNull(
-                                        mNotificationModel.image)
-
+                                image: Global.checkNull(mNotificationModel.image)
                                     ? mNotificationModel.image
                                     : "https://qph.cf2.quoracdn.net/main-thumb-1278318002-200-ydzfegagslcexelzgsnplcklfkienzfr.jpeg",
                                 fit: BoxFit.fill,
@@ -161,51 +135,37 @@ class NotificationFragmentState extends State<NotificationFragment> {
                           children: [
                             Container(
                                 alignment: Alignment.centerLeft,
-                                margin: const EdgeInsets.only(
-                                    top: AppDimens.dimens_5,
-                                    bottom: AppDimens.dimens_5),
+                                margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
                                 child: Text(
-                                  mNotificationModel.type.contains('estimate')
-                                      ? 'Estimation Submitted '
-                                      : mNotificationModel.title,
+                                  mNotificationModel.type.contains('estimate') ? 'Estimation Submitted ' : mNotificationModel.title,
                                   maxLines: 2,
                                   style: AppStyle.textViewStyleNormalBodyText2(
-                                      context: context,
-                                      color: AppColors.colorBlack2,
-                                      fontSizeDelta: 0,
-                                      fontWeightDelta: 2),
+                                      context: context, color: AppColors.colorBlack2, fontSizeDelta: 0, fontWeightDelta: 2),
                                 )),
                             Container(
-                                margin: const EdgeInsets.only(
-                                    bottom: AppDimens.dimens_5),
+                                margin: const EdgeInsets.only(bottom: AppDimens.dimens_5),
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   mNotificationModel.getDate(),
                                   style: AppStyle.textViewStyleSmall(
-                                      context: context,
-                                      color: AppColors.grayDashboardText,
-                                      fontSizeDelta: -2,
-                                      fontWeightDelta: 0),
+                                      context: context, color: AppColors.grayDashboardText, fontSizeDelta: -2, fontWeightDelta: 0),
                                 )),
                           ],
                         )),
                         SizedBox(
                           height: 90,
-                          child: Icon(Icons.arrow_forward_ios_rounded,
-                              size: AppDimens.dimens_13,
-                              color: AppColors.colorBlueStart),
+                          child: Icon(Icons.arrow_forward_ios_rounded, size: AppDimens.dimens_13, color: AppColors.colorBlueStart),
                         )
                       ],
                     ),
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-
-                          builder: (_) => NotificationDetailsScreen(
-
-                                notificationModel: mNotificationModel,
-                                userImage: userImage,
-                                userName: userName,
-                              )));
+                      log(userName);
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (_) => NotificationDetailsScreen(
+                      //           notificationModel: mNotificationModel,
+                      //           userImage: userImage,
+                      //           userName: userName,
+                      //         )));
                     },
                   ),
                 ),
@@ -216,7 +176,6 @@ class NotificationFragmentState extends State<NotificationFragment> {
     );
     widgetM = AppViews.getSetDataNotification(context, mShowData, mShowWidget);
     return SafeArea(
-
       top: false,
       bottom: false,
       child: Scaffold(
@@ -236,23 +195,20 @@ class NotificationFragmentState extends State<NotificationFragment> {
         ),
       ),
     );
-
   }
 
   Future<void> initConnectivity() async {
     final prefManager = await SharedPreferences.getInstance();
 
     String? userImage_ = prefManager.getString(SharedPrefKey.KEY_USER_IMAGE);
-    String? _userFirstName =
-        prefManager.getString(SharedPrefKey.KEY_FIRST_NAME);
+    String? _userFirstName = prefManager.getString(SharedPrefKey.KEY_FIRST_NAME);
     String? _userLastImage = prefManager.getString(SharedPrefKey.KEY_LAST_NAME);
 
     setState(() {
       if (Global.checkNull(userImage_)) {
         userImage = userImage_!;
       }
-      if (Global.checkNull(_userFirstName) &&
-          Global.checkNull(_userLastImage)) {
+      if (Global.checkNull(_userFirstName) && Global.checkNull(_userLastImage)) {
         userName = _userFirstName! + " " + _userLastImage!;
       }
     });
@@ -281,11 +237,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
     var categories = await NotificationsRepo().getNotifications(requestParams);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       setState(() {
         mShowData = ShowData.showNoDataFound;
       });
@@ -293,17 +245,12 @@ class NotificationFragmentState extends State<NotificationFragment> {
       setState(() {
         alNotification = mResult.responseData as List<NotificationModel>;
 
-
         if (alNotification.isNotEmpty) {
           mShowData = ShowData.showData;
           if (preferences.getnotificationId() != alNotification.last.id) {
             preferences.setNotificationId(alNotification.last.id);
-            createanddisplaynotification(
-                title: alNotification.last.title,
-                body: alNotification.last.title,
-                payload: alNotification.last.id);
+            createanddisplaynotification(title: alNotification.last.title, body: alNotification.last.title, payload: alNotification.last.id);
           }
-
         } else {
           mShowData = ShowData.showNoDataFound;
         }
@@ -311,11 +258,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
     });
   }
 
-
-  static void createanddisplaynotification(
-      {required String title,
-      required String body,
-      required String payload}) async {
+  static void createanddisplaynotification({required String title, required String body, required String payload}) async {
     try {
       final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
       const NotificationDetails notificationDetails = NotificationDetails(
@@ -338,5 +281,4 @@ class NotificationFragmentState extends State<NotificationFragment> {
       print(e);
     }
   }
-
 }

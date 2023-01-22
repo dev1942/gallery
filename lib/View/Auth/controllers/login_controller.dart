@@ -18,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../View/forgot_password_screen.dart';
 import '../View/otp_screen.dart';
 import '../View/registation_screen.dart';
+
 class LoginController extends GetxController {
   bool connectionStatus = false;
   bool isShowLoader = false;
@@ -39,8 +40,6 @@ class LoginController extends GetxController {
 
   final List<String> items = ['English', 'Arabic'];
   String selectedValue = "English";
-
-
 
   @override
   void onInit() {
@@ -67,7 +66,6 @@ class LoginController extends GetxController {
       },
     );
   }
-
 
   void changeRemember(bool value) {
     rememberMe = value;
@@ -99,37 +97,20 @@ class LoginController extends GetxController {
     String strEmail = controllerEmail.text.toString();
     String strPassword = controllerPassword.text.toString();
     if (!Global.checkNull(strPassword) && !Global.checkNull(strEmail)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_EMAIL_AND_PASSWORD,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMAIL_AND_PASSWORD, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
     }
     if (!Global.checkNull(strEmail)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_EMAIL,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMAIL, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
-    } else if (Global.checkNull(strEmail) &&
-        !Global.checkValidEmail(strEmail)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_VALID_EMAIL,
-          toastType: TOAST_TYPE.toastError);
+    } else if (Global.checkNull(strEmail) && !Global.checkValidEmail(strEmail)) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_EMAIL, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
     } else if (!Global.checkNull(strPassword)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_PASSWORD,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_PASSWORD, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodePassword);
       return false;
     }
@@ -165,6 +146,7 @@ class LoginController extends GetxController {
     String strEmailID = controllerEmail.text.toString().trim();
     String strPassword = controllerPassword.text.toString();
     String firebaseToken = await FirebaseMessaging.instance.getToken() ?? '';
+    log(firebaseToken);
     await Global.taskStoreToken(firebaseToken);
 
     HashMap<String, Object> requestParams = HashMap();
@@ -179,11 +161,7 @@ class LoginController extends GetxController {
     update();
 
     signInEmail.fold((failure) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       if ("Please verify your email address first" == failure.MESSAGE) {
         gotoMobileOTPScreen(context);
       }
@@ -193,14 +171,9 @@ class LoginController extends GetxController {
   }
 
   void gotoMobileOTPScreen(BuildContext context) async {
-    ModelOTP mModelOTP = ModelOTP(
-        password: controllerPassword.text.toString(),
-        emailId: controllerEmail.text.toString());
+    ModelOTP mModelOTP = ModelOTP(password: controllerPassword.text.toString(), emailId: controllerEmail.text.toString());
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => OTPScreen(mModelOTP: mModelOTP)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen(mModelOTP: mModelOTP)));
     sendOTPTask();
   }
 
@@ -214,13 +187,11 @@ class LoginController extends GetxController {
   }
 
   void pushRegisterScreen(BuildContext context) async {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const RegistrationScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const RegistrationScreen()));
   }
 
   void forgoPasswordScreen(BuildContext context) async {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
   }
 
   sendOTPTask() async {
@@ -233,19 +204,11 @@ class LoginController extends GetxController {
     var signInEmail = await OTPRepo().sentOTPToEmail(requestParams);
 
     signInEmail.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       isShowLoader = false;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       isShowLoader = false;
       update();
     });
@@ -256,16 +219,13 @@ class LoginController extends GetxController {
       padding: const EdgeInsets.all(15),
       height: 300,
       decoration: BoxDecoration(
-          color: AppColors.colorWhite,
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(13), topRight: Radius.circular(13))),
+          color: AppColors.colorWhite, borderRadius: const BorderRadius.only(topLeft: Radius.circular(13), topRight: Radius.circular(13))),
       child: Column(
         children: [
           Container(
             height: 5,
             width: 30,
-            decoration:
-                ContainerProperties.simpleDecoration(radius: 100.0).copyWith(
+            decoration: ContainerProperties.simpleDecoration(radius: 100.0).copyWith(
               color: AppColors.colorBlueStart,
             ),
           ),
@@ -281,13 +241,9 @@ class LoginController extends GetxController {
                           controllerPassword.text = accounts[index].password;
                         },
                         child: Container(
-                            alignment: AlignmentDirectional.centerStart,
-                            height: 40,
-                            width: double.infinity,
-                            child: Text(accounts[index].email)),
+                            alignment: AlignmentDirectional.centerStart, height: 40, width: double.infinity, child: Text(accounts[index].email)),
                       ),
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(),
+                  separatorBuilder: (BuildContext context, int index) => const Divider(),
                   itemCount: accounts.length))
         ],
       ),
@@ -307,8 +263,7 @@ class LoginController extends GetxController {
   }
 
   Future<void> storeAccounts() async {
-    String account = jsonEncode(
-        {'email': controllerEmail.text, 'password': controllerPassword.text});
+    String account = jsonEncode({'email': controllerEmail.text, 'password': controllerPassword.text});
     final prefs = await SharedPreferences.getInstance();
     List<String> accounts = prefs.getStringList("accounts") ?? [];
 
@@ -331,6 +286,5 @@ class Accounts {
   String password;
 
   Accounts({required this.email, required this.password});
-  factory Accounts.fromMap(Map<String, dynamic> json) =>
-      Accounts(email: json['email'], password: json['password']);
+  factory Accounts.fromMap(Map<String, dynamic> json) => Accounts(email: json['email'], password: json['password']);
 }

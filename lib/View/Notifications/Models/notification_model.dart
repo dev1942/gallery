@@ -53,12 +53,10 @@ class NotificationModel {
     return NotificationModel(
       id: json['_id'].toString(),
       type: json['type'].toString(),
-      estimateId: json['estimateId'] == null
-          ? null
-          : json['estimateId']['_id'].toString(),
+      estimateId: json['estimateId'] == null ? null : json['estimateId']['_id'].toString(),
       promotionId: json['promotionId'].toString(),
       productId: json['productId'].toString(),
-      title: strProviderName + ' ' + json['title'].toString(),
+      title: json['title'].toString(),
       description: "",
       from: from,
       image: strImage,
@@ -68,10 +66,8 @@ class NotificationModel {
 
   getDate() {
     if (Global.checkNull(createdAt)) {
-      DateTime parseDate =
-          DateFormat(Constants.STRING_DB_DATE_FORMATE).parse(createdAt);
-      DateTime local = DateTime.utc(parseDate.year, parseDate.month,
-          parseDate.day, parseDate.hour, parseDate.minute);
+      DateTime parseDate = DateFormat(Constants.STRING_DB_DATE_FORMATE).parse(createdAt);
+      DateTime local = DateTime.utc(parseDate.year, parseDate.month, parseDate.day, parseDate.hour, parseDate.minute);
       var inputDate = DateTime.parse(local.toLocal().toString());
       var outputFormat = DateFormat(Constants.STRING_DD_MMM_YYYY);
       var outputDate = outputFormat.format(inputDate);
@@ -83,10 +79,8 @@ class NotificationModel {
 
   getDateInFormate() {
     if (Global.checkNull(createdAt)) {
-      DateTime parseDate =
-          DateFormat(Constants.STRING_DB_DATE_FORMATE).parse(createdAt);
-      DateTime local = DateTime.utc(parseDate.year, parseDate.month,
-          parseDate.day, parseDate.hour, parseDate.minute);
+      DateTime parseDate = DateFormat(Constants.STRING_DB_DATE_FORMATE).parse(createdAt);
+      DateTime local = DateTime.utc(parseDate.year, parseDate.month, parseDate.day, parseDate.hour, parseDate.minute);
 
       return local.toLocal();
     } else {
