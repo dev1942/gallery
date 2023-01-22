@@ -3,7 +3,7 @@
 class RequestBuilder {
   static final String LIVE_URL = "https://developmentapi-app.otobucks.com/v1/";
   //https://developmentapi-app.otobucks.com/v1
-  static final String LOCAL_URL = "http://192.168.18.36:4001/v1/auth/";
+  static final String LOCAL_URL = "http://192.168.18.36:4000/v1/";
   //https://api.otobucks.com/v1/auth/customers/login
   static String API_BASE_URL = LIVE_URL;
   static String API_DELETE_BOOKING="${LIVE_URL}bookings/bookService";
