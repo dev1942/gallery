@@ -1,6 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:otobucks/controller/login_screen_controller.dart';
 
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
@@ -33,23 +34,23 @@ class LogInScreen extends GetView<LoginController> {
                   actions: [
                     IconButton(
                         onPressed: () {
-                          print("Test");
+                          log("Test");
                           var data = getDate(
                               startDate: DateTime.now().toString(),
                               endDate: DateTime.now().toString());
-                          print("::::::::::::::::::::::::::::::: $data");
+                          log("::::::::::::::::::::::::::::::: $data");
                         },
-                        icon: Icon(Icons.add))
+                        icon: const Icon(Icons.add))
                   ],
                 ),
                 floatingActionButton: FloatingActionButton(
                   onPressed: () {
-                    print("Test");
+                    log("Test");
                     var data =
                         getDate(startDate: "startDate", endDate: "endDate");
-                    print("::::::::::::::::::::::::::::::: $data");
+                    log("::::::::::::::::::::::::::::::: $data");
                   },
-                  child: Icon(Icons.add),
+                  child: const Icon(Icons.add),
                 ),
                 resizeToAvoidBottomInset: true,
                 backgroundColor: AppColors.colorWhite,

@@ -688,7 +688,7 @@ class Items {
         description = json['description'] as String?,
         quantity = json['quantity'] as String?,
         price = json['price'] as String?,
-        tax = json['tax'] as dynamic?,
+        tax = json['tax'] as dynamic,
         amount = json['amount'] as String?;
 
   Map<String, dynamic> toJson() => {

@@ -2,13 +2,7 @@ import 'dart:collection';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:otobucks/global/container_properties.dart';
-import 'package:otobucks/View/Notifications/Views/notification_details_screen.dart';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:otobucks/View/Notifications/Views/notification_details_screen.dart';
 import 'package:otobucks/preferences/preferences.dart';
 
 import 'package:otobucks/services/repository/notification_repo.dart';
@@ -103,7 +97,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.only(top: 10, right: AppDimens.dimens_10, left: 10, bottom: 7),
-                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
                   // margin: const EdgeInsets.only(bottom: AppDimens.dimens_14),
 
                   child: InkWell(
@@ -278,7 +272,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
         payload: payload,
       );
     } on Exception catch (e) {
-      print(e);
+      log(e.toString());
     }
   }
 }

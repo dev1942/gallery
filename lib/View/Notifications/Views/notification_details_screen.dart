@@ -109,7 +109,7 @@ class NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                     right: AppDimens.dimens_10,
                     left: 10,
                     bottom: 7),
-                margin: EdgeInsets.symmetric(horizontal: 5),
+                margin: const EdgeInsets.symmetric(horizontal: 5),
 
                 alignment: Alignment.center,
                 child: Text(
@@ -132,7 +132,7 @@ class NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                     right: AppDimens.dimens_10,
                     left: 10,
                     bottom: 7),
-                margin: EdgeInsets.symmetric(horizontal: 5),
+                margin: const EdgeInsets.symmetric(horizontal: 5),
                 alignment: Alignment.center,
                 child: Row(
                   children: [

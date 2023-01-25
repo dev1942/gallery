@@ -1,23 +1,15 @@
 import 'dart:collection';
-import 'dart:convert';
-import 'dart:developer';
-import 'package:http/http.dart'as http;
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/services/repository/estimates_repo.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../global/constants.dart';
-import '../../../global/url_collection.dart';
-import '../Models/AllBookingsModel.dart';
 import '../Models/view_booking_model.dart';
+
 class EstimationListController extends GetxController {
   ShowData mShowData = ShowData.showLoading;
   bool connectionStatus = false;
   bool isShowLoader = false;
-
 
   int indexM = 0;
   List<Estimation> alEstimates = [];
@@ -68,23 +60,16 @@ class EstimationListController extends GetxController {
     var categories = await EstimatesRepo().getEstimates(requestParams, status);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
 
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-
-
       alEstimates = mResult.responseData as List<Estimation>;
-   for(int i=0;i<alEstimates.length;i++){
-     Logger().w(alEstimates[i].offerStatus);
-     Logger().w(alEstimates[i].isOfferCreated);
-
-   }
+      for (int i = 0; i < alEstimates.length; i++) {
+        Logger().w(alEstimates[i].offerStatus);
+        Logger().w(alEstimates[i].isOfferCreated);
+      }
       if (alEstimates.isNotEmpty) {
         mShowData = ShowData.showData;
       } else {
@@ -95,21 +80,17 @@ class EstimationListController extends GetxController {
   }
 
   //----------------------------Create Offer-post Api------------
- createAnOffer({String? estimateid,var offerAmount,String? offerNote}) async {
+  createAnOffer({String? estimateid, var offerAmount, String? offerNote}) async {
     mShowData = ShowData.showLoading;
     update(); // isShowLoader = true;
 
     HashMap<String, Object> requestParams = HashMap();
     requestParams['bookingID'] = estimateid!;
     requestParams['offerAmount'] = offerAmount;
-    requestParams['offerNote'] = offerNote??"";
-    var categories = await EstimatesRepo().CreateAnOfferEstimate(requestParams);
+    requestParams['offerNote'] = offerNote ?? "";
+    var categories = await EstimatesRepo().createAnOfferEstimate(requestParams);
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
 
       update();
@@ -117,7 +98,7 @@ class EstimationListController extends GetxController {
       Global.showToastAlert(
           context: Get.overlayContext!,
           strTitle: "",
-          strMsg:"Offer Created Successfully",// mResult.responseMessage,
+          strMsg: "Offer Created Successfully", // mResult.responseMessage,
           toastType: TOAST_TYPE.toastSuccess);
       //getEstimation("submitted");
       update();

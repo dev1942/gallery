@@ -446,7 +446,7 @@ clearController(){
   }
 
 //-----------------------Update car----------------
-  UpdateCar(
+  updateCar(
       String brand, String color, String year, String km, String city,String code,String number,String id) async {
     mShowData = ShowData.showLoading;
 

@@ -14,7 +14,7 @@ import 'package:otobucks/View/MyBookings/controller/estimation_screen_controller
 import '../../MyBookings/view/tabs_views/promotions_booking.dart';
 
 class EstimationFragment extends StatefulWidget {
-  EstimationFragment({
+  const EstimationFragment({
     Key? key,
   }) : super(key: key);
 

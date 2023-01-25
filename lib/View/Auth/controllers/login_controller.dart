@@ -50,9 +50,9 @@ class LoginController extends GetxController {
   void getInitializeMessage() {
     FirebaseMessaging.instance.getInitialMessage().then(
       (message) {
-        print("FirebaseMessaging.instance.getInitialMessage");
+        log("FirebaseMessaging.instance.getInitialMessage");
         if (message != null) {
-          print("New Notification");
+          log("New Notification");
           // if (message.data['_id'] != null) {
           //   Navigator.of(context).push(
           //     MaterialPageRoute(

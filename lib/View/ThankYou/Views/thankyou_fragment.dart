@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,7 +5,6 @@ import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_images.dart';
 import 'package:otobucks/global/app_style.dart';
-import 'package:otobucks/View/Home/Views/home_page.dart';
 import 'package:otobucks/widgets/custom_button.dart';
 
 import '../../../Utils/Navigation.dart';

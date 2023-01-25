@@ -1,7 +1,11 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:otobucks/global/app_colors.dart';
 
 class BlinkIcon extends StatefulWidget{
+  const BlinkIcon({Key? key}) : super(key: key);
+
   @override
   _BlinkIconState createState() => _BlinkIconState();
 }
@@ -10,7 +14,7 @@ class _BlinkIconState extends State<BlinkIcon> with SingleTickerProviderStateMix
   Animation<Color>? _colorAnimation;
   @override
   void initState() {
-    _controller = AnimationController(vsync: this, duration: Duration(seconds: 1 ));
+    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 1 ));
     _colorAnimation = ColorTween(begin: Colors.green, end: AppColors.colorYellowShade)
         .animate(CurvedAnimation(parent: _controller!, curve: Curves.linear)) as Animation<Color>?;
     _controller!.addStatusListener((status) {
@@ -27,7 +31,6 @@ class _BlinkIconState extends State<BlinkIcon> with SingleTickerProviderStateMix
   @override
   void dispose() {
     _controller!.dispose();
-    // TODO: implement dispose
     super.dispose();
   }
   @override

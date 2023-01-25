@@ -15,7 +15,7 @@ class GetCarModelResult {
 }
 */
 
-  String? Id;
+  String? id;
   String? brand;
   String? color;
   String? modelYear;
@@ -25,7 +25,7 @@ class GetCarModelResult {
   String? carNumber;
 
   GetCarModelResult({
-    this.Id,
+    this.id,
     this.brand,
     this.color,
     this.modelYear,
@@ -35,7 +35,7 @@ class GetCarModelResult {
     this.carNumber,
   });
   GetCarModelResult.fromJson(Map<String, dynamic> json) {
-    Id = json['_id']?.toString();
+    id = json['_id']?.toString();
     brand = json['brand']?.toString();
     color = json['color']?.toString();
     modelYear = json['modelYear']?.toString();
@@ -46,7 +46,7 @@ class GetCarModelResult {
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['_id'] = Id;
+    data['_id'] = id;
     data['brand'] = brand;
     data['color'] = color;
     data['modelYear'] = modelYear;
@@ -106,9 +106,9 @@ class GetCarModel {
     if (result != null) {
       final v = result;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v!.toJson());
-      });
+      }
       data['result'] = arr0;
     }
     return data;

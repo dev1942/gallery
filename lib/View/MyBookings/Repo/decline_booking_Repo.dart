@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:collection';
 import 'dart:developer';
 import 'package:dartz/dartz.dart';

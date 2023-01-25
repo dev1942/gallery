@@ -15,6 +15,7 @@ import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/services/repository/estimates_repo.dart';
+
 // import '../Models/AllBookingsModel.dart';
 class RescheduleBookingController extends GetxController {
   bool connectionStatus = false;
@@ -28,7 +29,7 @@ class RescheduleBookingController extends GetxController {
   String pickedImage = "";
   String pickedVideo = "";
   String voiceNoteFile = "";
-  String SelectedTime = "";
+  String selectedTime = "";
   String bookingid = "";
   late LatLng? mLatLng;
 
@@ -42,20 +43,19 @@ class RescheduleBookingController extends GetxController {
     if (estimatesModel != null) {
       estimatesModel = model;
       if (Global.checkNull(estimatesModel!.bookingDetails!.customerNote)) {
-        controllerNote.text =
-            estimatesModel!.bookingDetails!.customerNote.toString();
+        controllerNote.text = estimatesModel!.bookingDetails!.customerNote.toString();
       }
       // selectedDate= estimatesModel!.bookingDetails!.date.toString();// mEstimatesModel.getDateInFormate();
       bookingid = estimatesModel!.id.toString();
       pickedImage = estimatesModel!.bookingDetails!.image!.first;
-      print("estimatesModel!.bookingDetails!.video!.first");
+      log("estimatesModel!.bookingDetails!.video!.first");
       // if (estimatesModel!.bookingDetails!.video!.isNotEmpty) {
-      //   print(model.bookingDetails!.video!.first);
+      //   log(model.bookingDetails!.video!.first);
       //   pickedVideo = model.bookingDetails!.video!.first;
       // }
 
-      print("pickedVideo------33---------");
-      print(pickedVideo);
+      log("pickedVideo------33---------");
+      log(pickedVideo);
       //----------------------------------------
       mTimeModel = getTimeModel(estimatesModel!.bookingDetails!.time);
       update();
@@ -68,36 +68,23 @@ class RescheduleBookingController extends GetxController {
     String time12HR = DateFormat('hh:00 aa').format(parseDate);
     String time24HR = DateFormat('HH:00').format(parseDate);
 
-    TimeModel mTimeModel = TimeModel(
-        isSelected: true,
-        isEnable: true,
-        t24hr: parseDate.hour,
-        time_24hr: time24HR,
-        time_12hr: time12HR);
+    TimeModel mTimeModel = TimeModel(isSelected: true, isEnable: true, t24hr: parseDate.hour, time_24hr: time24HR, time_12hr: time12HR);
     return mTimeModel;
   }
 
   getLocationAdress() async {
     Location location = Location();
     PermissionStatus _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.granted ||
-        _permissionGranted == PermissionStatus.grantedLimited) {
+    if (_permissionGranted == PermissionStatus.granted || _permissionGranted == PermissionStatus.grantedLimited) {
       var currentLocation = await location.getLocation();
       log(currentLocation.latitude.toString());
-      LatLng _mLatLng =
-          LatLng(currentLocation.latitude!, currentLocation.longitude!);
-      List<i.Placemark> placemarks = await i.placemarkFromCoordinates(
-          _mLatLng.latitude, _mLatLng.longitude);
-      addressNote.text =
-          '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
+      LatLng _mLatLng = LatLng(currentLocation.latitude!, currentLocation.longitude!);
+      List<i.Placemark> placemarks = await i.placemarkFromCoordinates(_mLatLng.latitude, _mLatLng.longitude);
+      addressNote.text = '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
 
       mLatLng = _mLatLng;
     } else {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: 'Enable Location From setting!',
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Enable Location From setting!', toastType: TOAST_TYPE.toastError);
       mLatLng = Global.mLatLng;
     }
     update();
@@ -105,8 +92,7 @@ class RescheduleBookingController extends GetxController {
 
   Future getImage(ImageSource imageSource) async {
     // ignore: invalid_use_of_visible_for_testing_member
-    var image = await ImagePicker.platform
-        .pickImage(source: imageSource, imageQuality: 70);
+    var image = await ImagePicker.platform.pickImage(source: imageSource, imageQuality: 70);
 
     pickedImage = image!.path;
     update();
@@ -114,19 +100,14 @@ class RescheduleBookingController extends GetxController {
 
   Future pickVideo(ImageSource imageSource) async {
     // ignore: invalid_use_of_visible_for_testing_member
-    var image = await ImagePicker.platform.pickVideo(
-        source: imageSource, maxDuration: const Duration(seconds: 30));
+    var image = await ImagePicker.platform.pickVideo(source: imageSource, maxDuration: const Duration(seconds: 30));
 
     if (image != null) {
       isVideoCompressed = true;
       update();
       String _desFile = await Global.destinationFile("mp4");
       final dynamic response = await lightCompressor.compressVideo(
-          path: image.path,
-          destinationPath: _desFile,
-          videoQuality: VideoQuality.very_low,
-          isMinBitrateCheckEnabled: false,
-          iosSaveInGallery: false);
+          path: image.path, destinationPath: _desFile, videoQuality: VideoQuality.very_low, isMinBitrateCheckEnabled: false, iosSaveInGallery: false);
 
       if (response is OnSuccess) {
         pickedVideo = response.destinationPath;
@@ -142,7 +123,7 @@ class RescheduleBookingController extends GetxController {
   }
 
   onSelectDate(String _selectedDate) {
-    print("date selected=========");
+    log("date selected=========");
     selectedDate = _selectedDate;
     update();
   }
@@ -169,26 +150,14 @@ class RescheduleBookingController extends GetxController {
 
   isValid() {
     if (!Global.checkNull(addressNote.text)) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: 'Please Enter Address',
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Please Enter Address', toastType: TOAST_TYPE.toastError);
       return false;
     }
     if (!Global.checkNull(selectedDate)) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_SELECT_DATE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_SELECT_DATE, toastType: TOAST_TYPE.toastError);
       return false;
     } else if (mTimeModel == null) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_SELECT_TIME,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_SELECT_TIME, toastType: TOAST_TYPE.toastError);
       return false;
     }
 
@@ -271,15 +240,13 @@ class RescheduleBookingController extends GetxController {
   //               title: mServiceModel.title)));
   // }
 //----------------------------------Reschedule Booking----------------------------
-  reScheduleBooking(BuildContext context, String id,
-      {String? imagePath}) async {
-
-    print(id);
-    print(selectedDate);
-    print(SelectedTime);
-    print("picked image");
-    print(pickedVideo);
-    print( controllerNote.text);
+  reScheduleBooking(BuildContext context, String id, {String? imagePath}) async {
+    log(id);
+    log(selectedDate);
+    log(selectedTime);
+    log("picked image");
+    log(pickedVideo);
+    log(controllerNote.text);
     // if (Global.checkNull(pickedVideo)) {
     //   double fileSize = await Global.getFileSize(pickedVideo);
     //   if (fileSize > 10) {
@@ -301,11 +268,11 @@ class RescheduleBookingController extends GetxController {
     requestParams["bookingID"] = id;
     requestParams[PARAMS.PARAM_DATE] = selectedDate;
     // final gasGiants = {PARAMS.PARAM_SOURCE:  mServiceModel.id, PARAMS.PARAM_ADDRESS: addressNote.text};
-    requestParams[PARAMS.PARAM_TIME] = SelectedTime ?? "";
+    requestParams[PARAMS.PARAM_TIME] = selectedTime;
     if (imagePath != null) {
       requestParamsImage[PARAMS.PARAM_IMAGE] = imagePath;
     }
-    if (strNote != null) {
+    if (strNote.isNotEmpty) {
       requestParams[PARAMS.PARAM_CUTOMERNOTE] = strNote;
     }
 
@@ -339,27 +306,18 @@ class RescheduleBookingController extends GetxController {
 
     //Logger().i(requestParamsImage);
 
-    var categories = await EstimatesRepo()
-        .rescheduleEstimates(requestParams, requestParamsImage, ReqType.patch);
+    var categories = await EstimatesRepo().rescheduleEstimates(requestParams, requestParamsImage, ReqType.patch);
 
     categories.fold((failure) {
       //.............Failure case............................
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
 
       isShowLoader = false;
       update();
     }, (mResult) {
       isShowLoader = false;
       update();
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: "Rescheduled Successfully",
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: "Rescheduled Successfully", toastType: TOAST_TYPE.toastSuccess);
       //................ goto Thank you......................
       Get.offAll(() => const ThankYouFragment());
     });

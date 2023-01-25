@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Promotion_discount/View/promotion_banner.dart';
 import 'package:otobucks/View/Promotion_discount/model/promotion_model.dart';
@@ -27,7 +26,7 @@ class BannerPageViewState extends State<BannerPageView> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
       if (_currentPage < 2) {
         _currentPage++;
       } else {
@@ -36,7 +35,7 @@ class BannerPageViewState extends State<BannerPageView> {
 
       _pageController.animateToPage(
         _currentPage,
-        duration: Duration(milliseconds: 800),
+        duration: const Duration(milliseconds: 800),
         curve: Curves.linear,
       );
     });

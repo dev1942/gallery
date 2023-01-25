@@ -39,10 +39,10 @@ class EstimationDetailsPDFScreenState
   bool isShowLoader = false;
   late Result allBookingsModel;
   int indexM = 0;
-  EstimationListController _estimationListController =
+  final EstimationListController _estimationListController =
       Get.put(EstimationListController());
-  TextEditingController _textOffercontroller = TextEditingController();
-  TextEditingController _textOfferNotecontroller = TextEditingController();
+  final TextEditingController _textOffercontroller = TextEditingController();
+  final TextEditingController _textOfferNotecontroller = TextEditingController();
   @override
   void initState() {
     getEstimationDetails();
@@ -55,7 +55,7 @@ class EstimationDetailsPDFScreenState
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var mBorderColor = AppColors.colorBorder;
-    Widget mShowWidget = Container();
+    // Widget mShowWidget = Container();
     List<TableRow> alTableRow = [];
     alTableRow.add(TableRow(
         decoration: BoxDecoration(color: AppColors.colorBlack3),
@@ -214,142 +214,137 @@ class EstimationDetailsPDFScreenState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // profile pic and name
-            Container(
-              // margin: const EdgeInsets.only(
-              //     left: 0, top: AppDimens.dimens_10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                Constants.TXT_CUSTOMER_ESTIMATION.tr.toUpperCase(),
-                                style: AppStyle.textViewStyleNormalBodyText2(
-                                    context: context,
-                                    color: AppColors.colorBlack,
-                                    fontWeightDelta: 1,
-                                    fontSizeDelta: 2)),
-                            Text(Constants.TXT_TAX_INVOICE.tr,
-                                style: AppStyle.textViewStyleSmall(
-                                    context: context,
-                                    color: AppColors.colorBlack,
-                                    fontWeightDelta: 0,
-                                    fontSizeDelta: -1)),
-                          ],
-                        ),
-                        Container(
-                            child: Row(
-                          children: [
-                            const Icon(Icons.download_rounded,
-                                size: AppDimens.dimens_17),
-                            const SizedBox(
-                              width: AppDimens.dimens_3,
-                            ),
-                            InkWell(
-                              child: Text(Constants.TXT_DOWNLOAD_INVOICE.tr,
-                                  style: AppStyle.textViewStyleSmall(
-                                      context: context,
-                                      color: AppColors.colorBlack,
-                                      fontWeightDelta: 0,
-                                      fontSizeDelta: 0)),
-                              onTap: () {},
-                            )
-                          ],
-                        )),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                      top: AppDimens.dimens_5,
-                      bottom: AppDimens.dimens_5,
-                    ),
-                    height: AppDimens.dimens_30,
-                    color: AppColors.colorBlue2,
-                  ),
-
-                  SizedBox(height: 10.0),
-                  //-----------invoice id ,invoice date ,
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(Constants.TXT_CUSTOMER_NAME.tr,
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: AppColors.colorBlack,
-                                fontWeightDelta: 1,
-                                fontSizeDelta: 1)),
-                        Text(
-                            "${allBookingsModel.customer!.firstName}  ${allBookingsModel.customer!.lastName}",
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: AppColors.colorBlack2,
-                                fontWeightDelta: -1,
-                                fontSizeDelta: -1)),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 5.0),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Row(
-                      children: [
-                        Text("Invoice Number :".tr,
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: AppColors.colorBlack,
-                                fontWeightDelta: 0,
-                                fontSizeDelta: -2)),
-                        Text(
-                            allBookingsModel.estimation!.invoiceNumber
-                                .toString(),
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: AppColors.colorBlack2,
-                                fontWeightDelta: 0,
-                                fontSizeDelta: -2)),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 5.0),
-                  Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(Constants.TXT_INVOICE_DATE.tr,
+                          Text(
+                              Constants.TXT_CUSTOMER_ESTIMATION.tr.toUpperCase(),
+                              style: AppStyle.textViewStyleNormalBodyText2(
+                                  context: context,
+                                  color: AppColors.colorBlack,
+                                  fontWeightDelta: 1,
+                                  fontSizeDelta: 2)),
+                          Text(Constants.TXT_TAX_INVOICE.tr,
                               style: AppStyle.textViewStyleSmall(
                                   context: context,
                                   color: AppColors.colorBlack,
                                   fontWeightDelta: 0,
-                                  fontSizeDelta: -2)),
-                          Text(
-                              allBookingsModel.estimation!.createdAt!
-                                  .substring(0, 10),
-                              style: AppStyle.textViewStyleSmall(
-                                  context: context,
-                                  color: AppColors.colorBlack2,
-                                  fontWeightDelta: 0,
-                                  fontSizeDelta: -2)),
+                                  fontSizeDelta: -1)),
                         ],
+                      ),
+                      Row(
+                        children: [
+                      const Icon(Icons.download_rounded,
+                          size: AppDimens.dimens_17),
+                      const SizedBox(
+                        width: AppDimens.dimens_3,
+                      ),
+                      InkWell(
+                        child: Text(Constants.TXT_DOWNLOAD_INVOICE.tr,
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: AppColors.colorBlack,
+                                fontWeightDelta: 0,
+                                fontSizeDelta: 0)),
+                        onTap: () {},
                       )
+                        ],
+                      ),
                     ],
                   ),
-                  //------------------end------------
-                ],
-              ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: AppDimens.dimens_5,
+                    bottom: AppDimens.dimens_5,
+                  ),
+                  height: AppDimens.dimens_30,
+                  color: AppColors.colorBlue2,
+                ),
+
+                const SizedBox(height: 10.0),
+                //-----------invoice id ,invoice date ,
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(Constants.TXT_CUSTOMER_NAME.tr,
+                          style: AppStyle.textViewStyleSmall(
+                              context: context,
+                              color: AppColors.colorBlack,
+                              fontWeightDelta: 1,
+                              fontSizeDelta: 1)),
+                      Text(
+                          "${allBookingsModel.customer!.firstName}  ${allBookingsModel.customer!.lastName}",
+                          style: AppStyle.textViewStyleSmall(
+                              context: context,
+                              color: AppColors.colorBlack2,
+                              fontWeightDelta: -1,
+                              fontSizeDelta: -1)),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 5.0),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Row(
+                    children: [
+                      Text("Invoice Number :".tr,
+                          style: AppStyle.textViewStyleSmall(
+                              context: context,
+                              color: AppColors.colorBlack,
+                              fontWeightDelta: 0,
+                              fontSizeDelta: -2)),
+                      Text(
+                          allBookingsModel.estimation!.invoiceNumber
+                              .toString(),
+                          style: AppStyle.textViewStyleSmall(
+                              context: context,
+                              color: AppColors.colorBlack2,
+                              fontWeightDelta: 0,
+                              fontSizeDelta: -2)),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 5.0),
+                Row(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(Constants.TXT_INVOICE_DATE.tr,
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: AppColors.colorBlack,
+                                fontWeightDelta: 0,
+                                fontSizeDelta: -2)),
+                        Text(
+                            allBookingsModel.estimation!.createdAt!
+                                .substring(0, 10),
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: AppColors.colorBlack2,
+                                fontWeightDelta: 0,
+                                fontSizeDelta: -2)),
+                      ],
+                    )
+                  ],
+                ),
+                //------------------end------------
+              ],
             ),
 
             Container(
@@ -455,7 +450,7 @@ class EstimationDetailsPDFScreenState
                       TableCell(
                           verticalAlignment: TableCellVerticalAlignment.middle,
                           child: Container(
-                            margin: EdgeInsets.only(left: AppDimens.dimens_3),
+                            margin: const EdgeInsets.only(left: AppDimens.dimens_3),
                             alignment: Alignment.centerLeft,
                             child: Text(
                                 allBookingsModel.estimation!.items![index].title
@@ -706,7 +701,7 @@ class EstimationDetailsPDFScreenState
                   right: AppDimens.dimens_20),
               child: Row(
                 children: [
-                  allBookingsModel.estimation!.estimationImage!.length>0? Container(
+                  allBookingsModel.estimation!.estimationImage!.isNotEmpty? Container(
 
                     height:50,
                     width: 100,
@@ -796,7 +791,7 @@ class EstimationDetailsPDFScreenState
               ),
             ),
 
-            widget.isCompleted ?SizedBox(): Container(
+            widget.isCompleted ?const SizedBox(): Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.only(
                   top: AppDimens.dimens_20,
@@ -940,8 +935,8 @@ class EstimationDetailsPDFScreenState
                             //width: size.width / 1.8,
                           ),
                         )
-                      : SizedBox(),
-                  SizedBox(
+                      : const SizedBox(),
+                  const SizedBox(
                     width: 5,
                   ),
                   //const Spacer(),
@@ -1023,7 +1018,7 @@ class EstimationDetailsPDFScreenState
       // isShowLoader = true;
     });
 
-    HashMap<String, Object> requestParams = HashMap();
+    // HashMap<String, Object> requestParams = HashMap();
 
     // var categories = await EstimatesRepo()
     //     .getEstimatesDetail(requestParams, widget.allBookingsModel.result![0].id.toString());

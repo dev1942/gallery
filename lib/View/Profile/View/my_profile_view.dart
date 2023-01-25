@@ -17,20 +17,21 @@ import 'package:otobucks/widgets/custom_textfield_with_icon.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/image_view.dart';
 import 'package:otobucks/widgets/small_button.dart';
-import '../../Wallet/Widgets/withdraw_money_dialog.dart';
 import '../../auth/View/otp_screen.dart';
 import '../../auth/controllers/otp_controller.dart';
 import '../Model/car_list_model.dart';
+
 class MyProfileFragment extends StatefulWidget {
   const MyProfileFragment({Key? key}) : super(key: key);
 
   @override
   MyProfileFragmentState createState() => MyProfileFragmentState();
 }
+
 class MyProfileFragmentState extends State<MyProfileFragment> {
   var controller = Get.put(ProfileScreenController());
-  var Otpcontroller = Get.put(OtpController());
-  bool IsAddCarTap = false;
+  var otpcontroller = Get.put(OtpController());
+  bool isAddCarTap = false;
   bool isEditidTab = false;
   String? editId;
   @override
@@ -39,10 +40,11 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
     controller.getProfile();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    double marginBoth = AppDimens.dimens_20;
+    // double marginBoth = AppDimens.dimens_20;
     double height = AppDimens.dimens_36;
     double imgHeight = AppDimens.dimens_90;
     double iconSize = AppDimens.dimens_18;
@@ -74,35 +76,27 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                               height: AppDimens.dimens_80,
                             ),
                             Container(
-                              margin: const EdgeInsets.only(
-                                  bottom: AppDimens.dimens_15),
+                              margin: const EdgeInsets.only(bottom: AppDimens.dimens_15),
                               alignment: Alignment.center,
                               child: Stack(
                                 children: [
                                   Global.checkNull(value.imgProfilePic)
                                       ? ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                              AppDimens.dimens_80),
-                                          child: Global.isURL(
-                                                  value.imgProfilePic)
+                                          borderRadius: BorderRadius.circular(AppDimens.dimens_80),
+                                          child: Global.isURL(value.imgProfilePic)
                                               ? NetworkImageCustom(
                                                   image: value.imgProfilePic,
                                                   fit: BoxFit.fill,
                                                   height: AppDimens.dimens_130,
                                                   width: AppDimens.dimens_130)
-                                              : ImageView(
-                                                  strImage: value.imgProfilePic,
-                                                  height: AppDimens.dimens_130,
-                                                  width: AppDimens.dimens_130),
+                                              : ImageView(strImage: value.imgProfilePic, height: AppDimens.dimens_130, width: AppDimens.dimens_130),
                                         )
                                       : ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                              AppDimens.dimens_80),
+                                          borderRadius: BorderRadius.circular(AppDimens.dimens_80),
                                           child: Container(
                                             height: AppDimens.dimens_130,
                                             width: AppDimens.dimens_130,
-                                            padding: const EdgeInsets.all(
-                                                AppDimens.dimens_16),
+                                            padding: const EdgeInsets.all(AppDimens.dimens_16),
                                             child: Image.asset(
                                               AppImages.ic_user_sufix,
                                               color: Colors.white,
@@ -116,11 +110,8 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                     child: InkWell(
                                       child: CircleAvatar(
                                         radius: 17,
-                                        child: Image.asset(
-                                            AppImages.ic_edit_profile_icon,
-                                            width: AppDimens.dimens_15,
-                                            color: AppColors.colorWhite,
-                                            height: AppDimens.dimens_20),
+                                        child: Image.asset(AppImages.ic_edit_profile_icon,
+                                            width: AppDimens.dimens_15, color: AppColors.colorWhite, height: AppDimens.dimens_20),
                                       ),
                                       onTap: () {
                                         value.selectProfilePic(context);
@@ -142,21 +133,13 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                value.strFname.toUpperCase() +
-                                    " " +
-                                    value.strLname.toUpperCase(),
-                                style: AppStyle.textViewStyleLarge(
-                                    context: context,
-                                    color: AppColors.colorBlack,
-                                    fontSizeDelta: 3,
-                                    fontWeightDelta: 0),
+                                value.strFname.toUpperCase() + " " + value.strLname.toUpperCase(),
+                                style:
+                                    AppStyle.textViewStyleLarge(context: context, color: AppColors.colorBlack, fontSizeDelta: 3, fontWeightDelta: 0),
                               ),
                               Text(
                                 value.strCountry,
-                                style: AppStyle.textViewStyleSmall(
-                                    context: context,
-                                    color: AppColors.colorGray4,
-                                    fontSizeDelta: -1),
+                                style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorGray4, fontSizeDelta: -1),
                               ),
                               addVerticleSpace(AppDimens.dimens_10),
 //..............................Text Field user name....................................
@@ -177,102 +160,82 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                   )),
                               addVerticleSpace(16),
                               //............................Text filedmobile number.............................
-                             Stack(
-                               children: [
-                                 CustomTextFieldMobile(
-                                   strCountyCode: value.strCountyCode,
-                                   textInputAction: TextInputAction.done,
-                                   readonly: true,
-                                   // enabled: false,
-                                   //  enabled: true,
-                                   height: 42,
-                                   controller: value.controllerPhone,
-                                   focusNode: value.mFocusNodePhone,
-
-                                 ),
-                                 Positioned(
-                                   top: 6,
-                                   right: 4,
-                                   child:
-                                 InkWell(
-                                     onTap: () {
-                  showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) =>
-                  AlertDialog(
-                  title: const Text('Edit Number'),
-                  content: TextField(
-                  controller:
-                  value.controllerPhone,
-                  ),
-                  actions: <Widget>[
-                  TextButton(
-                  onPressed: () =>
-                  Navigator.pop(
-                  context, 'Cancel'),
-                  child: const Text('Cancel'),
-                  ),
-                  TextButton(
-                  onPressed: () {
-                  Navigator.pop(
-                  context, 'OK');
-                  },
-                  child: const Text('Submit'),
-                  ),
-                  ],
-                  ));
-                  },
-                    child: value.isPhoneVerified &&
-                        value.oldPhoneNumebr ==
-                            value.controllerPhone.text
-                        ? Icon(Icons.mobile_friendly,
-                        color: value.isPhoneVerified &&
-                            value.oldPhoneNumebr ==
-                                value.controllerPhone.text
-                            ? Colors.green
-                            : AppColors.lightGrey)
-                        : SizedBox(
-                      height: 30,
-                      width: 50,
-                      child: PrimaryButton(
-                        color: null,
-                        label: const Text('verify'),
-                        onPress: () {
-                          gotoMobileOTPScreen(context,
-                              value.controllerPhone.text);
-                        },
-                      ),
-                    ),
-                  ),
-                                 )
-                               ],
-                             ),
+                              Stack(
+                                children: [
+                                  CustomTextFieldMobile(
+                                    strCountyCode: value.strCountyCode,
+                                    textInputAction: TextInputAction.done,
+                                    readonly: true,
+                                    // enabled: false,
+                                    //  enabled: true,
+                                    height: 42,
+                                    controller: value.controllerPhone,
+                                    focusNode: value.mFocusNodePhone,
+                                  ),
+                                  Positioned(
+                                    top: 6,
+                                    right: 4,
+                                    child: InkWell(
+                                      onTap: () {
+                                        showDialog<String>(
+                                            context: context,
+                                            builder: (BuildContext context) => AlertDialog(
+                                                  title: const Text('Edit Number'),
+                                                  content: TextField(
+                                                    controller: value.controllerPhone,
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      onPressed: () => Navigator.pop(context, 'Cancel'),
+                                                      child: const Text('Cancel'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context, 'OK');
+                                                      },
+                                                      child: const Text('Submit'),
+                                                    ),
+                                                  ],
+                                                ));
+                                      },
+                                      child: value.isPhoneVerified && value.oldPhoneNumebr == value.controllerPhone.text
+                                          ? Icon(Icons.mobile_friendly,
+                                              color: value.isPhoneVerified && value.oldPhoneNumebr == value.controllerPhone.text
+                                                  ? Colors.green
+                                                  : AppColors.lightGrey)
+                                          : SizedBox(
+                                              height: 30,
+                                              width: 50,
+                                              child: PrimaryButton(
+                                                color: null,
+                                                label: const Text('verify'),
+                                                onPress: () {
+                                                  gotoMobileOTPScreen(context, value.controllerPhone.text);
+                                                },
+                                              ),
+                                            ),
+                                    ),
+                                  )
+                                ],
+                              ),
                               addVerticleSpace(AppDimens.dimens_16),
                               //.....................Email Section..................
                               Container(
                                 width: Get.width,
                                 height: AppDimens.dimens_42,
-                                decoration: BoxDecoration(
-                                    border: Border.all(),
-                                    borderRadius: BorderRadius.circular(
-                                        AppDimens.dimens_10)),
+                                decoration: BoxDecoration(border: Border.all(), borderRadius: BorderRadius.circular(AppDimens.dimens_10)),
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal:AppDimens.dimens_12),
+                                  padding: const EdgeInsets.symmetric(horizontal: AppDimens.dimens_12),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Text(value.controllerEmail.text),
-                                        Icon(
-                                          Icons.mark_email_read_outlined,
-                                          size: iconSize,
-                                          color:
-                                          value.isEmailVerified?Colors.green:AppColors.lightGrey
-                                          ,
-                                        ),
+                                      Icon(
+                                        Icons.mark_email_read_outlined,
+                                        size: iconSize,
+                                        color: value.isEmailVerified ? Colors.green : AppColors.lightGrey,
+                                      ),
                                       // child: Icon(Icons),
                                     ],
                                   ),
@@ -283,10 +246,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                               Text(
                                 Constants.STR_EMERGENCY_CONTACT_DETAIL,
                                 style: AppStyle.textViewStyleLarge(
-                                    context: context,
-                                    color: AppColors.colorPrimary,
-                                    fontSizeDelta: 1,
-                                    fontWeightDelta: 2),
+                                    context: context, color: AppColors.colorPrimary, fontSizeDelta: 1, fontWeightDelta: 2),
                               ),
                               addVerticleSpace(AppDimens.dimens_12),
                               CustomTextFieldWithIcon(
@@ -300,11 +260,10 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                 inputFormatters: const [],
                                 obscureText: false,
                                 onChanged: (String value) {},
-                                suffixIcon: InkWell(
-                              child:  Icon(
-                                Icons.location_on_outlined,
-
-                              ),
+                                suffixIcon: const InkWell(
+                                  child: Icon(
+                                    Icons.location_on_outlined,
+                                  ),
                                 ),
                               ),
                               addVerticleSpace(AppDimens.dimens_16),
@@ -316,10 +275,10 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                 controller: value.controllerEmgPhone,
                                 focusNode: value.mFocusNodeEmgPhone,
                                 suffixIcon: InkWell(
-                              child:  Icon(
-                                Icons.phone_android_rounded,
-                                size: iconSize,
-                              ),
+                                  child: Icon(
+                                    Icons.phone_android_rounded,
+                                    size: iconSize,
+                                  ),
                                 ),
                               ),
                               /*--------------------------Add Car Button--------------------------------------*/
@@ -334,440 +293,307 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                   width: size.width,
                                   onPressed: () {
                                     setState(() {
-                                      IsAddCarTap = true;
+                                      isAddCarTap = true;
                                       //IsAddCarTap =! IsAddCarTap;
                                     });
                                   },
-                                  strTitle:
-                                      "Add Car" //Constants.STR_ENTER_YOUR_CAR_DETAILS
+                                  strTitle: "Add Car" //Constants.STR_ENTER_YOUR_CAR_DETAILS
                                   ),
 
                               /*---------------------------------Add Car Inputs File Start---------------------------------------------*/
-                              if (IsAddCarTap || isEditidTab) Column(
+                              if (isAddCarTap || isEditidTab)
+                                Column(
+                                  children: [
+                                    addVerticleSpace(AppDimens.dimens_16),
+
+                                    CustomTextFieldWithIcon(
+                                      height: 42,
+                                      textInputAction: TextInputAction.next,
+                                      enabled: true,
+                                      controller: value.controllerCarBrand,
+                                      keyboardType: TextInputType.text,
+                                      hintText: Constants.STR_CAR_BRAND,
+                                      inputFormatters: const [],
+                                      obscureText: false,
+                                      onChanged: (String value) {},
+                                      suffixIcon: Image.asset(AppImages.ic_car, width: iconSize, height: iconSize),
+                                    ),
+                                    addVerticleSpace(AppDimens.dimens_16),
+                                    CustomTextFieldWithIcon(
+                                      height: 42,
+                                      textInputAction: TextInputAction.next,
+                                      enabled: true,
+                                      controller: value.controllerCarModelYear,
+                                      keyboardType: TextInputType.text,
+                                      hintText: Constants.STR_CAR_MODEL_YEAR,
+                                      inputFormatters: const [],
+                                      obscureText: false,
+                                      onChanged: (String value) {},
+                                      suffixIcon: Image.asset(AppImages.ic_car, width: iconSize, height: iconSize),
+                                    ),
+                                    addVerticleSpace(AppDimens.dimens_16),
+                                    CustomTextFieldWithIcon(
+                                      height: 42,
+                                      textInputAction: TextInputAction.next,
+                                      enabled: true,
+                                      controller: value.controllerMileage,
+                                      keyboardType: TextInputType.text,
+                                      hintText: Constants.STR_MILEAGE,
+                                      inputFormatters: const [],
+                                      obscureText: false,
+                                      onChanged: (String value) {},
+                                      suffixIcon: Image.asset(AppImages.ic_petrol, width: iconSize, height: iconSize),
+                                    ),
+                                    addVerticleSpace(AppDimens.dimens_16),
+
+                                    CustomTextFieldWithIcon(
+                                      height: 42,
+                                      textInputAction: TextInputAction.next,
+                                      enabled: true,
+                                      controller: value.controllerColour,
+                                      keyboardType: TextInputType.text,
+                                      hintText: Constants.STR_CAR_COLOUR,
+                                      inputFormatters: const [],
+                                      obscureText: false,
+                                      onChanged: (String value) {},
+                                      suffixIcon: Image.asset(AppImages.ic_color, width: iconSize, height: iconSize),
+                                    ),
+                                    addVerticleSpace(AppDimens.dimens_10),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'Car Plate Number',
+                                        style: regularText600(15),
+                                      ),
+                                    ),
+                                    addVerticleSpace(AppDimens.dimens_12),
+                                    //..........Car plete info row..................//
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        addVerticleSpace(AppDimens.dimens_16),
-
-                                        CustomTextFieldWithIcon(
-                                          height: 42,
-                                          textInputAction:
-                                              TextInputAction.next,
-                                          enabled: true,
-                                          controller:
-                                              value.controllerCarBrand,
-                                          keyboardType:
-                                              TextInputType.text,
-                                          hintText:
-                                              Constants.STR_CAR_BRAND,
-                                          inputFormatters: const [],
-                                          obscureText: false,
-                                          onChanged: (String value) {},
-                                          suffixIcon: Image.asset(
-                                              AppImages.ic_car,
-                                              width: iconSize,
-                                              height: iconSize),
-                                        ),
-                                        addVerticleSpace(AppDimens.dimens_16),
-                                        CustomTextFieldWithIcon(
-                                          height: 42,
-                                          textInputAction:
-                                              TextInputAction.next,
-                                          enabled: true,
-                                          controller: value
-                                              .controllerCarModelYear,
-                                          keyboardType:
-                                              TextInputType.text,
-                                          hintText: Constants
-                                              .STR_CAR_MODEL_YEAR,
-                                          inputFormatters: const [],
-                                          obscureText: false,
-                                          onChanged: (String value) {},
-                                          suffixIcon: Image.asset(
-                                              AppImages.ic_car,
-                                              width: iconSize,
-                                              height: iconSize),
-                                        ),
-                                        addVerticleSpace(AppDimens.dimens_16),
-                                        CustomTextFieldWithIcon(
-                                          height: 42,
-                                          textInputAction:
-                                              TextInputAction.next,
-                                          enabled: true,
-                                          controller:
-                                              value.controllerMileage,
-                                          keyboardType:
-                                              TextInputType.text,
-                                          hintText: Constants.STR_MILEAGE,
-                                          inputFormatters: const [],
-                                          obscureText: false,
-                                          onChanged: (String value) {},
-                                          suffixIcon: Image.asset(
-                                              AppImages.ic_petrol,
-                                              width: iconSize,
-                                              height: iconSize),
-                                        ),
-                                        addVerticleSpace(AppDimens.dimens_16),
-
-                                        CustomTextFieldWithIcon(
-                                          height: 42,
-                                          textInputAction:
-                                              TextInputAction.next,
-                                          enabled: true,
-                                          controller:
-                                              value.controllerColour,
-                                          keyboardType:
-                                              TextInputType.text,
-                                          hintText:
-                                              Constants.STR_CAR_COLOUR,
-                                          inputFormatters: const [],
-                                          obscureText: false,
-                                          onChanged: (String value) {},
-                                          suffixIcon: Image.asset(
-                                              AppImages.ic_color,
-                                              width: iconSize,
-                                              height: iconSize),
-                                        ),
-                                        addVerticleSpace(AppDimens.dimens_10),
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            'Car Plate Number',
-                                            style: regularText600(15),
+                                        Expanded(
+                                          child: CustomTextFieldWithIcon(
+                                            height: 42,
+                                            textInputAction: TextInputAction.next,
+                                            enabled: true,
+                                            controller: value.controllerCode,
+                                            keyboardType: TextInputType.text,
+                                            hintText: 'Code',
+                                            inputFormatters: const [],
+                                            obscureText: false,
+                                            onChanged: (String value) {},
                                           ),
                                         ),
-                                        addVerticleSpace(AppDimens.dimens_12),
-                                        //..........Car plete info row..................//
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Expanded(
-                                              child:
-                                                  CustomTextFieldWithIcon(
-                                                height: 42,
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                enabled: true,
-                                                controller:
-                                                    value.controllerCode,
-                                                keyboardType:
-                                                    TextInputType.text,
-                                                hintText: 'Code',
-                                                inputFormatters: const [],
-                                                obscureText: false,
-                                                onChanged:
-                                                    (String value) {},
-                                              ),
-                                            ),
-                                            addHorizontalSpace(5),
-                                            Expanded(
-                                              child:
-                                                  CustomTextFieldWithIcon(
-                                                height: 42,
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                enabled: true,
-                                                controller:
-                                                    value.controllerCity,
-                                                keyboardType:
-                                                    TextInputType.text,
-                                                hintText: 'City',
-                                                inputFormatters: const [],
-                                                obscureText: false,
-                                                onChanged:
-                                                    (String value) {},
-                                              ),
-                                            ),
-                                            addHorizontalSpace(5),
-                                            Expanded(
-                                              child:
-                                                  CustomTextFieldWithIcon(
-                                                height: 42,
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                enabled: true,
-                                                controller: value
-                                                    .controllerNumber,
-                                                keyboardType:
-                                                    TextInputType.text,
-                                                hintText: 'Number',
-                                                inputFormatters: const [],
-                                                obscureText: false,
-                                                onChanged:
-                                                    (String value) {},
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        addVerticleSpace(16),
-                                        // edit butons................
-                                        Visibility(
-                                          visible: isEditidTab,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                            children: [
-                                              SizedBox(
-                                                width:130,
-                                                child: CustomButton(
-                                                    isGradient: true,
-                                                    isRoundBorder: true,
-                                                    height: height,
-                                                    fontSize: -2,
-                                                    fontColor:
-                                                    AppColors.colorWhite,
-                                                    width: size.width,
-                                                    onPressed: () {
-                                                      controller
-                                                          .clearController();
-                                                      setState(() {
-                                                        isEditidTab=false;
-                                                      });
-                                                    },
-                                                    strTitle: "Cancel"),
-                                              ),
-                                              const SizedBox(width: 10.0),
-                                              SizedBox(
-                                                width:130,
-                                                child: CustomButton(
-                                                    isGradient: true,
-                                                    isRoundBorder: true,
-                                                    height: height,
-                                                    fontSize: -2,
-                                                    fontColor:
-                                                    AppColors.colorWhite,
-                                                    width: size.width / 2.2,
-                                                    onPressed: () {
-                                                      if (value.controllerCarBrand.text.isNotEmpty &&
-                                                          value
-                                                              .controllerColour
-                                                              .text
-                                                              .isNotEmpty &&
-                                                          value
-                                                              .controllerCarModelYear
-                                                              .text
-                                                              .isNotEmpty &&
-                                                          value
-                                                              .controllerMileage
-                                                              .text
-                                                              .isNotEmpty &&
-                                                          value
-                                                              .controllerCity
-                                                              .text
-                                                              .isNotEmpty &&
-                                                          value
-                                                              .controllerCode
-                                                              .text
-                                                              .isNotEmpty &&
-                                                          value
-                                                              .controllerNumber
-                                                              .text
-                                                              .isNotEmpty) {
-                                                        controller.UpdateCar(
-
-                                                            value
-                                                                .controllerCarBrand
-                                                                .text,
-                                                            value
-                                                                .controllerColour
-                                                                .text,
-                                                            value
-                                                                .controllerCarModelYear
-                                                                .text,
-                                                            value
-                                                                .controllerMileage
-                                                                .text,
-                                                            value.controllerCity
-                                                                .text,
-                                                            value.controllerCode
-                                                                .text,
-                                                            value
-                                                                .controllerNumber
-                                                                .text,
-                                                          editId!,
-                                                        );
-                                                        setState(() {
-                                                          IsAddCarTap = false;
-                                                        });
-                                                      } else {
-                                                        Global.showToastAlert(
-                                                            context: Get
-                                                                .overlayContext!,
-                                                            strTitle: "",
-                                                            strMsg:
-                                                            "Please Fill All Fields",
-                                                            toastType: TOAST_TYPE
-                                                                .toastError);
-                                                      }
-                                                    },
-                                                    strTitle: "Update"),
-                                              ),
-                                            ],
+                                        addHorizontalSpace(5),
+                                        Expanded(
+                                          child: CustomTextFieldWithIcon(
+                                            height: 42,
+                                            textInputAction: TextInputAction.next,
+                                            enabled: true,
+                                            controller: value.controllerCity,
+                                            keyboardType: TextInputType.text,
+                                            hintText: 'City',
+                                            inputFormatters: const [],
+                                            obscureText: false,
+                                            onChanged: (String value) {},
                                           ),
                                         ),
-                                        addVerticleSpace(12),
-                                        Visibility(
-                                          visible: !isEditidTab,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SizedBox(
-                                                width:130,
-                                                child: CustomButton(
-                                                    isGradient: true,
-                                                    isRoundBorder: true,
-                                                    height: height,
-                                                    fontSize: -2,
-                                                    fontColor:
-                                                        AppColors.colorWhite,
-                                                    width: size.width,
-                                                    onPressed: () {
-                                                      controller
-                                                          .clearController();
-                                                      setState(() {
-                                                        IsAddCarTap = false;
-                                                      });
-                                                    },
-                                                    strTitle: "Cancel"),
-                                              ),
-                                              const SizedBox(width: 10.0),
-                                              SizedBox(
-                                                width:130,
-                                                child: CustomButton(
-                                                    isGradient: true,
-                                                    isRoundBorder: true,
-                                                    height: height,
-                                                    fontSize: -2,
-                                                    fontColor:
-                                                        AppColors.colorWhite,
-                                                    width: size.width / 2.2,
-                                                    onPressed: () {
-                                                      if (value.controllerCarBrand.text.isNotEmpty &&
-                                                          value
-                                                              .controllerColour
-                                                              .text
-                                                              .isNotEmpty &&
-                                                          value
-                                                              .controllerCarModelYear
-                                                              .text
-                                                              .isNotEmpty &&
-                                                          value
-                                                              .controllerMileage
-                                                              .text
-                                                              .isNotEmpty &&
-                                                          value
-                                                              .controllerCity
-                                                              .text
-                                                              .isNotEmpty &&
-                                                          value
-                                                              .controllerCode
-                                                              .text
-                                                              .isNotEmpty &&
-                                                          value
-                                                              .controllerNumber
-                                                              .text
-                                                              .isNotEmpty) {
-                                                        controller.addNewCar(
-                                                            value
-                                                                .controllerCarBrand
-                                                                .text,
-                                                            value
-                                                                .controllerColour
-                                                                .text,
-                                                            value
-                                                                .controllerCarModelYear
-                                                                .text,
-                                                            value
-                                                                .controllerMileage
-                                                                .text,
-                                                            value.controllerCity
-                                                                .text,
-                                                            value.controllerCode
-                                                                .text,
-                                                            value
-                                                                .controllerNumber
-                                                                .text);
-                                                        setState(() {
-                                                          IsAddCarTap = false;
-                                                        });
-                                                      } else {
-                                                        Global.showToastAlert(
-                                                            context: Get
-                                                                .overlayContext!,
-                                                            strTitle: "",
-                                                            strMsg:
-                                                                "Please Fill All Fields",
-                                                            toastType: TOAST_TYPE
-                                                                .toastError);
-                                                      }
-                                                    },
-                                                    strTitle: Constants.SAVE),
-                                              ),
-                                            ],
+                                        addHorizontalSpace(5),
+                                        Expanded(
+                                          child: CustomTextFieldWithIcon(
+                                            height: 42,
+                                            textInputAction: TextInputAction.next,
+                                            enabled: true,
+                                            controller: value.controllerNumber,
+                                            keyboardType: TextInputType.text,
+                                            hintText: 'Number',
+                                            inputFormatters: const [],
+                                            obscureText: false,
+                                            onChanged: (String value) {},
                                           ),
                                         ),
                                       ],
-                                    ) else SizedBox(),
+                                    ),
+                                    addVerticleSpace(16),
+                                    // edit butons................
+                                    Visibility(
+                                      visible: isEditidTab,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            width: 130,
+                                            child: CustomButton(
+                                                isGradient: true,
+                                                isRoundBorder: true,
+                                                height: height,
+                                                fontSize: -2,
+                                                fontColor: AppColors.colorWhite,
+                                                width: size.width,
+                                                onPressed: () {
+                                                  controller.clearController();
+                                                  setState(() {
+                                                    isEditidTab = false;
+                                                  });
+                                                },
+                                                strTitle: "Cancel"),
+                                          ),
+                                          const SizedBox(width: 10.0),
+                                          SizedBox(
+                                            width: 130,
+                                            child: CustomButton(
+                                                isGradient: true,
+                                                isRoundBorder: true,
+                                                height: height,
+                                                fontSize: -2,
+                                                fontColor: AppColors.colorWhite,
+                                                width: size.width / 2.2,
+                                                onPressed: () {
+                                                  if (value.controllerCarBrand.text.isNotEmpty &&
+                                                      value.controllerColour.text.isNotEmpty &&
+                                                      value.controllerCarModelYear.text.isNotEmpty &&
+                                                      value.controllerMileage.text.isNotEmpty &&
+                                                      value.controllerCity.text.isNotEmpty &&
+                                                      value.controllerCode.text.isNotEmpty &&
+                                                      value.controllerNumber.text.isNotEmpty) {
+                                                    controller.updateCar(
+                                                      value.controllerCarBrand.text,
+                                                      value.controllerColour.text,
+                                                      value.controllerCarModelYear.text,
+                                                      value.controllerMileage.text,
+                                                      value.controllerCity.text,
+                                                      value.controllerCode.text,
+                                                      value.controllerNumber.text,
+                                                      editId!,
+                                                    );
+                                                    setState(() {
+                                                      isAddCarTap = false;
+                                                    });
+                                                  } else {
+                                                    Global.showToastAlert(
+                                                        context: Get.overlayContext!,
+                                                        strTitle: "",
+                                                        strMsg: "Please Fill All Fields",
+                                                        toastType: TOAST_TYPE.toastError);
+                                                  }
+                                                },
+                                                strTitle: "Update"),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    addVerticleSpace(12),
+                                    Visibility(
+                                      visible: !isEditidTab,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            width: 130,
+                                            child: CustomButton(
+                                                isGradient: true,
+                                                isRoundBorder: true,
+                                                height: height,
+                                                fontSize: -2,
+                                                fontColor: AppColors.colorWhite,
+                                                width: size.width,
+                                                onPressed: () {
+                                                  controller.clearController();
+                                                  setState(() {
+                                                    isAddCarTap = false;
+                                                  });
+                                                },
+                                                strTitle: "Cancel"),
+                                          ),
+                                          const SizedBox(width: 10.0),
+                                          SizedBox(
+                                            width: 130,
+                                            child: CustomButton(
+                                                isGradient: true,
+                                                isRoundBorder: true,
+                                                height: height,
+                                                fontSize: -2,
+                                                fontColor: AppColors.colorWhite,
+                                                width: size.width / 2.2,
+                                                onPressed: () {
+                                                  if (value.controllerCarBrand.text.isNotEmpty &&
+                                                      value.controllerColour.text.isNotEmpty &&
+                                                      value.controllerCarModelYear.text.isNotEmpty &&
+                                                      value.controllerMileage.text.isNotEmpty &&
+                                                      value.controllerCity.text.isNotEmpty &&
+                                                      value.controllerCode.text.isNotEmpty &&
+                                                      value.controllerNumber.text.isNotEmpty) {
+                                                    controller.addNewCar(
+                                                        value.controllerCarBrand.text,
+                                                        value.controllerColour.text,
+                                                        value.controllerCarModelYear.text,
+                                                        value.controllerMileage.text,
+                                                        value.controllerCity.text,
+                                                        value.controllerCode.text,
+                                                        value.controllerNumber.text);
+                                                    setState(() {
+                                                      isAddCarTap = false;
+                                                    });
+                                                  } else {
+                                                    Global.showToastAlert(
+                                                        context: Get.overlayContext!,
+                                                        strTitle: "",
+                                                        strMsg: "Please Fill All Fields",
+                                                        toastType: TOAST_TYPE.toastError);
+                                                  }
+                                                },
+                                                strTitle: Constants.SAVE),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              else
+                                const SizedBox(),
 
                               /*---------------------------------Add Car Inputs File Start End---------------------------------------------*/
 
                               /*---------------------------------Car List----------------------------------------------*/
-                            addVerticleSpace(12),
+                              addVerticleSpace(12),
 
                               controller.carList.isNotEmpty
                                   ? ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
+                                      physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       padding: const EdgeInsets.all(0),
                                       itemCount: controller.carList.length,
-                                      itemBuilder:
-                                          (BuildContext contextM, index) {
-                                        GetCarModelResult? mcarlistmodel =
-                                            controller.carList[index];
-                                        return
-
-                                          MyCarListItem(
+                                      itemBuilder: (BuildContext contextM, index) {
+                                        GetCarModelResult? mcarlistmodel = controller.carList[index];
+                                        return MyCarListItem(
                                             carBrand: mcarlistmodel.brand ?? "",
-                                            modeYear:
-                                                mcarlistmodel.modelYear ?? "",
+                                            modeYear: mcarlistmodel.modelYear ?? "",
                                             km: mcarlistmodel.mileage ?? "",
                                             color: mcarlistmodel.color ?? "",
                                             code: mcarlistmodel.carCode ?? "",
                                             city: mcarlistmodel.carCity ?? "",
-                                            number:
-                                                mcarlistmodel.carNumber ?? "",
-                                            image:
-                                                "https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
+                                            number: mcarlistmodel.carNumber ?? "",
+                                            image: "https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
                                             onEditTap: () {
-                                              value.controllerCarBrand.text =
-                                                  mcarlistmodel.brand ?? "";
-                                              value.controllerColour.text =
-                                                  mcarlistmodel.color ?? "";
-                                              value.controllerCarModelYear
-                                                      .text =
-                                                  mcarlistmodel.modelYear ?? "";
-                                              value.controllerMileage.text =
-                                                  mcarlistmodel.mileage ?? "";
-                                              value.controllerCity.text =
-                                                  mcarlistmodel.carCity ?? "";
-                                              value.controllerCode.text =
-                                                  mcarlistmodel.carCode ?? "";
-                                              value.controllerNumber.text =
-                                                  mcarlistmodel.carNumber ?? "";
+                                              value.controllerCarBrand.text = mcarlistmodel.brand ?? "";
+                                              value.controllerColour.text = mcarlistmodel.color ?? "";
+                                              value.controllerCarModelYear.text = mcarlistmodel.modelYear ?? "";
+                                              value.controllerMileage.text = mcarlistmodel.mileage ?? "";
+                                              value.controllerCity.text = mcarlistmodel.carCity ?? "";
+                                              value.controllerCode.text = mcarlistmodel.carCode ?? "";
+                                              value.controllerNumber.text = mcarlistmodel.carNumber ?? "";
                                               setState(() {
                                                 isEditidTab = true;
-                                                editId =
-                                                    mcarlistmodel.Id ?? "0";
+                                                editId = mcarlistmodel.id ?? "0";
                                               });
                                               // controller.onTapCategory(mCategoryModel);
                                             },
                                             onDeleteTap: () {
-                                              controller.deletecar(
-                                                  mcarlistmodel.Id ?? "0");
+                                              controller.deletecar(mcarlistmodel.id ?? "0");
                                               // });
                                             });
                                       })
-                                  : SizedBox(),
+                                  : const SizedBox(),
 
                               /*---------------------------------Car List End------------------------------------------*/
                               addVerticleSpace(12),
@@ -778,51 +604,33 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                 children: [
                                   !Global.checkNull(value.imgMulkia)
                                       ? InkWell(
-                                        child: Container(
-                                          width: size.width / 2.39,
-                                          alignment: Alignment.center,
-                                          height: imgHeight,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            border: Border.all(color: AppColors.colorPrimary
-                                            )
+                                          child: Container(
+                                            width: size.width / 2.39,
+                                            alignment: Alignment.center,
+                                            height: imgHeight,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10), border: Border.all(color: AppColors.colorPrimary)),
+                                            padding: const EdgeInsets.all(AppDimens.dimens_5),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                const Icon(Icons.add_circle_outline_sharp),
+                                                Container(
+                                                  child: Text(
+                                                    Constants.STR_ADD_MULKIA,
+                                                    textAlign: TextAlign.center,
+                                                    style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
+                                                  ),
+                                                  margin: const EdgeInsets.only(top: AppDimens.dimens_4),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                          padding: const EdgeInsets.all(
-                                              AppDimens.dimens_5),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              const Icon(Icons
-                                                  .add_circle_outline_sharp),
-                                              Container(
-                                                child: Text(
-                                                  Constants
-                                                      .STR_ADD_MULKIA,
-                                                  textAlign:
-                                                      TextAlign.center,
-                                                  style: AppStyle
-                                                      .textViewStyleSmall(
-                                                          context:
-                                                              context,
-                                                          color: AppColors
-                                                              .colorBlack),
-                                                ),
-                                                margin:
-                                                    const EdgeInsets.only(
-                                                        top: AppDimens
-                                                            .dimens_4),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        onTap: () {
-                                          value.selectDocs(
-                                              IdType.mulkia, context);
-                                        },
-                                      )
+                                          onTap: () {
+                                            value.selectDocs(IdType.mulkia, context);
+                                          },
+                                        )
                                       : SizedBox(
                                           width: size.width / 2.39,
                                           height: imgHeight,
@@ -831,21 +639,13 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                             children: [
                                               Container(
                                                 decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          AppDimens.dimens_5),
+                                                  borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                                                 ),
                                                 width: size.width / 2.39,
-                                                child: Global.isURL(
-                                                        value.imgMulkia)
-                                                    ? NetworkImageCustom(
-                                                        height: imgHeight,
-                                                        width: size.width / 2.39,
-                                                        image:
-                                                            value.imgMulkia)
+                                                child: Global.isURL(value.imgMulkia)
+                                                    ? NetworkImageCustom(height: imgHeight, width: size.width / 2.39, image: value.imgMulkia)
                                                     : ImageView(
-                                                        strImage:
-                                                            value.imgMulkia,
+                                                        strImage: value.imgMulkia,
                                                         height: imgHeight,
                                                         width: size.width / 2.39,
                                                       ),
@@ -855,71 +655,46 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                   top: 0,
                                                   child: InkWell(
                                                       child: Container(
-                                                        child: const Icon(
-                                                            Icons.close),
+                                                        child: const Icon(Icons.close),
                                                         decoration:
-                                                            AppViews.getColorDecor(
-                                                                mColor: AppColors
-                                                                    .colorWhite
-                                                                    .withOpacity(
-                                                                        0.8),
-                                                                mBorderRadius:
-                                                                    5),
+                                                            AppViews.getColorDecor(mColor: AppColors.colorWhite.withOpacity(0.8), mBorderRadius: 5),
                                                       ),
-                                                      onTap: () =>
-                                                          value.removeImage(
-                                                              'mulkia')))
+                                                      onTap: () => value.removeImage('mulkia')))
                                             ],
                                           ),
                                         ),
                                   const SizedBox(width: AppDimens.dimens_18),
                                   !Global.checkNull(value.imgDrivingLicence)
                                       ? InkWell(
-                                        child: Container(
-                                          width: size.width / 2.39,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            border: Border.all(color: AppColors.colorPrimary
-                                            ),),
-                                          alignment: Alignment.center,
-                                          height: imgHeight,
-                                          padding: const EdgeInsets.all(
-                                              AppDimens.dimens_5),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              const Icon(Icons
-                                                  .add_circle_outline_sharp),
-                                              Container(
-                                                child: Text(
-                                                  Constants
-                                                      .STR_ADD_DRIVING_LICENCE,
-                                                  textAlign:
-                                                      TextAlign.center,
-                                                  style: AppStyle
-                                                      .textViewStyleSmall(
-                                                          context:
-                                                              context,
-                                                          color: AppColors
-                                                              .colorBlack),
-                                                ),
-                                                margin:
-                                                    const EdgeInsets.only(
-                                                        top: AppDimens
-                                                            .dimens_4),
-                                              )
-                                            ],
+                                          child: Container(
+                                            width: size.width / 2.39,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10),
+                                              border: Border.all(color: AppColors.colorPrimary),
+                                            ),
+                                            alignment: Alignment.center,
+                                            height: imgHeight,
+                                            padding: const EdgeInsets.all(AppDimens.dimens_5),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                const Icon(Icons.add_circle_outline_sharp),
+                                                Container(
+                                                  child: Text(
+                                                    Constants.STR_ADD_DRIVING_LICENCE,
+                                                    textAlign: TextAlign.center,
+                                                    style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
+                                                  ),
+                                                  margin: const EdgeInsets.only(top: AppDimens.dimens_4),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        onTap: () {
-                                          value.selectDocs(
-                                              IdType.drivingLicence,
-                                              context);
-                                        },
-                                      )
+                                          onTap: () {
+                                            value.selectDocs(IdType.drivingLicence, context);
+                                          },
+                                        )
                                       : SizedBox(
                                           width: size.width / 2.39,
                                           height: imgHeight,
@@ -928,23 +703,15 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                             children: [
                                               Container(
                                                 decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          AppDimens.dimens_5),
+                                                  borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                                                 ),
                                                 width: size.width / 2.39,
-                                                child: Global.isURL(value
-                                                        .imgDrivingLicence)
-                                                    ? NetworkImageCustom(
+                                                child: Global.isURL(value.imgDrivingLicence)
+                                                    ? NetworkImageCustom(height: imgHeight, width: size.width / 2.39, image: value.imgDrivingLicence)
+                                                    : ImageView(
+                                                        strImage: value.imgDrivingLicence,
                                                         height: imgHeight,
                                                         width: size.width / 2.39,
-                                                        image: value
-                                                            .imgDrivingLicence)
-                                                    : ImageView(
-                                                        strImage: value
-                                                            .imgDrivingLicence,
-                                                        height: imgHeight,
-                                                        width:size.width / 2.39,
                                                       ),
                                               ),
                                               Positioned(
@@ -952,100 +719,65 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                   top: 0,
                                                   child: InkWell(
                                                       child: Container(
-                                                        child: const Icon(
-                                                            Icons.close),
+                                                        child: const Icon(Icons.close),
                                                         decoration:
-                                                            AppViews.getColorDecor(
-                                                                mColor: AppColors
-                                                                    .colorWhite
-                                                                    .withOpacity(
-                                                                        0.8),
-                                                                mBorderRadius:
-                                                                    5),
+                                                            AppViews.getColorDecor(mColor: AppColors.colorWhite.withOpacity(0.8), mBorderRadius: 5),
                                                       ),
-                                                      onTap: () =>
-                                                          value.removeImage(
-                                                              'driving')))
+                                                      onTap: () => value.removeImage('driving')))
                                             ],
                                           ),
                                         ),
                                 ],
                               ),
-addVerticleSpace(9),
+                              addVerticleSpace(9),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   !Global.checkNull(value.imgEmIdFront)
                                       ? InkWell(
-                                        child: Container(
-                                          width: size.width / 2.39,
-                                          alignment: Alignment.center,
-                                          height: imgHeight,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10),
-                                              border: Border.all(color: AppColors.colorPrimary
-                                              )
+                                          child: Container(
+                                            width: size.width / 2.39,
+                                            alignment: Alignment.center,
+                                            height: imgHeight,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10), border: Border.all(color: AppColors.colorPrimary)),
+                                            padding: const EdgeInsets.all(AppDimens.dimens_5),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                const Icon(Icons.add_circle_outline_sharp),
+                                                Container(
+                                                  child: Text(
+                                                    Constants.STR_ADD_EMIRATES_ID_FRONT,
+                                                    textAlign: TextAlign.center,
+                                                    style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
+                                                  ),
+                                                  margin: const EdgeInsets.only(top: AppDimens.dimens_4),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                          padding: const EdgeInsets.all(
-                                              AppDimens.dimens_5),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              const Icon(Icons
-                                                  .add_circle_outline_sharp),
-                                              Container(
-                                                child: Text(
-                                                  Constants
-                                                      .STR_ADD_EMIRATES_ID_FRONT,
-                                                  textAlign:
-                                                      TextAlign.center,
-                                                  style: AppStyle
-                                                      .textViewStyleSmall(
-                                                          context:
-                                                              context,
-                                                          color: AppColors
-                                                              .colorBlack),
-                                                ),
-                                                margin:
-                                                    const EdgeInsets.only(
-                                                        top: AppDimens
-                                                            .dimens_4),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        onTap: () {
-                                          value.selectDocs(
-                                              IdType.emIdFront, context);
-                                        },
-                                      )
+                                          onTap: () {
+                                            value.selectDocs(IdType.emIdFront, context);
+                                          },
+                                        )
                                       : SizedBox(
-                                          width:size.width / 2.39,
+                                          width: size.width / 2.39,
                                           height: imgHeight,
                                           child: Stack(
                                             alignment: Alignment.center,
                                             children: [
                                               Container(
                                                 decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          AppDimens.dimens_5),
+                                                  borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                                                 ),
                                                 width: size.width / 2.39,
-                                                child: Global.isURL(
-                                                        value.imgEmIdFront)
-                                                    ? NetworkImageCustom(
-                                                        height: imgHeight,
-                                                        width: size.width / 2.39,
-                                                        image: value
-                                                            .imgEmIdFront)
+                                                child: Global.isURL(value.imgEmIdFront)
+                                                    ? NetworkImageCustom(height: imgHeight, width: size.width / 2.39, image: value.imgEmIdFront)
                                                     : ImageView(
-                                                        strImage: value
-                                                            .imgEmIdFront,
+                                                        strImage: value.imgEmIdFront,
                                                         height: imgHeight,
                                                         width: size.width / 2.39,
                                                       ),
@@ -1055,99 +787,62 @@ addVerticleSpace(9),
                                                   top: 0,
                                                   child: InkWell(
                                                       child: Container(
-                                                        child: const Icon(
-                                                            Icons.close),
+                                                        child: const Icon(Icons.close),
                                                         decoration:
-                                                            AppViews.getColorDecor(
-                                                                mColor: AppColors
-                                                                    .colorWhite
-                                                                    .withOpacity(
-                                                                        0.8),
-                                                                mBorderRadius:
-                                                                    5),
+                                                            AppViews.getColorDecor(mColor: AppColors.colorWhite.withOpacity(0.8), mBorderRadius: 5),
                                                       ),
-                                                      onTap: () =>
-                                                          value.removeImage(
-                                                              'emirate_front')))
+                                                      onTap: () => value.removeImage('emirate_front')))
                                             ],
                                           ),
                                         ),
                                   const SizedBox(width: AppDimens.dimens_18),
                                   !Global.checkNull(value.imgEmIdBack)
                                       ? InkWell(
-                                        child: Container(
-                                          width: size.width / 2.39,
-                                          alignment: Alignment.center,
-                                          height: imgHeight,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10),
-                                              border: Border.all(color: AppColors.colorPrimary
-                                              )
-                                          ),
-                                          padding: const EdgeInsets.all(
-                                              AppDimens.dimens_5),
-                                          child: FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment
-                                                      .center,
-                                              children: [
-                                                const Icon(Icons
-                                                    .add_circle_outline_sharp),
-                                                Container(
-                                                  child: Text(
-                                                    Constants
-                                                        .STR_ADD_EMIRATES_ID_BACK,
-                                                    textAlign:
-                                                        TextAlign.center,
-                                                    style: AppStyle
-                                                        .textViewStyleSmall(
-                                                            context:
-                                                                context,
-                                                            color: AppColors
-                                                                .colorBlack),
-                                                  ),
-                                                  margin: const EdgeInsets
-                                                          .only(
-                                                      top: AppDimens
-                                                          .dimens_4),
-                                                )
-                                              ],
+                                          child: Container(
+                                            width: size.width / 2.39,
+                                            alignment: Alignment.center,
+                                            height: imgHeight,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10), border: Border.all(color: AppColors.colorPrimary)),
+                                            padding: const EdgeInsets.all(AppDimens.dimens_5),
+                                            child: FittedBox(
+                                              fit: BoxFit.scaleDown,
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  const Icon(Icons.add_circle_outline_sharp),
+                                                  Container(
+                                                    child: Text(
+                                                      Constants.STR_ADD_EMIRATES_ID_BACK,
+                                                      textAlign: TextAlign.center,
+                                                      style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
+                                                    ),
+                                                    margin: const EdgeInsets.only(top: AppDimens.dimens_4),
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        onTap: () {
-                                          value.selectDocs(
-                                              IdType.emIdBack, context);
-                                        },
-                                      )
+                                          onTap: () {
+                                            value.selectDocs(IdType.emIdBack, context);
+                                          },
+                                        )
                                       : SizedBox(
-                                          width:size.width / 2.39,
+                                          width: size.width / 2.39,
                                           height: imgHeight,
                                           child: Stack(
                                             alignment: Alignment.center,
                                             children: [
                                               Container(
                                                 decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          AppDimens.dimens_5),
+                                                  borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                                                 ),
                                                 width: size.width / 2.39,
-                                                child: Global.isURL(
-                                                        value.imgEmIdBack)
-                                                    ? NetworkImageCustom(
-                                                        height: imgHeight,
-                                                        width:size.width / 2.39,
-                                                        image:
-                                                            value.imgEmIdBack)
+                                                child: Global.isURL(value.imgEmIdBack)
+                                                    ? NetworkImageCustom(height: imgHeight, width: size.width / 2.39, image: value.imgEmIdBack)
                                                     : ImageView(
-                                                        strImage:
-                                                            value.imgEmIdBack,
+                                                        strImage: value.imgEmIdBack,
                                                         height: imgHeight,
                                                         width: size.width / 2.39,
                                                       ),
@@ -1157,20 +852,11 @@ addVerticleSpace(9),
                                                   top: 0,
                                                   child: InkWell(
                                                       child: Container(
-                                                        child: const Icon(
-                                                            Icons.close),
+                                                        child: const Icon(Icons.close),
                                                         decoration:
-                                                            AppViews.getColorDecor(
-                                                                mColor: AppColors
-                                                                    .colorWhite
-                                                                    .withOpacity(
-                                                                        0.8),
-                                                                mBorderRadius:
-                                                                    5),
+                                                            AppViews.getColorDecor(mColor: AppColors.colorWhite.withOpacity(0.8), mBorderRadius: 5),
                                                       ),
-                                                      onTap: () =>
-                                                          value.removeImage(
-                                                              'emirate_back')))
+                                                      onTap: () => value.removeImage('emirate_back')))
                                             ],
                                           ),
                                         ),
@@ -1190,18 +876,14 @@ addVerticleSpace(9),
                                       value.updateProfile(context);
                                     }
                                   },
-                                  strTitle:
-                                      Constants.STR_UPDATE_YOUR_PROFILE),
+                                  strTitle: Constants.STR_UPDATE_YOUR_PROFILE),
                               addVerticleSpace(12),
-
                             ],
                           ),
                         ),
                       ]))),
                 ),
-                GetBuilder<ProfileScreenController>(
-                    builder: (value) =>
-                        AppViews.showLoadingWithStatus(value.isShowLoader)),
+                GetBuilder<ProfileScreenController>(builder: (value) => AppViews.showLoadingWithStatus(value.isShowLoader)),
               ],
             )));
   }
@@ -1211,25 +893,22 @@ addVerticleSpace(9),
     // ModelPhoneOTP mModelOTP = ModelPhoneOTP(
     //     phoneNumber: controllerPassword.text.toString(),
     //     otp: controllerEmail.text.toString());
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => OTPScreen(phoneNumber: phoneNumber)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen(phoneNumber: phoneNumber)));
     // sendOTPTask();
-    Otpcontroller.sendNumberOTPTask(phoneNumber!, context);
+    otpcontroller.sendNumberOTPTask(phoneNumber, context);
     //sentOTPToNumber();
   }
 
-  Future<void> _displayVerify() async {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return WithdrawMoneyDialogBox(
-            title: 'Verify Phone',
-            onTap: () {},
-          );
-        });
-  }
+  // Future<void> _displayVerify() async {
+  //   return showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return WithdrawMoneyDialogBox(
+  //           title: 'Verify Phone',
+  //           onTap: () {},
+  //         );
+  //       });
+  // }
 
 // _displayAddCard() async {
 //   return showDialog(

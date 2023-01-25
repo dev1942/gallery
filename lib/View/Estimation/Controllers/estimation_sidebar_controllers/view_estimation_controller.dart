@@ -127,7 +127,7 @@ class ViewEstimationController extends GetxController {
   }
 
   onSelectDate(String _selectedDate) {
-    print("date selected=========");
+    log("date selected=========");
     selectedDate = _selectedDate;
     update();
   }

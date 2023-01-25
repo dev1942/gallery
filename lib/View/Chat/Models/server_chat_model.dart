@@ -72,7 +72,7 @@ class ServerChatModel {
   getDateInFormate() {
     if (Global.checkNull(updatedAt)) {
       DateTime parseDate =
-          DateFormat(Constants.STRING_DB_DATE_FORMATE).parse("${updatedAt}");
+          DateFormat(Constants.STRING_DB_DATE_FORMATE).parse("$updatedAt");
       DateTime local = DateTime.utc(parseDate.year, parseDate.month,
           parseDate.day, parseDate.hour, parseDate.minute);
 

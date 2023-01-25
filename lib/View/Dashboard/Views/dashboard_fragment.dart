@@ -7,7 +7,6 @@ import 'package:otobucks/View/Promotion_discount/View/banner_page_view.dart';
 import '../../../global/app_colors.dart';
 import '../../../global/app_dimens.dart';
 import '../../../global/app_views.dart';
-import '../../../widgets/banner_page_view.dart';
 
 class DashboardFragment extends StatefulWidget {
   const DashboardFragment({Key? key}) : super(key: key);

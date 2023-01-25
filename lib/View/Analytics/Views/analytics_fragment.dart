@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Analytics/Controllers/analytics_controller.dart';
@@ -23,7 +25,7 @@ class AnalyticsFragment extends StatefulWidget {
 class AnalyticsFragmentState extends State<AnalyticsFragment> {
   var controller = Get.put(AnalyticsController());
   var staticscontroller = Get.put(StaticesAnalyticsController());
-  var apidata;
+  dynamic apidata;
 
   @override
   void initState() {
@@ -33,11 +35,11 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
   }
 
   Future<void> apiData() async {
-    print("------my data-----1--------");
+    log("------my data-----1--------");
     var apidata = await staticscontroller.fetchdata();
-    print("------my data--------2-----");
-    print(apidata!.result!.promotionBookings);
-    print(apidata!.result!.serviceBookings);
+    log("------my data--------2-----");
+    log(apidata!.result!.promotionBookings.toString());
+    log(apidata.result!.serviceBookings.toString());
   }
 
   @override
@@ -61,18 +63,11 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(
-                top: AppDimens.dimens_10,
-                left: AppDimens.dimens_18,
-                right: AppDimens.dimens_18),
+            margin: const EdgeInsets.only(top: AppDimens.dimens_10, left: AppDimens.dimens_18, right: AppDimens.dimens_18),
             alignment: Alignment.centerLeft,
             child: Text(
               Constants.TXT_MY_EARNINGS,
-              style: AppStyle.textViewStyleNormalSubtitle2(
-                  context: context,
-                  color: AppColors.colorBlack,
-                  fontSizeDelta: 0,
-                  fontWeightDelta: 1),
+              style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 1),
             ),
           ),
           Container(
@@ -94,30 +89,19 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            RoundDot(
-                                mColor: AppColors.colorGreen,
-                                size: AppDimens.dimens_8),
+                            RoundDot(mColor: AppColors.colorGreen, size: AppDimens.dimens_8),
                             Expanded(
-                              child: GetBuilder<AnalyticsController>(
-                                  builder: (value) {
+                              child: GetBuilder<AnalyticsController>(builder: (value) {
                                 return AppViews.getSetDataCustomLoader(
                                     context,
                                     value.loadingWalletBalance,
                                     Container(
-                                      margin: const EdgeInsets.only(
-                                          left: AppDimens.dimens_4),
+                                      margin: const EdgeInsets.only(left: AppDimens.dimens_4),
                                       child: Text(
-                                        Global.replaceCurrencySign(
-                                                value.mWalletModel.currency) +
-                                            double.parse(
-                                                    value.mWalletModel.balance)
-                                                .toStringAsFixed(2),
-                                        style: AppStyle
-                                            .textViewStyleNormalSubtitle2(
-                                                context: context,
-                                                color: AppColors.colorGreen,
-                                                fontSizeDelta: 2,
-                                                fontWeightDelta: 3),
+                                        Global.replaceCurrencySign(value.mWalletModel.currency) +
+                                            double.parse(value.mWalletModel.balance).toStringAsFixed(2),
+                                        style: AppStyle.textViewStyleNormalSubtitle2(
+                                            context: context, color: AppColors.colorGreen, fontSizeDelta: 2, fontWeightDelta: 3),
                                       ),
                                     ),
                                     SpinKitCircle(
@@ -131,13 +115,9 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
                           ],
                         ),
                         Container(
-                          margin:
-                              const EdgeInsets.only(top: AppDimens.dimens_5),
+                          margin: const EdgeInsets.only(top: AppDimens.dimens_5),
                           child: Text(Constants.TXT_TOTAL_WALLET_BALANCE,
-                              style: AppStyle.textViewStyleSmall(
-                                  context: context,
-                                  color: AppColors.colorBlack,
-                                  fontSizeDelta: -2)),
+                              style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack, fontSizeDelta: -2)),
                         )
                       ],
                     ),
@@ -210,18 +190,11 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
 
           // card show
           Container(
-            margin: const EdgeInsets.only(
-                top: AppDimens.dimens_20,
-                left: AppDimens.dimens_18,
-                right: AppDimens.dimens_18),
+            margin: const EdgeInsets.only(top: AppDimens.dimens_20, left: AppDimens.dimens_18, right: AppDimens.dimens_18),
             alignment: Alignment.centerLeft,
             child: Text(
               Constants.TXT_TOTAL_EARNINGS,
-              style: AppStyle.textViewStyleNormalSubtitle2(
-                  context: context,
-                  color: AppColors.colorBlack,
-                  fontSizeDelta: 0,
-                  fontWeightDelta: 1),
+              style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 1),
             ),
           ),
           addVerticleSpace(90),
@@ -233,13 +206,11 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
                 dataMap: //dataMap,
 
                     {
-                  "Promotion Bookings":
-                      apidata != null ? apidata!.result!.promotionBookings : 10,
-                  "Service Bookings":
-                      apidata != null ? apidata!.result!.serviceBookings : 6,
+                  "Promotion Bookings": apidata != null ? apidata!.result!.promotionBookings : 10,
+                  "Service Bookings": apidata != null ? apidata!.result!.serviceBookings : 6,
                   "Invites": 0,
                 },
-                animationDuration: Duration(milliseconds: 800),
+                animationDuration: const Duration(milliseconds: 800),
                 chartLegendSpacing: 100,
                 chartRadius: MediaQuery.of(context).size.width / 3,
                 colorList: colorList,
