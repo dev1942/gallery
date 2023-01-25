@@ -1,4 +1,7 @@
+// ignore_for_file: unused_field
+
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -40,9 +43,9 @@ class ImagePickerUtility {
     dynamic _file;
     //PickedFile? _file;
     if (_imageType == ImageType.camera) {
-      _file = await _imagePicker.getImage(source: ImageSource.camera);
+      _file = await _imagePicker.pickImage(source: ImageSource.camera);
     } else {
-      _file = await _imagePicker.getImage(source: ImageSource.gallery);
+      _file = await _imagePicker.pickImage(source: ImageSource.gallery);
     }
     if (_file != null) {
       //File _image = File(_file.path);
@@ -50,6 +53,7 @@ class ImagePickerUtility {
       var tempImg = _image;
       if (tempImg != null) {
         var imagePath = await _cropImage(tempImg);
+        log(imagePath.toString());
       }
     }
   }
@@ -57,7 +61,7 @@ class ImagePickerUtility {
   Future<String?> pickImageWithGallery() async {
     dynamic _file;
     //PickedFile? _file;
-    _file = await _imagePicker.getImage(source: ImageSource.gallery);
+    _file = await _imagePicker.pickImage(source: ImageSource.gallery);
     if (_file != null) {
       //File _image = File(_file.path);
       _image = _file.path;
@@ -66,6 +70,8 @@ class ImagePickerUtility {
         _image = await _cropImage(tempImg);
       }
       return _image;
+    } else {
+      return null;
     }
   }
 
@@ -75,9 +81,9 @@ class ImagePickerUtility {
     //PickedFile? _file;
 
     if (_imageType == ImageType.camera) {
-      _file = await _imagePicker.getImage(source: ImageSource.camera);
+      _file = await _imagePicker.pickImage(source: ImageSource.camera);
     } else {
-      _file = await _imagePicker.getImage(source: ImageSource.gallery);
+      _file = await _imagePicker.pickImage(source: ImageSource.gallery);
     }
 
     if (_file != null) {
@@ -85,15 +91,17 @@ class ImagePickerUtility {
       //File _image = File(_file.path);
       var tempImg = _image;
       if (tempImg != null) {
-        print("gallery");
+        log("gallery");
         _image = await _cropImage(tempImg);
       }
       return _image;
+    } else {
+      return null;
     }
   }
 
   Future<String?> _cropImage(String imagePath) async {
-    print("------8------");
+    log("------8------");
     final croppedFile = await ImageCropper().cropImage(
       sourcePath: imagePath,
       aspectRatioPresets: [
@@ -103,7 +111,7 @@ class ImagePickerUtility {
         CropAspectRatioPreset.ratio4x3,
         CropAspectRatioPreset.ratio16x9
       ],
-    /*  androidUiSettings: AndroidUiSettings(
+      /*  androidUiSettings: AndroidUiSettings(
         toolbarTitle: "Crop Image",
         toolbarColor: AppColors.colorBlueEnd,
         toolbarWidgetColor: Colors.white,
@@ -121,13 +129,12 @@ class ImagePickerUtility {
         ),
         IOSUiSettings(minimumAspectRatio: 1.0),
       ],
-
     );
 
-    print("------9------");
+    log("------9------");
     if (croppedFile != null) {
-      print(croppedFile);
-      print(croppedFile.path);
+      log(croppedFile.path);
+      log(croppedFile.path);
       return croppedFile.path;
     } else {
       throw Exception('No Cropped File Present');

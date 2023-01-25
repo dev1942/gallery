@@ -83,7 +83,7 @@ class _ImagePreview extends StatelessWidget {
             right: 0,
             child: Padding(
               padding: const EdgeInsets.all(5.0),
-              child: Container(
+              child: SizedBox(
                 height: 20,
                 width: 20,
                 child: FloatingActionButton(

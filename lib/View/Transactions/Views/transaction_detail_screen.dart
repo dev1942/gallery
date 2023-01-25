@@ -1,3 +1,6 @@
+// ignore_for_file: unused_element
+
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +29,7 @@ import '../../PurchaseHistory/Widgets/InvoiceDetailsClipper.dart';
 class TransactionDetailScreen extends StatefulWidget {
   final TransactionModel transactionModel;
 
-  const TransactionDetailScreen({Key? key, required this.transactionModel})
-      : super(key: key);
+  const TransactionDetailScreen({Key? key, required this.transactionModel}) : super(key: key);
 
   @override
   TransactionDetailScreenState createState() => TransactionDetailScreenState();
@@ -42,13 +44,10 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
   bool isShowLoader = false;
 
   sharePhoto() async {
-    await screenshotController
-        .capture(delay: const Duration(milliseconds: 10))
-        .then((Uint8List? image) async {
+    await screenshotController.capture(delay: const Duration(milliseconds: 10)).then((Uint8List? image) async {
       if (image != null) {
         final directory = await getApplicationDocumentsDirectory();
-        final imagePath =
-            await File('${directory.path}/Otobucks-Receipt.png').create();
+        final imagePath = await File('${directory.path}/Otobucks-Receipt.png').create();
         await imagePath.writeAsBytes(image);
 //..............................................Save to gallery...................................
 //         final result = await ImageGallerySaver.saveImage(
@@ -63,22 +62,15 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
   }
 
   saveAsPhoto() async {
-    await screenshotController
-        .capture(delay: const Duration(milliseconds: 10))
-        .then((Uint8List? image) async {
+    await screenshotController.capture(delay: const Duration(milliseconds: 10)).then((Uint8List? image) async {
       if (image != null) {
         final directory = await getApplicationDocumentsDirectory();
-        final imagePath =
-            await File('${directory.path}/Otobucks-Receipt.png').create();
+        final imagePath = await File('${directory.path}/Otobucks-Receipt.png').create();
         await imagePath.writeAsBytes(image);
 //...................sav to gallery
-        final result = await ImageGallerySaver.saveImage(image,
-            quality: 60, name: "hello");
-        Global.showToastAlert(
-            context: context,
-            strTitle: "Success",
-            strMsg: "Receipt Saved to Gallery",
-            toastType: TOAST_TYPE.toastSuccess);
+        final result = await ImageGallerySaver.saveImage(image, quality: 60, name: "hello");
+        log(result.toString());
+        Global.showToastAlert(context: context, strTitle: "Success", strMsg: "Receipt Saved to Gallery", toastType: TOAST_TYPE.toastSuccess);
         //-----------------------------------------------Share Plugin-------------------------------
         // await Share.shareFiles([imagePath.path]);
       }
@@ -96,8 +88,6 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    double height = AppDimens.dimens_36;
     return Scaffold(
         appBar: AppViews.initAppBar(
           mContext: context,
@@ -115,10 +105,7 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
             Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
-                      left: AppDimens.dimens_50,
-                      top: AppDimens.dimens_25,
-                      bottom: AppDimens.dimens_32),
+                  padding: const EdgeInsets.only(left: AppDimens.dimens_50, top: AppDimens.dimens_25, bottom: AppDimens.dimens_32),
                   alignment: Alignment.center,
                   color: AppColors.colorBlueStart,
                   child: Row(
@@ -126,16 +113,14 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
                       //...................Main Container for profile pictures.....................................
                       Container(
                         child: ClipRRect(
-                          borderRadius:
-                              BorderRadius.circular(AppDimens.dimens_50),
+                          borderRadius: BorderRadius.circular(AppDimens.dimens_50),
                           child: NetworkImageCustom(
                               image: Get.find<HomeScreenController>().image,
                               fit: BoxFit.fill,
                               height: AppDimens.dimens_60,
                               width: AppDimens.dimens_60),
                         ),
-                        margin:
-                            const EdgeInsets.only(right: AppDimens.dimens_10),
+                        margin: const EdgeInsets.only(right: AppDimens.dimens_10),
                       ),
                       Flexible(
                           child: Column(
@@ -144,30 +129,18 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
                         children: [
                           Container(
                               alignment: Alignment.centerLeft,
-                              margin: const EdgeInsets.only(
-                                  top: AppDimens.dimens_5,
-                                  bottom: AppDimens.dimens_2),
+                              margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_2),
                               child: Text(
-                                Get.find<HomeScreenController>()
-                                        .fullName
-                                        .capitalize ??
-                                    "",
+                                Get.find<HomeScreenController>().fullName.capitalize ?? "",
                                 style: AppStyle.textViewStyleNormalBodyText2(
-                                    context: context,
-                                    color: AppColors.colorWhite,
-                                    fontSizeDelta: 0,
-                                    fontWeightDelta: -3),
+                                    context: context, color: AppColors.colorWhite, fontSizeDelta: 0, fontWeightDelta: -3),
                               )),
                           Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 "Car Owner",
                                 style: AppStyle.textViewStyleSmall(
-                                    context: context,
-                                    color:
-                                        AppColors.colorWhite.withOpacity(0.7),
-                                    fontSizeDelta: -2,
-                                    fontWeightDelta: 0),
+                                    context: context, color: AppColors.colorWhite.withOpacity(0.7), fontSizeDelta: -2, fontWeightDelta: 0),
                               )),
                         ],
                       )),
@@ -188,8 +161,7 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
                         child: Container(
                           width: Get.width,
                           height: 400,
-                          decoration:
-                              BoxDecoration(color: AppColors.grayDashboardItem),
+                          decoration: BoxDecoration(color: AppColors.grayDashboardItem),
                           margin: const EdgeInsets.symmetric(horizontal: 20),
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
@@ -197,23 +169,16 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
                               addVerticleSpace(10),
                               CircleAvatar(
                                 backgroundColor: AppColors.colorGreen,
-                                child:
-                                    const Icon(Icons.done, color: Colors.white),
+                                child: const Icon(Icons.done, color: Colors.white),
                               ),
                               Text(
                                 "OtoBucks",
-                                style: TextStyle(
-                                    color: AppColors.colorBlueEnd,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w700),
+                                style: TextStyle(color: AppColors.colorBlueEnd, fontSize: 17, fontWeight: FontWeight.w700),
                               ),
                               addVerticleSpace(5),
                               Text(
                                 "Transaction Successful",
-                                style: TextStyle(
-                                    color: AppColors.colorGreen,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700),
+                                style: TextStyle(color: AppColors.colorGreen, fontSize: 20, fontWeight: FontWeight.w700),
                               ),
                               const Text("Money has been sent to :"),
                               AppViews.addDivider(),
@@ -222,49 +187,33 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        widget.transactionModel.createdAt
-                                            .toString()
-                                            .split('T')[0],
-                                        style: const TextStyle(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w600),
+                                        widget.transactionModel.createdAt.toString().split('T')[0],
+                                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
                                       ),
-                                      Text(
-                                          "ID#${widget.transactionModel.transactionId}",
-                                          style: const TextStyle(
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.w600)),
+                                      Text("ID#${widget.transactionModel.transactionId}",
+                                          style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
                                     ],
                                   ),
                                   addVerticleSpace(17),
                                   const Text(
                                     "Service Details",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700),
+                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
                                   ),
                                   Text(
                                     "Title : ${widget.transactionModel.metadata.service?.title}",
-                                    style: const TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w500),
+                                    style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
                                   ),
                                   Text(
                                     "Provider : ${widget.transactionModel.metadata.provider?.firstName + " " + widget.transactionModel.metadata.provider?.lastName}",
-                                    style: const TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w500),
+                                    style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
                                   ),
                                   addVerticleSpace(17),
                                   const Text(
                                     "Transaction Details",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700),
+                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
                                   ),
                                   Row(
                                     children: [
@@ -313,10 +262,7 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
                                       ),
                                       Text(
                                         "AED ${widget.transactionModel.amount} /-",
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColors.colorGreen),
+                                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.colorGreen),
                                       ),
                                     ],
                                   ),
@@ -347,12 +293,12 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
                       sharePhoto();
                     },
                     child: Column(
-                      children: [
-                        const Icon(
+                      children: const [
+                        Icon(
                           Icons.share_outlined,
                           size: 20,
                         ),
-                        const Text(
+                        Text(
                           "Share",
                           style: TextStyle(
                             fontSize: 12,
@@ -367,12 +313,12 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
                       saveAsPhoto();
                     },
                     child: Column(
-                      children: [
-                        const Icon(
+                      children: const [
+                        Icon(
                           Icons.image_outlined,
                           size: 20,
                         ),
-                        const Text(
+                        Text(
                           "Save to Gallery",
                           style: TextStyle(
                             fontSize: 12,
@@ -387,12 +333,12 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
                       _createPDF();
                     },
                     child: Column(
-                      children: [
-                        const Icon(
+                      children: const [
+                        Icon(
                           Icons.file_open_outlined,
                           size: 20,
                         ),
-                        const Text(
+                        Text(
                           "Save to PDF",
                           style: TextStyle(
                             fontSize: 12,
@@ -407,12 +353,12 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
                       Get.back();
                     },
                     child: Column(
-                      children: [
-                        const Icon(
+                      children: const [
+                        Icon(
                           Icons.cancel_presentation,
                           size: 20,
                         ),
-                        const Text(
+                        Text(
                           "Go Back",
                           style: TextStyle(
                             fontSize: 12,
@@ -458,9 +404,7 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
     // page.graphics.drawImage(PdfBitmap(await _readImageData("autofix.png")),
     //Rect.fromLTWH(0, 100, 440, 200));
     PdfGrid grid = PdfGrid();
-    grid.style = PdfGridStyle(
-        font: PdfStandardFont(PdfFontFamily.helvetica, 24),
-        cellPadding: PdfPaddings(left: 5, right: 2, top: 2, bottom: 2));
+    grid.style = PdfGridStyle(font: PdfStandardFont(PdfFontFamily.helvetica, 24), cellPadding: PdfPaddings(left: 5, right: 2, top: 2, bottom: 2));
     grid.columns.add(count: 2);
     //...........................................ID ROW..............................................................
     grid.headers.add(1);
@@ -475,8 +419,7 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
     //.......................Service Title.....................................................
     row = grid.rows.add();
     row.cells[0].value = "Service Title";
-    row.cells[1].value =
-        widget.transactionModel.metadata.service?.title.toString();
+    row.cells[1].value = widget.transactionModel.metadata.service?.title.toString();
     //................Provider row..............................................................
     row = grid.rows.add();
     row.cells[0].value = 'Service Provider';
@@ -490,15 +433,12 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
     //..................Transaction date row.............................................
     row = grid.rows.add();
     row.cells[0].value = 'Transaction Date';
-    row.cells[1].value =
-        widget.transactionModel.createdAt.toString().split('T')[0];
+    row.cells[1].value = widget.transactionModel.createdAt.toString().split('T')[0];
     //..................Transaction Amount.............................................
     row = grid.rows.add();
     row.cells[0].value = 'Transaction Amount';
-    row.cells[1].value =
-        "AED${widget.transactionModel.amount.toString()} /-".split('T')[0];
-    grid.draw(
-        page: document.pages.add(), bounds: const Rect.fromLTWH(0, 0, 0, 0));
+    row.cells[1].value = "AED${widget.transactionModel.amount.toString()} /-".split('T')[0];
+    grid.draw(page: document.pages.add(), bounds: const Rect.fromLTWH(0, 0, 0, 0));
     List<int> bytes = await document.save();
     document.dispose();
     Get.put(TransactionController()).saveAndLaunchFile(bytes, 'OtoBucks.pdf');

@@ -41,9 +41,7 @@ class VoiceRecordingButton extends StatefulWidget {
   final Function callback;
   final String strVoiceNotePath;
 
-  const VoiceRecordingButton(
-      {Key? key, required this.callback, required this.strVoiceNotePath})
-      : super(key: key);
+  const VoiceRecordingButton({Key? key, required this.callback, required this.strVoiceNotePath}) : super(key: key);
 
   @override
   VoiceRecordingState createState() => VoiceRecordingState();
@@ -83,10 +81,8 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
   Future<void> _initializeExample() async {
     await playerModule.closeAudioSession();
     await playerModule.openAudioSession();
-    await playerModule
-        .setSubscriptionDuration(const Duration(milliseconds: 10));
-    await recorderModule
-        .setSubscriptionDuration(const Duration(milliseconds: 10));
+    await playerModule.setSubscriptionDuration(const Duration(milliseconds: 10));
+    await recorderModule.setSubscriptionDuration(const Duration(milliseconds: 10));
     await initializeDateFormatting();
     await setCodec(_codec);
   }
@@ -112,12 +108,9 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
     final session = await AudioSession.instance;
     await session.configure(AudioSessionConfiguration(
       avAudioSessionCategory: AVAudioSessionCategory.playAndRecord,
-      avAudioSessionCategoryOptions:
-          AVAudioSessionCategoryOptions.allowBluetooth |
-              AVAudioSessionCategoryOptions.defaultToSpeaker,
+      avAudioSessionCategoryOptions: AVAudioSessionCategoryOptions.allowBluetooth | AVAudioSessionCategoryOptions.defaultToSpeaker,
       avAudioSessionMode: AVAudioSessionMode.spokenAudio,
-      avAudioSessionRouteSharingPolicy:
-          AVAudioSessionRouteSharingPolicy.defaultPolicy,
+      avAudioSessionRouteSharingPolicy: AVAudioSessionRouteSharingPolicy.defaultPolicy,
       avAudioSessionSetActiveOptions: AVAudioSessionSetActiveOptions.none,
       androidAudioAttributes: const AndroidAudioAttributes(
         contentType: AndroidAudioContentType.speech,
@@ -194,8 +187,7 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
       if (!kIsWeb) {
         var status = await Permission.microphone.request();
         if (status != PermissionStatus.granted) {
-          throw RecordingPermissionException(
-              'Microphone permission not granted');
+          throw RecordingPermissionException('Microphone permission not granted');
         }
       }
       var path = '';
@@ -213,9 +205,7 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
       recorderModule.logger.d('startRecorder');
 
       _recorderSubscription = recorderModule.onProgress!.listen((e) {
-        var date = DateTime.fromMillisecondsSinceEpoch(
-            e.duration.inMilliseconds,
-            isUtc: true);
+        var date = DateTime.fromMillisecondsSinceEpoch(e.duration.inMilliseconds, isUtc: true);
         var txt = DateFormat('mm:ss', 'en_GB').format(date);
 
         setState(() {
@@ -285,14 +275,12 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
       maxDuration = e.duration.inMilliseconds.toDouble();
       if (maxDuration <= 0) maxDuration = 0.0;
 
-      sliderCurrentPosition =
-          min(e.position.inMilliseconds.toDouble(), maxDuration);
+      sliderCurrentPosition = min(e.position.inMilliseconds.toDouble(), maxDuration);
       if (sliderCurrentPosition < 0.0) {
         sliderCurrentPosition = 0.0;
       }
 
-      var date = DateTime.fromMillisecondsSinceEpoch(e.position.inMilliseconds,
-          isUtc: true);
+      var date = DateTime.fromMillisecondsSinceEpoch(e.position.inMilliseconds, isUtc: true);
       var txt = DateFormat('mm:ss', 'en_GB').format(date);
       setState(() {
         _playerTxt = txt; //.substring(0, 8);
@@ -316,8 +304,7 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
   }
 
   pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-        allowMultiple: false, dialogTitle: "select file", type: FileType.audio);
+    FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false, dialogTitle: "select file", type: FileType.audio);
 
     if (result != null) {
       setState(() {
@@ -347,8 +334,7 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
     var totalLength = buffer.length;
     while (totalLength > 0 && !playerModule.isStopped) {
       var bsize = totalLength > blockSize ? blockSize : totalLength;
-      await playerModule
-          .feedFromStream(buffer.sublist(lnData, lnData + bsize)); // await !!!!
+      await playerModule.feedFromStream(buffer.sublist(lnData, lnData + bsize)); // await !!!!
       lnData += bsize;
       totalLength -= bsize;
     }
@@ -473,9 +459,7 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
   }
 
   void Function()? onStopPlayerPressed() {
-    return (playerModule.isPlaying || playerModule.isPaused)
-        ? stopPlayer
-        : null;
+    return (playerModule.isPlaying || playerModule.isPaused) ? stopPlayer : null;
   }
 
   void Function()? onStartPlayerPressed() {
@@ -549,53 +533,48 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
                 borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                 child: Container(
                   color: AppColors.colorGray2,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+                    Visibility(
+                      child: Text(
+                        _recorderTxt,
+                        style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack),
+                      ),
+                      visible: _isRecording,
+                    ),
+                    Visibility(
+                      child: LinearProgressIndicator(
+                          value: 100.0 / 160.0 * (_dbLevel ?? 1) / 100,
+                          valueColor: AlwaysStoppedAnimation<Color>(AppColors.colorGreen),
+                          backgroundColor: AppColors.colorBlueEnd),
+                      visible: false,
+                    ),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Visibility(
-                          child: Text(
-                            _recorderTxt,
-                            style: AppStyle.textViewStyleNormalSubtitle2(
-                                context: context, color: AppColors.colorBlack),
+                        SizedBox(
+                          width: AppDimens.dimens_50,
+                          height: AppDimens.dimens_50,
+                          child: TextButton(
+                            onPressed: onStartRecorderPressed(),
+                            child: recorderIcon(),
                           ),
-                          visible: _isRecording,
                         ),
-                        Visibility(
-                          child: LinearProgressIndicator(
-                              value: 100.0 / 160.0 * (_dbLevel ?? 1) / 100,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  AppColors.colorGreen),
-                              backgroundColor: AppColors.colorBlueEnd),
-                          visible: false,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(
-                              width: AppDimens.dimens_50,
-                              height: AppDimens.dimens_50,
-                              child: TextButton(
-                                onPressed: onStartRecorderPressed(),
-                                child: recorderIcon(),
-                              ),
-                            ),
-                            // Visibility(
-                            //   child: Container(
-                            //     width: AppDimens.dimens_50,
-                            //     height: AppDimens.dimens_50,
-                            //     child: ClipOval(
-                            //       child: TextButton(
-                            //           onPressed: onPauseResumeRecorderPressed(),
-                            //           child: Icon(Icons.pause)),
-                            //     ),
-                            //   ),
-                            //   visible: onPauseResumeRecorderPressed() != null,
-                            // )
-                          ],
-                        ),
-                      ]),
+                        // Visibility(
+                        //   child: Container(
+                        //     width: AppDimens.dimens_50,
+                        //     height: AppDimens.dimens_50,
+                        //     child: ClipOval(
+                        //       child: TextButton(
+                        //           onPressed: onPauseResumeRecorderPressed(),
+                        //           child: Icon(Icons.pause)),
+                        //     ),
+                        //   ),
+                        //   visible: onPauseResumeRecorderPressed() != null,
+                        // )
+                      ],
+                    ),
+                  ]),
                   width: AppDimens.dimens_100,
                   height: AppDimens.dimens_100,
                 )),
@@ -619,8 +598,7 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
                   Visibility(
                     child: Text(
                       _playerTxt,
-                      style: AppStyle.textViewStyleNormalSubtitle2(
-                          context: context, color: AppColors.colorBlack),
+                      style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack),
                     ),
                     visible: onPauseResumePlayerPressed() != null,
                   ),
@@ -649,9 +627,7 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
                       SizedBox(
                         width: AppDimens.dimens_50,
                         height: AppDimens.dimens_50,
-                        child: TextButton(
-                            onPressed: onStopPlayerPressed(),
-                            child: const Icon(Icons.stop)),
+                        child: TextButton(onPressed: onStopPlayerPressed(), child: const Icon(Icons.stop)),
                       ),
                     ],
                   ),
@@ -677,7 +653,7 @@ class VoiceRecordingState extends State<VoiceRecordingButton> {
                   child: InkWell(
                     child: const Icon(Icons.close),
                     onTap: () {
-                      print("------close--------");
+                      debugPrint("------close--------");
                       setState(() {
                         _path = "";
                         isShowPlayView = false;
