@@ -11,6 +11,7 @@ import 'package:otobucks/View/Dashboard/Models/category_model.dart';
 import 'package:otobucks/View/Services_All/Views/service_screen.dart';
 import 'package:otobucks/services/repository/categories_repo.dart';
 import 'package:otobucks/services/repository/promotions_repo.dart';
+
 class DashboardController extends GetxController {
   Rx<ShowData> mShowData = ShowData.showLoading.obs;
 
@@ -20,7 +21,7 @@ class DashboardController extends GetxController {
   bool connectionStatus = false;
 
   late TabController tabcontroller;
-bool isHomePage=true;
+  bool isHomePage = true;
   final PageController controller = PageController();
   int intCurrentPage = 0;
   int intTabPosition = 0;
@@ -36,11 +37,7 @@ bool isHomePage=true;
     var categories = await CategoriesRepo().getCategories(requestParams);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData.value = ShowData.showNoDataFound;
       update();
     }, (mResult) {
@@ -58,8 +55,7 @@ bool isHomePage=true;
 
     HashMap<String, Object> requestParams = HashMap();
 
-    var categories = await PromotionsRepo()
-        .getPromotions(requestParams, BannerType.homePage);
+    var categories = await PromotionsRepo().getPromotions(requestParams, BannerType.homePage);
 
     categories.fold((failure) {}, (mResult) {
       alPromotions = mResult.responseData as List<PromotionsModel>;
@@ -70,8 +66,7 @@ bool isHomePage=true;
 
   setCurrentTab(int pagePosition) {
     intCurrentPage = pagePosition;
-    controller.animateToPage(pagePosition,
-        duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+    controller.animateToPage(pagePosition, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
   }
 
   onTapCategory(CategoryModel mCategoryModel_) {
@@ -94,10 +89,7 @@ bool isHomePage=true;
         Navigator.push(
             context,
             MaterialPageRoute(
-                fullscreenDialog: true,
-                builder: (context) => ServiceScreen(
-                    mCategoryModel: mCategoryModel,
-                    mSubCategoryModel: mSubCategoryModel_)));
+                fullscreenDialog: true, builder: (context) => ServiceScreen(mCategoryModel: mCategoryModel, mSubCategoryModel: mSubCategoryModel_)));
         break;
     }
   }
@@ -120,7 +112,17 @@ bool isHomePage=true;
   }
 
   Future<void> initScreen() async {
+    if (alCategory.isEmpty) {
+      log("message called");
+      await Future.delayed(Duration.zero);
+
+      Get.find<DashboardController>().getPromotion();
+    }
+  }
+
+  Future<void> refreshCategories() async {
     await Future.delayed(Duration.zero);
+
     Get.find<DashboardController>().getPromotion();
   }
 }

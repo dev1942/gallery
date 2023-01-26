@@ -14,7 +14,7 @@ import 'package:otobucks/widgets/image_selection_bottom_sheet.dart';
 class ProfileScreenController extends GetxController {
   ShowData mShowData = ShowData.showLoading;
   // Rx<ShowData> mShowData1 = ShowData.showLoading.obs;
-  List<GetCarModelResult> carList=[];
+  List<GetCarModelResult> carList = [];
   bool connectionStatus = false;
   bool isShowLoader = false;
   TextEditingController controllerAddress = TextEditingController();
@@ -56,19 +56,23 @@ class ProfileScreenController extends GetxController {
   String strFname = "";
   String strCountry = "";
   String strLname = "";
-  String oldPhoneNumebr="";
+  String oldPhoneNumebr = "";
+  UserModel? mUserModel;
 
+  clearController() {
+    controllerCarBrand.clear();
+    controllerCarModelYear.clear();
+    controllerMileage.clear();
+    controllerColour.clear();
+    controllerCode.clear();
+    controllerCity.clear();
+    controllerNumber.clear();
+  }
 
-
-clearController(){
-  controllerCarBrand.clear();
-  controllerCarModelYear.clear();
-  controllerMileage.clear();
-  controllerColour.clear();
-  controllerCode.clear();
-  controllerCity.clear();
-  controllerNumber.clear();
-}
+  Future<void> pullToRefresh() async {
+    getCarList();
+    getProfile();
+  }
 
   removeImage(String image) {
     switch (image) {
@@ -95,49 +99,45 @@ clearController(){
     HashMap<String, Object> requestParams = HashMap();
     var categories = await UserRepo().getUser(requestParams);
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
+      mUserModel = mResult.responseData as UserModel;
+      if (mUserModel != null) {
+        controllerAddress.text = Global.getString(mUserModel!.address);
 
-      UserModel mUserModel = mResult.responseData as UserModel;
-      controllerAddress.text = Global.getString(mUserModel.address);
+        strFname = Global.getString(mUserModel!.firstName);
+        strLname = Global.getString(mUserModel!.lastName);
+        strCountry = Global.getString(mUserModel!.country.first);
+        oldPhoneNumebr = Global.getString(mUserModel!.phone);
+        controllerPhone.text = Global.getString(mUserModel!.phone);
+        controllerEmail.text = Global.getString(mUserModel!.email);
+        isEmailVerified = mUserModel!.isEmailVerified;
+        isPhoneVerified = mUserModel!.isPhoneVerified;
+        controllerEmgName.text = Global.getString(mUserModel!.emergency.emergencyName);
+        controllerEmgPhone.text = Global.getString(mUserModel!.emergency.emergencyPhone);
+        controllerCarBrand.text = Global.getString(mUserModel!.car.brand);
+        controllerCarModelYear.text = Global.getString(mUserModel!.car.modelYear);
+        controllerMileage.text = Global.getString(mUserModel!.car.mileage);
+        controllerColour.text = Global.getString(mUserModel!.car.color);
+        imgProfilePic = Global.getString(mUserModel!.image);
+        imgMulkia = Global.getString(mUserModel!.customer.mulkiya);
+        imgDrivingLicence = Global.getString(mUserModel!.customer.drivingLicence);
+        imgEmIdFront = Global.getString(mUserModel!.customer.emiratesIDFront);
+        imgEmIdBack = Global.getString(mUserModel!.customer.emiratesIDBack);
 
-      strFname = Global.getString(mUserModel.firstName);
-      strLname = Global.getString(mUserModel.lastName);
-      strCountry = Global.getString(mUserModel.country.first);
-      oldPhoneNumebr=Global.getString(mUserModel.phone);
-      controllerPhone.text = Global.getString(mUserModel.phone);
-      controllerEmail.text = Global.getString(mUserModel.email);
-      isEmailVerified = mUserModel.isEmailVerified;
-      isPhoneVerified = mUserModel.isPhoneVerified;
-      controllerEmgName.text =
-          Global.getString(mUserModel.emergency.emergencyName);
-      controllerEmgPhone.text =
-          Global.getString(mUserModel.emergency.emergencyPhone);
-      controllerCarBrand.text = Global.getString(mUserModel.car.brand);
-      controllerCarModelYear.text = Global.getString(mUserModel.car.modelYear);
-      controllerMileage.text = Global.getString(mUserModel.car.mileage);
-      controllerColour.text = Global.getString(mUserModel.car.color);
-      imgProfilePic = Global.getString(mUserModel.image);
-      imgMulkia = Global.getString(mUserModel.customer.mulkiya);
-      imgDrivingLicence = Global.getString(mUserModel.customer.drivingLicence);
-      imgEmIdFront = Global.getString(mUserModel.customer.emiratesIDFront);
-      imgEmIdBack = Global.getString(mUserModel.customer.emiratesIDBack);
-
-      if (Global.checkNull(mUserModel.countryCode)) {
-        strCountyCode = mUserModel.countryCode;
-        strEmgCountyECode = mUserModel.countryCode;
+        if (Global.checkNull(mUserModel!.countryCode)) {
+          strCountyCode = mUserModel!.countryCode;
+          strEmgCountyECode = mUserModel!.countryCode;
+        }
       }
 
       mShowData = ShowData.showData;
       update();
     });
   }
+
   updateProfile(BuildContext context) async {
     isShowLoader = true;
     update();
@@ -158,7 +158,6 @@ clearController(){
     requestParams[PARAMS.PARAM_EMERGENCYPHONE] = strEmgPhone;
     requestParams[PARAMS.PARAM_COUNTRYCODE] = strCountyCode;
 
-
     if (Global.checkNull(imgMulkia)) {
       if (Global.isURL(imgMulkia)) {
         requestParams[PARAMS.PARAM_SCANMULKIA] = imgMulkia;
@@ -171,8 +170,7 @@ clearController(){
       if (Global.isURL(imgDrivingLicence)) {
         requestParams[PARAMS.PARAM_SCANDRIVINGLISCENCE] = imgDrivingLicence;
       } else {
-        requestParamsImage[PARAMS.PARAM_SCANDRIVINGLISCENCE] =
-            imgDrivingLicence;
+        requestParamsImage[PARAMS.PARAM_SCANDRIVINGLISCENCE] = imgDrivingLicence;
       }
     }
     if (Global.checkNull(imgEmIdFront)) {
@@ -199,22 +197,13 @@ clearController(){
       }
     }
 
-    var categories = await UserRepo()
-        .updateUser(requestParams, requestParamsImage, ReqType.patch);
+    var categories = await UserRepo().updateUser(requestParams, requestParamsImage, ReqType.patch);
     isShowLoader = false;
     update();
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
     }, (mResult) async {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       getProfile();
     });
   }
@@ -258,52 +247,27 @@ clearController(){
     // String strColour = controllerColour.text.toString();
 
     if (!Global.checkNull(strAddress)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_ADDRESS,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_ADDRESS, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeAddress);
       return false;
     } else if (!Global.checkNull(strEmail)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_EMAIL,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMAIL, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
-    } else if (Global.checkNull(strEmail) &&
-        !Global.checkValidEmail(strEmail)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_VALID_EMAIL,
-          toastType: TOAST_TYPE.toastError);
+    } else if (Global.checkNull(strEmail) && !Global.checkValidEmail(strEmail)) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_EMAIL, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
     } else if (!Global.checkNull(strEmgName)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_EMG_NAME,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMG_NAME, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmgName);
       return false;
     } else if (!Global.checkNull(strEmgPhone)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_EMG_NUMBER,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMG_NUMBER, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmgPhone);
       return false;
     } else if (!Global.checkNull(strEmgPhone)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmgPhone);
       return false;
     }
@@ -358,31 +322,25 @@ clearController(){
         });
   }
 
-
 //---------------------------get car list ---------
   getCarList() async {
     HashMap<String, Object> requestParams = HashMap();
     var categorie1 = await MyProfileRepository().getCarList(requestParams);
 
     categorie1.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-
       carList = mResult.responseData as List<GetCarModelResult>;
       carList = carList.reversed.toList();
       mShowData = ShowData.showData;
       update();
     });
   }
+
 //---------------------------add new car---------
-  addNewCar(
-      String brand, String color, String year, String km, String city,String code,String number) async {
+  addNewCar(String brand, String color, String year, String km, String city, String code, String number) async {
     mShowData = ShowData.showLoading;
 
     update(); // isShowLoader = true;
@@ -398,24 +356,17 @@ clearController(){
 
     var categories = await MyProfileRepository().addCar(requestParams);
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       clearController();
-     // getCardsMine();
+      // getCardsMine();
       getCarList();
     });
   }
+
 //-----------------------Delete car-------------------
   deletecar(String carId) async {
     // cardNumber.clear();
@@ -426,28 +377,19 @@ clearController(){
     update();
     HashMap<String, Object> requestParams = HashMap();
     //requestParams['cardId'] = cardId;
-    var categories = await MyProfileRepository().deletecar(requestParams,carId);
+    var categories = await MyProfileRepository().deletecar(requestParams, carId);
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       getCarList();
     });
   }
 
 //-----------------------Update car----------------
-  updateCar(
-      String brand, String color, String year, String km, String city,String code,String number,String id) async {
+  updateCar(String brand, String color, String year, String km, String city, String code, String number, String id) async {
     mShowData = ShowData.showLoading;
 
     update(); // isShowLoader = true;
@@ -461,22 +403,14 @@ clearController(){
     requestParams['carCode'] = code;
     requestParams['carNumber'] = number;
 
-    var categories = await MyProfileRepository().updatecar(requestParams,id);
+    var categories = await MyProfileRepository().updatecar(requestParams, id);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       clearController();
       // getCardsMine();
       getCarList();

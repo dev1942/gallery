@@ -98,10 +98,10 @@ void onStart() {
   WidgetsFlutterBinding.ensureInitialized();
   final service = FlutterBackgroundService();
   service.startService().then((value) {
-    Timer.periodic(const Duration(seconds: 30), (value) {
-      log("Check");
-      getNotifications();
-    });
+    // Timer.periodic(const Duration(seconds: 30), (value) {
+    //   log("Check");
+    //   getNotifications();
+    // });
   });
 }
 
