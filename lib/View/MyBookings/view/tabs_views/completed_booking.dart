@@ -52,7 +52,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                           var data = controller.isSearching == false ? inProcgressList[index] : controller.filteredBookingList![index];
                           if (data.status == "completed" && data.deleted == false) {
                             log("data rated-------");
-                            log(data.rated);
+
                             return Padding(
                               padding: const EdgeInsets.symmetric(vertical: 6.0),
                               child: Stack(

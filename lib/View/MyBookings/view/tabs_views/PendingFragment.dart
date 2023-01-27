@@ -38,7 +38,7 @@ class PendingFragment extends GetView<MyBookingsController> {
           body: GetBuilder<MyBookingsController>(builder: (context) {
             return FutureBuilder<BookingModel>(
                 // body: FutureBuilder<AllBookingsModel>(
-                future: controller.getAllBookings(),
+                future: controller.futurBookings,
                 builder: (context, snapshot) {
                   log("CHECKING DATA :: ${snapshot.hasData}");
                   log("----------------snapshot has data----------");
