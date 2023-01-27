@@ -1,6 +1,7 @@
 // @dart=2.9
 import 'dart:async';
 import 'dart:collection';
+import 'dart:developer';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -14,7 +15,6 @@ import 'package:otobucks/View/Notifications/Models/notification_model.dart';
 import 'package:otobucks/View/auth/View/login_in_screen.dart';
 import 'package:otobucks/app/locator.dart';
 import 'package:otobucks/global/theme_data/theme_data.dart';
-import 'package:otobucks/helper/firebase_utils.dart';
 import 'package:otobucks/helper/local_notifications_helper.dart';
 import 'package:otobucks/preferences/preferences.dart';
 import 'package:otobucks/services/navigation_service.dart';
@@ -40,8 +40,8 @@ class Controller extends GetxController {
 }
 
 Future<void> backgroundHandler(RemoteMessage message) async {
-  print(message.data.toString());
-  print(message.notification.title);
+  log(message.data.toString());
+  log(message.notification.title);
 }
 
 Preferences preferences = Preferences();
@@ -67,7 +67,7 @@ void createanddisplaynotification({String title, String body, String payload}) a
       payload: payload,
     );
   } on Exception catch (e) {
-    print(e);
+    log(e.toString());
   }
 }
 
@@ -98,13 +98,12 @@ void onStart() {
   WidgetsFlutterBinding.ensureInitialized();
   final service = FlutterBackgroundService();
   service.startService().then((value) {
-    Timer.periodic(const Duration(seconds: 30), (value) {
-      print("Check");
-      getNotifications();
-    });
+    // Timer.periodic(const Duration(seconds: 30), (value) {
+    //   log("Check");
+    //   getNotifications();
+    // });
   });
 }
-
 
 // late Directory appDocsDir;
 Future<void> main() async {

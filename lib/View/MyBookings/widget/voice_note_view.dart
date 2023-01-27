@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
@@ -679,7 +681,7 @@ class VoiceRecordingViewButtonState extends State<VoiceRecordingViewButton> {
                   child: InkWell(
                     child: const Icon(Icons.close),
                     onTap: () {
-                     print("Cancel");
+                     debugPrint("Cancel");
                       setState(() {
                         _path = "";
                         isShowPlayView = false;
@@ -690,7 +692,7 @@ class VoiceRecordingViewButtonState extends State<VoiceRecordingViewButton> {
                     },
                   ),
                   visible: true,//isHideRemoveButton,
-                )):SizedBox()
+                )):const SizedBox()
           ],
         ),
         width: AppDimens.dimens_150,

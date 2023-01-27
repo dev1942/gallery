@@ -1,10 +1,8 @@
 import 'dart:collection';
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:otobucks/View/Profile/Model/otp_phoneno_model.dart';
 import 'package:otobucks/View/Profile/View/my_profile_view.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
@@ -105,12 +103,12 @@ class OtpController extends GetxController {
 //------------------------For Number-------------
 
   //----------------------Send Otp------Number------
-  sendNumberOTPTask(String PhoneNumber, BuildContext context) async {
+  sendNumberOTPTask(String phoneNumber, BuildContext context) async {
     isShowLoader = true;
     update();
     HashMap<String, Object> requestParams = HashMap();
 
-    requestParams[PARAMS.PARAM_PHONE] = PhoneNumber;
+    requestParams[PARAMS.PARAM_PHONE] = phoneNumber;
 
     var signInEmail = await OTPRepo().sentOTPToNumber(requestParams);
 
@@ -160,9 +158,9 @@ class OtpController extends GetxController {
           strTitle: "",
           strMsg: mResult.responseMessage,
           toastType: TOAST_TYPE.toastSuccess);
-      print("Navigator pop context--- otp verify-------");
+      log("Navigator pop context--- otp verify-------");
       // Navigator.Pu
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyProfileFragment()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const MyProfileFragment()));
       //Navigator.pushReplacementNamed(context, Constants.ACT_HOME);
     //  loginUserTask(context, modelOTP);
     });

@@ -1,6 +1,5 @@
 import 'dart:collection';
 import 'dart:developer';
-import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as i;
 import 'package:get/get.dart';
@@ -18,7 +17,6 @@ import 'package:otobucks/View/Services_All/Views/service_provider_profile_screen
 import 'package:otobucks/services/repository/estimates_repo.dart';
 
 import '../../../global/Models/time_model.dart';
-import '../Models/AllBookingsModel.dart';
 
 class CreateEstimationController extends GetxController {
   bool connectionStatus = false;
@@ -55,7 +53,7 @@ class CreateEstimationController extends GetxController {
       List<i.Placemark> placemarks = await i.placemarkFromCoordinates(_mLatLng.latitude, _mLatLng.longitude);
       addressNote.text = '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
 
-      print("addresssssis${addressNote.text}");
+      log("addresssssis${addressNote.text}");
       mLatLng = _mLatLng;
     } else {
       Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Enable Location From setting!', toastType: TOAST_TYPE.toastError);

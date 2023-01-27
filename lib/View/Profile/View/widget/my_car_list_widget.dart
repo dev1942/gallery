@@ -3,9 +3,7 @@ import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/app_views.dart';
-import 'package:otobucks/widgets/fade_in_image.dart';
 
-import '../../../../global/app_images.dart';
 
 class MyCarListItem extends StatelessWidget {
   final String image;
@@ -79,15 +77,15 @@ class MyCarListItem extends StatelessWidget {
                        ),
 
                      ],),
-                      SizedBox(),
-                      this.isViewed ? SizedBox(): Row(children: [
+                      const SizedBox(),
+                      isViewed ? const SizedBox(): Row(children: [
                         GestureDetector(
                           onTap: onEditTap,
-                          child:Icon(Icons.edit_calendar)
+                          child:const Icon(Icons.edit_calendar)
                         ),
                        GestureDetector(
                            onTap: onDeleteTap,
-                           child: Icon(Icons.delete)),
+                           child: const Icon(Icons.delete)),
                       ],),
 
                     ],
@@ -111,7 +109,7 @@ addVerticleSpace(10),
                                 fontWeightDelta: 0),
                           ),
                           Text(
-                            "$modeYear",
+                            modeYear,
                             style: AppStyle.textViewStyleSmall(
                                 context: context,
                                 color: AppColors.colorBlack,
@@ -133,7 +131,7 @@ addVerticleSpace(10),
                                 fontWeightDelta: 0),
                           ),
                           Text(
-                            "$km",
+                            km,
                             style: AppStyle.textViewStyleSmall(
                                 context: context,
                                 color: AppColors.colorBlack,
@@ -155,7 +153,7 @@ addVerticleSpace(10),
                                 fontWeightDelta: 0),
                           ),
                           Text(
-                            "$color",
+                            color,
                             style: AppStyle.textViewStyleSmall(
                                 context: context,
                                 color: AppColors.colorBlack,
@@ -168,13 +166,13 @@ addVerticleSpace(10),
                   ),
 
 
-Divider(thickness: 1,),
+const Divider(thickness: 1,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                    CodeCityNumber(context,"Code  ",code),
-                    CodeCityNumber(context,"City",city),
-                    CodeCityNumber(context,"Number",number),
+                    codeCityNumber(context,"Code  ",code),
+                    codeCityNumber(context,"City",city),
+                    codeCityNumber(context,"Number",number),
                   ],)
 
                 ],
@@ -188,7 +186,7 @@ Divider(thickness: 1,),
     );
   }
 
-  Widget CodeCityNumber(BuildContext context,heading,text){
+  Widget codeCityNumber(BuildContext context,heading,text){
     return   Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -200,7 +198,7 @@ Divider(thickness: 1,),
               fontSizeDelta: -2,
               fontWeightDelta: 0),
         ),
-        SizedBox(height:3.0),
+        const SizedBox(height:3.0),
         Text(
           text,
           style: AppStyle.textViewStyleSmall(

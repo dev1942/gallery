@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
-import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/global/enum.dart';
@@ -16,8 +15,8 @@ class TransactionController extends GetxController {
 
   bool connectionStatus = false;
   bool isShowLoader = false;
-  var endDate;
-  var startDate;
+  dynamic endDate;
+  dynamic startDate;
   bool isSearching=false;
   bool isRangePicked = false;
   List<TransactionModel> transactions = [];

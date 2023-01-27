@@ -12,7 +12,7 @@ class ChatHistorController extends GetxController {
 
   List<MyRoomModel> rooms = [];
 
-  getRooms() async {
+  Future<void>getRooms() async {
     rooms.clear();
     mShowData = ShowData.showLoading;
     // isShowLoader = true

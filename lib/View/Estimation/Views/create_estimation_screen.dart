@@ -1,10 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:otobucks/View/CheckOut/Views/checkout_screen.dart';
 import 'package:otobucks/View/MyBookings/controller/estimation_controller.dart';
-import 'package:http/http.dart' as http;
 import 'package:otobucks/View/Profile/Controller/profile_screen_controller.dart';
 import 'package:otobucks/global/adaptive_helper.dart';
 import 'package:otobucks/global/app_colors.dart';
@@ -26,7 +27,6 @@ import 'package:otobucks/widgets/image_view.dart';
 import 'package:otobucks/widgets/media_button.dart';
 import 'package:otobucks/widgets/time_selector.dart';
 import 'package:otobucks/widgets/voice_note_buttons.dart';
-import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 import '../../../global/Models/time_model.dart';
 
@@ -34,9 +34,7 @@ class CreateEstimationScreen extends StatefulWidget {
   final ServiceModel mServiceModel;
   final String screenType;
 
-  const CreateEstimationScreen(
-      {Key? key, required this.mServiceModel, required this.screenType})
-      : super(key: key);
+  const CreateEstimationScreen({Key? key, required this.mServiceModel, required this.screenType}) : super(key: key);
 
   @override
   CreateEstimationScreenState createState() => CreateEstimationScreenState();
@@ -45,7 +43,6 @@ class CreateEstimationScreen extends StatefulWidget {
 class CreateEstimationScreenState extends State<CreateEstimationScreen> {
   var controller = Get.put(CreateEstimationController());
   var profileController = Get.put(ProfileScreenController());
-
 
   @override
   void initState() {
@@ -56,26 +53,25 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
     super.initState();
   }
 
-  List<String>? carNamesList=[];
-  List<String>? carNameId=[];
+  List<String>? carNamesList = [];
+  List<String>? carNameId = [];
 
-  getcardata(){
-    if(profileController.carList.isNotEmpty) {
+  getcardata() {
+    if (profileController.carList.isNotEmpty) {
       for (int i = 0; i < profileController.carList.length; i++) {
         carNamesList?.add(profileController.carList[i].brand!);
-        carNameId?.add(profileController.carList[i].Id!);
+        carNameId?.add(profileController.carList[i].id!);
       }
     }
   }
 
-String? selectedValue="";
+  String? selectedValue = "";
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    print("---------car list----------------");
-    print(carNamesList);
-    print(carNameId);
-
+    log("---------car list----------------");
+    log(carNamesList.toString());
+    log(carNameId.toString());
 
     return Scaffold(
       appBar: AppViews.initAppBar(
@@ -115,8 +111,7 @@ String? selectedValue="";
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     _dateTimeSection(),
-                    if (widget.screenType != 'promotion')
-                      _uploadImagesSection(),
+                    if (widget.screenType != 'promotion') _uploadImagesSection(),
                     //Upload Video or Shoot a video
                     if (widget.screenType != 'promotion') _videoSection(),
                     //Voice Note
@@ -128,10 +123,7 @@ String? selectedValue="";
                     Container(
                       alignment: Alignment.center,
                       margin: const EdgeInsets.only(
-                          top: AppDimens.dimens_20,
-                          bottom: AppDimens.dimens_20,
-                          left: AppDimens.dimens_10,
-                          right: AppDimens.dimens_10),
+                          top: AppDimens.dimens_20, bottom: AppDimens.dimens_20, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
                       child: CustomButton(
                           isGradient: true,
                           isRoundBorder: true,
@@ -144,43 +136,29 @@ String? selectedValue="";
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => CheckoutScreen(
-                                              promotionID:
-                                                  widget.mServiceModel.id,
-                                              address: controller
-                                                  .addressNote.text
-                                                  .toString(),
+                                              promotionID: widget.mServiceModel.id,
+                                              address: controller.addressNote.text.toString(),
                                               date: controller.selectedDate,
-                                              time: controller
-                                                  .mTimeModel!.time_24hr,
-                                              amount: controller
-                                                  .mServiceModel.price,
-                                              note: controller
-                                                  .controllerNote.text,
-                                              previousAmount: controller
-                                                  .mServiceModel.beforePrice,
-                                              discount: controller
-                                                  .mServiceModel.discount,
+                                              time: controller.mTimeModel!.time_24hr,
+                                              amount: controller.mServiceModel.price,
+                                              note: controller.controllerNote.text,
+                                              previousAmount: controller.mServiceModel.beforePrice,
+                                              discount: controller.mServiceModel.discount,
                                             )));
                               } else {
-
-                                if(selectedValue != null && selectedValue!.isNotEmpty){
-                                  int index=carNamesList!.indexOf(selectedValue!);
-                                  controller.createEstimation(context,carNameId![index]);
-                                }else{
+                                if (selectedValue != null && selectedValue!.isNotEmpty) {
+                                  int index = carNamesList!.indexOf(selectedValue!);
+                                  controller.createEstimation(context, carNameId![index]);
+                                } else {
                                   Global.showToastAlert(
-                                      context: Get.overlayContext!,
-                                      strTitle: "",
-                                      strMsg: "Please Select a Car",
-                                      toastType: TOAST_TYPE.toastInfo);
+                                      context: Get.overlayContext!, strTitle: "", strMsg: "Please Select a Car", toastType: TOAST_TYPE.toastInfo);
                                 }
 
-                                 //
+                                //
                               }
                             }
                           },
-                          strTitle: widget.screenType == 'promotion'
-                              ? 'Process To Payment'
-                              : Constants.TXT_REQUEST_ESTIMATION.tr),
+                          strTitle: widget.screenType == 'promotion' ? 'Process To Payment' : Constants.TXT_REQUEST_ESTIMATION.tr),
                     ),
                   ],
                 ),
@@ -190,8 +168,7 @@ String? selectedValue="";
             ],
           ),
           GetBuilder<CreateEstimationController>(
-            builder: (value) =>
-                AppViews.showLoadingWithStatus(value.isShowLoader),
+            builder: (value) => AppViews.showLoadingWithStatus(value.isShowLoader),
           )
         ],
       ),
@@ -200,10 +177,7 @@ String? selectedValue="";
 
   _profileSection() => Container(
         margin: const EdgeInsetsDirectional.only(
-            start: AppDimens.dimens_20,
-            top: AppDimens.dimens_20,
-            bottom: AppDimens.dimens_30,
-            end: AppDimens.dimens_20),
+            start: AppDimens.dimens_20, top: AppDimens.dimens_20, bottom: AppDimens.dimens_30, end: AppDimens.dimens_20),
         alignment: Alignment.center,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -216,10 +190,7 @@ String? selectedValue="";
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                 child: NetworkImageCustom(
-                    image: controller.mServiceModel.getProviderImage(),
-                    fit: BoxFit.fill,
-                    height: AppDimens.dimens_120,
-                    width: AppDimens.dimens_120),
+                    image: controller.mServiceModel.getProviderImage(), fit: BoxFit.fill, height: AppDimens.dimens_120, width: AppDimens.dimens_120),
               ),
             ),
             Expanded(
@@ -229,17 +200,11 @@ String? selectedValue="";
               children: [
                 Text(
                   // ignore: unnecessary_null_comparison
-                  controller.mServiceModel.mServiceProviderModel != null
-                      ? controller.mServiceModel.mServiceProviderModel.getName()
-                      : "",
+                  controller.mServiceModel.mServiceProviderModel != null ? controller.mServiceModel.mServiceProviderModel.getName() : "",
                   softWrap: true,
                   overflow: TextOverflow.clip,
                   maxLines: 2,
-                  style: AppStyle.textViewStyleLarge(
-                      context: context,
-                      color: AppColors.colorWhite,
-                      fontSizeDelta: 3,
-                      fontWeightDelta: -2),
+                  style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorWhite, fontSizeDelta: 3, fontWeightDelta: -2),
                 ),
                 InkWell(
                   child: Container(
@@ -277,92 +242,59 @@ String? selectedValue="";
                 Expanded(
                   child: Text(
                     "Service".tr,
-                    style: AppStyle.textViewStyleNormalSubtitle2(
-                        context: context,
-                        color: AppColors.colorGray,
-                        fontSizeDelta: 1,
-                        fontWeightDelta: 1),
+                    style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorGray, fontSizeDelta: 1, fontWeightDelta: 1),
                   ),
                 ),
                 Text(
                   value.mServiceModel.mSubCategoryModel.title,
-                  style: AppStyle.textViewStyleNormalSubtitle2(
-                      context: context,
-                      color: Colors.grey,
-                      fontSizeDelta: 1,
-                      fontWeightDelta: -1),
+                  style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: Colors.grey, fontSizeDelta: 1, fontWeightDelta: -1),
                 ),
               ],
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(
-                top: AppDimens.dimens_10,
-                left: AppDimens.dimens_14,
-                right: AppDimens.dimens_14),
+            margin: const EdgeInsets.only(top: AppDimens.dimens_10, left: AppDimens.dimens_14, right: AppDimens.dimens_14),
             alignment: Alignment.center,
             child: Row(
               children: [
                 Expanded(
                   child: Text(
                     "Provider".tr,
-                    style: AppStyle.textViewStyleNormalSubtitle2(
-                        context: context,
-                        color: AppColors.colorGray,
-                        fontSizeDelta: 1,
-                        fontWeightDelta: 1),
+                    style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorGray, fontSizeDelta: 1, fontWeightDelta: 1),
                   ),
                 ),
                 Text(
                   value.mServiceModel.mServiceProviderModel.getName(),
-                  style: AppStyle.textViewStyleNormalSubtitle2(
-                      context: context,
-                      color: Colors.grey,
-                      fontSizeDelta: 1,
-                      fontWeightDelta: -1),
+                  style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: Colors.grey, fontSizeDelta: 1, fontWeightDelta: -1),
                 ),
               ],
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(
-                top: AppDimens.dimens_10,
-                left: AppDimens.dimens_14,
-                right: AppDimens.dimens_14),
+            margin: const EdgeInsets.only(top: AppDimens.dimens_10, left: AppDimens.dimens_14, right: AppDimens.dimens_14),
             alignment: Alignment.center,
             child: Row(
               children: [
                 Expanded(
                   child: Text(
                     "Service Price per hour".tr,
-                    style: AppStyle.textViewStyleNormalSubtitle2(
-                        context: context,
-                        color: AppColors.colorGray,
-                        fontSizeDelta: 1,
-                        fontWeightDelta: 1),
+                    style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorGray, fontSizeDelta: 1, fontWeightDelta: 1),
                   ),
                 ),
                 GradientText(
                   //  Global.replaceCurrencySign(value.mServiceModel.currency) +
                   "AED " + value.mServiceModel.price,
-                  style: AppStyle.textViewStyleNormalSubtitle2(
-                      context: context,
-                      color: AppColors.colorTextBlue,
-                      fontSizeDelta: 0,
-                      fontWeightDelta: 3),
+                  style:
+                      AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorTextBlue, fontSizeDelta: 0, fontWeightDelta: 3),
                 ),
               ],
             ),
           ),
           Container(
-              margin: const EdgeInsets.only(
-                  top: AppDimens.dimens_20,
-                  left: AppDimens.dimens_14,
-                  right: AppDimens.dimens_14),
+              margin: const EdgeInsets.only(top: AppDimens.dimens_20, left: AppDimens.dimens_14, right: AppDimens.dimens_14),
               alignment: Alignment.center,
               height: AppDimens.dimens_160,
-              child: GoogleMapView(
-                  onTap: (LatLng mLatLng_) => value.updateLatLang(mLatLng_))),
+              child: GoogleMapView(onTap: (LatLng mLatLng_) => value.updateLatLang(mLatLng_))),
           _addressTextFiledSection(),
           Container(
             margin: const EdgeInsets.only(
@@ -374,50 +306,43 @@ String? selectedValue="";
 
             child: Text(
               "Cars".tr,
-              style: AppStyle.textViewStyleNormalSubtitle2(
-                  context: context,
-                  color: AppColors.colorBlack2,
-                  fontWeightDelta: 1,
-                  fontSizeDelta: 0),
+              style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
             ),
           ),
           //..................drop down car list..........................
           Container(
-            margin:  EdgeInsets.only(
+            margin: const EdgeInsets.only(
               top: AppDimens.dimens_8,
               left: AppDimens.dimens_14,
               right: AppDimens.dimens_14,
             ),
             child:
-        //     AppViews.defaultDropDownInPutFieldButton(
-        //
-        //         itemsList:
-        //
-        // carNamesList??[]
-        //     // [
-        //     //   "Suzuki",
-        //     //   "Tesla",
-        //     //   "Tesla 2",
-        //     // ]
-        //
-        //         , selectedValue:  , hintText: "Choose Your Car"),
+                //     AppViews.defaultDropDownInPutFieldButton(
+                //
+                //         itemsList:
+                //
+                // carNamesList??[]
+                //     // [
+                //     //   "Suzuki",
+                //     //   "Tesla",
+                //     //   "Tesla 2",
+                //     // ]
+                //
+                //         , selectedValue:  , hintText: "Choose Your Car"),
 
-            DropdownButtonFormField2(
+                DropdownButtonFormField2(
               buttonHeight: 45,
               decoration: InputDecoration(
                 //Add isDense true and zero Padding.
                 //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
                 isDense: true,
                 hintStyle: AppStyle.textViewStyleNormalBodyText2(
-                    color: AppColors.colorTextFieldHint,
-                    fontSizeDelta: -5,
-                    fontWeightDelta: -1,
-                    context: Get.context!),
+                    color: AppColors.colorTextFieldHint, fontSizeDelta: -5, fontWeightDelta: -1, context: Get.context!),
                 fillColor: Colors.white,
                 focusedBorder: AppViews.textFieldRoundBorder(),
                 border: AppViews.textFieldRoundBorder(),
                 disabledBorder: AppViews.textFieldRoundBorder(),
-                focusedErrorBorder: AppViews.textFieldRoundBorder(),          contentPadding: EdgeInsets.zero,
+                focusedErrorBorder: AppViews.textFieldRoundBorder(), contentPadding: EdgeInsets.zero,
                 filled: true,
                 //Add more decoration as you want here
                 //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
@@ -426,26 +351,22 @@ String? selectedValue="";
               hint: const Text(
                 "Choose Your Car",
               ),
-              icon:const  Icon(
-                  Icons.arrow_drop_down,
-                  color:
-                  Colors.black
-              ),
+              icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
               iconSize: 30,
-              buttonPadding:  EdgeInsets.only(left: 20, right: 10),
+              buttonPadding: const EdgeInsets.only(left: 20, right: 10),
               dropdownDecoration: BoxDecoration(
-                color:
-                Colors.white,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
               items: carNamesList!
                   .map((item) => DropdownMenuItem<String>(
-                value: item,
-                child: Text(
-                  item??"",
-                  style:AppStyle.textViewStyleSmall(context: Get.context!, color: Colors.black),
-                ),
-              )).toList(),
+                        value: item,
+                        child: Text(
+                          item,
+                          style: AppStyle.textViewStyleSmall(context: Get.context!, color: Colors.black),
+                        ),
+                      ))
+                  .toList(),
               // validator: (value) {
               //   if (value == null) {
               //     return 'Field can not empty';
@@ -454,15 +375,12 @@ String? selectedValue="";
 
               onChanged: (value) {
                 selectedValue = value.toString();
-                setState(() {
-                });
+                setState(() {});
               },
               onSaved: (value) {
                 selectedValue = value.toString();
-              setState(() {
-
-              });
-                },
+                setState(() {});
+              },
             ),
           ),
 
@@ -474,11 +392,7 @@ String? selectedValue="";
             ),
             child: Text(
               "Date & Time".tr,
-              style: AppStyle.textViewStyleNormalSubtitle2(
-                  context: context,
-                  color: AppColors.colorBlack2,
-                  fontWeightDelta: 1,
-                  fontSizeDelta: 0),
+              style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
             ),
           ),
 
@@ -488,9 +402,7 @@ String? selectedValue="";
               left: AppDimens.dimens_14,
               right: AppDimens.dimens_14,
             ),
-            child: DateSelector(
-                onSelection: (String _selectedDate) =>
-                    value.onSelectDate(_selectedDate)),
+            child: DateSelector(onSelection: (String _selectedDate) => value.onSelectDate(_selectedDate)),
           ),
           Container(
             margin: const EdgeInsets.only(
@@ -500,11 +412,7 @@ String? selectedValue="";
             ),
             child: Text(
               "Time".tr,
-              style: AppStyle.textViewStyleNormalSubtitle2(
-                  context: context,
-                  color: AppColors.colorBlack2,
-                  fontWeightDelta: 1,
-                  fontSizeDelta: 0),
+              style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
             ),
           ),
           Container(
@@ -518,13 +426,13 @@ String? selectedValue="";
             child: TimeSelector(
                 selectedDate: value.selectedDate,
                 mTimeModel: value.mTimeModel,
-                onSelection: (TimeModel mtimeModel_) =>
-                    value.onSelectTime(mtimeModel_)),
+                onSelection: (TimeModel mtimeModel_) => value.onSelectTime(mtimeModel_)),
           ),
         ],
       );
     });
   }
+
 //   static Widget defaultDropDownInPutFieldButton(
 //       {required List<String> itemsList,
 //         required String? selectedValue,
@@ -552,21 +460,15 @@ String? selectedValue="";
                 Flexible(
                   child: Text(
                     Constants.STR_IMAGE_MSG.tr,
-                    style: AppStyle.textViewStyleNormalSubtitle2(
-                        context: context,
-                        color: AppColors.colorBlack2,
-                        fontWeightDelta: 1,
-                        fontSizeDelta: 0),
+                    style:
+                        AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
                   ),
                 ),
                 const SizedBox(width: AppDimens.dimens_5),
                 Text(
                   Constants.STR_MAX_SIZE.tr,
-                  style: AppStyle.textViewStyleNormalSubtitle2(
-                      context: context,
-                      color: AppColors.colorBlack2,
-                      fontWeightDelta: -1,
-                      fontSizeDelta: -4),
+                  style:
+                      AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
                 ),
               ],
             ),
@@ -591,8 +493,7 @@ String? selectedValue="";
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(AppDimens.dimens_5),
+                              borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                             ),
                             height: AppDimens.dimens_100,
                             width: AppDimens.dimens_100,
@@ -621,8 +522,7 @@ String? selectedValue="";
                             },
                           ),
                           Container(
-                            margin: const EdgeInsetsDirectional.only(
-                                start: AppDimens.dimens_15),
+                            margin: const EdgeInsetsDirectional.only(start: AppDimens.dimens_15),
                             child: MediaButton(
                               strImage: AppImages.ic_camera,
                               onPressed: () {
@@ -658,21 +558,15 @@ String? selectedValue="";
                 Flexible(
                   child: Text(
                     Constants.STR_VIDEO_MSG.tr,
-                    style: AppStyle.textViewStyleNormalSubtitle2(
-                        context: context,
-                        color: AppColors.colorBlack2,
-                        fontWeightDelta: 1,
-                        fontSizeDelta: 0),
+                    style:
+                        AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
                   ),
                 ),
                 const SizedBox(width: AppDimens.dimens_5),
                 Text(
                   Constants.STR_MAX_SIZE.tr,
-                  style: AppStyle.textViewStyleNormalSubtitle2(
-                      context: context,
-                      color: AppColors.colorBlack2,
-                      fontWeightDelta: -1,
-                      fontSizeDelta: -4),
+                  style:
+                      AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
                 ),
               ],
             ),
@@ -698,13 +592,10 @@ String? selectedValue="";
                         ),
                         Container(
                           child: Text(
-                            Constants.TXT_PLEASE_WAIT +
-                                ' ${snapshot.data.toStringAsFixed(0)}%',
-                            style: AppStyle.textViewStyleSmall(
-                                context: context, color: AppColors.colorBlack),
+                            Constants.TXT_PLEASE_WAIT + ' ${snapshot.data.toStringAsFixed(0)}%',
+                            style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
                           ),
-                          margin:
-                              const EdgeInsets.only(top: AppDimens.dimens_8),
+                          margin: const EdgeInsets.only(top: AppDimens.dimens_8),
                         )
                       ],
                     ),
@@ -728,8 +619,7 @@ String? selectedValue="";
                     Visibility(
                         visible: Global.checkNull(value.pickedVideo),
                         child: Container(
-                          margin: const EdgeInsetsDirectional.only(
-                              end: AppDimens.dimens_15),
+                          margin: const EdgeInsetsDirectional.only(end: AppDimens.dimens_15),
                           height: AppDimens.dimens_100,
                           width: AppDimens.dimens_100,
                           child: Stack(
@@ -737,29 +627,25 @@ String? selectedValue="";
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(AppDimens.dimens_5),
+                                  borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                                 ),
                                 height: AppDimens.dimens_100,
                                 width: AppDimens.dimens_100,
                                 child: InkWell(
                                   child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                          AppDimens.dimens_5),
+                                      borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                                       child: Container(
                                         color: AppColors.colorGray2,
                                         child: Icon(
                                           Icons.play_arrow,
                                           color: AppColors.curiousBlue,
                                         ),
-                                        padding: const EdgeInsets.all(
-                                            AppDimens.dimens_35),
+                                        padding: const EdgeInsets.all(AppDimens.dimens_35),
                                         // width: width != null ? width : AppDimens.dimens_100,
                                         // height: height != null ? height : AppDimens.dimens_100,
                                       )),
                                   onTap: () {
-                                    Global.gotoVideoView(
-                                        context, value.pickedVideo);
+                                    Global.gotoVideoView(context, value.pickedVideo);
                                   },
                                 ),
                               ),
@@ -784,8 +670,7 @@ String? selectedValue="";
                             },
                           ),
                           Container(
-                            margin: const EdgeInsetsDirectional.only(
-                                start: AppDimens.dimens_15),
+                            margin: const EdgeInsetsDirectional.only(start: AppDimens.dimens_15),
                             child: MediaButton(
                               strImage: AppImages.ic_video_cam,
                               onPressed: () {
@@ -807,8 +692,7 @@ String? selectedValue="";
     });
   }
 
-  _voiceNoteSection() =>
-      GetBuilder<CreateEstimationController>(builder: (value) {
+  _voiceNoteSection() => GetBuilder<CreateEstimationController>(builder: (value) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -824,21 +708,15 @@ String? selectedValue="";
                   Flexible(
                     child: Text(
                       Constants.STR_LEAVE_VOICE_NOTE.tr,
-                      style: AppStyle.textViewStyleNormalSubtitle2(
-                          context: context,
-                          color: AppColors.colorBlack2,
-                          fontWeightDelta: 1,
-                          fontSizeDelta: 0),
+                      style:
+                          AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
                     ),
                   ),
                   const SizedBox(width: AppDimens.dimens_5),
                   Text(
                     Constants.STR_MAX_SIZE.tr,
-                    style: AppStyle.textViewStyleNormalSubtitle2(
-                        context: context,
-                        color: AppColors.colorBlack2,
-                        fontWeightDelta: -1,
-                        fontSizeDelta: -4),
+                    style:
+                        AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
                   ),
                 ],
               ),
@@ -849,19 +727,13 @@ String? selectedValue="";
                 left: AppDimens.dimens_14,
                 right: AppDimens.dimens_14,
               ),
-
               child: InkWell(
-                onTap: (){
-
-                },
+                onTap: () {},
                 child: VoiceRecordingButton(
                   // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
                   strVoiceNotePath: value.voiceNoteFile,
-                  callback: (String filePath) =>
-                      value.onSelectVoiceNote(filePath),
+                  callback: (String filePath) => value.onSelectVoiceNote(filePath),
                 ),
-
-
               ),
             ),
           ],
@@ -881,11 +753,7 @@ String? selectedValue="";
           ),
           child: Text(
             Constants.STR_ADDRESS.tr,
-            style: AppStyle.textViewStyleNormalSubtitle2(
-                context: context,
-                color: AppColors.colorBlack2,
-                fontWeightDelta: 1,
-                fontSizeDelta: 0),
+            style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
           ),
         ),
         Container(
@@ -902,25 +770,18 @@ String? selectedValue="";
               },
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.text,
-              style: AppStyle.textViewStyleNormalBodyText2(
-                  color: AppColors.colorBlack,
-                  fontSizeDelta: 0,
-                  fontWeightDelta: 0,
-                  context: context),
+              style: AppStyle.textViewStyleNormalBodyText2(color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
               controller: controller.addressNote,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
-                prefixIconConstraints:
-                    const BoxConstraints(minWidth: AppDimens.dimens_33),
-                suffixIconConstraints:
-                    const BoxConstraints(minWidth: AppDimens.dimens_33),
+                prefixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
+                suffixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
                 suffixIcon: Container(
                   margin: const EdgeInsets.only(right: AppDimens.dimens_12),
                   alignment: Alignment.center,
                   width: 5,
                 ),
-                contentPadding: const EdgeInsets.only(
-                    top: AppDimens.dimens_7, left: AppDimens.dimens_15),
+                contentPadding: const EdgeInsets.only(top: AppDimens.dimens_7, left: AppDimens.dimens_15),
                 focusedBorder: AppViews.textFieldRoundBorder(),
                 border: AppViews.textFieldRoundBorder(),
                 disabledBorder: AppViews.textFieldRoundBorder(),
@@ -929,16 +790,12 @@ String? selectedValue="";
                 filled: true,
                 fillColor: AppColors.colorGray2,
                 hintStyle: AppStyle.textViewStyleNormalBodyText2(
-                    color: AppColors.colorTextFieldHint,
-                    fontSizeDelta: 0,
-                    fontWeightDelta: 0,
-                    context: context),
+                    color: AppColors.colorTextFieldHint, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
               ),
             ),
             height: AppDimens.dimens_50,
           ),
-          decoration:
-              AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
+          decoration: AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
         )
       ],
     );
@@ -957,11 +814,7 @@ String? selectedValue="";
           ),
           child: Text(
             Constants.STR_LEAVE_NOTE.tr,
-            style: AppStyle.textViewStyleNormalSubtitle2(
-                context: context,
-                color: AppColors.colorBlack2,
-                fontWeightDelta: 1,
-                fontSizeDelta: 0),
+            style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
           ),
         ),
         Container(
@@ -978,25 +831,18 @@ String? selectedValue="";
               },
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.text,
-              style: AppStyle.textViewStyleNormalBodyText2(
-                  color: AppColors.colorBlack,
-                  fontSizeDelta: 0,
-                  fontWeightDelta: 0,
-                  context: context),
+              style: AppStyle.textViewStyleNormalBodyText2(color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
               controller: controller.controllerNote,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
-                prefixIconConstraints:
-                    const BoxConstraints(minWidth: AppDimens.dimens_33),
-                suffixIconConstraints:
-                    const BoxConstraints(minWidth: AppDimens.dimens_33),
+                prefixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
+                suffixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
                 suffixIcon: Container(
                   margin: const EdgeInsets.only(right: AppDimens.dimens_12),
                   alignment: Alignment.center,
                   width: AppDimens.dimens_50,
                 ),
-                contentPadding: const EdgeInsets.only(
-                    top: AppDimens.dimens_7, left: AppDimens.dimens_15),
+                contentPadding: const EdgeInsets.only(top: AppDimens.dimens_7, left: AppDimens.dimens_15),
                 focusedBorder: AppViews.textFieldRoundBorder(),
                 border: AppViews.textFieldRoundBorder(),
                 disabledBorder: AppViews.textFieldRoundBorder(),
@@ -1005,16 +851,12 @@ String? selectedValue="";
                 filled: true,
                 fillColor: AppColors.colorGray2,
                 hintStyle: AppStyle.textViewStyleNormalBodyText2(
-                    color: AppColors.colorTextFieldHint,
-                    fontSizeDelta: 0,
-                    fontWeightDelta: 0,
-                    context: context),
+                    color: AppColors.colorTextFieldHint, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
               ),
             ),
             height: AppDimens.dimens_50,
           ),
-          decoration:
-              AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
+          decoration: AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
         )
       ],
     );
@@ -1022,10 +864,10 @@ String? selectedValue="";
 // Future  hitAPI() async {
 //   final response=await http.get(Uri.parse('https://developmentapi-app.otobucks.com/v1/bookings/bookService'));
 //   if(response.statusCode==200){
-//     return print(response.body.toString());
+//     return log(response.body.toString());
 //   }
 //   else{
-//     return print(response.body.toString());
+//     return log(response.body.toString());
 //   }
 // }
 }

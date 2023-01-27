@@ -1,9 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/global/text_styles.dart';
 
@@ -45,13 +41,9 @@ class _BotSmsState extends State<BotSms> {
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.symmetric(horizontal: 20),
-              padding: const EdgeInsets.only(
-                  top: 25, left: 25, right: 25, bottom: 70),
+              padding: const EdgeInsets.only(top: 25, left: 25, right: 25, bottom: 70),
               width: double.infinity,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: Image.asset('assets/images/ic_sms.png').image,
-                      fit: BoxFit.fill)),
+              decoration: BoxDecoration(image: DecorationImage(image: Image.asset('assets/images/ic_sms.png').image, fit: BoxFit.fill)),
               child: Text(
                 "This Functionality is under development. It will be available you you soon",
                 textAlign: TextAlign.center,

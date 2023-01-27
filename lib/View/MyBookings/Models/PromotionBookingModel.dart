@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class PromotionBookingHistory {
   String? status;
   String? message;
@@ -26,13 +28,13 @@ class PromotionBookingHistory {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    data['countOnPage'] = this.countOnPage;
-    data['totalCount'] = this.totalCount;
-    if (this.result != null) {
-      data['result'] = this.result!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
+    data['countOnPage'] = countOnPage;
+    data['totalCount'] = totalCount;
+    if (result != null) {
+      data['result'] = result!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -76,49 +78,49 @@ class ProotionResult {
     status = json['status'];
     sId = json['_id'];
     provider = json['provider'] != null
-        ? new Provider.fromJson(json['provider'])
+        ? Provider.fromJson(json['provider'])
         : null;
     customer = json['customer'] != null
-        ? new Provider.fromJson(json['customer'])
+        ? Provider.fromJson(json['customer'])
         : null;
     paymentMethod = json['paymentMethod'];
     transactionId = json['transactionId'];
     promotion = json['promotion'] != null
-        ? new Promotion.fromJson(json['promotion'])
+        ? Promotion.fromJson(json['promotion'])
         : null;
     paymentStatus = json['paymentStatus'];
     address = json['address'];
     bookingDetails = json['bookingDetails'] != null
-        ? new BookingDetails.fromJson(json['bookingDetails'])
+        ? BookingDetails.fromJson(json['bookingDetails'])
         : null;
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ssn'] = this.ssn;
-    data['totalprice'] = this.totalprice;
-    data['status'] = this.status;
-    data['_id'] = this.sId;
-    if (this.provider != null) {
-      data['provider'] = this.provider!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ssn'] = ssn;
+    data['totalprice'] = totalprice;
+    data['status'] = status;
+    data['_id'] = sId;
+    if (provider != null) {
+      data['provider'] = provider!.toJson();
     }
-    if (this.customer != null) {
-      data['customer'] = this.customer!.toJson();
+    if (customer != null) {
+      data['customer'] = customer!.toJson();
     }
-    data['paymentMethod'] = this.paymentMethod;
-    data['transactionId'] = this.transactionId;
-    if (this.promotion != null) {
-      data['promotion'] = this.promotion!.toJson();
+    data['paymentMethod'] = paymentMethod;
+    data['transactionId'] = transactionId;
+    if (promotion != null) {
+      data['promotion'] = promotion!.toJson();
     }
-    data['paymentStatus'] = this.paymentStatus;
-    data['address'] = this.address;
-    if (this.bookingDetails != null) {
-      data['bookingDetails'] = this.bookingDetails!.toJson();
+    data['paymentStatus'] = paymentStatus;
+    data['address'] = address;
+    if (bookingDetails != null) {
+      data['bookingDetails'] = bookingDetails!.toJson();
     }
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }
@@ -155,15 +157,15 @@ class Provider {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['country'] = this.country;
-    data['role'] = this.role;
-    data['_id'] = this.sId;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['country'] = country;
+    data['role'] = role;
+    data['_id'] = sId;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['id'] = id;
     return data;
   }
 }
@@ -230,7 +232,7 @@ class Promotion {
     paymentStatus = json['paymentStatus'];
     sId = json['_id'];
     source =
-    json['source'] != null ? new Source.fromJson(json['source']) : null;
+    json['source'] != null ? Source.fromJson(json['source']) : null;
     title = json['title'];
     description = json['description'];
     previousPrice = json['previousPrice'];
@@ -244,7 +246,7 @@ class Promotion {
     sourceType = json['sourceType'];
     promotionCharges = json['promotionCharges'];
     provider = json['provider'] != null
-        ? new Provider.fromJson(json['provider'])
+        ? Provider.fromJson(json['provider'])
         : null;
     activeByAdmin = json['activeByAdmin'];
     createdAt = json['createdAt'];
@@ -254,36 +256,36 @@ class Promotion {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ssn'] = this.ssn;
-    data['promoImg'] = this.promoImg;
-    data['deleted'] = this.deleted;
-    data['active'] = this.active;
-    data['paymentStatus'] = this.paymentStatus;
-    data['_id'] = this.sId;
-    if (this.source != null) {
-      data['source'] = this.source!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ssn'] = ssn;
+    data['promoImg'] = promoImg;
+    data['deleted'] = deleted;
+    data['active'] = active;
+    data['paymentStatus'] = paymentStatus;
+    data['_id'] = sId;
+    if (source != null) {
+      data['source'] = source!.toJson();
     }
-    data['title'] = this.title;
-    data['description'] = this.description;
-    data['previousPrice'] = this.previousPrice;
-    data['discount'] = this.discount;
-    data['priceAfterDiscount'] = this.priceAfterDiscount;
-    data['startDate'] = this.startDate;
-    data['endDate'] = this.endDate;
-    data['country'] = this.country;
-    data['location'] = this.location;
-    data['days'] = this.days;
-    data['sourceType'] = this.sourceType;
-    data['promotionCharges'] = this.promotionCharges;
-    if (this.provider != null) {
-      data['provider'] = this.provider!.toJson();
+    data['title'] = title;
+    data['description'] = description;
+    data['previousPrice'] = previousPrice;
+    data['discount'] = discount;
+    data['priceAfterDiscount'] = priceAfterDiscount;
+    data['startDate'] = startDate;
+    data['endDate'] = endDate;
+    data['country'] = country;
+    data['location'] = location;
+    data['days'] = days;
+    data['sourceType'] = sourceType;
+    data['promotionCharges'] = promotionCharges;
+    if (provider != null) {
+      data['provider'] = provider!.toJson();
     }
-    data['activeByAdmin'] = this.activeByAdmin;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
-    data['id'] = this.id;
+    data['activeByAdmin'] = activeByAdmin;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = iV;
+    data['id'] = id;
     return data;
   }
 }
@@ -302,10 +304,10 @@ class Source {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['title'] = this.title;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['title'] = title;
+    data['id'] = id;
     return data;
   }
 }
@@ -416,48 +418,48 @@ class PromotionProvider {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['country'] = this.country;
-    data['states'] = this.states;
-    data['cities'] = this.cities;
-    data['banned'] = this.banned;
-    data['isEmailVerified'] = this.isEmailVerified;
-    data['isPhoneVerified'] = this.isPhoneVerified;
-    data['role'] = this.role;
-    data['secondNumber'] = this.secondNumber;
-    data['experienceLevel'] = this.experienceLevel;
-    data['about'] = this.about;
-    data['status'] = this.status;
-    data['approvedBy'] = this.approvedBy;
-    data['firebaseToken'] = this.firebaseToken;
-    if (this.emergency != null) {
-      data['emergency'] = this.emergency!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['country'] = country;
+    data['states'] = states;
+    data['cities'] = cities;
+    data['banned'] = banned;
+    data['isEmailVerified'] = isEmailVerified;
+    data['isPhoneVerified'] = isPhoneVerified;
+    data['role'] = role;
+    data['secondNumber'] = secondNumber;
+    data['experienceLevel'] = experienceLevel;
+    data['about'] = about;
+    data['status'] = status;
+    data['approvedBy'] = approvedBy;
+    data['firebaseToken'] = firebaseToken;
+    if (emergency != null) {
+      data['emergency'] = emergency!.map((v) => v.toJson()).toList();
     }
-    data['_id'] = this.sId;
-    if (this.car != null) {
-      data['car'] = this.car!.map((v) => v.toJson()).toList();
+    data['_id'] = sId;
+    if (car != null) {
+      data['car'] = car!.map((v) => v.toJson()).toList();
     }
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['refrence'] = this.refrence;
-    data['image'] = this.image;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
-    data['stripeId'] = this.stripeId;
-    data['coverImage'] = this.coverImage;
-    data['passwordChangedAt'] = this.passwordChangedAt;
-    data['whatsApp'] = this.whatsApp;
-    data['ssn'] = this.ssn;
-    if (this.location != null) {
-      data['location'] = this.location!.map((v) => v.toJson()).toList();
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['refrence'] = refrence;
+    data['image'] = image;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = iV;
+    data['stripeId'] = stripeId;
+    data['coverImage'] = coverImage;
+    data['passwordChangedAt'] = passwordChangedAt;
+    data['whatsApp'] = whatsApp;
+    data['ssn'] = ssn;
+    if (location != null) {
+      data['location'] = location!.map((v) => v.toJson()).toList();
     }
-    if (this.cars != null) {
-      data['cars'] = this.cars!.map((v) => v.toJson()).toList();
+    if (cars != null) {
+      data['cars'] = cars!.map((v) => v.toJson()).toList();
     }
-    data['id'] = this.id;
+    data['id'] = id;
     return data;
   }
 }
@@ -478,11 +480,11 @@ class BookingDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['time'] = this.time;
-    data['date'] = this.date;
-    data['note'] = this.note;
-    data['address'] = this.address;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['time'] = time;
+    data['date'] = date;
+    data['note'] = note;
+    data['address'] = address;
     return data;
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/SplashScreen/Controllers/splash_screen_controller.dart';
 import 'package:otobucks/global/app_colors.dart';
-import 'package:otobucks/global/app_images.dart';
 import 'package:otobucks/global/screen_utils.dart';
 import 'package:otobucks/global/size_config.dart';
 import 'package:video_player/video_player.dart';
@@ -37,12 +36,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     Get.put(SplashScreenController(context: context));
-    var size = MediaQuery.of(context).size;
+    // var size = MediaQuery.of(context).size;
     ScreenUtil.getInstance().init(context);
 
     return LayoutBuilder(
       builder: (context, constraints) {
-
         return OrientationBuilder(
           builder: (context, orientation) {
             SizeConfig().init(constraints, orientation);
@@ -61,7 +59,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   ],
                 ),
               ),
-
 
               // ConstrainedBox(
               //   constraints: const BoxConstraints.expand(),
@@ -82,9 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
               // ),
             );
           },
-
         );
-
       },
     );
   }

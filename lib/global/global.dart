@@ -20,6 +20,7 @@ import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/View/Videos/Views/show_video_screen.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:path_provider/path_provider.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:quiver/time.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,6 +36,7 @@ import 'app_dimens.dart';
 import 'app_images.dart';
 import 'app_views.dart';
 import 'constants.dart';
+
 //Main Global class
 class Global {
   static LatLng mLatLng = const LatLng(25.2048, 55.2708);
@@ -49,16 +51,12 @@ class Global {
         Container(
           child: Text(
             strMessage,
-            style: Theme.of(contextM)
-                .textTheme
-                .subtitle2
-                ?.merge(const TextStyle(color: Colors.white)),
+            style: Theme.of(contextM).textTheme.subtitle2?.merge(const TextStyle(color: Colors.white)),
           ),
           padding: const EdgeInsets.all(AppDimens.dimens_5),
           decoration: BoxDecoration(
             color: AppColors.colorAccent,
-            border: Border.all(
-                width: AppDimens.dimens_1, color: AppColors.colorWhite),
+            border: Border.all(width: AppDimens.dimens_1, color: AppColors.colorWhite),
           ),
         ),
         duration: const Duration(seconds: 3),
@@ -76,11 +74,7 @@ class Global {
     }
   }
 
-  static showToastAlert(
-      {required BuildContext context,
-      required String strTitle,
-      required String strMsg,
-      required TOAST_TYPE toastType}) {
+  static showToastAlert({required BuildContext context, required String strTitle, required String strMsg, required TOAST_TYPE toastType}) {
     if (!Global.checkNull(strMsg)) {
       strMsg = AppAlert.ALERT_SERVER_NOT_RESPONDING;
     }
@@ -129,13 +123,10 @@ class Global {
                 children: <Widget>[
                   Container(
                     alignment: Alignment.center,
-                    margin: const EdgeInsetsDirectional.only(
-                        end: AppDimens.dimens_25),
+                    margin: const EdgeInsetsDirectional.only(end: AppDimens.dimens_25),
                     height: AppDimens.dimens_40,
                     width: AppDimens.dimens_40,
-                    decoration: BoxDecoration(
-                        color: bgColor.withOpacity(0.2),
-                        shape: BoxShape.circle),
+                    decoration: BoxDecoration(color: bgColor.withOpacity(0.2), shape: BoxShape.circle),
                     padding: const EdgeInsets.all(AppDimens.dimens_12),
                     child: Image.asset(
                       strIcon,
@@ -151,11 +142,7 @@ class Global {
                           ? Text(
                               strTitle,
                               textAlign: TextAlign.start,
-                              style: AppStyle.textViewStyleNormalButton(
-                                  context: context,
-                                  color: bgColor,
-                                  fontWeightDelta: 1,
-                                  fontSizeDelta: 0),
+                              style: AppStyle.textViewStyleNormalButton(context: context, color: bgColor, fontWeightDelta: 1, fontSizeDelta: 0),
                             )
                           : Container(
                               height: 0,
@@ -163,11 +150,7 @@ class Global {
                       Text(
                         strMsg,
                         textAlign: TextAlign.start,
-                        style: AppStyle.textViewStyleSmall(
-                            context: context,
-                            color: AppColors.colorBlack,
-                            fontWeightDelta: 0,
-                            fontSizeDelta: 0),
+                        style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack, fontWeightDelta: 0, fontSizeDelta: 0),
                       ),
                     ],
                   )),
@@ -181,8 +164,7 @@ class Global {
   }
 
   static showNoInternetDialog(BuildContext contextM) {
-    showDialogM(
-        contextM, AppAlert.ALERT, AppAlert.ALERT_NO_INTERNET_CONNECTION);
+    showDialogM(contextM, AppAlert.ALERT, AppAlert.ALERT_NO_INTERNET_CONNECTION);
   }
 
   // show dialog
@@ -214,8 +196,7 @@ class Global {
 
       bool status = true;
       if (Global.checkNull(strStatus)) {
-        if (Global.equalsIgnoreCase(strStatus, "fail") ||
-            Global.equalsIgnoreCase(strStatus, "error")) {
+        if (Global.equalsIgnoreCase(strStatus, "fail") || Global.equalsIgnoreCase(strStatus, "error")) {
           status = false;
         }
       }
@@ -226,16 +207,10 @@ class Global {
       } else if (!status || data.containsKey(Constants.RES_ERROR)) {
         dataObj = data[Constants.RES_ERROR];
       }
-      return Result(
-          responseStatus: status,
-          responseMessage: strMessage,
-          responseData: dataObj ?? {});
+      return Result(responseStatus: status, responseMessage: strMessage, responseData: dataObj ?? {});
     } catch (exception) {
       log('catch error : $exception');
-      return Result(
-          responseStatus: false,
-          responseMessage: AppAlert.ALERT_PLEASE_TRY_AFTER_SOME_TIME,
-          responseData: "");
+      return Result(responseStatus: false, responseMessage: AppAlert.ALERT_PLEASE_TRY_AFTER_SOME_TIME, responseData: "");
     }
   }
 
@@ -248,8 +223,7 @@ class Global {
 
       bool status = true;
       if (Global.checkNull(strStatus)) {
-        if (Global.equalsIgnoreCase(strStatus, "fail") ||
-            Global.equalsIgnoreCase(strStatus, "error")) {
+        if (Global.equalsIgnoreCase(strStatus, "fail") || Global.equalsIgnoreCase(strStatus, "error")) {
           status = false;
         }
       }
@@ -257,21 +231,15 @@ class Global {
       dynamic dataObj;
       if (status && data.containsKey(Constants.RES_RESULT)) {
         dataObj = data[Constants.RES_RESULT];
-        debugPrint("mapData: ${data[Constants.RES_RESULT]}");
+        log("mapData: ${data[Constants.RES_RESULT]}");
       } else if (!status || data.containsKey(Constants.RES_ERROR)) {
         dataObj = data[Constants.RES_ERROR];
       }
-      print("ResponseData ${dataObj}");
-      return Result(
-          responseStatus: status,
-          responseMessage: strMessage,
-          responseData: dataObj ?? {});
+      log("ResponseData $dataObj");
+      return Result(responseStatus: status, responseMessage: strMessage, responseData: dataObj ?? {});
     } catch (exception) {
       log('catch error : $exception');
-      return Result(
-          responseStatus: false,
-          responseMessage: AppAlert.ALERT_PLEASE_TRY_AFTER_SOME_TIME,
-          responseData: "");
+      return Result(responseStatus: false, responseMessage: AppAlert.ALERT_PLEASE_TRY_AFTER_SOME_TIME, responseData: "");
     }
   }
 
@@ -284,9 +252,7 @@ class Global {
     }
   }
 
-  static bool equalsIgnoreCase(String? a, String? b) =>
-      (a == null && b == null) ||
-      (a != null && b != null && a.toLowerCase() == b.toLowerCase());
+  static bool equalsIgnoreCase(String? a, String? b) => (a == null && b == null) || (a != null && b != null && a.toLowerCase() == b.toLowerCase());
 
   static launchDialerOrWhatsApp(String strNumber, bool isWhatsApp) async {
     if (isWhatsApp) {
@@ -460,8 +426,7 @@ class Global {
     }
   }
 
-  static showAlertDialog(BuildContext mContext, String strTitle,
-      String strMessage, List<Widget> widgetActions) {
+  static showAlertDialog(BuildContext mContext, String strTitle, String strMessage, List<Widget> widgetActions) {
     return showDialog(
       context: mContext,
       builder: (context) => AlertDialog(
@@ -478,22 +443,14 @@ class Global {
     );
   }
 
-  static showAlertDialogN(
-      BuildContext mContext,
-      String strTitle,
-      String strMessage,
-      List<Widget> widgetActions,
-      bool isBarrierDismissible) {
+  static showAlertDialogN(BuildContext mContext, String strTitle, String strMessage, List<Widget> widgetActions, bool isBarrierDismissible) {
     return showDialog(
       context: mContext,
       barrierDismissible: isBarrierDismissible,
       builder: (context) => AlertDialog(
         title: Text(
           strTitle,
-          style: Theme.of(mContext)
-              .textTheme
-              .subtitle2
-              ?.merge(const TextStyle(color: Colors.black)),
+          style: Theme.of(mContext).textTheme.subtitle2?.merge(const TextStyle(color: Colors.black)),
         ),
         content: Text(strMessage,
             style: Theme.of(mContext).textTheme.subtitle2?.merge(
@@ -508,8 +465,7 @@ class Global {
     return key.length == 16 || key.length == 24 || key.length == 32;
   }
 
-  static updateVersionCode(BuildContext mContext, bool isUpdate,
-      bool isForceFullUpdate, String strRedirectUrl) {
+  static updateVersionCode(BuildContext mContext, bool isUpdate, bool isForceFullUpdate, String strRedirectUrl) {
     if (isUpdate || isForceFullUpdate) {
       if (!Constants.FLAG_DIALOG_APP_UPDATE) {
         List<Widget> widgetActions;
@@ -531,8 +487,7 @@ class Global {
           widgetActions = <Widget>[
             // ignore: argument_type_not_assignable
             TextButton(
-              onPressed: () =>
-                  Navigator.of(mContext, rootNavigator: true).pop(),
+              onPressed: () => Navigator.of(mContext, rootNavigator: true).pop(),
               child: Text(Constants.KEY_NO_THANKS,
                   style: Theme.of(mContext).textTheme.subtitle2?.merge(
                         const TextStyle(color: Colors.black),
@@ -549,8 +504,7 @@ class Global {
             ),
           ];
         }
-        return Global.showAlertDialogN(mContext, Constants.KEY_APP_UPDATE_TITLE,
-            Constants.KEY_APP_UPDATE_MESSAGE, widgetActions, false);
+        return Global.showAlertDialogN(mContext, Constants.KEY_APP_UPDATE_TITLE, Constants.KEY_APP_UPDATE_MESSAGE, widgetActions, false);
       }
     }
   }
@@ -597,15 +551,13 @@ class Global {
   static getTimeFromTimeStamp(int timestamp, String strDateFormate) {
     String strDate = "";
     var formatter = DateFormat(strDateFormate);
-    strDate =
-        formatter.format(DateTime.fromMillisecondsSinceEpoch(timestamp * 1000));
+    strDate = formatter.format(DateTime.fromMillisecondsSinceEpoch(timestamp * 1000));
     return strDate;
   }
 
   static List<CountryCode> getCountyCode() {
     List<CountryCode> alCountryCode = [];
-    String strCountryCode =
-        utf8.decode(base64.decode(Constants.CONTRY_CODE_BASE64));
+    String strCountryCode = utf8.decode(base64.decode(Constants.CONTRY_CODE_BASE64));
     if (strCountryCode.isNotEmpty) {
       // ignore: non_constant_identifier_names
       var country_code = json.decode(strCountryCode);
@@ -663,9 +615,7 @@ class Global {
   }
 
   static bool checkNull(String? strString) {
-    if (strString != null &&
-        strString.isNotEmpty &&
-        !Global.equalsIgnoreCase(strString, "null")) {
+    if (strString != null && strString.isNotEmpty && !Global.equalsIgnoreCase(strString, "null")) {
       return true;
     }
     return false;
@@ -678,14 +628,11 @@ class Global {
     return false;
   }
 
-  static showAlertDialogBtnRow(BuildContext mContext, String strTitle,
-      Widget widgetActions, bool isBarrierDismissible) {
+  static showAlertDialogBtnRow(BuildContext mContext, String strTitle, Widget widgetActions, bool isBarrierDismissible) {
     return showDialog(
       context: mContext,
       barrierDismissible: isBarrierDismissible,
-      builder: (context) => AlertDialog(
-          title: Text(strTitle.isNotEmpty ? strTitle : AppAlert.ALERT),
-          content: widgetActions),
+      builder: (context) => AlertDialog(title: Text(strTitle.isNotEmpty ? strTitle : AppAlert.ALERT), content: widgetActions),
     );
   }
 
@@ -742,12 +689,10 @@ class Global {
     prefManager.setString(SharedPrefKey.KEY_FIRST_NAME, mUserDetail.firstName);
     prefManager.setString(SharedPrefKey.KEY_LAST_NAME, mUserDetail.lastName);
     prefManager.setString(SharedPrefKey.KEY_USER_IMAGE, mUserDetail.avatar);
-    prefManager.setString(
-        SharedPrefKey.KEY_KEY_MOBILE_NUMBER, mUserDetail.mobile);
+    prefManager.setString(SharedPrefKey.KEY_KEY_MOBILE_NUMBER, mUserDetail.mobile);
     prefManager.setString(SharedPrefKey.KEY_KEY_EMAIL_ID, mUserDetail.email);
     if (Global.checkNull(mUserDetail.accessToken)) {
-      prefManager.setString(
-          SharedPrefKey.KEY_ACCESS_TOKEN, mUserDetail.accessToken);
+      prefManager.setString(SharedPrefKey.KEY_ACCESS_TOKEN, mUserDetail.accessToken);
     }
     prefManager.setBool(SharedPrefKey.KEY_IS_LOGIN, true);
   }
@@ -832,8 +777,7 @@ class Global {
     return Image.memory(base64Decode(base64String));
   }
 
-  static setControllerValue(
-      TextEditingController mController, String strValue) {
+  static setControllerValue(TextEditingController mController, String strValue) {
     if (checkNull(strValue)) {
       mController.text = strValue;
     }
@@ -854,11 +798,7 @@ class Global {
   }
 
   static showNoInternet(BuildContext context) {
-    Global.showToastAlert(
-        context: context,
-        strTitle: "",
-        strMsg: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-        toastType: TOAST_TYPE.toastError);
+    Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_NO_INTERNET_CONNECTION, toastType: TOAST_TYPE.toastError);
   }
 
   static getDiscount(String productMrp, String salePrice) {
@@ -880,11 +820,7 @@ class Global {
     return discount;
   }
 
-  static Future<void> shareText(
-      {String? title,
-      String? text,
-      String? linkUrl,
-      String? chooserTitle}) async {
+  static Future<void> shareText({String? title, String? text, String? linkUrl, String? chooserTitle}) async {
     await Share.share(text!);
   }
 
@@ -941,17 +877,11 @@ class Global {
   }
 
   static capitalizeFirstofEach(String strValue) {
-    return strValue
-        .replaceAll(RegExp('_'), ' ')
-        .split(" ")
-        .map((str) => inCaps(str))
-        .join(" ");
+    return strValue.replaceAll(RegExp('_'), ' ').split(" ").map((str) => inCaps(str)).join(" ");
   }
 
   static inCaps(String strValue) {
-    return strValue.isNotEmpty
-        ? '${strValue[0].toUpperCase()}${strValue.substring(1)}'
-        : '';
+    return strValue.isNotEmpty ? '${strValue[0].toUpperCase()}${strValue.substring(1)}' : '';
   }
 
 // Static Data
@@ -985,10 +915,7 @@ class Global {
     return false;
   }
 
-  static showFailuerError(
-      {required BuildContext context,
-      required String strTitle,
-      required Failure failure}) {
+  static showFailuerError({required BuildContext context, required String strTitle, required Failure failure}) {
     if (Global.checkNull(failure.DATA.toString())) {
       Map mData = failure.DATA as Map;
       var keyMain = mData.keys;
@@ -996,29 +923,20 @@ class Global {
         var mDataItems = mData[strMainKey.toString()];
         for (var itemSub in mDataItems) {
           String strSubItem = itemSub.toString();
-          Global.showToastAlert(
-              context: context,
-              strTitle: strTitle,
-              strMsg: strSubItem,
-              toastType: TOAST_TYPE.toastError);
+          Global.showToastAlert(context: context, strTitle: strTitle, strMsg: strSubItem, toastType: TOAST_TYPE.toastError);
           break;
         }
         break;
       }
     } else {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
     }
   }
 
   static getAddressFromLatLong(LatLng mLatLong) async {
     StringBuffer strAddress = StringBuffer();
     try {
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(mLatLong.latitude, mLatLong.longitude);
+      List<Placemark> placemarks = await placemarkFromCoordinates(mLatLong.latitude, mLatLong.longitude);
 
       String streetAddress = placemarks[0].street.toString();
       String city = placemarks[0].locality.toString();
@@ -1112,11 +1030,7 @@ class Global {
   }
 
   static getCropFile(
-      {required String imagePath,
-      required double mRatioX,
-      required double mRatioY,
-      required int mMaxHeight,
-      required int mMaxWidth}) async {
+      {required String imagePath, required double mRatioX, required double mRatioY, required int mMaxHeight, required int mMaxWidth}) async {
     final croppedFile = await ImageCropper().cropImage(
         sourcePath: imagePath,
         aspectRatio: CropAspectRatio(ratioX: mRatioX, ratioY: mRatioY),
@@ -1131,8 +1045,7 @@ class Global {
             lockAspectRatio: false,
           ),
           IOSUiSettings(minimumAspectRatio: 1.0),
-        ]
-    ) ;
+        ]);
     /*androidUiSettings: AndroidUiSettings(
         toolbarTitle: 'Crop Image',
         toolbarColor: AppColors.colorAccent,
@@ -1148,14 +1061,9 @@ class Global {
     } else if (Platform.isIOS) {
       strAppURL = Constants.STR_APP_URL_IOS;
     }
-    String strShareMessage =
-        Constants.APP_NAME + " is really useful. Try it !!! \n\n" + strAppURL;
+    String strShareMessage = Constants.APP_NAME + " is really useful. Try it !!! \n\n" + strAppURL;
 
-    shareText(
-        title: Constants.APP_NAME,
-        text: strShareMessage,
-        chooserTitle: "Share",
-        linkUrl: "");
+    shareText(title: Constants.APP_NAME, text: strShareMessage, chooserTitle: "Share", linkUrl: "");
   }
 
   static getCurrentLocation({required BuildContext context}) async {
@@ -1195,8 +1103,7 @@ class Global {
     }
 
     if (isPermissionGranted && _serviceEnabled) {
-      location_selection.LocationData _locationData =
-          await location.getLocation();
+      location_selection.LocationData _locationData = await location.getLocation();
       mLatLngMain = LatLng(_locationData.latitude!, _locationData.longitude!);
       // prefManager.setDouble(
       //     SharedPrefKey.KEY_CURRENT_LONGITUDE, _locationData.longitude!);
@@ -1207,6 +1114,7 @@ class Global {
     // }
     return mLatLngMain;
   }
+
   static showDateRangePicker(BuildContext mContext, int daysCount) async {
     // DateTimeRange? picked = await DateRangePicker.showDateRangePicker(
     //   initialDateRange: DateTimeRange(
@@ -1237,8 +1145,7 @@ class Global {
     List<TimeModel> alTimeModel = [];
     int addedHR = 1;
     for (int index = 9; index < 21; ++index) {
-      DateTime mDateTime = DateTime(DateTime.now().year, 8, 9, 8, 0)
-          .add(Duration(hours: addedHR));
+      DateTime mDateTime = DateTime(DateTime.now().year, 8, 9, 8, 0).add(Duration(hours: addedHR));
 
       String time12HR = DateFormat('hh:00 aa').format(mDateTime);
       String time24HR = DateFormat('HH:00').format(mDateTime);
@@ -1250,12 +1157,7 @@ class Global {
         }
       }
 
-      TimeModel mTimeModel = TimeModel(
-          time_12hr: time12HR,
-          isEnable: true,
-          time_24hr: time24HR,
-          t24hr: mDateTime.hour,
-          isSelected: isSelected);
+      TimeModel mTimeModel = TimeModel(time_12hr: time12HR, isEnable: true, time_24hr: time24HR, t24hr: mDateTime.hour, isSelected: isSelected);
 
       alTimeModel.add(mTimeModel);
       ++addedHR;
@@ -1265,15 +1167,12 @@ class Global {
 
   static checkIsToday(String selectedDate) {
     if (Global.checkNull(selectedDate)) {
-      DateTime _selectedDate =
-          DateFormat(Constants.STRING_YYYY_MM_DD).parse(selectedDate);
+      DateTime _selectedDate = DateFormat(Constants.STRING_YYYY_MM_DD).parse(selectedDate);
       DateTime currentDate = DateTime.now();
 
       bool isAfter = currentDate.isAfter(_selectedDate);
 
-      if (currentDate.month == _selectedDate.month &&
-          currentDate.year == _selectedDate.year &&
-          currentDate.day == _selectedDate.day) {
+      if (currentDate.month == _selectedDate.month && currentDate.year == _selectedDate.year && currentDate.day == _selectedDate.day) {
         // same
         return DateType.today;
       } else if (isAfter) {
@@ -1370,8 +1269,7 @@ class Global {
     if (Global.checkNull(strMonth)) {
       bool removeDate = false;
 
-      DateTime parseDate =
-          DateFormat(Constants.STRING_MMMM_yyyy).parse(strMonth);
+      DateTime parseDate = DateFormat(Constants.STRING_MMMM_yyyy).parse(strMonth);
 
       int currentMonth = DateTime.now().month;
       int currentYear = DateTime.now().year;
@@ -1384,8 +1282,7 @@ class Global {
         gape = 0;
         mmDateTime = DateTime.now();
         if (selectedDate != null) {
-          if (currentYear == selectedDate.year &&
-              currentMonth == selectedDate.month) {
+          if (currentYear == selectedDate.year && currentMonth == selectedDate.month) {
             bool isAfter = mmDateTime.isAfter(selectedDate);
             if (isAfter) {
               mmDateTime = selectedDate;
@@ -1419,12 +1316,7 @@ class Global {
           }
         }
 
-        DateModel mTimeModel = DateModel(
-            date: date,
-            month: mMonth,
-            year: year,
-            daysOfTheWeek: daysOfTheWeek,
-            isSelected: isSelected);
+        DateModel mTimeModel = DateModel(date: date, month: mMonth, year: year, daysOfTheWeek: daysOfTheWeek, isSelected: isSelected);
         alDateModel.add(mTimeModel);
         ++addedHR;
       }
@@ -1437,7 +1329,7 @@ class Global {
   }
 
   static gotoVideoView(BuildContext context, String videoURL) {
-    print("vidoe gellary seldciton");
+    log("vidoe gellary seldciton");
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -1447,7 +1339,7 @@ class Global {
   }
 
   static inProgressAlert(BuildContext context) {
-    Get.to(() => BotSms());
+    Get.to(() => const BotSms());
     // showToastAlert(
     //     context: context,
     //     strTitle: "Alert",
@@ -1460,8 +1352,7 @@ class Global {
     final String videoName = '${DateTime.now().millisecondsSinceEpoch}.$type';
     if (Platform.isAndroid) {
       // Handle this part the way you want to save it in any directory you wish.
-      final List<Directory>? dir =
-          await getExternalStorageDirectories(type: StorageDirectory.movies);
+      final List<Directory>? dir = await getExternalStorageDirectories(type: StorageDirectory.movies);
       directory = dir!.first.path;
       return File('$directory/$videoName').path;
     } else {

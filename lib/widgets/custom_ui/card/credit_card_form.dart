@@ -429,7 +429,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
                       //     cBorderColor: AppColors.colorBorder2,
                       //     dRadius: AppDimens.dimens_5,
                       //     dBorderWidth: AppDimens.dimens_1),
-                      child: Container(
+                      child: SizedBox(
                           // margin:
                           //     const EdgeInsets.only(top: AppDimens.dimens_5),
                           height: AppDimens.dimens_34,

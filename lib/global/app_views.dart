@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_text/circular_text.dart';
 import 'package:get/get.dart';
@@ -11,6 +13,7 @@ import 'app_style.dart';
 import 'constants.dart';
 import 'enum.dart';
 import 'global.dart';
+
 class AppViews {
   // App bar inti
   static initAppBar({
@@ -27,10 +30,10 @@ class AppViews {
 
     if (isShowSOS) {
       actionsList.add(GestureDetector(
-        onTap: () async{
-          print("click");
+        onTap: () async {
+          log("click");
           // await LocationHelper.getCurrentLocation(mContext, (p0, p1){
-          //   print("${p0}  ${p1}");
+          //   log("${p0}  ${p1}");
           // });
           //Global.inProgressAlert(mContext);
         },
@@ -110,37 +113,26 @@ class AppViews {
                       textScaleFactor: Global.getScalFactor(),
                       softWrap: true,
                       maxLines: 1,
-                      style: AppStyle.textViewStyleLarge(
-                          context: mContext,
-                          color: AppColors.colorWhite,
-                          fontWeightDelta: 2)),
+                      style: AppStyle.textViewStyleLarge(context: mContext, color: AppColors.colorWhite, fontWeightDelta: 2)),
                   margin: const EdgeInsets.only(bottom: 1),
                 ),
                 Text("welcome to outobucks".tr,
                     textScaleFactor: Global.getScalFactor(),
                     softWrap: true,
                     maxLines: 1,
-                    style: AppStyle.textViewStyleSmall(
-                        context: mContext,
-                        color: AppColors.colorWhite,
-                        fontWeightDelta: -2,
-                        fontSizeDelta: -1)),
+                    style: AppStyle.textViewStyleSmall(context: mContext, color: AppColors.colorWhite, fontWeightDelta: -2, fontSizeDelta: -1)),
               ],
             )
           : Text(
               strTitle,
-              style: Theme.of(mContext)
-                  .textTheme
-                  .subtitle1
-                  ?.apply(color: AppColors.colorWhite, fontWeightDelta: 1),
+              style: Theme.of(mContext).textTheme.subtitle1?.apply(color: AppColors.colorWhite, fontWeightDelta: 1),
             ),
       centerTitle: centerTitle,
       actions: actionsList,
     );
   }
 
-  static initAppBarHome(
-      {required BuildContext mContext, required String strTitle}) {
+  static initAppBarHome({required BuildContext mContext, required String strTitle}) {
     List<Widget> actionsList = [];
 
     actionsList.add(Container(
@@ -195,10 +187,7 @@ class AppViews {
       iconTheme: IconThemeData(color: AppColors.colorAccent),
       title: Text(
         strTitle,
-        style: Theme.of(mContext)
-            .textTheme
-            .subtitle1
-            ?.apply(color: AppColors.colorTextFieldHint, fontWeightDelta: 3),
+        style: Theme.of(mContext).textTheme.subtitle1?.apply(color: AppColors.colorTextFieldHint, fontWeightDelta: 3),
       ),
       actions: actionsList,
     );
@@ -224,8 +213,7 @@ class AppViews {
   // Show Center Loading
   static showLoading() {
     return Center(
-      child: SpinKitThreeBounce(
-          color: AppColors.colorAccent, size: AppDimens.dimens_34),
+      child: SpinKitThreeBounce(color: AppColors.colorAccent, size: AppDimens.dimens_34),
     );
   } // Show Footer Loading Icon
 
@@ -283,8 +271,7 @@ class AppViews {
   static addDividerDrawerSmall() {
     // divider
     return Container(
-      margin: const EdgeInsets.only(
-          top: AppDimens.margin_normal, bottom: AppDimens.margin_normal),
+      margin: const EdgeInsets.only(top: AppDimens.margin_normal, bottom: AppDimens.margin_normal),
       color: AppColors.colorDividerDrawer.withOpacity(0.3),
       height: AppDimens.dimens_1,
     );
@@ -295,19 +282,14 @@ class AppViews {
         child: Text(
       strTitle,
       textAlign: TextAlign.center,
-      style: AppStyle.textViewStyleLarge(
-          context: context,
-          color: AppColors.colorBlack,
-          fontWeightDelta: 0,
-          fontSizeDelta: 0),
+      style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorBlack, fontWeightDelta: 0, fontSizeDelta: 0),
     ));
   }
 
   static addDivider() {
     // divider
     return Container(
-      margin: const EdgeInsets.only(
-          top: AppDimens.margin_xxx_small, bottom: AppDimens.margin_xxx_small),
+      margin: const EdgeInsets.only(top: AppDimens.margin_xxx_small, bottom: AppDimens.margin_xxx_small),
       color: AppColors.colorDividerDrawer.withOpacity(0.1),
       height: AppDimens.dimens_1,
     );
@@ -316,18 +298,13 @@ class AppViews {
   static addDividerSimple() {
     // divider
     return Container(
-      margin: const EdgeInsets.only(
-          top: AppDimens.margin_xx_small, bottom: AppDimens.margin_xx_small),
+      margin: const EdgeInsets.only(top: AppDimens.margin_xx_small, bottom: AppDimens.margin_xx_small),
       color: AppColors.colorDividerDrawer.withOpacity(0.1),
       height: AppDimens.dimens_1,
     );
   }
 
-  static getRoundBorder(
-      {required Color cBoxBgColor,
-      required Color cBorderColor,
-      required double dRadius,
-      required double dBorderWidth}) {
+  static getRoundBorder({required Color cBoxBgColor, required Color cBorderColor, required double dRadius, required double dBorderWidth}) {
     return BoxDecoration(
       color: cBoxBgColor,
       borderRadius: BorderRadius.circular(dRadius),
@@ -339,8 +316,7 @@ class AppViews {
   }
 
   static getErrorImage(double mHeight, double mWidth) {
-    return Image.asset(AppImages.ic_place_holder,
-        height: mHeight, width: mWidth, fit: BoxFit.contain);
+    return Image.asset(AppImages.ic_place_holder, height: mHeight, width: mWidth, fit: BoxFit.contain);
   }
 
   static getProgressImage(double mHeight, double mWidth) {
@@ -381,18 +357,13 @@ class AppViews {
           child: Text(
             AppAlert.MSG_NO_RECORDS_FOUND,
             textAlign: TextAlign.center,
-            style: AppStyle.textViewStyleLarge(
-                context: context,
-                color: AppColors.colorBlack,
-                fontWeightDelta: 0,
-                fontSizeDelta: 0),
+            style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorBlack, fontWeightDelta: 0, fontSizeDelta: 0),
           ),
         );
         break;
       case ShowData.showError:
         widgetM = Container(
-          child:
-              AppViews.setNoData(AppAlert.ALERT_SERVER_NOT_RESPONDING, context),
+          child: AppViews.setNoData(AppAlert.ALERT_SERVER_NOT_RESPONDING, context),
         );
         break;
     }
@@ -430,18 +401,13 @@ class AppViews {
           child: Text(
             AppAlert.MSG_NO_RECORDS_FOUND,
             textAlign: TextAlign.center,
-            style: AppStyle.textViewStyleLarge(
-                context: context,
-                color: AppColors.colorBlack,
-                fontWeightDelta: 0,
-                fontSizeDelta: 0),
+            style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorBlack, fontWeightDelta: 0, fontSizeDelta: 0),
           ),
         );
         break;
       case ShowData.showError:
         widgetM = Container(
-          child:
-              AppViews.setNoData(AppAlert.ALERT_SERVER_NOT_RESPONDING, context),
+          child: AppViews.setNoData(AppAlert.ALERT_SERVER_NOT_RESPONDING, context),
         );
         break;
     }
@@ -479,18 +445,13 @@ class AppViews {
           child: Text(
             AppAlert.MSG_NO_RECORDS_FOUND,
             textAlign: TextAlign.center,
-            style: AppStyle.textViewStyleLarge(
-                context: context,
-                color: AppColors.colorBlack,
-                fontWeightDelta: 0,
-                fontSizeDelta: 0),
+            style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorBlack, fontWeightDelta: 0, fontSizeDelta: 0),
           ),
         );
         break;
       case ShowData.showError:
         widgetM = Container(
-          child:
-              AppViews.setNoData(AppAlert.ALERT_SERVER_NOT_RESPONDING, context),
+          child: AppViews.setNoData(AppAlert.ALERT_SERVER_NOT_RESPONDING, context),
         );
         break;
     }
@@ -498,8 +459,7 @@ class AppViews {
     return widgetM;
   }
 
-  static getSetDataCustomLoader(BuildContext context, ShowData mShowData,
-      Widget showWidget, Widget loader, String noData) {
+  static getSetDataCustomLoader(BuildContext context, ShowData mShowData, Widget showWidget, Widget loader, String noData) {
     Widget widgetM = Container();
 
     switch (mShowData) {
@@ -519,18 +479,13 @@ class AppViews {
           child: Text(
             noData,
             textAlign: TextAlign.center,
-            style: AppStyle.textViewStyleLarge(
-                context: context,
-                color: AppColors.colorBlack,
-                fontWeightDelta: 0,
-                fontSizeDelta: 0),
+            style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorBlack, fontWeightDelta: 0, fontSizeDelta: 0),
           ),
         );
         break;
       case ShowData.showError:
         widgetM = Container(
-          child:
-              AppViews.setNoData(AppAlert.ALERT_SERVER_NOT_RESPONDING, context),
+          child: AppViews.setNoData(AppAlert.ALERT_SERVER_NOT_RESPONDING, context),
         );
         break;
     }
@@ -538,8 +493,7 @@ class AppViews {
     return widgetM;
   }
 
-  static getSetDataWithReturn(BuildContext context, ShowData mShowData,
-      Widget showWidget, String onReturn) {
+  static getSetDataWithReturn(BuildContext context, ShowData mShowData, Widget showWidget, String onReturn) {
     Widget widgetM = Container();
 
     switch (mShowData) {
@@ -559,19 +513,14 @@ class AppViews {
           child: Text(
             onReturn,
             textAlign: TextAlign.center,
-            style: AppStyle.textViewStyleLarge(
-                context: context,
-                color: AppColors.colorBlack,
-                fontWeightDelta: 0,
-                fontSizeDelta: 0),
+            style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorBlack, fontWeightDelta: 0, fontSizeDelta: 0),
           ),
         );
 
         break;
       case ShowData.showError:
         widgetM = Container(
-          child:
-              AppViews.setNoData(AppAlert.ALERT_SERVER_NOT_RESPONDING, context),
+          child: AppViews.setNoData(AppAlert.ALERT_SERVER_NOT_RESPONDING, context),
         );
         break;
     }
@@ -579,16 +528,14 @@ class AppViews {
     return widgetM;
   }
 
-  static getSetDataGridView(
-      BuildContext context, ShowData mShowData, Widget showWidget) {
+  static getSetDataGridView(BuildContext context, ShowData mShowData, Widget showWidget) {
     Widget widgetM = Container();
 
     switch (mShowData) {
       case ShowData.showLoading:
         widgetM = Container(
           alignment: Alignment.topCenter,
-          child: SpinKitThreeBounce(
-              color: AppColors.colorAccent, size: AppDimens.dimens_34),
+          child: SpinKitThreeBounce(color: AppColors.colorAccent, size: AppDimens.dimens_34),
           color: Theme.of(context).colorScheme.surface,
         );
         break;
@@ -604,8 +551,7 @@ class AppViews {
         break;
       case ShowData.showError:
         widgetM = Container(
-          child:
-              AppViews.setNoData(AppAlert.ALERT_SERVER_NOT_RESPONDING, context),
+          child: AppViews.setNoData(AppAlert.ALERT_SERVER_NOT_RESPONDING, context),
         );
         break;
     }
@@ -615,10 +561,8 @@ class AppViews {
 
   static getBorderDecor() {
     return BoxDecoration(
-      border:
-          Border.all(width: 1.0, color: AppColors.lightGrey.withOpacity(0.2)),
-      borderRadius: const BorderRadius.all(
-          Radius.circular(5.0) //                 <--- border radius here
+      border: Border.all(width: 1.0, color: AppColors.lightGrey.withOpacity(0.2)),
+      borderRadius: const BorderRadius.all(Radius.circular(5.0) //                 <--- border radius here
           ),
     );
 
@@ -651,16 +595,14 @@ class AppViews {
     );
   }
 
-  static getFadeInNetworkImage(
-      {required double height, required double width, required String image}) {
+  static getFadeInNetworkImage({required double height, required double width, required String image}) {
     if (height != 0 && width != 0) {
       return FadeInImage.assetNetwork(
           placeholder: AppImages.ic_place_holder,
           height: height,
           width: width,
           image: image,
-          imageErrorBuilder: (BuildContext? context, Object? exception,
-              StackTrace? stackTrace) {
+          imageErrorBuilder: (BuildContext? context, Object? exception, StackTrace? stackTrace) {
             return AppViews.getErrorImage(height, width);
           },
           fit: BoxFit.contain);
@@ -669,8 +611,7 @@ class AppViews {
           placeholder: AppImages.ic_place_holder,
           height: height,
           image: image,
-          imageErrorBuilder: (BuildContext? context, Object? exception,
-              StackTrace? stackTrace) {
+          imageErrorBuilder: (BuildContext? context, Object? exception, StackTrace? stackTrace) {
             return AppViews.getErrorImage(height, AppDimens.dimens_200);
           },
           fit: BoxFit.contain);
@@ -679,8 +620,7 @@ class AppViews {
           placeholder: AppImages.ic_place_holder,
           width: width,
           image: image,
-          imageErrorBuilder: (BuildContext? context, Object? exception,
-              StackTrace? stackTrace) {
+          imageErrorBuilder: (BuildContext? context, Object? exception, StackTrace? stackTrace) {
             return AppViews.getErrorImage(AppDimens.dimens_200, width);
           },
           fit: BoxFit.contain);
@@ -713,9 +653,7 @@ class AppViews {
       border: Border(
         bottom: BorderSide(
           //                   <--- left side
-          color: isSelected
-              ? AppColors.colorAccent
-              : Colors.black.withOpacity(0.5),
+          color: isSelected ? AppColors.colorAccent : Colors.black.withOpacity(0.5),
           width: 2.5,
         ),
       ),
@@ -737,10 +675,8 @@ class AppViews {
     return showGeneralDialog(
         context: context,
         barrierDismissible: false,
-        barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        pageBuilder: (BuildContext context, Animation<double> animation,
-            Animation<double> secondaryAnimation) {
+        barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
           return Directionality(
             textDirection: TextDirection.ltr,
             child: Material(
@@ -749,12 +685,9 @@ class AppViews {
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Container(
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                    decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
                     child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 20, left: 20, bottom: 20),
+                      padding: const EdgeInsets.only(top: 20, left: 20, bottom: 20),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -762,25 +695,17 @@ class AppViews {
                         children: [
                           Text(
                             strTitle,
-                            style: AppStyle.textViewStyleLarge(
-                                fontWeightDelta: 2,
-                                fontSizeDelta: 2,
-                                context: context,
-                                color: AppColors.colorBlack),
+                            style: AppStyle.textViewStyleLarge(fontWeightDelta: 2, fontSizeDelta: 2, context: context, color: AppColors.colorBlack),
                           ),
                           const SizedBox(height: 16),
                           Text(
                             strMessage,
                             style: AppStyle.textViewStyleLarge(
-                                fontWeightDelta: -1,
-                                fontSizeDelta: 1,
-                                context: context,
-                                color: AppColors.colorBlack.withOpacity(0.7)),
+                                fontWeightDelta: -1, fontSizeDelta: 1, context: context, color: AppColors.colorBlack.withOpacity(0.7)),
                           ),
                           const SizedBox(height: 16),
                           Container(
-                            margin: const EdgeInsets.only(
-                                right: AppDimens.dimens_10),
+                            margin: const EdgeInsets.only(right: AppDimens.dimens_10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -788,13 +713,9 @@ class AppViews {
                                 Global.checkNull(strLeftBtnText)
                                     ? TextButton(
                                         style: TextButton.styleFrom(
-
-                                            foregroundColor:
-                                                AppColors.colorAccent,
-                                            disabledForegroundColor:
-                                                AppColors.colorAccent,
-                                            backgroundColor:
-                                                AppColors.colorAccent),
+                                            foregroundColor: AppColors.colorAccent,
+                                            disabledForegroundColor: AppColors.colorAccent,
+                                            backgroundColor: AppColors.colorAccent),
                                         onPressed: () {
                                           if (onTapLeftBtn != null) {
                                             onTapLeftBtn();
@@ -804,12 +725,8 @@ class AppViews {
                                         },
                                         child: Text(
                                           strLeftBtnText!,
-                                          style: AppStyle
-                                              .textViewStyleNormalButton(
-                                                  context: context,
-                                                  fontWeightDelta: 2,
-                                                  fontSizeDelta: 1,
-                                                  color: AppColors.colorWhite),
+                                          style: AppStyle.textViewStyleNormalButton(
+                                              context: context, fontWeightDelta: 2, fontSizeDelta: 1, color: AppColors.colorWhite),
                                         ),
                                       )
                                     : const SizedBox(
@@ -823,14 +740,9 @@ class AppViews {
                                 Global.checkNull(strRightBtnText)
                                     ? TextButton(
                                         style: TextButton.styleFrom(
-
-                                            foregroundColor:
-                                                AppColors.colorAccent,
-                                            disabledForegroundColor: AppColors
-                                                .colorAccent
-                                                .withOpacity(0.38),
-                                            backgroundColor:
-                                                AppColors.colorAccent),
+                                            foregroundColor: AppColors.colorAccent,
+                                            disabledForegroundColor: AppColors.colorAccent.withOpacity(0.38),
+                                            backgroundColor: AppColors.colorAccent),
                                         onPressed: () {
                                           if (onTapRightBtn != null) {
                                             onTapRightBtn();
@@ -840,12 +752,8 @@ class AppViews {
                                         },
                                         child: Text(
                                           strRightBtnText!,
-                                          style: AppStyle
-                                              .textViewStyleNormalButton(
-                                                  context: context,
-                                                  fontWeightDelta: 2,
-                                                  fontSizeDelta: 1,
-                                                  color: AppColors.colorWhite),
+                                          style: AppStyle.textViewStyleNormalButton(
+                                              context: context, fontWeightDelta: 2, fontSizeDelta: 1, color: AppColors.colorWhite),
                                         ),
                                       )
                                     : const SizedBox(
@@ -893,21 +801,15 @@ class AppViews {
   }
 
   static getGrayDecoration({double? mBorderRadius}) {
-    return BoxDecoration(
-
-        color: AppColors.greyOTPBg,
-        borderRadius: BorderRadius.circular(mBorderRadius ?? 0));
+    return BoxDecoration(color: AppColors.greyOTPBg, borderRadius: BorderRadius.circular(mBorderRadius ?? 0));
   }
 
   static getColorDecor({double? mBorderRadius, required Color mColor}) {
-    return BoxDecoration(
-        color: mColor, borderRadius: BorderRadius.circular(mBorderRadius ?? 0));
+    return BoxDecoration(color: mColor, borderRadius: BorderRadius.circular(mBorderRadius ?? 0));
   }
 
   static getRoundBorderDecor({double? mBorderRadius, required Color mColor}) {
-    return BoxDecoration(
-        border: Border.all(color: mColor),
-        borderRadius: BorderRadius.circular(mBorderRadius ?? 0));
+    return BoxDecoration(border: Border.all(color: mColor), borderRadius: BorderRadius.circular(mBorderRadius ?? 0));
   }
 
   static textFieldGrayRoundBorder() {
@@ -924,7 +826,7 @@ class AppViews {
   static textFieldRoundBorder() {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
-      borderSide:  BorderSide(
+      borderSide: BorderSide(
         width: 1,
         color: AppColors.colorAccent,
         style: BorderStyle.solid,
@@ -951,8 +853,7 @@ class AppViews {
                   Container(
                       decoration: BoxDecoration(
                         color: AppColors.colorChatBgLeft,
-                        borderRadius: const BorderRadius.all(
-                            Radius.circular(AppDimens.dimens_10)),
+                        borderRadius: const BorderRadius.all(Radius.circular(AppDimens.dimens_10)),
                       ),
                       padding: const EdgeInsets.all(AppDimens.dimens_12),
                       child: Column(
@@ -990,9 +891,7 @@ class AppViews {
             Container(
               height: 100,
               width: 100,
-              decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(5)),
               margin: const EdgeInsets.only(
                 right: AppDimens.dimens_10,
               ),
@@ -1019,8 +918,7 @@ class AppViews {
                   color: Colors.grey.shade300,
 
                   alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.only(
-                      top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
+                  margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
                   // child:
                   // Text(
                   //   mNotificationModel.type.contains('estimate')
@@ -1064,28 +962,23 @@ class AppViews {
       ),
     );
   }
+
   //----------------drop down text field--------------------------
-  static Widget defaultDropDownInPutFieldButton(
-      {required List<String> itemsList,
-        required String? selectedValue,
-        required String? hintText}) {
+  static Widget defaultDropDownInPutFieldButton({required List<String> itemsList, required String? selectedValue, required String? hintText}) {
     return DropdownButtonFormField2(
       buttonHeight: 45,
       decoration: InputDecoration(
         //Add isDense true and zero Padding.
         //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-          isDense: true,
-        hintStyle: AppStyle.textViewStyleNormalBodyText2(
-            color: AppColors.colorTextFieldHint,
-            fontSizeDelta: -5,
-            fontWeightDelta: -1,
-            context: Get.context!),
+        isDense: true,
+        hintStyle:
+            AppStyle.textViewStyleNormalBodyText2(color: AppColors.colorTextFieldHint, fontSizeDelta: -5, fontWeightDelta: -1, context: Get.context!),
         fillColor: Colors.white,
-          focusedBorder: AppViews.textFieldRoundBorder(),
-          border: AppViews.textFieldRoundBorder(),
-          disabledBorder: AppViews.textFieldRoundBorder(),
-          focusedErrorBorder: AppViews.textFieldRoundBorder(),          contentPadding: EdgeInsets.zero,
-          filled: true,
+        focusedBorder: AppViews.textFieldRoundBorder(),
+        border: AppViews.textFieldRoundBorder(),
+        disabledBorder: AppViews.textFieldRoundBorder(),
+        focusedErrorBorder: AppViews.textFieldRoundBorder(), contentPadding: EdgeInsets.zero,
+        filled: true,
         //Add more decoration as you want here
         //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
       ),
@@ -1094,26 +987,21 @@ class AppViews {
         hintText!,
       ),
 
-      icon: Icon(
-        Icons.arrow_drop_down,
-        color:
-          Colors.black
-      ),
+      icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
       iconSize: 30,
       buttonPadding: const EdgeInsets.only(left: 20, right: 10),
       dropdownDecoration: BoxDecoration(
-        color:
-            Colors.white,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(10),
       ),
       items: itemsList
           .map((item) => DropdownMenuItem<String>(
-        value: item,
-        child: Text(
-          item,
-          style:AppStyle.textViewStyleSmall(context: Get.context!, color: Colors.black),
-        ),
-      ))
+                value: item,
+                child: Text(
+                  item,
+                  style: AppStyle.textViewStyleSmall(context: Get.context!, color: Colors.black),
+                ),
+              ))
           .toList(),
       // validator: (value) {
       //   if (value == null) {
@@ -1130,10 +1018,15 @@ class AppViews {
     );
   }
 }
-addVerticleSpace(double height){
-  return SizedBox(height: height,);
-}
-addHorizontalSpace(double width){
-  return SizedBox(width: width,);
 
+addVerticleSpace(double height) {
+  return SizedBox(
+    height: height,
+  );
+}
+
+addHorizontalSpace(double width) {
+  return SizedBox(
+    width: width,
+  );
 }

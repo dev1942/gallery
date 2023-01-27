@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -153,7 +155,7 @@ class PromotionBanner extends StatelessWidget {
                                 ),
                                 //-------------------VBView details buttons-----------------------
                                 Visibility(
-                                  visible: this.isVisible,
+                                  visible: isVisible,
                                   child: SizedBox(
                                     width: Get.width / 3.3,
                                     child: ElevatedButton(

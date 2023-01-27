@@ -6,10 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Home/Controllers/home_screen_controller.dart';
 import 'package:otobucks/View/Drawer/Views/drawer_custom.dart';
-import 'package:otobucks/services/services.dart';
 
 import '../../../global/app_colors.dart';
-import '../../../global/app_images.dart';
 import '../../../global/app_views.dart';
 import '../../../global/enum.dart';
 import '../../../widgets/bottom_bar.dart';
@@ -30,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   void onMessage() {
     FirebaseMessaging.onMessage.listen(
       (message) {
-        print("FirebaseMessaging.onMessage.listen");
+        log("FirebaseMessaging.onMessage.listen");
         if (message.notification != null) {
           log(message.notification!.title.toString());
           log(message.notification!.body.toString());
@@ -77,13 +75,13 @@ class _HomePageState extends State<HomePage> {
                 //Get Date Function++++++++++++++++++++++++++++++++++++++++++++
                 // floatingActionButton: FloatingActionButton(
                 //   onPressed: () async {
-                //     print("Test");
+                //     log("Test");
                 //     var data = await getDate(
                 //         startDate: DateTime.now().toString(),
                 //         endDate: DateTime.now().toString());
-                //     print(DateTime.now().toString());
-                //     print("::::::::::::::::::::::::::::::: ${data}");
-                //     print(
+                //     log(DateTime.now().toString());
+                //     log("::::::::::::::::::::::::::::::: ${data}");
+                //     log(
                 //         "::::::::::::::::::::::::::::::: ${data['result'][0]}");
                 //   },
                 // ),

@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -180,6 +183,9 @@ class HomeScreenController extends GetxController {
         indexM = 0;
         strTitle = ' Hello ';
         await launchUrl(Uri.parse('https://wa.me/+971588038049'), mode: LaunchMode.externalApplication);
+        break;
+      case PageType.bookingHistory:
+        log("Booking history");
         break;
     }
 

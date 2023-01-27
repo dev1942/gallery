@@ -18,33 +18,27 @@ Widget imageSouceSheet({
       child: Wrap(
         children: <Widget>[
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.camera_enhance,
               color: Colors.white,
             ),
             title: Text(
               "CAMERA",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(color: Colors.white),
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.white),
             ),
             onTap: onCameraPressed,
           ),
-          Divider(
+          const Divider(
             color: Colors.white,
           ),
           ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.image,
                 color: Colors.white,
               ),
               title: Text(
                 "GALLERY",
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(color: Colors.white),
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.white),
               ),
               onTap: onGalleryPressed)
         ],

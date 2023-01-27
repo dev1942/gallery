@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:logger/logger.dart';
-import 'package:otobucks/View/CheckOut/Views/checkout_screen.dart';
-import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart';
+
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
 import '../../../../../global/app_colors.dart';
@@ -13,11 +11,9 @@ import '../../../../../global/app_views.dart';
 import '../../../../global/constants.dart';
 import '../../../../global/global.dart';
 import '../../../Rating/Views/rating_page.dart';
-import '../../Models/AllBookingsModel.dart';
 import '../../Models/PromotionBookingModel.dart';
 import '../../controller/mybookings_controller.dart';
-import '../../widget/BlinkingIcon.dart';
-import '../view_booking_screen.dart';
+
 
 class PromotionsBookingView extends GetView<MyBookingsController> {
   const PromotionsBookingView({
@@ -81,7 +77,7 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
                                         //------------------ column Image  amd view booking-----------------
                                         Column(
                                           children: [
-                                            ImageWidget(
+                                            imageWidget(
                                                 imagePath: data?.promotion?.promoImg?.first.toString()),
                                             const SizedBox(
                                               height: AppDimens.dimens_12,
@@ -142,7 +138,7 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
                                                 children: [
                                                   //---------------UserName
                                                   Expanded(
-                                                    child: UserNameWidget(
+                                                    child: userNameWidget(
                                                         userName:
                                                             "${data?.provider?.firstName}"
                                                             " "
@@ -152,13 +148,13 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
                                               ),
                                               Row(
                                                 children: [
-                                                  Textwidget(
+                                                  textwidget(
                                                       text:
                                                           "Promotion Title: ".tr,
                                                       fontsize: 0,
                                                       fontweight: 0),
                                                   Flexible(
-                                                    child: Textwidget(
+                                                    child: textwidget(
                                                         text: "${data?.promotion?.title}",
                                                         fontsize: 0,
                                                         fontweight: 0),
@@ -167,7 +163,7 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
                                               ),
                                               Row(
                                                 children: [
-                                                  Textwidget(
+                                                  textwidget(
                                                       text: "Paid  : ".tr,
                                                       fontsize: 0,
                                                       fontweight: 0),
@@ -282,7 +278,7 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
   //   ));
   // }
 
-  Widget Textwidget({String? text, double? fontsize, int? fontweight}) {
+  Widget textwidget({String? text, double? fontsize, int? fontweight}) {
     return Text(
       text?.tr ?? "".tr,
       overflow: TextOverflow.ellipsis,
@@ -297,20 +293,19 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
     );
   }
 
-  Widget UserNameWidget({String? userName}) {
-    return Container(
-        child: Text(
+  Widget userNameWidget({String? userName}) {
+    return Text(
       userName ?? "".tr,
       maxLines: 1,
       style: AppStyle.textViewStyleNormalBodyText2(
-          context: Get.context!,
-          color: AppColors.colorBlack2,
-          fontSizeDelta: 1,
-          fontWeightDelta: 1),
-    ));
+      context: Get.context!,
+      color: AppColors.colorBlack2,
+      fontSizeDelta: 1,
+      fontWeightDelta: 1),
+    );
   }
 
-  Widget ImageWidget({String? imagePath}) {
+  Widget imageWidget({String? imagePath}) {
     return Container(
       margin: const EdgeInsets.only(
         right: AppDimens.dimens_10,
@@ -335,7 +330,7 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
         child:
             // "AED ${mEstimatesModel.grandTotal}/-",
             GradientText(
-          "AED ${price} /-".tr,
+          "AED $price /-".tr,
           // Global.checkNull(mEstimatesModel
           //     .source
           //     ?.price)

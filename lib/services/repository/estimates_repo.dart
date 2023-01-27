@@ -14,47 +14,34 @@ import '../../global/Models/result.dart';
 import '../../global/Models/success.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
 import '../../View/Dashboard/Models/category_model.dart';
-import '../../View/Estimation/Models/estimation_detail_model.dart';
 import '../rest_api/request_listener_multipart.dart';
+
 class EstimatesRepo {
   //....................create estimation new API done......................
   Future<Either<Failure, Success>> createEstimates(
-      HashMap<String, String> requestParams,
-      HashMap<String, String> requestParamsImages,
-      ReqType mReqType) async {
+      HashMap<String, String> requestParams, HashMap<String, String> requestParamsImages, ReqType mReqType) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
 
     try {
       String response = await ReqListenerMultiPart.fetchPost(
-          strUrl: RequestBuilder.API_CREATE_ESTIMATES,
-          requestParams: requestParams,
-          requestParamsImages: requestParamsImages,
-          mReqType: mReqType);
+          strUrl: RequestBuilder.API_CREATE_ESTIMATES, requestParams: requestParams, requestParamsImages: requestParamsImages, mReqType: mReqType);
       Result? mResponse;
       if (Global.equalsIgnoreCase(response, "413")) {
-        return Left(Failure(
-            DATA: "", MESSAGE: AppAlert.ALERT_FILE_SIZE_ALL, STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_FILE_SIZE_ALL, STATUS: false));
       }
 
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: "alServices",
-            responseMessage: mResponse.responseMessage);
-Logger().i(mResponse.responseStatus);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: "alServices", responseMessage: mResponse.responseMessage);
+        Logger().i(mResponse.responseStatus);
         return Right(mSuccess);
       }
 
@@ -62,53 +49,36 @@ Logger().i(mResponse.responseStatus);
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
-
       Logger().e(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
+
 //...............Reschedual estimates.........................
   Future<Either<Failure, Success>> rescheduleEstimates(
-      HashMap<String, String> requestParams,
-      HashMap<String, String> requestParamsImages,
-      ReqType mReqType,
-      ) async {
+    HashMap<String, String> requestParams,
+    HashMap<String, String> requestParamsImages,
+    ReqType mReqType,
+  ) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
       String response = await ReqListenerMultiPart.fetchPost(
-          strUrl: RequestBuilder.API_CREATE_ESTIMATES,
-          requestParams: requestParams,
-          requestParamsImages: requestParamsImages,
-          mReqType: mReqType);
+          strUrl: RequestBuilder.API_CREATE_ESTIMATES, requestParams: requestParams, requestParamsImages: requestParamsImages, mReqType: mReqType);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: "alServices",
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: "alServices", responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -118,43 +88,28 @@ Logger().i(mResponse.responseStatus);
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
       log(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
+
 //...................service details...................................
-  Future<Either<Failure, Success>> getServiceDetails(
-      HashMap<String, Object> requestParams,
-      {required String serviceId}) async {
+  Future<Either<Failure, Success>> getServiceDetails(HashMap<String, Object> requestParams, {required String serviceId}) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
       String response = await ReqListener.fetchPost(
-          strUrl: RequestBuilder.API_GET_SERVICES + serviceId,
-          requestParams: requestParams,
-          mReqType: ReqType.get,
-          mParamType: ParamType.simple);
+          strUrl: RequestBuilder.API_GET_SERVICES + serviceId, requestParams: requestParams, mReqType: ReqType.get, mParamType: ParamType.simple);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
@@ -165,10 +120,7 @@ Logger().i(mResponse.responseStatus);
           alCategory.add(mCategoryModel);
         }
 
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: alCategory,
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: alCategory, responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -177,34 +129,24 @@ Logger().i(mResponse.responseStatus);
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
       log(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
+
 //....................all estimates old API......................
-  Future<Either<Failure, Success>> getEstimates(
-      HashMap<String, Object> requestParams, String mEstimationStatus) async {
+  Future<Either<Failure, Success>> getEstimates(HashMap<String, Object> requestParams, String mEstimationStatus) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
       String response = await ReqListener.fetchPost(
           //strUrl:'estimates',
-        strUrl: 'estimates/?status=$mEstimationStatus',
+          strUrl: 'estimates/?status=$mEstimationStatus',
           requestParams: requestParams,
           mReqType: ReqType.get,
           mParamType: ParamType.simple);
@@ -212,8 +154,7 @@ Logger().i(mResponse.responseStatus);
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
@@ -225,112 +166,7 @@ Logger().i(mResponse.responseStatus);
           alEstimates.add(mEstimatesModel);
         }
 
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: alEstimates,
-            responseMessage: mResponse.responseMessage);
-
-        return Right(mSuccess);
-      }
-
-      if (!Global.checkNull(mResponse!.responseMessage)) {
-        mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
-      }
-
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
-    } catch (e) {
-      Logger().e("from Create estimation request${e.toString()}");
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
-    }
-  }
-//-----------------cancel estimate old API................
-  Future<Either<Failure, Success>> getCancelEstimates(
-      HashMap<String, Object> requestParams) async {
-    bool connectionStatus = await ConnectivityStatus.isConnected();
-    if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
-    }
-    try {
-      String response = await ReqListener.fetchPost(
-          strUrl: RequestBuilder.API_CANCEL_BOOKING_REQUESTS,
-          requestParams: requestParams,
-          mReqType: ReqType.post,
-          mParamType: ParamType.json);
-      Result? mResponse;
-      if (response.isNotEmpty) {
-        mResponse = Global.getData(response);
-      } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
-      }
-
-      if (mResponse?.responseStatus == true) {
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: "",
-            responseMessage: mResponse.responseMessage);
-
-        return Right(mSuccess);
-      }
-
-      if (!Global.checkNull(mResponse!.responseMessage)) {
-        mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
-      }
-
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
-    } catch (e) {
-      log(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
-    }
-  }
-//.......................Get all cancelled old API..........
-  Future<Either<Failure, Success>> declineEstimate(
-      HashMap<String, Object> requestParams,) async {
-    bool connectionStatus = await ConnectivityStatus.isConnected();
-    if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
-    }
-    try {
-      String response = await ReqListener.fetchPost(
-          strUrl: 'bookings/bookService/decline',
-          requestParams: requestParams,
-          mReqType: ReqType.patch,
-          mParamType: ParamType.json);
-      Result? mResponse;
-      if (response.isNotEmpty) {
-        mResponse = Global.getData(response);
-      } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
-      }
-
-      if (mResponse?.responseStatus == true) {
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: "",
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: alEstimates, responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -340,46 +176,103 @@ Logger().i(mResponse.responseStatus);
       }
 
       return Left(
-          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: ""));
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
+    } catch (e) {
+      Logger().e("from Create estimation request${e.toString()}");
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
+    }
+  }
+
+//-----------------cancel estimate old API................
+  Future<Either<Failure, Success>> getCancelEstimates(HashMap<String, Object> requestParams) async {
+    bool connectionStatus = await ConnectivityStatus.isConnected();
+    if (!connectionStatus) {
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
+    }
+    try {
+      String response = await ReqListener.fetchPost(
+          strUrl: RequestBuilder.API_CANCEL_BOOKING_REQUESTS, requestParams: requestParams, mReqType: ReqType.post, mParamType: ParamType.json);
+      Result? mResponse;
+      if (response.isNotEmpty) {
+        mResponse = Global.getData(response);
+      } else {
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+      }
+
+      if (mResponse?.responseStatus == true) {
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: "", responseMessage: mResponse.responseMessage);
+
+        return Right(mSuccess);
+      }
+
+      if (!Global.checkNull(mResponse!.responseMessage)) {
+        mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
+      }
+
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
       log(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
+    }
+  }
+
+//.......................Get all cancelled old API..........
+  Future<Either<Failure, Success>> declineEstimate(
+    HashMap<String, Object> requestParams,
+  ) async {
+    bool connectionStatus = await ConnectivityStatus.isConnected();
+    if (!connectionStatus) {
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
+    }
+    try {
+      String response = await ReqListener.fetchPost(
+          strUrl: 'bookings/bookService/decline', requestParams: requestParams, mReqType: ReqType.patch, mParamType: ParamType.json);
+      Result? mResponse;
+      if (response.isNotEmpty) {
+        mResponse = Global.getData(response);
+      } else {
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+      }
+
+      if (mResponse?.responseStatus == true) {
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: "", responseMessage: mResponse.responseMessage);
+
+        return Right(mSuccess);
+      }
+
+      if (!Global.checkNull(mResponse!.responseMessage)) {
+        mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
+      }
+
+      return Left(Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: ""));
+    } catch (e) {
+      log(e.toString());
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
 
   //--------------------Rating Api
 
   Future<Either<Failure, Success>> ratingBookingRepo(
-      HashMap<String, Object> requestParams,) async {
+    HashMap<String, Object> requestParams,
+  ) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
       String response = await ReqListener.fetchPost(
-          strUrl: 'ratings/booking/byCustomer',
-          requestParams: requestParams,
-          mReqType: ReqType.post,
-          mParamType: ParamType.json);
+          strUrl: 'ratings/booking/byCustomer', requestParams: requestParams, mReqType: ReqType.post, mParamType: ParamType.json);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: "",
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: "", responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -388,30 +281,23 @@ Logger().i(mResponse.responseStatus);
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(
-          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: ""));
+      return Left(Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: ""));
     } catch (e) {
       log(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
+
 //........booking estimation ........................
-  Future<Either<Failure, Success>> bookingEstimation(
-      HashMap<String, Object> requestParams) async {
+  Future<Either<Failure, Success>> bookingEstimation(HashMap<String, Object> requestParams) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
       String response = await ReqListener.fetchPost(
           // strUrl: 'bookings/serviceBooking',
-           strUrl: 'promotions/book',
+          strUrl: 'promotions/book',
           requestParams: requestParams,
           mReqType: ReqType.post,
           mParamType: ParamType.json);
@@ -419,15 +305,11 @@ Logger().i(mResponse.responseStatus);
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: "",
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: "", responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -436,47 +318,31 @@ Logger().i(mResponse.responseStatus);
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(
-          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: ""));
+      return Left(Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: ""));
     } catch (e) {
       Logger().e("From Promotion Book Estimation ${e.toString()}");
 
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
 
-
-  Future<Either<Failure, Success>> bookingPartialEstimation(
-      HashMap<String, Object> requestParams) async {
+  Future<Either<Failure, Success>> bookingPartialEstimation(HashMap<String, Object> requestParams) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
       String response = await ReqListener.fetchPost(
-          strUrl:"bookings/bookService/partialPay",
-          requestParams: requestParams,
-          mReqType: ReqType.patch,
-          mParamType: ParamType.json);
+          strUrl: "bookings/bookService/partialPay", requestParams: requestParams, mReqType: ReqType.patch, mParamType: ParamType.json);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: "",
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: "", responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -485,48 +351,33 @@ Logger().i(mResponse.responseStatus);
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(
-          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: ""));
+      return Left(Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: ""));
     } catch (e) {
       Logger().e("From Promotion Book Estimation ${e.toString()}");
 
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
 
 //----------------------------Booking FUlly Paied
 
-  Future<Either<Failure, Success>> bookingFullyPayedEstimation(
-      HashMap<String, Object> requestParams) async {
+  Future<Either<Failure, Success>> bookingFullyPayedEstimation(HashMap<String, Object> requestParams) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
       String response = await ReqListener.fetchPost(
-          strUrl:"bookings/bookService/completePay",
-          requestParams: requestParams,
-          mReqType: ReqType.patch,
-          mParamType: ParamType.json);
+          strUrl: "bookings/bookService/completePay", requestParams: requestParams, mReqType: ReqType.patch, mParamType: ParamType.json);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: "",
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: "", responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -535,21 +386,13 @@ Logger().i(mResponse.responseStatus);
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(
-          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: ""));
+      return Left(Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: ""));
     } catch (e) {
       Logger().e("From Promotion Book Estimation ${e.toString()}");
 
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
-
-
-
-
 
   // estimationDetails..................................
 //   Future<Either<Failure, Success>> getEstimatesDetail(
@@ -612,34 +455,23 @@ Logger().i(mResponse.responseStatus);
 //   }
 
   //-------------------------------Create An Offer---------------
-  Future<Either<Failure, Success>> CreateAnOfferEstimate(
-      HashMap<String, Object> requestParams) async {
+  Future<Either<Failure, Success>> createAnOfferEstimate(HashMap<String, Object> requestParams) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
       String response = await ReqListener.fetchPost(
-          strUrl:'bookings/bookService/offer/create',
-          requestParams: requestParams,
-          mReqType: ReqType.patch,
-          mParamType: ParamType.json);
+          strUrl: 'bookings/bookService/offer/create', requestParams: requestParams, mReqType: ReqType.patch, mParamType: ParamType.json);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: {},
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: {}, responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -648,51 +480,32 @@ Logger().i(mResponse.responseStatus);
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
       log(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
 
-
   //-----------------------Decline Booking------------
-  Future<Either<Failure, Success>> DeclineBookingEstimate(
-      HashMap<String, Object> requestParams) async {
+  Future<Either<Failure, Success>> declineBookingEstimate(HashMap<String, Object> requestParams) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
       String response = await ReqListener.fetchPost(
-          strUrl:'bookings/bookService/decline',
-          requestParams: requestParams,
-          mReqType: ReqType.patch,
-          mParamType: ParamType.json);
+          strUrl: 'bookings/bookService/decline', requestParams: requestParams, mReqType: ReqType.patch, mParamType: ParamType.json);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: {},
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: {}, responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -701,18 +514,11 @@ Logger().i(mResponse.responseStatus);
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
       log(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
   //.....................Get All Booking by inzimam....................
@@ -775,6 +581,5 @@ Logger().i(mResponse.responseStatus);
   //         DATA: ""));
   //   }
   // }
-
 
 }

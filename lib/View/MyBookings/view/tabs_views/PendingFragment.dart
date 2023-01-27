@@ -1,3 +1,7 @@
+// ignore_for_file: file_names
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -11,12 +15,9 @@ import '../../../../../global/app_style.dart';
 import '../../../../../global/app_views.dart';
 import '../../../../global/constants.dart';
 import '../../../../global/global.dart';
-import '../../Models/AllBookingsModel.dart';
-import 'package:otobucks/global/enum.dart';
 import '../../controller/mybookings_controller.dart';
 import '../view_booking_screen.dart';
-import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart' as viewBookingModel;
-import 'package:otobucks/View/MyBookings/Models/AllBookingsModel.dart' as bookingResult;
+// ignore: library_prefixes
 
 class PendingFragment extends GetView<MyBookingsController> {
   const PendingFragment({
@@ -25,8 +26,8 @@ class PendingFragment extends GetView<MyBookingsController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.isSearching=false;
-    controller.isSearchingTypePromotion=false;
+    controller.isSearching = false;
+    controller.isSearchingTypePromotion = false;
     Get.put(MyBookingsController());
     return SafeArea(
         top: false,
@@ -39,8 +40,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                 // body: FutureBuilder<AllBookingsModel>(
                 future: controller.getAllBookings(),
                 builder: (context, snapshot) {
-                  print("CHECKING DATA :: ${snapshot.hasData}");
-                  print("----------------snapshot has data----------");
+                  log("CHECKING DATA :: ${snapshot.hasData}");
+                  log("----------------snapshot has data----------");
 
                   if (snapshot.hasData) {
                     return GetBuilder<MyBookingsController>(
@@ -49,15 +50,12 @@ class PendingFragment extends GetView<MyBookingsController> {
                           return RefreshIndicator(
                             onRefresh: controller.refreshBookings,
                             child: ListView.builder(
-                              itemCount: controller.isSearching == true
-                                  ? controller.filteredBookingList!.length
-                                  : snapshot.data?.result?.length,
+                              itemCount: controller.isSearching == true ? controller.filteredBookingList!.length : snapshot.data?.result?.length,
                               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                               itemBuilder: (BuildContext contextM, index) {
                                 controller.pendingsbookinglist = snapshot.data!.result!.reversed.toList();
-                                var data =  controller.isSearching==false?
-                                controller.pendingsbookinglist![index]:
-                                controller.filteredBookingList![index];
+                                var data =
+                                    controller.isSearching == false ? controller.pendingsbookinglist![index] : controller.filteredBookingList![index];
                                 if (data.status == "submitted" || data.status == "pending" || data.status == "reSubmitted") {
                                   return Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -68,7 +66,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       padding: const EdgeInsets.only(top: 10, right: AppDimens.dimens_10, left: 10, bottom: 7),
-                                      margin: EdgeInsets.symmetric(horizontal: 5),
+                                      margin: const EdgeInsets.symmetric(horizontal: 5),
                                       child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                                         //Row left image and right data
                                         Row(
@@ -78,7 +76,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                             Column(
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
-                                                ImageWidget(imagePath: data.source?.image?.first),
+                                                imageWidget(imagePath: data.source?.image?.first),
                                                 const SizedBox(
                                                   height: AppDimens.dimens_12,
                                                 ),
@@ -87,7 +85,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                 Padding(
                                                   padding: const EdgeInsets.only(right: 10.0),
                                                   child: InkWell(
-                                                    child: Container(
+                                                    child: SizedBox(
                                                         child: Center(
                                                       child: Text(
                                                         Constants.TXT_VIEW_BOOKING.tr,
@@ -101,11 +99,10 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                     onTap: () {
                                                       if (data.status == "pending") {
                                                         //reschedule and decline
-                                                        // print(data.bookingDetails!.customerNote.toString());
-                                                        Get.to(
-                                                            ViewBookingEstimation(mEstimatesModel: data as viewBookingModel.Result, isPending: true));
+                                                        // log(data.bookingDetails!.customerNote.toString());
+                                                        Get.to(ViewBookingEstimation(mEstimatesModel: data, isPending: true));
                                                       } else {
-                                                        Get.to(ViewBookingEstimation(mEstimatesModel: data as viewBookingModel.Result));
+                                                        Get.to(ViewBookingEstimation(mEstimatesModel: data));
                                                       }
                                                     },
                                                   ),
@@ -130,13 +127,13 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                   // ),
                                                   Row(
                                                     children: [
-                                                      Textwidget(text: "Service Title: ".tr, fontsize: 0, fontweight: 0),
-                                                      Textwidget(text: data.source?.title ?? "", fontsize: 0, fontweight: 0),
+                                                      textwidget(text: "Service Title: ".tr, fontsize: 0, fontweight: 0),
+                                                      textwidget(text: data.source?.title ?? "", fontsize: 0, fontweight: 0),
                                                     ],
                                                   ),
                                                   Row(
                                                     children: [
-                                                      Textwidget(text: "Price :  ".tr, fontsize: 0, fontweight: 0),
+                                                      textwidget(text: "Price :  ".tr, fontsize: 0, fontweight: 0),
                                                       priceWidget("${data.source!.price}/hr".toString()),
                                                     ],
                                                   ),
@@ -160,7 +157,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                       ),
                                                     ],
                                                   ),
-                                                  Divider(
+                                                  const Divider(
                                                     thickness: 1,
                                                   ),
 
@@ -188,7 +185,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                           if (data.status != "pending") {
                                                             //items data isEmpty or Not
 
-                                                            Get.to(EstimationDetailsPDFScreen(allBookingsModel: data as viewBookingModel.Result));
+                                                            Get.to(EstimationDetailsPDFScreen(allBookingsModel: data));
 
                                                             //
                                                           }
@@ -222,7 +219,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                                   ),
                                                                   child: Center(
                                                                     child: Text(
-                                                                      "${data.estimation?.offerStatus}".tr.toUpperCase() ?? "",
+                                                                      "${data.estimation?.offerStatus}".tr.toUpperCase(),
                                                                       style: TextStyle(
                                                                         color: data.estimation?.offerStatus == "accepted"
                                                                             ? AppColors.colorSuccessText
@@ -255,7 +252,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                                                       fontSizeDelta: 8,
                                                                                       fontWeightDelta: 2),
                                                                                 ),
-                                                                                Container(
+                                                                                SizedBox(
                                                                                   child: Text(
                                                                                     // " dsfjlasd ladjfl klfjl;asf l;sa lsjflks jlkdf lkdfkadjlfjal; fkdalkdf dlkfj;la sd",
                                                                                     "${data.estimation?.offerNote}",
@@ -309,7 +306,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                                                 },
                                                               ),
                                                             )
-                                                          : SizedBox()
+                                                          : const SizedBox()
                                                     ],
                                                   ),
                                                 ],
@@ -323,7 +320,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                     ),
                                   );
                                 } else {
-                                  return SizedBox();
+                                  return const SizedBox();
                                 }
                               },
                             ),
@@ -344,7 +341,7 @@ class PendingFragment extends GetView<MyBookingsController> {
     ));
   }
 
-  Widget Textwidget({String? text, double? fontsize, int? fontweight}) {
+  Widget textwidget({String? text, double? fontsize, int? fontweight}) {
     return Flexible(
       child: Text(
         text ?? "".tr,
@@ -361,8 +358,8 @@ class PendingFragment extends GetView<MyBookingsController> {
     );
   }
 
-  Widget UserNameWidget({String? userName}) {
-    return Container(
+  Widget userNameWidget({String? userName}) {
+    return SizedBox(
         child: Text(
       userName ?? "".tr,
       maxLines: 1,
@@ -370,7 +367,7 @@ class PendingFragment extends GetView<MyBookingsController> {
     ));
   }
 
-  Widget ImageWidget({String? imagePath}) {
+  Widget imageWidget({String? imagePath}) {
     return Container(
       margin: const EdgeInsets.only(
         right: AppDimens.dimens_10,
@@ -391,7 +388,7 @@ class PendingFragment extends GetView<MyBookingsController> {
         child:
             // "AED ${mEstimatesModel.grandTotal}/-",
             GradientText(
-          "AED ${price}".tr,
+          "AED $price".tr,
           // Global.checkNull(mEstimatesModel
           //     .source
           //     ?.price)
@@ -409,7 +406,7 @@ class PendingFragment extends GetView<MyBookingsController> {
 
   getDate(String date) {
     if (Global.checkNull(date)) {
-      DateTime parseDate = DateFormat(Constants.STRING_DB_DATE_FORMATE).parse(date!);
+      DateTime parseDate = DateFormat(Constants.STRING_DB_DATE_FORMATE).parse(date);
       var inputDate = DateTime.parse(parseDate.toString());
       var outputFormat = DateFormat(Constants.STRING_DD_MMM_YYYY);
       var outputDate = outputFormat.format(inputDate);

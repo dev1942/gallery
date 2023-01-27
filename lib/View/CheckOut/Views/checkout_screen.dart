@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Estimation/Controllers/estimation_sidebar_controllers/estimation_checkout.dart';
-import 'package:otobucks/global/global.dart';
 import 'package:otobucks/global/text_styles.dart';
 
 import '../../../../../global/app_colors.dart';
@@ -35,10 +34,10 @@ class CheckoutScreen extends StatefulWidget {
   final String? note;
  final String? previousAmount;
   final String? discount;
-  bool isPartialPay;
-  bool isFullyPay;
+  final bool isPartialPay;
+  final bool isFullyPay;
 
-   CheckoutScreen(
+   const CheckoutScreen(
       {Key? key,
         this.isPartialPay=false,
         this.isFullyPay=false,
@@ -222,7 +221,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                   ),
                                 ),
                               )),
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           Text("Payment Detail".tr),
                          widget.isPartialPay? Card(
                              margin: const EdgeInsets.all(AppDimens.dimens_20),
@@ -234,7 +233,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                  Row(
                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                    children: [
-                                     Text("Total Amount ".tr,style: TextStyle(fontSize: 16),),
+                                     Text("Total Amount ".tr,style: const TextStyle(fontSize: 16),),
                                      Text("AED ${widget.amount??"0"}",  style: AppStyle.textViewStyleNormalSubtitle2(
                                          context: context,
                                          color: AppColors.colorBlueStart,
@@ -245,7 +244,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                  Row(
                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                    children: [
-                                     Text("Pay 50%".tr,style: TextStyle(fontSize: 16),),
+                                     Text("Pay 50%".tr,style: const TextStyle(fontSize: 16),),
                                      Text("${(num.parse(widget.amount!)/2)}",  style: AppStyle.textViewStyleNormalSubtitle2(
                                          context: context,
                                          color: AppColors.colorBlueStart,
@@ -256,7 +255,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                  Row(
                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                    children: [
-                                     Text("Sub Total Amount ".tr,style: TextStyle(fontSize: 16),),
+                                     Text("Sub Total Amount ".tr,style: const TextStyle(fontSize: 16),),
                                      Text("AED ${(num.parse(widget.amount!)/2)}",  style: AppStyle.textViewStyleNormalSubtitle2(
                                          context: context,
                                          color: AppColors.colorBlueStart,
@@ -277,7 +276,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                  Row(
                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                    children: [
-                                     Text("Total Amount ".tr,style: TextStyle(fontSize: 16),),
+                                     Text("Total Amount ".tr,style: const TextStyle(fontSize: 16),),
                                      Text("AED ${widget.previousAmount??"0"}",  style: AppStyle.textViewStyleNormalSubtitle2(
                                          context: context,
                                          color: AppColors.colorBlueStart,
@@ -288,7 +287,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                  Row(
                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                    children: [
-                                     Text("50 % Payed Amount".tr,style: TextStyle(fontSize: 16),),
+                                     Text("50 % Payed Amount".tr,style: const TextStyle(fontSize: 16),),
                                      Text("${(num.parse(widget.amount!))}",  style: AppStyle.textViewStyleNormalSubtitle2(
                                          context: context,
                                          color: AppColors.colorBlueStart,
@@ -299,7 +298,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                  Row(
                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                    children: [
-                                     Text("Balance Amount ".tr,style: TextStyle(fontSize: 16),),
+                                     Text("Balance Amount ".tr,style: const TextStyle(fontSize: 16),),
                                      Text("AED ${(num.parse(widget.amount!))}",  style: AppStyle.textViewStyleNormalSubtitle2(
                                          context: context,
                                          color: AppColors.colorBlueStart,
@@ -320,7 +319,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("Total Amount ".tr,style: TextStyle(fontSize: 16),),
+                                    Text("Total Amount ".tr,style: const TextStyle(fontSize: 16),),
                                     Text("AED ${widget.previousAmount??"0"}",  style: AppStyle.textViewStyleNormalSubtitle2(
                                         context: context,
                                         color: AppColors.colorBlueStart,
@@ -331,7 +330,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Discount ".tr,style: TextStyle(fontSize: 16),),
+                                  Text("Discount ".tr,style: const TextStyle(fontSize: 16),),
                                   Text("${widget.discount??"0"} %",  style: AppStyle.textViewStyleNormalSubtitle2(
                                       context: context,
                                       color: AppColors.colorBlueStart,
@@ -342,7 +341,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Sub Total Amount ".tr,style: TextStyle(fontSize: 16),),
+                                  Text("Sub Total Amount ".tr,style: const TextStyle(fontSize: 16),),
                                   Text("AED ${widget.amount??"0"}",  style: AppStyle.textViewStyleNormalSubtitle2(
                                       context: context,
                                       color: AppColors.colorBlueStart,

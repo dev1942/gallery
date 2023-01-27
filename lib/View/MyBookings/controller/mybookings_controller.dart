@@ -1,11 +1,11 @@
+// ignore_for_file: unnecessary_overrides
+
 import 'dart:collection';
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:otobucks/View/Chat/Views/chat_detail_screen.dart';
@@ -22,7 +22,6 @@ import '../../../services/repository/chat_repo.dart';
 import '../Models/PromotionBookingModel.dart';
 
 class MyBookingsController extends GetxController {
-  @override
   //..................variabls..............................
 
   var log = Logger();
@@ -34,24 +33,21 @@ class MyBookingsController extends GetxController {
   String chatNowRoomId = '';
   bool isSearching = false;
   bool isSearchingTypePromotion = false;
-
+  @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     futurBookings = getAllBookings();
-    futurePromotionBookings=getAllPromotionBookings();
+    futurePromotionBookings = getAllPromotionBookings();
     getToken();
   }
 
   @override
   void onReady() {
-    // TODO: implement onReady
     super.onReady();
   }
 
   @override
   void onClose() {
-    // TODO: implement onClose
     super.onClose();
   }
 
@@ -64,10 +60,7 @@ class MyBookingsController extends GetxController {
     token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
     log.e("token at start is");
     log.e(token);
-    final headers = {
-      'Authorization': "Bearer $token",
-      "Content-Type": "application/json"
-    };
+    final headers = {'Authorization': "Bearer $token", "Content-Type": "application/json"};
     final response = await http.get(Uri.parse(RequestBuilder.API_GET_ALL_BOOKINGS), headers: headers);
     var data = jsonDecode(response.body);
     if (response.statusCode == 200) {
@@ -84,14 +77,12 @@ class MyBookingsController extends GetxController {
     update();
     return BookingModel.fromJson(data);
   }
+
   //...............Get All Promotion  Bookings...........................
   Future<PromotionBookingHistory> getAllPromotionBookings() async {
     final prefManager = await SharedPreferences.getInstance();
     token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
-    final headers = {
-      'Authorization': "Bearer $token",
-      "Content-Type": "application/json"
-    };
+    final headers = {'Authorization': "Bearer $token", "Content-Type": "application/json"};
     final response = await http.get(Uri.parse(RequestBuilder.API_GET_PROMOTIONS_HISTORY), headers: headers);
     var data = jsonDecode(response.body);
     if (response.statusCode == 200) {
@@ -121,11 +112,7 @@ class MyBookingsController extends GetxController {
     var categories = await ChatRepo().createRoom(requestParams, userId);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
 
       chatNowLoading = false;
       update();
@@ -147,11 +134,7 @@ class MyBookingsController extends GetxController {
     var alTransactions = await ChatRepo().getMyRoom(requestParams, roomId);
 
     alTransactions.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
 
       mShowData = ShowData.showNoDataFound;
       update();
@@ -159,11 +142,9 @@ class MyBookingsController extends GetxController {
       chatNowLoading = false;
       MyRoomModel model = mResult.responseData as MyRoomModel;
       if (model.users[0].id == Get.find<HomeScreenController>().userId) {
-        Get.to(
-            () => ChatDetailScreen(roomUser: model.users[1], roomId: roomId));
+        Get.to(() => ChatDetailScreen(roomUser: model.users[1], roomId: roomId));
       } else {
-        Get.to(
-            () => ChatDetailScreen(roomUser: model.users[0], roomId: roomId));
+        Get.to(() => ChatDetailScreen(roomUser: model.users[0], roomId: roomId));
       }
       update();
     });
@@ -171,10 +152,9 @@ class MyBookingsController extends GetxController {
 
   //------------------------------------Launch whats app send message-----------------------------
   launchWhatsappSendMessage(String? phoneNumber, String? message) {
-    var whatsappUrl =
-        "whatsapp://send?phone=${phoneNumber}" + "&text=${message}";
+    var whatsappUrl = "whatsapp://send?phone=$phoneNumber" "&text=$message";
     try {
-      launch(whatsappUrl);
+      launchUrl(Uri.parse(whatsappUrl));
     } catch (e) {
       //To handle error and display error message
 
@@ -188,8 +168,7 @@ class MyBookingsController extends GetxController {
   void searchInShop(String query) {
     filteredBookingList = pendingsbookinglist;
     final suggestions = pendingsbookinglist?.where((filteredBooking) {
-      String? shopName =
-          filteredBooking.source?.title?.toString().toLowerCase();
+      String? shopName = filteredBooking.source?.title?.toString().toLowerCase();
       final input = query.toLowerCase();
       return shopName!.contains(input);
     }).toList();
@@ -214,8 +193,7 @@ class MyBookingsController extends GetxController {
   void searchInShopPromotion(String query) {
     filteredPromotionBookingList = promotionBookingList;
     final suggestions = promotionBookingList?.where((filteredBooking) {
-      String? shopName =
-      filteredBooking.promotion?.title?.toString().toLowerCase();
+      String? shopName = filteredBooking.promotion?.title?.toString().toLowerCase();
       final input = query.toLowerCase();
       return shopName!.contains(input);
     }).toList();
@@ -241,48 +219,28 @@ class MyBookingsController extends GetxController {
     try {
       final body = json.encode({"bookingID": bookingID});
       log.i("$token");
-      log.i("$body");
-      final headers = {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json'
-      };
-      var uriSaveCart =
-          Uri.parse("${RequestBuilder.API_DELETE_BOOKING}/${bookingID}");
-      http.Response response =
-          await http.delete(uriSaveCart, headers: headers, body: body);
-      log.i("BodyI sent when delete booking=======>${body}");
+      log.i(body);
+      final headers = {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'};
+      var uriSaveCart = Uri.parse("${RequestBuilder.API_DELETE_BOOKING}/$bookingID");
+      http.Response response = await http.delete(uriSaveCart, headers: headers, body: body);
+      log.i("BodyI sent when delete booking=======>$body");
       final message = json.decode(response.body.toString());
       //..............Response Ok Part...................................................
       if (response.statusCode == 200) {
         log.i(response.statusCode);
-        log.i(
-            "Server Response to me while delete booking is======>>${message["message"]}");
-        Global.showToastAlert(
-            context: Get.context!,
-            strTitle: "Deleted",
-            strMsg: message["message"].toString(),
-            toastType: TOAST_TYPE.toastSuccess);
+        log.i("Server Response to me while delete booking is======>>${message["message"]}");
+        Global.showToastAlert(context: Get.context!, strTitle: "Deleted", strMsg: message["message"].toString(), toastType: TOAST_TYPE.toastSuccess);
       }
       //.........................not ok ...................................................
       else {
-        Global.showToastAlert(
-            context: Get.context!,
-            strTitle: "Message",
-            strMsg: message["message"].toString(),
-            toastType: TOAST_TYPE.toastError);
+        Global.showToastAlert(context: Get.context!, strTitle: "Message", strMsg: message["message"].toString(), toastType: TOAST_TYPE.toastError);
         log.e(response.statusCode);
-        log.e(
-            "Server Response to me  while deleting booking =====>>  ${response.body.toString()}");
+        log.e("Server Response to me  while deleting booking =====>>  ${response.body.toString()}");
       }
     } catch (e) {
-      Global.showToastAlert(
-          context: Get.context!,
-          strTitle: "Deleted",
-          strMsg: e.toString(),
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.context!, strTitle: "Deleted", strMsg: e.toString(), toastType: TOAST_TYPE.toastSuccess);
 
-      log.e(
-          "Exception is whileremover market shop  is=======>>${e.toString()}");
+      log.e("Exception is whileremover market shop  is=======>>${e.toString()}");
     }
   }
 
@@ -291,11 +249,8 @@ class MyBookingsController extends GetxController {
   TextEditingController datePickerController = TextEditingController();
 
   Future<void> selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
+    final DateTime? picked =
+        await showDatePicker(context: context, initialDate: selectedDate, firstDate: DateTime(2015, 8), lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate) {
       selectedDate = picked;
 
@@ -304,9 +259,9 @@ class MyBookingsController extends GetxController {
       final DateFormat formatter = DateFormat('yyyy-MM-dd');
       final String formatted = formatter.format(selectedDate);
       datePickerController.text = formatted;
-    isSearching = true;
-    searchbyDate(datePickerController.text);
-    searchbyDatePromotion(datePickerController.text);
+      isSearching = true;
+      searchbyDate(datePickerController.text);
+      searchbyDatePromotion(datePickerController.text);
       update();
     }
   }

@@ -2,13 +2,9 @@ import 'dart:collection';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:otobucks/global/container_properties.dart';
-import 'package:otobucks/View/Notifications/Views/notification_details_screen.dart';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:otobucks/View/Notifications/Views/notification_details_screen.dart';
+import 'package:get/get.dart';
+import 'package:otobucks/View/Notifications/Views/NotificationController.dart';
 import 'package:otobucks/preferences/preferences.dart';
 
 import 'package:otobucks/services/repository/notification_repo.dart';
@@ -31,28 +27,49 @@ class NotificationFragment extends StatefulWidget {
 }
 
 class NotificationFragmentState extends State<NotificationFragment> {
-  ShowData mShowData = ShowData.showLoading;
-
-  bool connectionStatus = false;
-  bool isShowLoader = false;
-  String userImage = "", userName = "";
-  static final FlutterLocalNotificationsPlugin _notificationsPlugin = FlutterLocalNotificationsPlugin();
-  Preferences preferences = Preferences();
-
-  List<NotificationModel> alNotification = [];
-
+  var controller = Get.put(NotificationsController());
   @override
   void initState() {
     super.initState();
-
-    initConnectivity();
+    if (controller.alNotification.isEmpty) {
+      controller.initConnectivity(context);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     Widget widgetM = Container();
 
-    Widget mShowWidget = ListView(
+    return SafeArea(
+        top: false,
+        bottom: false,
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          backgroundColor: AppColors.getMainBgColor(),
+          body: Obx(() => Stack(
+                children: [
+                  Container(
+                    color: AppColors.colorBlueStart,
+                    //height: AppDimens.dimens_120,
+                    height: 0,
+                  ),
+                  // Container(height: size.height, child: widgetM),
+                  widgetM,
+                  AppViews.getSetDataNotification(context, controller.mShowData.value, mShowWidget(controller, context)),
+                ],
+              )),
+        ));
+  }
+}
+
+Widget mShowWidget(NotificationsController controller, BuildContext context) {
+  Future<void> pullTorefrsh() async {
+    controller.getNotifications(context);
+  }
+
+  return RefreshIndicator(
+    onRefresh: pullTorefrsh,
+    child: ListView(
       children: [
         // profile pic and name
         Container(
@@ -64,7 +81,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
               Container(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(AppDimens.dimens_50),
-                  child: NetworkImageCustom(image: userImage, fit: BoxFit.fill, height: AppDimens.dimens_74, width: AppDimens.dimens_74),
+                  child: NetworkImageCustom(image: controller.userImage, fit: BoxFit.fill, height: AppDimens.dimens_74, width: AppDimens.dimens_74),
                 ),
                 margin: const EdgeInsets.only(right: AppDimens.dimens_10),
               ),
@@ -74,7 +91,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    userName,
+                    controller.userName,
                     style: AppStyle.textViewStyleNormalBodyText2(context: context, color: AppColors.colorWhite, fontSizeDelta: 0, fontWeightDelta: 1),
                   ),
                   Text(
@@ -93,7 +110,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
             physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             itemBuilder: (BuildContext contextM, index) {
-              NotificationModel mNotificationModel = alNotification[index];
+              NotificationModel mNotificationModel = controller.alNotification[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),
                 child: Container(
@@ -103,7 +120,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.only(top: 10, right: AppDimens.dimens_10, left: 10, bottom: 7),
-                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
                   // margin: const EdgeInsets.only(bottom: AppDimens.dimens_14),
 
                   child: InkWell(
@@ -159,7 +176,7 @@ class NotificationFragmentState extends State<NotificationFragment> {
                       ],
                     ),
                     onTap: () {
-                      log(userName);
+                      log(controller.userName);
                       // Navigator.of(context).push(MaterialPageRoute(
                       //     builder: (_) => NotificationDetailsScreen(
                       //           notificationModel: mNotificationModel,
@@ -171,114 +188,8 @@ class NotificationFragmentState extends State<NotificationFragment> {
                 ),
               );
             },
-            itemCount: alNotification.length)
+            itemCount: controller.alNotification.length)
       ],
-    );
-    widgetM = AppViews.getSetDataNotification(context, mShowData, mShowWidget);
-    return SafeArea(
-      top: false,
-      bottom: false,
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: AppColors.getMainBgColor(),
-        body: Stack(
-          children: [
-            Container(
-              color: AppColors.colorBlueStart,
-              //height: AppDimens.dimens_120,
-              height: 0,
-            ),
-            // Container(height: size.height, child: widgetM),
-            widgetM,
-            AppViews.showLoadingWithStatus(isShowLoader)
-          ],
-        ),
-      ),
-    );
-  }
-
-  Future<void> initConnectivity() async {
-    final prefManager = await SharedPreferences.getInstance();
-
-    String? userImage_ = prefManager.getString(SharedPrefKey.KEY_USER_IMAGE);
-    String? _userFirstName = prefManager.getString(SharedPrefKey.KEY_FIRST_NAME);
-    String? _userLastImage = prefManager.getString(SharedPrefKey.KEY_LAST_NAME);
-
-    setState(() {
-      if (Global.checkNull(userImage_)) {
-        userImage = userImage_!;
-      }
-      if (Global.checkNull(_userFirstName) && Global.checkNull(_userLastImage)) {
-        userName = _userFirstName! + " " + _userLastImage!;
-      }
-    });
-
-    if (!mounted) {
-      return;
-    }
-
-    // setState(() {
-    //   if (connectionStatus) {
-    //mShowData = ShowData.SHOW_DATA;
-    getNotifications();
-    // } else {
-    //   Global.showNoInternetDialog(context);
-    // }
-    // });
-  }
-
-  getNotifications() async {
-    setState(() {
-      mShowData = ShowData.showLoading;
-    });
-
-    HashMap<String, Object> requestParams = HashMap();
-
-    var categories = await NotificationsRepo().getNotifications(requestParams);
-
-    categories.fold((failure) {
-      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
-      setState(() {
-        mShowData = ShowData.showNoDataFound;
-      });
-    }, (mResult) {
-      setState(() {
-        alNotification = mResult.responseData as List<NotificationModel>;
-
-        if (alNotification.isNotEmpty) {
-          mShowData = ShowData.showData;
-          if (preferences.getnotificationId() != alNotification.last.id) {
-            preferences.setNotificationId(alNotification.last.id);
-            createanddisplaynotification(title: alNotification.last.title, body: alNotification.last.title, payload: alNotification.last.id);
-          }
-        } else {
-          mShowData = ShowData.showNoDataFound;
-        }
-      });
-    });
-  }
-
-  static void createanddisplaynotification({required String title, required String body, required String payload}) async {
-    try {
-      final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-      const NotificationDetails notificationDetails = NotificationDetails(
-        android: AndroidNotificationDetails(
-          "pushnotificationapp",
-          "pushnotificationappchannel",
-          importance: Importance.max,
-          priority: Priority.high,
-        ),
-      );
-
-      await _notificationsPlugin.show(
-        id,
-        title,
-        body,
-        notificationDetails,
-        payload: payload,
-      );
-    } on Exception catch (e) {
-      print(e);
-    }
-  }
+    ),
+  );
 }

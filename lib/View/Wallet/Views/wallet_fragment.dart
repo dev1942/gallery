@@ -1,13 +1,13 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:otobucks/View/Home/Controllers/home_screen_controller.dart';
 import 'package:otobucks/View/Wallet/Controllers/wallet_controller.dart';
 import 'package:otobucks/View/Wallet/Widgets/add_money_dialog.dart';
 
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/text_styles.dart';
 import 'package:otobucks/widgets/custom_button.dart';
-
 
 import '../../../../../../global/app_colors.dart';
 import '../../../../../../global/app_dimens.dart';
@@ -16,17 +16,16 @@ import '../../../../../../global/app_views.dart';
 import '../../../../../../global/constants.dart';
 import '../../../../../../global/global.dart';
 import '../../../widgets/custom_ui/card/simple_card.dart';
-import '../../../widgets/custom_ui/carousel_slider/carousel_options.dart';
 import '../../../widgets/custom_ui/carousel_slider/carousel_slider.dart';
 import '../../../widgets/custom_ui/loader/circle.dart';
 import '../../CheckOut/Models/card_model.dart';
-import '../../../widgets/round_dot.dart';
 import '../../Transactions/Models/add_bank_account_model.dart';
 import '../Widgets/add_bank_account_dialog.dart';
 import '../Widgets/add_card_dialog.dart';
 import '../Widgets/delete_card_dialog.dart';
 import '../Widgets/withdraw_money_dialog.dart';
 import '../Widgets/withdraw_option_dialog.dart';
+
 class WalletFragment extends StatefulWidget {
   const WalletFragment({Key? key}) : super(key: key);
 
@@ -269,11 +268,7 @@ class WalletFragmentState extends State<WalletFragment> {
         // ),
 //------------------------------------------------------------------------
         Container(
-          margin: const EdgeInsets.only(
-              bottom: AppDimens.dimens_10,
-              top: AppDimens.dimens_10,
-              left: AppDimens.dimens_18,
-              right: AppDimens.dimens_18),
+          margin: const EdgeInsets.only(bottom: AppDimens.dimens_10, top: AppDimens.dimens_10, left: AppDimens.dimens_18, right: AppDimens.dimens_18),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -303,10 +298,7 @@ class WalletFragmentState extends State<WalletFragment> {
                   context,
                   value.loadingCards,
                   Container(
-                      margin: const EdgeInsets.only(
-                          left: AppDimens.dimens_10,
-                          top: AppDimens.dimens_10,
-                          bottom: 20),
+                      margin: const EdgeInsets.only(left: AppDimens.dimens_10, top: AppDimens.dimens_10, bottom: 20),
                       child: Column(children: [
                         CarouselSlider(
                           options: CarouselOptions(
@@ -315,8 +307,7 @@ class WalletFragmentState extends State<WalletFragment> {
                               enableInfiniteScroll: false,
                               height: 200,
                               onPageChanged: (index, reason) => {}),
-                          items:
-                              List.generate(value.alCardModel.length, (index) {
+                          items: List.generate(value.alCardModel.length, (index) {
                             CardModel mCardModel = value.alCardModel[index];
                             return SimpleCard(
                               onTap: () {
@@ -343,11 +334,7 @@ class WalletFragmentState extends State<WalletFragment> {
         // divider
         AppViews.addDivider(),
         Container(
-          margin: const EdgeInsets.only(
-              left: AppDimens.dimens_20,
-              right: AppDimens.dimens_20,
-              top: AppDimens.dimens_10,
-              bottom: AppDimens.dimens_10),
+          margin: const EdgeInsets.only(left: AppDimens.dimens_20, right: AppDimens.dimens_20, top: AppDimens.dimens_10, bottom: AppDimens.dimens_10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -361,13 +348,9 @@ class WalletFragmentState extends State<WalletFragment> {
                         context,
                         value.loadingWalletBalance,
                         Text(
-                          Global.replaceCurrencySign("USD") +
-                              value.mWalletModel.balance,
+                          Global.replaceCurrencySign("USD") + value.mWalletModel.balance,
                           style: AppStyle.textViewStyleNormalSubtitle2(
-                              context: context,
-                              color: AppColors.colorBlack,
-                              fontSizeDelta: 2,
-                              fontWeightDelta: 3),
+                              context: context, color: AppColors.colorBlack, fontSizeDelta: 2, fontWeightDelta: 3),
                         ),
                         SpinKitCircle(
                           color: AppColors.colorAccent,
@@ -377,10 +360,7 @@ class WalletFragmentState extends State<WalletFragment> {
                         '0');
                   }),
                   Text(Constants.TXT_CURRENT_BALANCE,
-                      style: AppStyle.textViewStyleSmall(
-                          context: context,
-                          color: AppColors.colorBlack,
-                          fontSizeDelta: -2))
+                      style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack, fontSizeDelta: -2))
                 ],
               ),
               CustomButton(
@@ -634,8 +614,7 @@ class WalletFragmentState extends State<WalletFragment> {
         context: context,
         builder: (context) {
           return AddBankAccountDialogBox(
-            onTap: (AddBankAccountModel model) =>
-                controller.addBankAccount(model),
+            onTap: (AddBankAccountModel model) => controller.addBankAccount(model),
           );
         });
   }
@@ -657,11 +636,7 @@ class WalletFragmentState extends State<WalletFragment> {
         builder: (context) {
           return AddEditCardDialogBox(
             onTap: (CardModel mCardModelInserted) {
-              controller.addNewCard(
-                  mCardModelInserted.last4,
-                  mCardModelInserted.expMonth,
-                  mCardModelInserted.expYear,
-                  mCardModelInserted.cvcCheck,
+              controller.addNewCard(mCardModelInserted.last4, mCardModelInserted.expMonth, mCardModelInserted.expYear, mCardModelInserted.cvcCheck,
                   mCardModelInserted.name);
             },
           );
@@ -682,11 +657,7 @@ class WalletFragmentState extends State<WalletFragment> {
 
   Future<void> _displayAddMoney() async {
     if (controller.alCardModel.isEmpty) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: 'Please Add a card first.',
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: 'Please Add a card first.', toastType: TOAST_TYPE.toastError);
       return;
     }
     return showDialog(
