@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_declarations, non_constant_identifier_names
 
 class RequestBuilder {
-  static final String LIVE_URL = "https://developmentapi-app.otobucks.com/v1/";
+  static final String LIVE_URL = "https://api-app.otobucks.com/v1/";
   //https://developmentapi-app.otobucks.com/v1
   static final String LOCAL_URL = "http://192.168.18.36:4000/v1/";
   //https://api.otobucks.com/v1/auth/customers/login
