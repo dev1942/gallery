@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/InviteFriends/Controllers/invite_and_earn_controller.dart';
@@ -24,8 +26,14 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
 
   @override
   void initState() {
-    controller.getInviteCode();
-    controller.getMyInvites();
+    if (controller.inviteLink.isEmpty) {
+      controller.getInviteCode();
+    }
+    log(controller.inviteJoiners.length.toString());
+    if (controller.inviteJoiners.isEmpty || controller.inviteJoiners.length == 1) {
+      controller.getMyInvites();
+    }
+
     super.initState();
   }
 
@@ -39,10 +47,16 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
         child: Scaffold(
             resizeToAvoidBottomInset: true,
             backgroundColor: AppColors.getMainBgColor(),
-            body: SingleChildScrollView(
-                child: Column(
-              children: [_inviteSection(), _myInvitedSection()],
-            ))));
+            body: RefreshIndicator(
+              onRefresh: controller.pullTorefreshData,
+              child: SingleChildScrollView(
+                  child: Column(
+                children: [
+                  _inviteSection(),
+                  _myInvitedSection(),
+                ],
+              )),
+            )));
   }
 
   _inviteSection() {
@@ -55,21 +69,14 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.all(AppDimens.dimens_30),
-              child: Image.asset(AppImages.ic_invite_friend_top_image,
-                  height: size.maxWidth / 2),
+              child: Image.asset(AppImages.ic_invite_friend_top_image, height: size.maxWidth / 2),
             ),
-
             Container(
-                margin: const EdgeInsets.only(
-                    top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
+                margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
                 alignment: Alignment.center,
                 child: Text(
                   Constants.TXT_INVITE_FRIENDS,
-                  style: AppStyle.textViewStyleNormalBodyText2(
-                      context: context,
-                      color: AppColors.colorBlack,
-                      fontSizeDelta: 1,
-                      fontWeightDelta: 1),
+                  style: AppStyle.textViewStyleNormalBodyText2(context: context, color: AppColors.colorBlack, fontSizeDelta: 1, fontWeightDelta: 1),
                 )),
             Container(
                 margin: const EdgeInsets.all(AppDimens.dimens_15),
@@ -77,19 +84,14 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
                 child: Text(
                   "Now you can earn by inviting your friends, relative or anyone to the application. If they will use your refered code while signup then you will get a reward in return of that.",
                   textAlign: TextAlign.center,
-                  style: AppStyle.textViewStyleSmall(
-                      context: context,
-                      color: AppColors.grayDashboardText,
-                      fontSizeDelta: -2,
-                      fontWeightDelta: 0),
+                  style: AppStyle.textViewStyleSmall(context: context, color: AppColors.grayDashboardText, fontSizeDelta: -2, fontWeightDelta: 0),
                 )),
             AppViews.getSetDataWithReturn(
                 context,
                 value.loadingInvite,
                 Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.only(
-                      right: marginBoth, top: marginBoth, left: marginBoth),
+                  margin: EdgeInsets.only(right: marginBoth, top: marginBoth, left: marginBoth),
                   decoration: AppViews.getRoundBorder(
                       cBoxBgColor: AppColors.colorWhite,
                       cBorderColor: AppColors.colorBorder2,
@@ -97,9 +99,7 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
                       dBorderWidth: AppDimens.dimens_1),
                   child: Container(
                       height: AppDimens.dimens_46,
-                      padding: const EdgeInsets.only(
-                          left: AppDimens.dimens_10,
-                          right: AppDimens.dimens_10),
+                      padding: const EdgeInsets.only(left: AppDimens.dimens_10, right: AppDimens.dimens_10),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -111,10 +111,7 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
                                     value.inviteLink,
                                     textAlign: TextAlign.center,
                                     style: AppStyle.textViewStyleSmall(
-                                        context: context,
-                                        color: AppColors.colorBlack4,
-                                        fontSizeDelta: -1,
-                                        fontWeightDelta: 1),
+                                        context: context, color: AppColors.colorBlack4, fontSizeDelta: -1, fontWeightDelta: 1),
                                   ))),
                           InkWell(
                             onTap: () => value.copyText(),
@@ -124,10 +121,7 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
                                   "COPY",
                                   textAlign: TextAlign.center,
                                   style: AppStyle.textViewStyleSmall(
-                                      context: context,
-                                      color: AppColors.colorBlue2,
-                                      fontSizeDelta: 2,
-                                      fontWeightDelta: 3),
+                                      context: context, color: AppColors.colorBlue2, fontSizeDelta: 2, fontWeightDelta: 3),
                                 )),
                           )
                         ],
@@ -138,22 +132,16 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
               onTap: () => Share.share(value.customLink),
               child: Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.only(
-                    right: marginBoth, top: marginBoth, left: marginBoth),
+                margin: EdgeInsets.only(right: marginBoth, top: marginBoth, left: marginBoth),
                 child: Container(
                     height: AppDimens.dimens_46,
-                    padding: const EdgeInsets.only(
-                        left: AppDimens.dimens_10, right: AppDimens.dimens_10),
+                    padding: const EdgeInsets.only(left: AppDimens.dimens_10, right: AppDimens.dimens_10),
                     child: Wrap(
                       children: [
                         Text(
                           Constants.TXT_SHARE_WITH_YOUR_FRIENDS,
                           textAlign: TextAlign.center,
-                          style: AppStyle.textViewStyleSmall(
-                              context: context,
-                              color: AppColors.colorBlack4,
-                              fontSizeDelta: -1,
-                              fontWeightDelta: 1),
+                          style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack4, fontSizeDelta: -1, fontWeightDelta: 1),
                         ),
                         const SizedBox(
                           width: 10,
@@ -170,7 +158,6 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
                           width: AppDimens.dimens_20,
                         ),
                         addHorizontalSpace(9),
-
                         Image.asset(
                           AppImages.ic_twitter,
                           height: AppDimens.dimens_20,
@@ -204,11 +191,7 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
               alignment: Alignment.centerLeft,
               child: Text(
                 Constants.TXT_INVITED_FRIENDS,
-                style: AppStyle.textViewStyleNormalBodyText2(
-                    context: context,
-                    color: AppColors.colorBlack,
-                    fontSizeDelta: 1,
-                    fontWeightDelta: 1),
+                style: AppStyle.textViewStyleNormalBodyText2(context: context, color: AppColors.colorBlack, fontSizeDelta: 1, fontWeightDelta: 1),
               )),
           GetBuilder<InviteAndEarnController>(builder: (value) {
             return AppViews.getSetDataWithReturn(
@@ -217,16 +200,15 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
                 ListView.builder(
                     padding: const EdgeInsets.all(20),
                     itemCount: value.inviteJoiners.length,
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       if (value.inviteJoiners[index].joiner.isEmpty) {
                         return const SizedBox.shrink();
                       }
                       return Container(
-                        decoration: ContainerProperties.shadowDecoration(
-                            blurRadius: 15.0),
-                        margin:
-                            const EdgeInsets.only(bottom: AppDimens.dimens_14),
+                        decoration: ContainerProperties.shadowDecoration(blurRadius: 15.0),
+                        margin: const EdgeInsets.only(bottom: AppDimens.dimens_14),
                         child: InkWell(
                           child: Container(
                             alignment: Alignment.center,
@@ -243,11 +225,9 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
                                     right: AppDimens.dimens_10,
                                   ),
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(
-                                        AppDimens.dimens_5),
+                                    borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                                     child: NetworkImageCustom(
-                                        image: value.inviteJoiners[index]
-                                            .joiner[0].image,
+                                        image: value.inviteJoiners[index].joiner[0].image,
                                         fit: BoxFit.fill,
                                         height: AppDimens.dimens_90,
                                         width: AppDimens.dimens_90),
@@ -261,58 +241,33 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
                                     //title
                                     Container(
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           Container(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
-                                                value.inviteJoiners[index]
-                                                        .joiner[0].firstName +
-                                                    ' ' +
-                                                    value.inviteJoiners[index]
-                                                        .joiner[0].lastName,
-                                                style: AppStyle
-                                                    .textViewStyleNormalBodyText2(
-                                                        context: context,
-                                                        color: AppColors
-                                                            .grayDashboardText,
-                                                        fontSizeDelta: 1,
-                                                        fontWeightDelta: 1),
+                                                value.inviteJoiners[index].joiner[0].firstName + ' ' + value.inviteJoiners[index].joiner[0].lastName,
+                                                style: AppStyle.textViewStyleNormalBodyText2(
+                                                    context: context, color: AppColors.grayDashboardText, fontSizeDelta: 1, fontWeightDelta: 1),
                                               )),
                                           Container(
                                               alignment: Alignment.centerLeft,
                                               child: GradientText(
                                                 "",
-                                                style: AppStyle
-                                                    .textViewStyleNormalBodyText2(
-                                                        context: context,
-                                                        color: AppColors
-                                                            .grayDashboardText,
-                                                        fontSizeDelta: 2,
-                                                        fontWeightDelta: 3),
+                                                style: AppStyle.textViewStyleNormalBodyText2(
+                                                    context: context, color: AppColors.grayDashboardText, fontSizeDelta: 2, fontWeightDelta: 3),
                                               )),
                                         ],
                                       ),
-                                      margin: const EdgeInsets.only(
-                                          top: AppDimens.dimens_5,
-                                          bottom: AppDimens.dimens_5),
+                                      margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
                                     ),
                                     Container(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          value.inviteJoiners[index].joiner[0]
-                                              .getDate()
-                                              .toString(),
-                                          style: AppStyle
-                                              .textViewStyleNormalBodyText2(
-                                                  context: context,
-                                                  color: AppColors
-                                                      .grayDashboardText,
-                                                  fontSizeDelta: -2,
-                                                  fontWeightDelta: 0),
+                                          value.inviteJoiners[index].joiner[0].getDate().toString(),
+                                          style: AppStyle.textViewStyleNormalBodyText2(
+                                              context: context, color: AppColors.grayDashboardText, fontSizeDelta: -2, fontWeightDelta: 0),
                                         )),
                                     //Date
                                   ],

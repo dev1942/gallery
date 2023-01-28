@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otobucks/app/locator.dart';
-import 'package:otobucks/View/Rating/Views/recived_rating_tab.dart';
+import 'package:otobucks/View/Rating/Views/Received/recived_rating_tab.dart';
 import 'package:otobucks/global/Models/main_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../../global/app_colors.dart';
@@ -8,7 +8,7 @@ import '../../../../../global/app_dimens.dart';
 import '../../../../../global/app_style.dart';
 import '../../../../../global/app_views.dart';
 import '../../../../../global/enum.dart';
-import 'given_rating_tab.dart';
+import 'Given/given_rating_tab.dart';
 
 class MyRatingFragment extends StatefulWidget {
   const MyRatingFragment({Key? key}) : super(key: key);

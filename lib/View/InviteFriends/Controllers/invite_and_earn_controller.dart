@@ -33,12 +33,13 @@ class InviteAndEarnController extends GetxController {
   copyText() {
     Clipboard.setData(ClipboardData(text: customLink)).then((value) {
       //only if ->
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_TEXT_COPY,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_TEXT_COPY, toastType: TOAST_TYPE.toastSuccess);
     });
+  }
+
+  Future<void> pullTorefreshData() async {
+    getInviteCode();
+    getMyInvites();
   }
 
   Future<void> getInviteCode() async {
@@ -50,11 +51,7 @@ class InviteAndEarnController extends GetxController {
     var categories = await UserRepo().getInviteCode(requestParams);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
 
       loadingjoiners = ShowData.showNoDataFound;
       update();
@@ -81,11 +78,7 @@ class InviteAndEarnController extends GetxController {
     var categories = await UserRepo().getMyInvites(requestParams);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
 
       loadingInvite = ShowData.showNoDataFound;
       update();

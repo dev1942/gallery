@@ -9,10 +9,10 @@ import '../../../global/app_views.dart';
 import '../../Dashboard/Models/category_model.dart';
 import '../../../widgets/fade_in_image.dart';
 import '../../Dashboard/Controllers/dashboard_controller.dart';
+
 class AutoRepairSubCatScreen extends StatefulWidget {
   CategoryModel mCategoryModel;
-  AutoRepairSubCatScreen({Key? key, required this.mCategoryModel})
-      : super(key: key);
+  AutoRepairSubCatScreen({Key? key, required this.mCategoryModel}) : super(key: key);
   @override
   AutoRepairSubCatScreenState createState() => AutoRepairSubCatScreenState();
 }
@@ -23,10 +23,12 @@ class AutoRepairSubCatScreenState extends State<AutoRepairSubCatScreen> {
   @override
   void initState() {
     super.initState();
-    controller.getSubCategory(widget.mCategoryModel.id);
+    if (controller.alSubCategoryFiltered.isEmpty) {
+      controller.getSubCategory(widget.mCategoryModel.id);
+    }
+
     Get.find<DashboardController>().controllerSearch.addListener(() {
-      controller.runFilter(
-          Get.find<DashboardController>().controllerSearch.text.toString());
+      controller.runFilter(Get.find<DashboardController>().controllerSearch.text.toString());
     });
   }
 
@@ -47,10 +49,8 @@ class AutoRepairSubCatScreenState extends State<AutoRepairSubCatScreen> {
                 : size.maxWidth > 400
                     ? 4
                     : 3,
-            children: List<Widget>.generate(value.alSubCategoryFiltered.length,
-                (index) {
-              CategoryModel mSubCategoryModel =
-                  value.alSubCategoryFiltered[index];
+            children: List<Widget>.generate(value.alSubCategoryFiltered.length, (index) {
+              CategoryModel mSubCategoryModel = value.alSubCategoryFiltered[index];
 
               return InkWell(
                 child: Card(
@@ -61,29 +61,21 @@ class AutoRepairSubCatScreenState extends State<AutoRepairSubCatScreen> {
                     //   bottom: AppDimens.dimens_5,
                     //   top: AppDimens.dimens_5,
                     // ),
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: AppDimens.dimens_5,
-                        vertical: AppDimens.dimens_5),
+                    margin: const EdgeInsets.symmetric(horizontal: AppDimens.dimens_5, vertical: AppDimens.dimens_5),
                     child: Column(
                       children: [
                         Container(
                           // width: 20,
                           decoration: BoxDecoration(
                               // color: Colors.grey.withOpacity(.4),
-                              borderRadius:
-                                  BorderRadius.circular(AppDimens.dimens_10)),
+                              borderRadius: BorderRadius.circular(AppDimens.dimens_10)),
                           // height: 70,
                           child: AspectRatio(
                             aspectRatio: 1.9 - (itemWidth / itemHeight),
                             child: ClipRRect(
                               borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(AppDimens.dimens_10),
-                                  topRight:
-                                      Radius.circular(AppDimens.dimens_10)),
-                              child: NetworkImageCustom(
-                                  image: mSubCategoryModel.image,
-                                  height: 0,
-                                  width: 0),
+                                  topLeft: Radius.circular(AppDimens.dimens_10), topRight: Radius.circular(AppDimens.dimens_10)),
+                              child: NetworkImageCustom(image: mSubCategoryModel.image, height: 0, width: 0),
                             ),
                           ),
                         ),
@@ -96,24 +88,18 @@ class AutoRepairSubCatScreenState extends State<AutoRepairSubCatScreen> {
                           overflow: TextOverflow.ellipsis,
                           softWrap: true,
                           textAlign: TextAlign.center,
-                          style: AppStyle.textViewStyleXSmall(
-                                  context: context,
-                                  color: AppColors.colorTextBlue,
-                                  fontWeightDelta: 2)
+                          style: AppStyle.textViewStyleXSmall(context: context, color: AppColors.colorTextBlue, fontWeightDelta: 2)
                               .copyWith(fontSize: 12),
                         )
                       ],
                     ),
                   ),
                 ),
-                onTap: () => Get.find<DashboardController>()
-                    .onTapSubCategory(mSubCategoryModel, context),
+                onTap: () => Get.find<DashboardController>().onTapSubCategory(mSubCategoryModel, context),
               );
             }),
           );
         });
-    return GetBuilder<ServicesSubCatScreenController>(
-        builder: (value) => AppViews.getSetDataGridView(
-            context, value.mShowData, mShowWidget(value)));
+    return GetBuilder<ServicesSubCatScreenController>(builder: (value) => AppViews.getSetDataGridView(context, value.mShowData, mShowWidget(value)));
   }
 }
