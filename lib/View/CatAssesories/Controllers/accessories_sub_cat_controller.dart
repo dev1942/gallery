@@ -12,14 +12,10 @@ class AccessoriesSubCatController extends GetxController {
   List<AccessoriesStoreModel> stores = [];
   getStores() async {
     stores.clear();
-
     mShowData = ShowData.showLoading;
     update();
-
     HashMap<String, Object> requestParams = HashMap();
-
     var categories = await AccessoriesRepo().getStores(requestParams);
-
     categories.fold((failure) {
       Global.showToastAlert(
           context: Get.overlayContext!,
