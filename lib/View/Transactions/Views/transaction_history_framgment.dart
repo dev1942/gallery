@@ -29,7 +29,10 @@ class TransactionHistoryFragmentState extends State<TransactionHistoryFragment> 
 
   @override
   void initState() {
-    controller.getTransactions();
+    if (controller.transactions.isEmpty) {
+      controller.getTransactions();
+    }
+
     super.initState();
   }
 
@@ -174,229 +177,230 @@ class TransactionHistoryFragmentState extends State<TransactionHistoryFragment> 
                                     ),
                                   ),
                                   Expanded(
-                                      child: ListView.builder(
-                                          padding: const EdgeInsets.symmetric(vertical: AppDimens.dimens_20, horizontal: 5),
-                                          itemBuilder: (BuildContext contextM, index) {
-                                            TransactionModel transaction =
-                                                value.isSearching == false ? value.transactions[index] : value.filteredBookingList![index];
-                                            return Container(
-                                              margin: const EdgeInsets.only(bottom: AppDimens.dimens_14),
-                                              color: Colors.transparent,
-                                              child: Container(
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.rectangle,
-                                                    color: AppColors.grayDashboardItem,
-                                                    borderRadius: BorderRadius.circular(10),
-                                                  ),
-                                                  padding: const EdgeInsets.only(top: 10, right: AppDimens.dimens_10, left: 10, bottom: 7),
-                                                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                                                  child: InkWell(
-                                                    child: Container(
-                                                      alignment: Alignment.center,
-                                                      padding: const EdgeInsets.only(
-                                                        right: AppDimens.dimens_10,
-                                                      ),
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          Container(
-                                                            margin: const EdgeInsets.only(
-                                                              right: AppDimens.dimens_10,
-                                                            ),
-                                                            child: Column(
-                                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                                              children: [
-                                                                ClipRRect(
-                                                                  borderRadius: BorderRadius.circular(AppDimens.dimens_5),
-                                                                  child: NetworkImageCustom(
-                                                                      image: transaction.metadata.provider == null
-                                                                          ? Get.find<HomeScreenController>().image
-                                                                          : transaction.metadata.provider!.image,
-                                                                      fit: BoxFit.fill,
-                                                                      height: AppDimens.dimens_90,
-                                                                      width: AppDimens.dimens_90),
+                                      child: RefreshIndicator(
+                                    onRefresh: value.getTransactions,
+                                    child: ListView.builder(
+                                        padding: const EdgeInsets.symmetric(vertical: AppDimens.dimens_20, horizontal: 5),
+                                        itemBuilder: (BuildContext contextM, index) {
+                                          TransactionModel transaction =
+                                              value.isSearching == false ? value.transactions[index] : value.filteredBookingList![index];
+                                          return Container(
+                                            margin: const EdgeInsets.only(bottom: AppDimens.dimens_14),
+                                            color: Colors.transparent,
+                                            child: Container(
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.rectangle,
+                                                  color: AppColors.grayDashboardItem,
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                                padding: const EdgeInsets.only(top: 10, right: AppDimens.dimens_10, left: 10, bottom: 7),
+                                                margin: const EdgeInsets.symmetric(horizontal: 5),
+                                                child: InkWell(
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    padding: const EdgeInsets.only(
+                                                      right: AppDimens.dimens_10,
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Container(
+                                                          margin: const EdgeInsets.only(
+                                                            right: AppDimens.dimens_10,
+                                                          ),
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                            children: [
+                                                              ClipRRect(
+                                                                borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+                                                                child: NetworkImageCustom(
+                                                                    image: transaction.metadata.provider == null
+                                                                        ? Get.find<HomeScreenController>().image
+                                                                        : transaction.metadata.provider!.image,
+                                                                    fit: BoxFit.fill,
+                                                                    height: AppDimens.dimens_90,
+                                                                    width: AppDimens.dimens_90),
+                                                              ),
+                                                              addVerticleSpace(6),
+                                                              Padding(
+                                                                padding: const EdgeInsets.only(left: 4.0),
+                                                                child: Text(
+                                                                  transaction.metadata.type == "booking"
+                                                                      ? "Service ${transaction.metadata.type}"
+                                                                      : transaction.metadata.type,
+                                                                  style: AppStyle.textViewStyleNormalBodyText2(
+                                                                      context: context,
+                                                                      color: AppColors.colorBlack,
+                                                                      fontSizeDelta: -3,
+                                                                      fontWeightDelta: 0),
                                                                 ),
-                                                                addVerticleSpace(6),
-                                                                Padding(
-                                                                  padding: const EdgeInsets.only(left: 4.0),
-                                                                  child: Text(
-                                                                    transaction.metadata.type == "booking"
-                                                                        ? "Service ${transaction.metadata.type}"
-                                                                        : transaction.metadata.type,
-                                                                    style: AppStyle.textViewStyleNormalBodyText2(
-                                                                        context: context,
-                                                                        color: AppColors.colorBlack,
-                                                                        fontSizeDelta: -3,
-                                                                        fontWeightDelta: 0),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                            child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          children: [
+                                                            Container(
+                                                              child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: Container(
+                                                                        alignment: Alignment.centerLeft,
+                                                                        child: Text(
+                                                                          transaction.metadata.provider == null
+                                                                              ? Get.find<HomeScreenController>().fullName
+                                                                              : transaction.metadata.provider!.firstName +
+                                                                                  " " +
+                                                                                  transaction.metadata.provider!.lastName,
+                                                                          maxLines: 5,
+                                                                          style: AppStyle.textViewStyleNormalBodyText2(
+                                                                              context: context,
+                                                                              color: AppColors.colorYellowShade,
+                                                                              fontSizeDelta: 0,
+                                                                              fontWeightDelta: 1),
+                                                                        )),
+                                                                  ),
+                                                                  Container(
+                                                                    alignment: Alignment.centerLeft,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_2),
+                                                            ),
+                                                            Container(
+                                                                margin: const EdgeInsets.only(bottom: AppDimens.dimens_5),
+                                                                alignment: Alignment.centerLeft,
+                                                                child: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                                  children: [
+                                                                    Text(
+                                                                      "Service Title : ",
+                                                                      style: AppStyle.textViewStyleNormalBodyText2(
+                                                                        context: Get.context!,
+                                                                        color: AppColors.colorBlack2,
+                                                                        fontSizeDelta: -1,
+                                                                        //1,
+                                                                        fontWeightDelta: 0,
+                                                                        //    1
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                      transaction.metadata.service == null ? '' : transaction.metadata.service!.title,
+                                                                      maxLines: 1,
+                                                                      style: AppStyle.textViewStyleNormalBodyText2(
+                                                                        context: Get.context!,
+                                                                        color: AppColors.colorBlack2,
+                                                                        fontSizeDelta: -1,
+                                                                        //1,
+                                                                        fontWeightDelta: 0,
+                                                                        //    1
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                )),
+                                                            Row(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              children: [
+                                                                Text(
+                                                                  "Amount : ",
+                                                                  style: AppStyle.textViewStyleNormalBodyText2(
+                                                                      context: context,
+                                                                      color: AppColors.colorBlack,
+                                                                      fontSizeDelta: -1,
+                                                                      fontWeightDelta: 0),
+                                                                ),
+                                                                GradientText(
+                                                                  Global.replaceCurrencySign(transaction.currency) + "" + "${transaction.amount}/-",
+                                                                  style: AppStyle.textViewStyleNormalBodyText2(
+                                                                      context: context,
+                                                                      color: AppColors.grayDashboardText,
+                                                                      fontSizeDelta: 2,
+                                                                      fontWeightDelta: 3),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            const Divider(
+                                                              thickness: 1,
+                                                            ),
+                                                            //-------------Buttons row ....................
+                                                            Row(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              //     : MainAxisAlignment.center,
+                                                              children: [
+                                                                ///on click view estimation
+                                                                Expanded(
+                                                                  child: InkWell(
+                                                                    child: Container(
+                                                                        padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 6.0),
+                                                                        decoration: AppViews.getGradientBoxDecoration(mBorderRadius: 2),
+                                                                        //.....estimation staus............
+                                                                        child: Center(
+                                                                          child: Text(
+                                                                            "View Details".toUpperCase(),
+                                                                            style: TextStyle(
+                                                                                color: AppColors.colorWhite,
+                                                                                fontSize: 10,
+                                                                                fontWeight: FontWeight.w500),
+                                                                          ),
+                                                                        )),
+                                                                    onTap: () {
+                                                                      Navigator.push(
+                                                                          context,
+                                                                          MaterialPageRoute(
+                                                                              builder: (context) => TransactionDetailScreen(
+                                                                                    transactionModel: transaction,
+                                                                                  )));
+                                                                    },
+                                                                  ),
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 7,
+                                                                ),
+                                                                //............paid status
+
+                                                                Expanded(
+                                                                  child: Container(
+                                                                    padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 5.0),
+                                                                    decoration: BoxDecoration(
+                                                                      color: AppColors.colorSuccessBackground,
+                                                                      borderRadius: BorderRadius.circular(2.0),
+                                                                      border: Border.all(width: 1, color: AppColors.colorSuccessBorder),
+                                                                    ),
+                                                                    child: Center(
+                                                                      child: Text(
+                                                                        "Paid".toUpperCase(),
+                                                                        style: TextStyle(
+                                                                          color: AppColors.colorSuccessText,
+                                                                          fontSize: 10,
+                                                                          fontWeight: FontWeight.w500,
+                                                                        ),
+                                                                      ),
+                                                                    ),
                                                                   ),
                                                                 )
                                                               ],
                                                             ),
-                                                          ),
-                                                          Expanded(
-                                                              child: Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            mainAxisAlignment: MainAxisAlignment.start,
-                                                            children: [
-                                                              Container(
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                                  children: [
-                                                                    Expanded(
-                                                                      child: Container(
-                                                                          alignment: Alignment.centerLeft,
-                                                                          child: Text(
-                                                                            transaction.metadata.provider == null
-                                                                                ? Get.find<HomeScreenController>().fullName
-                                                                                : transaction.metadata.provider!.firstName +
-                                                                                    " " +
-                                                                                    transaction.metadata.provider!.lastName,
-                                                                            maxLines: 5,
-                                                                            style: AppStyle.textViewStyleNormalBodyText2(
-                                                                                context: context,
-                                                                                color: AppColors.colorYellowShade,
-                                                                                fontSizeDelta: 0,
-                                                                                fontWeightDelta: 1),
-                                                                          )),
-                                                                    ),
-                                                                    Container(
-                                                                      alignment: Alignment.centerLeft,
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_2),
-                                                              ),
-                                                              Container(
-                                                                  margin: const EdgeInsets.only(bottom: AppDimens.dimens_5),
-                                                                  alignment: Alignment.centerLeft,
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                                    children: [
-                                                                      Text(
-                                                                        "Service Title : ",
-                                                                        style: AppStyle.textViewStyleNormalBodyText2(
-                                                                          context: Get.context!,
-                                                                          color: AppColors.colorBlack2,
-                                                                          fontSizeDelta: -1,
-                                                                          //1,
-                                                                          fontWeightDelta: 0,
-                                                                          //    1
-                                                                        ),
-                                                                      ),
-                                                                      Text(
-                                                                        transaction.metadata.service == null
-                                                                            ? ''
-                                                                            : transaction.metadata.service!.title,
-                                                                        maxLines: 1,
-                                                                        style: AppStyle.textViewStyleNormalBodyText2(
-                                                                          context: Get.context!,
-                                                                          color: AppColors.colorBlack2,
-                                                                          fontSizeDelta: -1,
-                                                                          //1,
-                                                                          fontWeightDelta: 0,
-                                                                          //    1
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  )),
-                                                              Row(
-                                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                                children: [
-                                                                  Text(
-                                                                    "Amount : ",
-                                                                    style: AppStyle.textViewStyleNormalBodyText2(
-                                                                        context: context,
-                                                                        color: AppColors.colorBlack,
-                                                                        fontSizeDelta: -1,
-                                                                        fontWeightDelta: 0),
-                                                                  ),
-                                                                  GradientText(
-                                                                    Global.replaceCurrencySign(transaction.currency) + "" + "${transaction.amount}/-",
-                                                                    style: AppStyle.textViewStyleNormalBodyText2(
-                                                                        context: context,
-                                                                        color: AppColors.grayDashboardText,
-                                                                        fontSizeDelta: 2,
-                                                                        fontWeightDelta: 3),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              const Divider(
-                                                                thickness: 1,
-                                                              ),
-                                                              //-------------Buttons row ....................
-                                                              Row(
-                                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                                //     : MainAxisAlignment.center,
-                                                                children: [
-                                                                  ///on click view estimation
-                                                                  Expanded(
-                                                                    child: InkWell(
-                                                                      child: Container(
-                                                                          padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 6.0),
-                                                                          decoration: AppViews.getGradientBoxDecoration(mBorderRadius: 2),
-                                                                          //.....estimation staus............
-                                                                          child: Center(
-                                                                            child: Text(
-                                                                              "View Details".toUpperCase(),
-                                                                              style: TextStyle(
-                                                                                  color: AppColors.colorWhite,
-                                                                                  fontSize: 10,
-                                                                                  fontWeight: FontWeight.w500),
-                                                                            ),
-                                                                          )),
-                                                                      onTap: () {
-                                                                        Navigator.push(
-                                                                            context,
-                                                                            MaterialPageRoute(
-                                                                                builder: (context) => TransactionDetailScreen(
-                                                                                      transactionModel: transaction,
-                                                                                    )));
-                                                                      },
-                                                                    ),
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    width: 7,
-                                                                  ),
-                                                                  //............paid status
-
-                                                                  Expanded(
-                                                                    child: Container(
-                                                                      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 5.0),
-                                                                      decoration: BoxDecoration(
-                                                                        color: AppColors.colorSuccessBackground,
-                                                                        borderRadius: BorderRadius.circular(2.0),
-                                                                        border: Border.all(width: 1, color: AppColors.colorSuccessBorder),
-                                                                      ),
-                                                                      child: Center(
-                                                                        child: Text(
-                                                                          "Paid".toUpperCase(),
-                                                                          style: TextStyle(
-                                                                            color: AppColors.colorSuccessText,
-                                                                            fontSize: 10,
-                                                                            fontWeight: FontWeight.w500,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              Container(
-                                                                alignment: Alignment.centerRight,
-                                                              ),
-                                                              addVerticleSpace(10),
-                                                            ],
-                                                          )),
-                                                        ],
-                                                      ),
+                                                            Container(
+                                                              alignment: Alignment.centerRight,
+                                                            ),
+                                                            addVerticleSpace(10),
+                                                          ],
+                                                        )),
+                                                      ],
                                                     ),
-                                                    onTap: () {},
-                                                  )),
-                                            );
-                                          },
-                                          itemCount: value.isSearching == false ? value.transactions.length : value.filteredBookingList!.length))
+                                                  ),
+                                                  onTap: () {},
+                                                )),
+                                          );
+                                        },
+                                        itemCount: value.isSearching == false ? value.transactions.length : value.filteredBookingList!.length),
+                                  ))
                                 ],
                               ));
                         })

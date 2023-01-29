@@ -21,19 +21,16 @@ class DashboardSubCategoryList extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  DashboardSubCategoryListState createState() =>
-      DashboardSubCategoryListState();
+  DashboardSubCategoryListState createState() => DashboardSubCategoryListState();
 }
 
-class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
-    with SingleTickerProviderStateMixin {
+class DashboardSubCategoryListState extends State<DashboardSubCategoryList> with SingleTickerProviderStateMixin {
   var controller = Get.put(DashboardController());
 
   @override
   void initState() {
     super.initState();
-    controller.tabcontroller = TabController(
-        vsync: this, length: controller.alCategory.length, initialIndex: 0);
+    controller.tabcontroller = TabController(vsync: this, length: controller.alCategory.length, initialIndex: 0);
     controller.tabcontroller.animateTo(controller.intTabPosition);
   }
 
@@ -47,10 +44,7 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
             shrinkWrap: true,
             children: <Widget>[
               Container(
-                margin: const EdgeInsets.only(
-                    left: AppDimens.dimens_15,
-                    bottom: AppDimens.dimens_10,
-                    right: AppDimens.dimens_15),
+                margin: const EdgeInsets.only(left: AppDimens.dimens_15, bottom: AppDimens.dimens_10, right: AppDimens.dimens_15),
                 child: CustomTextFieldWithIcon(
                   textInputAction: TextInputAction.next,
                   enabled: true,
@@ -73,10 +67,7 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
                 padding: const EdgeInsets.only(left: 20.0),
                 child: Text(
                   "Categories".tr,
-                  style: AppStyle.textViewStyleLarge(
-                      fontWeightDelta: 1,
-                      fontSizeDelta: 2,
-                      context: context, color: AppColors.colorYellowShade),
+                  style: AppStyle.textViewStyleLarge(fontWeightDelta: 1, fontSizeDelta: 2, context: context, color: AppColors.colorYellowShade),
                 ),
               ),
               TabBar(
@@ -85,17 +76,12 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
                 controller: value.tabcontroller,
                 physics: const BouncingScrollPhysics(),
                 labelColor: AppColors.colorBlueStart,
-                unselectedLabelColor:
-                    AppColors.colorTextFieldHint.withOpacity(0.6),
+                unselectedLabelColor: AppColors.colorTextFieldHint.withOpacity(0.6),
                 indicator: const UnderlineTabIndicator(
                   borderSide: BorderSide.none,
                 ),
                 indicatorColor: AppColors.colorBlueStart,
-                labelStyle: AppStyle.textViewStyleXSmall(
-                    context: context,
-                    color: AppColors.colorBlueStart,
-                    fontWeightDelta: 2,
-                    fontSizeDelta: 0),
+                labelStyle: AppStyle.textViewStyleXSmall(context: context, color: AppColors.colorBlueStart, fontWeightDelta: 2, fontSizeDelta: 0),
                 automaticIndicatorColorAdjustment: false,
                 tabs: [
                   for (CategoryModel mCategoryModel in value.alCategory)
@@ -104,25 +90,17 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
                         text: mCategoryModel.title,
                         icon: Card(
                           elevation: 7,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(AppDimens.dimens_10)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppDimens.dimens_10)),
                           child: Container(
                             padding: const EdgeInsets.all(2),
-                            decoration: BoxDecoration(
-                                color: AppColors.colorYellowShade,
-                                borderRadius:
-                                    BorderRadius.circular(AppDimens.dimens_10)),
+                            decoration: BoxDecoration(color: AppColors.colorYellowShade, borderRadius: BorderRadius.circular(AppDimens.dimens_10)),
                             width: 80,
                             height: 80,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(
                                 AppDimens.dimens_8,
                               ),
-                              child: NetworkImageCustom(
-                                  image: mCategoryModel.image,
-                                  height: AppDimens.dimens_60,
-                                  width: AppDimens.dimens_60),
+                              child: NetworkImageCustom(image: mCategoryModel.image, height: AppDimens.dimens_60, width: AppDimens.dimens_60),
                             ),
                           ),
                         )),
@@ -135,10 +113,7 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
                 padding: const EdgeInsets.only(left: 20.0),
                 child: Text(
                   "Sub Categories".tr,
-                  style: AppStyle.textViewStyleLarge(
-                      context: context, color: AppColors.colorYellowShade,
-                  fontWeightDelta: 1,
-                  fontSizeDelta: 2),
+                  style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorYellowShade, fontWeightDelta: 1, fontSizeDelta: 2),
                 ),
               ),
               IndexedStack(
@@ -147,8 +122,7 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
                   children: List.generate(
                       controller.alCategory.length,
                       (index) => Visibility(
-                            child: getRespectiveTabs(
-                                controller.alCategory[index].title),
+                            child: getRespectiveTabs(controller.alCategory[index].title),
                             maintainState: false,
                             visible: value.intTabPosition == index,
                           ))),
@@ -160,8 +134,7 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList>
   Widget getRespectiveTabs(String catName) {
     switch (catName) {
       case 'Auto Repair Services':
-        return AutoRepairSubCatScreen(
-            mCategoryModel: controller.mCategoryModel);
+        return AutoRepairSubCatScreen(mCategoryModel: controller.mCategoryModel);
       case 'Auto Loans':
         return AutoLoansScreen(categoryModel: controller.mCategoryModel);
       // return comingSoon();

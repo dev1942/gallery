@@ -17,7 +17,7 @@ class TransactionController extends GetxController {
   bool isShowLoader = false;
   dynamic endDate;
   dynamic startDate;
-  bool isSearching=false;
+  bool isSearching = false;
   bool isRangePicked = false;
   List<TransactionModel> transactions = [];
 
@@ -30,7 +30,7 @@ class TransactionController extends GetxController {
   final List<String> items = ['All', 'Paid', 'Fail', 'In Progress'];
   String selectedValue = "All";
 
-  getTransactions() async {
+  Future<void> getTransactions() async {
     transactions.clear();
     mShowData = ShowData.showLoading;
     // isShowLoader = true
@@ -41,11 +41,7 @@ class TransactionController extends GetxController {
     var alTransactions = await TransactionRepo().getTransactions(requestParams);
 
     alTransactions.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
 
       mShowData = ShowData.showNoDataFound;
       update();
@@ -58,24 +54,25 @@ class TransactionController extends GetxController {
 
   //-------------------Search filteres---------------------------------
   List<TransactionModel>? filteredBookingList;
-  void searchInShop(String query){
-    filteredBookingList=transactions;
-    final suggestions=transactions.where((filteredBooking){
-      final shopName=filteredBooking.amount.toString().toLowerCase();
-      final input=query.toLowerCase();
+  void searchInShop(String query) {
+    filteredBookingList = transactions;
+    final suggestions = transactions.where((filteredBooking) {
+      final shopName = filteredBooking.amount.toString().toLowerCase();
+      final input = query.toLowerCase();
       return shopName.contains(input);
     }).toList();
-    filteredBookingList=suggestions;
+    filteredBookingList = suggestions;
     update();
   }
-  void searchbyDate(String query){
-    filteredBookingList=transactions;
-    final suggestions=transactions.where((filteredBooking){
-      final shopName=filteredBooking.createdAt.toLowerCase();
-      final input=query.toLowerCase();
+
+  void searchbyDate(String query) {
+    filteredBookingList = transactions;
+    final suggestions = transactions.where((filteredBooking) {
+      final shopName = filteredBooking.createdAt.toLowerCase();
+      final input = query.toLowerCase();
       return shopName!.contains(input);
     }).toList();
-    filteredBookingList=suggestions;
+    filteredBookingList = suggestions;
     update();
   }
   //................Save and launch file...........................................
@@ -85,17 +82,14 @@ class TransactionController extends GetxController {
     final file = File('$path/$fileName');
     await file.writeAsBytes(bytes, flush: true);
     OpenFile.open('$path/$fileName');
-
   }
+
   DateTime selectedDate = DateTime.now();
   TextEditingController datePickerController = TextEditingController();
 
   Future<void> selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
+    final DateTime? picked =
+        await showDatePicker(context: context, initialDate: selectedDate, firstDate: DateTime(2015, 8), lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate) {
       selectedDate = picked;
       //----

@@ -39,9 +39,9 @@ class _CartScreenState extends State<CartScreen> with SingleTickerProviderStateM
   void initState() {
     // tabController = TabController(length: 2, vsync: this);
     super.initState();
-    if (myCarts.isEmpty) {
-      getCarts();
-    }
+    // if (myCarts.isEmpty) {
+    //   getCarts();
+    // }
   }
 
   Future<void> getCarts() async {
