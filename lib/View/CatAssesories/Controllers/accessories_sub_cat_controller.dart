@@ -10,7 +10,7 @@ import 'package:otobucks/services/repository/accessories_repo.dart';
 class AccessoriesSubCatController extends GetxController {
   ShowData mShowData = ShowData.showNoDataFound;
   List<AccessoriesStoreModel> stores = [];
-  getStores() async {
+  Future<void> getStores() async {
     stores.clear();
 
     mShowData = ShowData.showLoading;
@@ -21,11 +21,7 @@ class AccessoriesSubCatController extends GetxController {
     var categories = await AccessoriesRepo().getStores(requestParams);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
@@ -51,5 +47,5 @@ class AccessoriesSubCatController extends GetxController {
       showSearch = true;
       update();
     }
-  } 
+  }
 }

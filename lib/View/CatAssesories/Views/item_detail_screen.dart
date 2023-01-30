@@ -6,21 +6,25 @@ import 'package:otobucks/global/container_properties.dart';
 import 'package:otobucks/global/text_styles.dart';
 import 'package:otobucks/widgets/small_button.dart';
 
+import '../Models/product_model.dart';
+
 class ItemDetailsScreen extends StatefulWidget {
-  const ItemDetailsScreen({Key? key}) : super(key: key);
+  final StoreProductModel productModel;
+  const ItemDetailsScreen({Key? key, required this.productModel}) : super(key: key);
 
   @override
   State<ItemDetailsScreen> createState() => _ItemDetailsScreenState();
 }
 
 class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
+  int counter = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppViews.initAppBar(
         mContext: context,
         centerTitle: false,
-        strTitle: 'Details',
+        strTitle: "Details",
         isShowNotification: false,
         isShowSOS: false,
       ),
@@ -52,17 +56,17 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                         SizedBox(
                           width: double.infinity,
                           height: 170,
-                          child: Image.asset('assets/images/ic_facebook.png'),
+                          child: Image.network(widget.productModel.image[0]),
                         ),
                         Text(
-                          'FaceBook',
+                          widget.productModel.title,
                           style: regularText600(18),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         Text(
-                          'Lorem Ipsum is simply dummy text of the printing.',
+                          widget.productModel.description,
                           style: lightText(14),
                         ),
                         const SizedBox(
@@ -72,9 +76,8 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                           margin: const EdgeInsets.symmetric(horizontal: 50),
                           child: PrimaryButton(
                               label: Text(
-                                '\$50',
-                                style: regularText600(17)
-                                    .copyWith(color: Colors.white),
+                                widget.productModel.currency + " " + widget.productModel.retailPrice.toString(),
+                                style: regularText600(17).copyWith(color: Colors.white),
                               ),
                               onPress: null,
                               color: null),
@@ -90,7 +93,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                     height: 15,
                   ),
                   Text(
-                    'Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing',
+                    widget.productModel.promotion ?? "",
                     style: lightText(14),
                   ),
                   const SizedBox(
@@ -105,35 +108,42 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Face book', style: regularText(16)),
+                          Text(widget.productModel.title, style: regularText(16)),
                           Text(
-                            '\$50',
-                            style: regularText600(16)
-                                .copyWith(color: AppColors.colorBlueStart),
+                            widget.productModel.currency + " " + widget.productModel.retailPrice.toString(),
+                            style: regularText600(16).copyWith(color: AppColors.colorBlueStart),
                           ),
                         ],
                       ),
                       const Spacer(),
                       Container(
                         margin: const EdgeInsets.only(right: 10),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.colorGray3)),
+                        decoration: BoxDecoration(border: Border.all(color: AppColors.colorGray3)),
                         child: IconButton(
                           icon: const Icon(Icons.remove),
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              if (counter > 1) {
+                                counter--;
+                              }
+                            });
+                          },
                         ),
                       ),
                       Text(
-                        '1',
-                        style: headingText(30),
+                        counter.toString(),
+                        style: headingText(25),
                       ),
                       Container(
                         margin: const EdgeInsets.only(left: 10),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.colorGray3)),
+                        decoration: BoxDecoration(border: Border.all(color: AppColors.colorGray3)),
                         child: IconButton(
                           icon: const Icon(Icons.add),
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              counter++;
+                            });
+                          },
                         ),
                       ),
                     ],

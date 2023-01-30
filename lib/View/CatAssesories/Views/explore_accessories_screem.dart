@@ -15,16 +15,14 @@ import '../Controllers/accessories_sub_cat_controller.dart';
 import '../Controllers/explore_screen_controller.dart';
 import '../Widgets/item_component.dart';
 import 'item_detail_screen.dart';
+
 class ExploreAccessoriesScreen extends StatefulWidget {
   final String storeId;
   final String storeTitle;
-  const ExploreAccessoriesScreen(
-      {Key? key, required this.storeId, required this.storeTitle})
-      : super(key: key);
+  const ExploreAccessoriesScreen({Key? key, required this.storeId, required this.storeTitle}) : super(key: key);
 
   @override
-  State<ExploreAccessoriesScreen> createState() =>
-      _ExploreAccessoriesScreenState();
+  State<ExploreAccessoriesScreen> createState() => _ExploreAccessoriesScreenState();
 }
 
 class _ExploreAccessoriesScreenState extends State<ExploreAccessoriesScreen> {
@@ -75,20 +73,14 @@ class _ExploreAccessoriesScreenState extends State<ExploreAccessoriesScreen> {
                         margin: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
-                          color: index != 0
-                              ? AppColors.colorBlueStart
-                              : Colors.white,
+                          color: index != 0 ? AppColors.colorBlueStart : Colors.white,
                         ),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 14),
+                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 14),
                         alignment: Alignment.center,
                         height: 50,
                         child: Text(
                           'Tires',
-                          style: regularText600(13).copyWith(
-                              color: index == 0
-                                  ? AppColors.colorBlueStart
-                                  : Colors.white),
+                          style: regularText600(13).copyWith(color: index == 0 ? AppColors.colorBlueStart : Colors.white),
                         ),
                       );
                     }),
@@ -152,7 +144,9 @@ class _ExploreAccessoriesScreenState extends State<ExploreAccessoriesScreen> {
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    Get.to(() => const ItemDetailsScreen());
+                                    Get.to(() => ItemDetailsScreen(
+                                          productModel: value.products[index],
+                                        ));
                                   },
                                   child: CartItemComponent(
                                     productModel: value.products[index],
@@ -189,7 +183,7 @@ class _ExploreAccessoriesScreenState extends State<ExploreAccessoriesScreen> {
       aspectRatio: 0.8,
       child: InkWell(
         onTap: () {
-          Get.to(() => const ItemDetailsScreen());
+          // Get.to(() => const ItemDetailsScreen());
         },
         child: Container(
           padding: EdgeInsets.all(wd(12)),
@@ -220,8 +214,7 @@ class _ExploreAccessoriesScreenState extends State<ExploreAccessoriesScreen> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('\$50',
-                              maxLines: 1, style: subHeadingText(wd(16))),
+                          Text('\$50', maxLines: 1, style: subHeadingText(wd(16))),
                           Text(
                             'Company',
                             maxLines: 1,
@@ -274,30 +267,25 @@ class _ExploreAccessoriesScreenState extends State<ExploreAccessoriesScreen> {
   _searchFiled() {
     return Container(
       alignment: Alignment.centerLeft,
-      margin: const EdgeInsets.only(
-          left: AppDimens.dimens_20,
-          bottom: AppDimens.dimens_6,
-          right: AppDimens.dimens_10),
-      child: Card(
-        child: CustomTextFieldWithIcon(
-          textInputAction: TextInputAction.next,
-          enabled: true,
-          controller: Get.find<AccessoriesSubCatController>().searchController,
-          keyboardType: TextInputType.text,
-          hintText: Constants.STR_SEARCH,
-          inputFormatters: const [],
-          obscureText: false,
-          height: AppDimens.dimens_36,
-          onChanged: (String value) {},
-          onSubmit: (String value) {},
-          suffixIcon: InkWell(
-            child: Image.asset(
-              AppImages.ic_search,
-              width: AppDimens.dimens_18,
-              // color: AppColors.colorIconGray,
-            ),
-            onTap: () {},
+      margin: const EdgeInsets.only(left: AppDimens.dimens_20, bottom: AppDimens.dimens_6, right: AppDimens.dimens_10, top: AppDimens.dimens_6),
+      child: CustomTextFieldWithIcon(
+        textInputAction: TextInputAction.next,
+        enabled: true,
+        controller: Get.find<AccessoriesSubCatController>().searchController,
+        keyboardType: TextInputType.text,
+        hintText: Constants.STR_SEARCH,
+        inputFormatters: const [],
+        obscureText: false,
+        height: AppDimens.dimens_36,
+        onChanged: (String value) {},
+        onSubmit: (String value) {},
+        suffixIcon: InkWell(
+          child: Image.asset(
+            AppImages.ic_search,
+            width: AppDimens.dimens_18,
+            // color: AppColors.colorIconGray,
           ),
+          onTap: () {},
         ),
       ),
     );
