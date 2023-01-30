@@ -40,8 +40,7 @@ Widget drawer(BuildContext context) {
                   )),
               Container(
                   height: 120,
-                  padding: const EdgeInsets.only(
-                      left: AppDimens.dimens_5, right: AppDimens.dimens_5),
+                  padding: const EdgeInsets.only(left: AppDimens.dimens_5, right: AppDimens.dimens_5),
                   alignment: Alignment.center,
                   child: Image.asset(
                     AppImages.appLogo,
@@ -80,8 +79,7 @@ Widget drawer(BuildContext context) {
                   _launchLink('https://www.linkedin.com/company/otobucks/');
                 },
                 child: Container(
-                  margin: const EdgeInsets.only(
-                      left: AppDimens.dimens_5, right: AppDimens.dimens_5),
+                  margin: const EdgeInsets.only(left: AppDimens.dimens_5, right: AppDimens.dimens_5),
                   child: Image.asset(
                     AppImages.ic_linked,
                     height: AppDimens.dimens_20,
@@ -94,8 +92,7 @@ Widget drawer(BuildContext context) {
                   _launchLink('https://www.facebook.com/otobucks/');
                 },
                 child: Container(
-                  margin: const EdgeInsets.only(
-                      left: AppDimens.dimens_5, right: AppDimens.dimens_5),
+                  margin: const EdgeInsets.only(left: AppDimens.dimens_5, right: AppDimens.dimens_5),
                   child: Image.asset(
                     AppImages.ic_drawer_facebook,
                     height: AppDimens.dimens_20,
@@ -108,8 +105,7 @@ Widget drawer(BuildContext context) {
                   _launchLink('https://twitter.com/otobucks');
                 },
                 child: Container(
-                  margin: const EdgeInsets.only(
-                      left: AppDimens.dimens_5, right: AppDimens.dimens_5),
+                  margin: const EdgeInsets.only(left: AppDimens.dimens_5, right: AppDimens.dimens_5),
                   child: Image.asset(
                     AppImages.ic_twitter,
                     color: Colors.white,
@@ -123,8 +119,7 @@ Widget drawer(BuildContext context) {
                   _launchLink('https://www.instagram.com/otobuckss/');
                 },
                 child: Container(
-                  margin: const EdgeInsets.only(
-                      left: AppDimens.dimens_5, right: AppDimens.dimens_5),
+                  margin: const EdgeInsets.only(left: AppDimens.dimens_5, right: AppDimens.dimens_5),
                   child: Image.asset(
                     AppImages.ic_drawer_insta,
                     height: AppDimens.dimens_20,
@@ -151,8 +146,7 @@ getDrawerItem(DrawerItem mDrawerItem, BuildContext context) {
       child: Row(
         children: [
           Container(
-            margin: const EdgeInsets.only(
-                left: AppDimens.dimens_15, right: AppDimens.dimens_10),
+            margin: const EdgeInsets.only(left: AppDimens.dimens_15, right: AppDimens.dimens_10),
             child: Image.asset(
               mDrawerItem.icon,
               color: AppColors.colorBlueStart,
@@ -163,28 +157,19 @@ getDrawerItem(DrawerItem mDrawerItem, BuildContext context) {
           Expanded(
             child: Text(
               mDrawerItem.title.tr,
-              style: AppStyle.textViewStyleNormalSubtitle2(
-                  context: context,
-                  color: AppColors.grayDashboardText,
-                  fontWeightDelta: 1,
-                  fontSizeDelta: -1),
+              style:
+                  AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.grayDashboardText, fontWeightDelta: 1, fontSizeDelta: -1),
             ),
           ),
           Constants.TAG_NOTIFICATION == mDrawerItem.title
               ? Container(
                   padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(100)),
-                  margin: const EdgeInsets.only(
-                      left: AppDimens.dimens_15, right: AppDimens.dimens_10),
+                  decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(100)),
+                  margin: const EdgeInsets.only(left: AppDimens.dimens_15, right: AppDimens.dimens_10),
                   child: Text(
                     "40",
-                    style: AppStyle.textViewStyleNormalSubtitle2(
-                        context: context,
-                        color: AppColors.colorWhite,
-                        fontWeightDelta: 1,
-                        fontSizeDelta: -1),
+                    style:
+                        AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorWhite, fontWeightDelta: 1, fontSizeDelta: -1),
                   )
                   // Image.asset(
                   //   mDrawerItem.icon,
@@ -211,63 +196,26 @@ getDrawerItem(DrawerItem mDrawerItem, BuildContext context) {
 }
 
 var alDrawerItem = [
-  DrawerItem(
-      title: "Home", icon: AppImages.ic_home_white, pageType: PageType.home),
-  DrawerItem(
-      title: Constants.TAG_MY_PROFILE,
-      icon: AppImages.ic_drawer_my_profile,
-      pageType: PageType.myProfile),
+  DrawerItem(title: "Home", icon: AppImages.ic_home_white, pageType: PageType.home),
+  DrawerItem(title: Constants.TAG_MY_PROFILE, icon: AppImages.ic_drawer_my_profile, pageType: PageType.myProfile),
   //booking history deleted
-  DrawerItem(
-      title: Constants.TAG_ESTIMATION.tr,
-      icon: AppImages.ic_drawer_estimation,
-      pageType: PageType.estimations),
-  // DrawerItem(
-  //     title: Constants.TAG_PURCHASE_PRODUCT_HISTORY,
-  //     icon: AppImages.ic_drawer_purchase_product,
-  //     pageType: PageType.purchaseHistory),
-  DrawerItem(
-      title: Constants.TAG_NOTIFICATION,
-      icon: AppImages.ic_drawer_notification,
-      pageType: PageType.notification),
+  DrawerItem(title: Constants.TAG_ESTIMATION.tr, icon: AppImages.ic_drawer_estimation, pageType: PageType.estimations),
+  DrawerItem(title: Constants.TAG_PURCHASE_PRODUCT_HISTORY, icon: AppImages.ic_drawer_purchase_product, pageType: PageType.purchaseHistory),
+  DrawerItem(title: Constants.TAG_NOTIFICATION, icon: AppImages.ic_drawer_notification, pageType: PageType.notification),
   // DrawerItem(
   //     title: Constants.TAG_INBOX,
   //     icon: AppImages.ic_message,
   //     pageType: PageType.inbox),
-  DrawerItem(
-      title: Constants.TAG_TRANSACTION_HISTORY,
-      icon: AppImages.ic_drawer_transection_history,
-      pageType: PageType.transactionHistory),
-  DrawerItem(
-      title: Constants.TAG_ANALYTICS,
-      icon: AppImages.ic_drawer_analytics,
-      pageType: PageType.analytics),
-  DrawerItem(
-      title: Constants.TAG_WALLET,
-      icon: AppImages.ic_drawer_wallet,
-      pageType: PageType.wallet),
-  DrawerItem(
-      title: Constants.TAG_INVITE_EARN,
-      icon: AppImages.ic_drawer_invite,
-      pageType: PageType.invite),
-  DrawerItem(
-      title: Constants.TAG_RATINGS,
-      icon: AppImages.ic_drawer_rating,
-      pageType: PageType.ratings),
-  DrawerItem(
-      title: Constants.TAG_TERMS_CONDITIONS,
-      icon: AppImages.ic_drawer_terms,
-      pageType: PageType.terms),
+  DrawerItem(title: Constants.TAG_TRANSACTION_HISTORY, icon: AppImages.ic_drawer_transection_history, pageType: PageType.transactionHistory),
+  DrawerItem(title: Constants.TAG_ANALYTICS, icon: AppImages.ic_drawer_analytics, pageType: PageType.analytics),
+  DrawerItem(title: Constants.TAG_WALLET, icon: AppImages.ic_drawer_wallet, pageType: PageType.wallet),
+  DrawerItem(title: Constants.TAG_INVITE_EARN, icon: AppImages.ic_drawer_invite, pageType: PageType.invite),
+  DrawerItem(title: Constants.TAG_RATINGS, icon: AppImages.ic_drawer_rating, pageType: PageType.ratings),
+  DrawerItem(title: Constants.TAG_TERMS_CONDITIONS, icon: AppImages.ic_drawer_terms, pageType: PageType.terms),
   // DrawerItem(
   //     title: Constants.TAG_ABOUT_US,
   //     icon: AppImages.ic_drawer_about,
   //     pageType: PageType.aboutUs),
-  DrawerItem(
-      title: Constants.TAG_CUSTOMER,
-      icon: AppImages.ic_whatsapp,
-      pageType: PageType.whatsapp),
-  DrawerItem(
-      title: Constants.TAG_LOG_OUT,
-      icon: AppImages.ic_drawer_logout,
-      pageType: PageType.logout)
+  DrawerItem(title: Constants.TAG_CUSTOMER, icon: AppImages.ic_whatsapp, pageType: PageType.whatsapp),
+  DrawerItem(title: Constants.TAG_LOG_OUT, icon: AppImages.ic_drawer_logout, pageType: PageType.logout)
 ];

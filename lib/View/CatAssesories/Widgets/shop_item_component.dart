@@ -7,10 +7,10 @@ import 'package:otobucks/View/CatAssesories/Models/store_model.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/small_button.dart';
 import '../Views/explore_accessories_screem.dart';
+
 class ShopItemComponent extends StatelessWidget {
   final AccessoriesStoreModel storeModel;
-  const ShopItemComponent({Key? key, required this.storeModel})
-      : super(key: key);
+  const ShopItemComponent({Key? key, required this.storeModel}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,9 +33,7 @@ class ShopItemComponent extends StatelessWidget {
                     child: NetworkImageCustom(
                       height: 90,
                       width: 90,
-                      image: storeModel.images.isNotEmpty
-                          ? storeModel.images[0]
-                          : '',
+                      image: storeModel.images.isNotEmpty ? storeModel.images[0] : '',
                     ),
                   ),
                 ),
@@ -47,15 +45,14 @@ class ShopItemComponent extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(storeModel.name.toString().capitalize!,
-                          maxLines: 1, style: subHeadingText(17)),
+                      Text(storeModel.name.toString().capitalize!, maxLines: 1, style: subHeadingText(16)),
                       const SizedBox(
                         height: 10,
                       ),
                       Text(
                         storeModel.description.toString(),
                         maxLines: 2,
-                        style: lightText(13),
+                        style: lightText(12.5),
                       )
                     ],
                   ),
@@ -78,10 +75,7 @@ class ShopItemComponent extends StatelessWidget {
                         itemBuilder: (ctx, index) {
                           return Container(
                             padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border:
-                                    Border.all(color: AppColors.colorGray6)),
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: AppColors.colorGray6)),
                             margin: const EdgeInsets.all(4),
                             height: 50,
                             width: 50,
@@ -92,7 +86,10 @@ class ShopItemComponent extends StatelessWidget {
                   width: 100,
                   height: 37,
                   child: PrimaryButton(
-                    label: const Text('Explore Now'),
+                    label: const Text(
+                      'Explore Now',
+                      style: TextStyle(fontSize: 13),
+                    ),
                     onPress: () {
                       Get.to(() => ExploreAccessoriesScreen(
                             storeId: storeModel.id,
