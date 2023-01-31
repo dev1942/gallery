@@ -5,7 +5,7 @@ class RequestBuilder {
   static final String PRODUCTION_URL = "https://api-app.otobucks.com/v1/";
   static final String LOCAL_URL = "http://192.168.18.36:4000/v1/";
   /*-------------------------Change URl type here----------------------------*/
-  static String API_BASE_URL = DEVELOPMENT_URL;
+  static String API_BASE_URL = PRODUCTION_URL;
   static String API_DELETE_BOOKING = "${API_BASE_URL}bookings/bookService/63b5cec6870dcf1488b013bb";
   static final String API_LOGIN = "auth/customers/login";
   static final String API_CURRENT_USER = "auth/users/currentUser";
@@ -45,5 +45,5 @@ class RequestBuilder {
   static final String RATINGS = "ratings/";
   // cancel booking
   static final String API_CANCEL_BOOKING_REQUESTS = "bookings/cancelRequests";
-  static final String API_GET_ALL_BOOKINGS = "https://developmentapi-app.otobucks.com/v1/bookings/bookService/";
+  static final String API_GET_ALL_BOOKINGS = "${API_BASE_URL}bookings/bookService/";
 }
