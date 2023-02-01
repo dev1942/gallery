@@ -17,7 +17,8 @@ class DashboardItemList extends StatelessWidget {
         shrinkWrap: true,
         padding: const EdgeInsets.all(0),
         itemBuilder: (BuildContext contextM, index) {
-          CategoryModel mCategoryModel = controller.alCategory[index];
+          var allCategories=controller.alCategory.reversed.toList();
+          CategoryModel mCategoryModel = allCategories[index];
           return CategoryItem(
               strTitle: mCategoryModel.title,
               strSubTitle: mCategoryModel.description,

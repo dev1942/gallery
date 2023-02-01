@@ -84,12 +84,6 @@ class AccessoriesRepo {
     }
     try {
       String response = await ReqListener.fetchPost(
-
-
-
-
-
-
           strUrl: 'products?storeId=$storeId',
           requestParams: requestParams,
           mReqType: ReqType.get,

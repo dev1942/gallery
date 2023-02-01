@@ -16,10 +16,8 @@ class StoreExploreController extends GetxController {
     update();
 
     HashMap<String, Object> requestParams = HashMap();
-
     var categories =
         await AccessoriesRepo().getProductsByStore(requestParams, storeId);
-
     categories.fold((failure) {
       Global.showToastAlert(
           context: Get.overlayContext!,

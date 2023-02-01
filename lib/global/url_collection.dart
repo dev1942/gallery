@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_declarations, non_constant_identifier_names
 
 class RequestBuilder {
-  static final String LIVE_URL = "https://developmentapi-app.otobucks.com/v1/";
-  //https://developmentapi-app.otobucks.com/v1
+  static final String DEVELOPMENT_URL = "https://developmentapi-app.otobucks.com/v1/";
+  static final String PRODUCTION_URL = "https://api-app.otobucks.com/v1/";
   static final String LOCAL_URL = "http://192.168.18.36:4000/v1/";
-  //https://api.otobucks.com/v1/auth/customers/login
-  static String API_BASE_URL = LIVE_URL;
-  static String API_DELETE_BOOKING = "https://developmentapi-app.otobucks.com/v1/bookings/bookService/63b5cec6870dcf1488b013bb";
+  /*-------------------------Change URl type here----------------------------*/
+  static String API_BASE_URL = PRODUCTION_URL;
+  static String API_DELETE_BOOKING = "${API_BASE_URL}bookings/bookService/63b5cec6870dcf1488b013bb";
   static final String API_LOGIN = "auth/customers/login";
   static final String API_CURRENT_USER = "auth/users/currentUser";
   static final String API_UPDATE_USER = "auth/customers/updateMe";
@@ -28,7 +28,7 @@ class RequestBuilder {
   static final String API_DELETE_CAR_ = "auth/customers/cars/";
   //Promotions
   static final String API_GET_PROMOTIONS = "promotions";
-  static final String API_GET_PROMOTIONS_HISTORY = "${LIVE_URL}promotions/getPromotionHistory";
+  static final String API_GET_PROMOTIONS_HISTORY = "${API_BASE_URL}promotions/getPromotionHistory";
   //notifications
   static final String API_GET_NOTIFICATIONS = "notifications";
   //wallet
@@ -45,5 +45,5 @@ class RequestBuilder {
   static final String RATINGS = "ratings/";
   // cancel booking
   static final String API_CANCEL_BOOKING_REQUESTS = "bookings/cancelRequests";
-  static final String API_GET_ALL_BOOKINGS = "https://developmentapi-app.otobucks.com/v1/bookings/bookService/";
+  static final String API_GET_ALL_BOOKINGS = "${API_BASE_URL}bookings/bookService/";
 }

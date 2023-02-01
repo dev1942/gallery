@@ -14,7 +14,6 @@ import '../../../Rating/Views/rating_page.dart';
 import '../../Models/PromotionBookingModel.dart';
 import '../../controller/mybookings_controller.dart';
 
-
 class PromotionsBookingView extends GetView<MyBookingsController> {
   const PromotionsBookingView({
     Key? key,
@@ -22,8 +21,8 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.isSearching=false;
-    controller.isSearchingTypePromotion=true;
+    controller.isSearching = false;
+    controller.isSearchingTypePromotion = true;
     Get.put(MyBookingsController());
     return SafeArea(
         top: false,
@@ -40,19 +39,15 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
                     return RefreshIndicator(
                       onRefresh: controller.refreshBookings,
                       child: ListView.builder(
-                        itemCount:
-                             controller.isSearching == true
-                             ? controller.filteredPromotionBookingList!.length
-                             :
-                            snapshot.data?.result?.length,
+                        itemCount: controller.isSearching == true
+                            ? controller.filteredPromotionBookingList!.length
+                            : snapshot.data?.result?.length,
                         padding: const EdgeInsets.symmetric(
                             vertical: 5, horizontal: 5),
                         itemBuilder: (BuildContext contextM, index) {
-                          var data =
-
-                          controller.isSearching==false?
-                          snapshot.data?.result![index]:
-                          controller.filteredPromotionBookingList![index];
+                          var data = controller.isSearching == false
+                              ? snapshot.data?.result![index]
+                              : controller.filteredPromotionBookingList![index];
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 6.0),
                             child: Container(
@@ -78,55 +73,55 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
                                         Column(
                                           children: [
                                             imageWidget(
-                                                imagePath: data?.promotion?.promoImg?.first.toString()),
+                                                imagePath: data
+                                                    ?.promotion?.promoImg?.first
+                                                    .toString()),
                                             const SizedBox(
                                               height: AppDimens.dimens_12,
                                             ),
 
                                             /// onclick of view booking
-                                            // InkWell(
-                                            //     child: Container(
-                                            //         alignment:
-                                            //             Alignment.center,
-                                            //         child: Padding(
-                                            //           padding:
-                                            //               const EdgeInsets
-                                            //                       .only(
-                                            //                   right: 8.0),
-                                            //           child: Text(
-                                            //                 "Promotion Booking"
-                                            //                 .tr,
-                                            //             style: AppStyle
-                                            //                 .textViewStyleSmall(
-                                            //                     context:
-                                            //                         context,
-                                            //                     color: AppColors
-                                            //                         .colorTextBlue2,
-                                            //                     fontSizeDelta:
-                                            //                         0,
-                                            //                     fontWeightDelta:
-                                            //                         0),
-                                            //           ),
-                                            //         )),
-                                            //     onTap: () {
-                                            //       // if (data.status ==
-                                            //       //     "inProgress") {
-                                            //       //   //reschedule and decline
-                                            //       //   Get.to(
-                                            //       //       ViewBookingEstimation(
-                                            //       //           status:
-                                            //       //               "inProgress",
-                                            //       //           mEstimatesModel:
-                                            //       //               data,
-                                            //       //           isPending:
-                                            //       //               false));
-                                            //       // } else {
-                                            //       //   Get.to(
-                                            //       //       ViewBookingEstimation(
-                                            //       //           mEstimatesModel:
-                                            //       //               data));
-                                            //       // }
-                                            //     }),
+                                            InkWell(
+                                                child: Container(
+                                                    alignment: Alignment.center,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 8.0),
+                                                      child: Text(
+                                                        "Complete".tr,
+                                                        style: AppStyle
+                                                            .textViewStyleSmall(
+                                                                context:
+                                                                    context,
+                                                                color: AppColors
+                                                                    .colorTextBlue2,
+                                                                fontSizeDelta:
+                                                                    0,
+                                                                fontWeightDelta:
+                                                                    0),
+                                                      ),
+                                                    )),
+                                                onTap: () {
+                                                  markProvidedDialog();
+                                                  // if (data.status ==
+                                                  //     "inProgress") {
+                                                  //   //reschedule and decline
+                                                  //   Get.to(
+                                                  //       ViewBookingEstimation(
+                                                  //           status:
+                                                  //               "inProgress",
+                                                  //           mEstimatesModel:
+                                                  //               data,
+                                                  //           isPending:
+                                                  //               false));
+                                                  // } else {
+                                                  //   Get.to(
+                                                  //       ViewBookingEstimation(
+                                                  //           mEstimatesModel:
+                                                  //               data));
+                                                  // }
+                                                }),
                                           ],
                                         ),
                                         addHorizontalSpace(8),
@@ -149,13 +144,14 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
                                               Row(
                                                 children: [
                                                   textwidget(
-                                                      text:
-                                                          "Promotion Title: ".tr,
+                                                      text: "Promotion Title: "
+                                                          .tr,
                                                       fontsize: 0,
                                                       fontweight: 0),
                                                   Flexible(
                                                     child: textwidget(
-                                                        text: "${data?.promotion?.title}",
+                                                        text:
+                                                            "${data?.promotion?.title}",
                                                         fontsize: 0,
                                                         fontweight: 0),
                                                   ),
@@ -210,43 +206,87 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
                                               const Divider(
                                                 thickness: 1,
                                               ),
-                                              // InkWell(
-                                              //   onTap: () {
-                                              //     displayTextInputDialog(
-                                              //         context,
-                                              //         data.sId!);
-                                              //   },
-                                              //   child: Container(
-                                              //       padding: const EdgeInsets
-                                              //           .symmetric(
-                                              //           horizontal:
-                                              //           6.0,
-                                              //           vertical:
-                                              //           4.0),
-                                              //       decoration: BoxDecoration(
-                                              //           color: AppColors
-                                              //               .colorYellowShade,
-                                              //           borderRadius:
-                                              //           BorderRadius
-                                              //               .circular(
-                                              //               2)),
-                                              //       child: Center(
-                                              //         child: Text(
-                                              //                "Give rating"
-                                              //               .tr
-                                              //               .toUpperCase(),
-                                              //           style: const TextStyle(
-                                              //               color: Colors
-                                              //                   .black,
-                                              //               fontSize:
-                                              //               10,
-                                              //               fontWeight:
-                                              //               FontWeight
-                                              //                   .w500),
-                                              //         ),
-                                              //       )),
-                                              // ),
-                                              ///
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        displayTextInputDialog(
+                                                            context, data.sId!);
+                                                      },
+                                                      child: Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      6.0,
+                                                                  vertical:
+                                                                      4.0),
+                                                          decoration: BoxDecoration(
+                                                              color: AppColors
+                                                                  .colorYellowShade,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          2)),
+                                                          child: Center(
+                                                            child: Text(
+                                                              "Give rating"
+                                                                  .tr
+                                                                  .toUpperCase(),
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 10,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                  addHorizontalSpace(10),
+                                                  //----------------------Booked Status--------------------------------------
+                                                  Expanded(
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        // displayTextInputDialog(
+                                                        //     context,
+                                                        //     data.sId!);
+                                                      },
+                                                      child: Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      6.0,
+                                                                  vertical:
+                                                                      4.0),
+                                                          decoration: BoxDecoration(
+                                                              color: AppColors
+                                                                  .colorPrimary,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          2)),
+                                                          child: Center(
+                                                            child: Text(
+                                                              "${data.status}"
+                                                                  .tr
+                                                                  .toUpperCase(),
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 10,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -298,10 +338,10 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
       userName ?? "".tr,
       maxLines: 1,
       style: AppStyle.textViewStyleNormalBodyText2(
-      context: Get.context!,
-      color: AppColors.colorBlack2,
-      fontSizeDelta: 1,
-      fontWeightDelta: 1),
+          context: Get.context!,
+          color: AppColors.colorBlack2,
+          fontSizeDelta: 1,
+          fontWeightDelta: 1),
     );
   }
 
@@ -366,5 +406,18 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
     Get.to(RatingScreen(
       bookingId: bookingId,
     ));
+  }
+
+  markProvidedDialog() {
+    return Get.defaultDialog(
+        title: "Complete Booking",
+        titleStyle: TextStyle(fontSize: 18, color: AppColors.colorPrimary),
+        middleText: "Are you sure you want to mark this booking as completed ?",
+        onConfirm: () {},
+        textCancel: "Close",
+        textConfirm: "Confirm",
+        confirmTextColor: Colors.white,
+        radius: 10,
+        barrierDismissible: false);
   }
 }
