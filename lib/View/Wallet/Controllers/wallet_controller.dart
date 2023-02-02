@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:otobucks/View/Transactions/Models/add_bank_account_model.dart';
@@ -9,6 +10,7 @@ import 'package:otobucks/View/Wallet/Models/wallet_model.dart';
 import 'package:otobucks/services/repository/card_repo.dart';
 import 'package:otobucks/services/repository/wallet_repo.dart';
 import '../../../widgets/custom_ui/carousel_slider/carousel_controller.dart';
+
 class WalletController extends GetxController {
   ShowData loadingCards = ShowData.showData;
   ShowData loadingWalletBalance = ShowData.showData;
@@ -42,15 +44,13 @@ class WalletController extends GetxController {
     var categories = await WalletRepo().getWalletAndEarning(requestParams);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      log(failure.toString());
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
 
       loadingWalletBalance = ShowData.showNoDataFound;
       update();
     }, (mResult) {
+      log(mResult.toString());
       mWalletModel = mResult.responseData as WalletModel;
 
       loadingWalletBalance = ShowData.showData;
@@ -68,11 +68,7 @@ class WalletController extends GetxController {
     var categories = await CardRepo().getCards(requestParams);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       loadingCards = ShowData.showNoDataFound;
       update();
     }, (mResult) {
@@ -86,8 +82,7 @@ class WalletController extends GetxController {
     });
   }
 
-  addNewCard(
-      String number, int month, int year, String cvc, String name) async {
+  addNewCard(String number, int month, int year, String cvc, String name) async {
     loadingCards = ShowData.showLoading;
 
     update(); // isShowLoader = true;
@@ -102,19 +97,11 @@ class WalletController extends GetxController {
     var categories = await CardRepo().addCard(requestParams);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       loadingCards = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       getCardsMine();
     });
   }
@@ -139,19 +126,11 @@ class WalletController extends GetxController {
     var categories = await WalletRepo().addBankAccount(requestParams);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       isShowLoader = false;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       isShowLoader = false;
       update();
     });
@@ -169,19 +148,11 @@ class WalletController extends GetxController {
     var categories = await WalletRepo().addMoney(requestParams);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       loadingWalletBalance = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       getWallet();
     });
   }
@@ -195,19 +166,11 @@ class WalletController extends GetxController {
     var categories = await CardRepo().deletecard(requestParams);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       loadingCards = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       getCardsMine();
     });
   }

@@ -16,30 +16,23 @@ import '../../View/Dashboard/Models/category_model.dart';
 import '../../View/Services_All/Models/service_model.dart';
 
 class ServicesRepo {
-  Future<Either<Failure, Success>> getServices(
-      HashMap<String, Object> requestParams,
-      {required String catId,
-      required String subCatId}) async {
+  Future<Either<Failure, Success>> getServices(HashMap<String, Object> requestParams, {required String catId, required String subCatId}) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
       String response = await ReqListener.fetchPost(
-          strUrl: RequestBuilder.API_GET_SERVICES_SIMPLE +
-              "?category=$catId&subcategory=$subCatId",
+          strUrl: RequestBuilder.API_GET_SERVICES_SIMPLE + "?category=$catId&subcategory=$subCatId",
           requestParams: requestParams,
           mReqType: ReqType.get,
           mParamType: ParamType.simple);
       Result? mResponse;
       if (response.isNotEmpty) {
+        log(response);
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
@@ -50,10 +43,7 @@ class ServicesRepo {
           alServices.add(mServiceModel);
         }
 
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: alServices,
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: alServices, responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -62,43 +52,27 @@ class ServicesRepo {
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
       log(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
 
-  Future<Either<Failure, Success>> getServiceDetails(
-      HashMap<String, Object> requestParams,
-      {required String serviceId}) async {
+  Future<Either<Failure, Success>> getServiceDetails(HashMap<String, Object> requestParams, {required String serviceId}) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
       String response = await ReqListener.fetchPost(
-          strUrl: RequestBuilder.API_GET_SERVICES + serviceId,
-          requestParams: requestParams,
-          mReqType: ReqType.get,
-          mParamType: ParamType.simple);
+          strUrl: RequestBuilder.API_GET_SERVICES + serviceId, requestParams: requestParams, mReqType: ReqType.get, mParamType: ParamType.simple);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
@@ -109,10 +83,7 @@ class ServicesRepo {
           alCategory.add(mCategoryModel);
         }
 
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: alCategory,
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: alCategory, responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -121,18 +92,11 @@ class ServicesRepo {
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
       log(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
 }

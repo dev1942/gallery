@@ -1,4 +1,6 @@
 // ignore_for_file: must_be_immutable
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Dashboard/Controllers/services_sub_cat_screen_controller.dart';
@@ -95,7 +97,10 @@ class AutoRepairSubCatScreenState extends State<AutoRepairSubCatScreen> {
                     ),
                   ),
                 ),
-                onTap: () => Get.find<DashboardController>().onTapSubCategory(mSubCategoryModel, context),
+                onTap: () {
+                  inspect(mSubCategoryModel);
+                  Get.find<DashboardController>().onTapSubCategory(mSubCategoryModel, context);
+                },
               );
             }),
           );

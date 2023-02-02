@@ -133,7 +133,7 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList> with
 
   Widget getRespectiveTabs(String catName) {
     switch (catName) {
-      case 'Auto Repair':
+      case 'Auto Repair Services':
         return AutoRepairSubCatScreen(mCategoryModel: controller.mCategoryModel);
       case 'Auto Loans':
         return AutoLoansScreen(categoryModel: controller.mCategoryModel);

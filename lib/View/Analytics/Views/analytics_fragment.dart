@@ -206,8 +206,8 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
                 dataMap: //dataMap,
 
                     {
-                  "Promotion Bookings": apidata != null ? apidata!.result!.promotionBookings : 10,
-                  "Service Bookings": apidata != null ? apidata!.result!.serviceBookings : 6,
+                  "Promotion Bookings": apidata != null ? apidata!.result!.promotionBookings : 0,
+                  "Service Bookings": apidata != null ? apidata!.result!.serviceBookings : 0,
                   "Invites": 0,
                 },
                 animationDuration: const Duration(milliseconds: 800),
