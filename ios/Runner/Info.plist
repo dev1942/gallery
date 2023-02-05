@@ -26,16 +26,20 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Need microphone access for uploading audio message recorded by user for service provider</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Playing the recorded message by the user</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Need to upload profile picture</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Always and when in use for locating service centers</string>
+	<string>App is using location to locate nearby service centers</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Older devices need location for locating service centers</string>
+	<string>App is using location to locate nearby service centers</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Need location when in use for locating service centers</string>
+	<string>App is using location to locate nearby service centers</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Need to upload profile picture</string>
+	<string>Need to upload profile picture of the user</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -52,8 +56,7 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
+		
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
