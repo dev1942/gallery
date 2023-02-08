@@ -17,12 +17,7 @@ class ServiceProviderRated extends StatelessWidget {
   Function onTap;
   bool isShowRating;
 
-  ServiceProviderRated(
-      {Key? key,
-      required this.mServiceModel,
-      required this.onTap,
-      required this.isShowRating})
-      : super(key: key);
+  ServiceProviderRated({Key? key, required this.mServiceModel, required this.onTap, required this.isShowRating}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +31,7 @@ class ServiceProviderRated extends StatelessWidget {
           color: AppColors.grayDashboardItem,
           borderRadius: BorderRadius.circular(AppDimens.dimens_5),
         ),
-        margin: const EdgeInsetsDirectional.only(
-            start: AppDimens.dimens_5, end: AppDimens.dimens_10),
+        margin: const EdgeInsetsDirectional.only(start: AppDimens.dimens_5, end: AppDimens.dimens_10),
         padding: const EdgeInsetsDirectional.all(AppDimens.dimens_6),
         child: InkWell(
           child: Column(
@@ -55,10 +49,7 @@ class ServiceProviderRated extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                       child: NetworkImageCustom(
-                          image: mServiceModel.getProviderImage(),
-                          fit: BoxFit.fill,
-                          height: AppDimens.dimens_40,
-                          width: AppDimens.dimens_40),
+                          image: mServiceModel.getProviderImage(), fit: BoxFit.fill, height: AppDimens.dimens_40, width: AppDimens.dimens_40),
                     ),
                   ),
                   Expanded(
@@ -71,10 +62,7 @@ class ServiceProviderRated extends StatelessWidget {
                         softWrap: true,
                         maxLines: 1,
                         style: AppStyle.textViewStyleNormalBodyText2(
-                            context: context,
-                            color: AppColors.colorBlack,
-                            fontSizeDelta: -1,
-                            fontWeightDelta: 2),
+                            context: context, color: AppColors.colorBlack, fontSizeDelta: -1, fontWeightDelta: 2),
                       ),
                       Container(
                           alignment: AlignmentDirectional.centerStart,
@@ -82,10 +70,7 @@ class ServiceProviderRated extends StatelessWidget {
                             mServiceModel.title,
                             maxLines: 1,
                             style: AppStyle.textViewStyleNormalBodyText2(
-                                context: context,
-                                color: AppColors.colorBlack,
-                                fontSizeDelta: -2,
-                                fontWeightDelta: 1),
+                                context: context, color: AppColors.colorBlack, fontSizeDelta: -2, fontWeightDelta: 1),
                           )),
                       RatingBarIndicator(
                         rating: mServiceModel.rating.toDouble(),
@@ -116,14 +101,8 @@ class ServiceProviderRated extends StatelessWidget {
                         ),
                         alignment: AlignmentDirectional.centerStart,
                         child: Text(
-                          Global.replaceCurrencySign(mServiceModel.currency) +
-                              "" +
-                              mServiceModel.price,
-                          style: AppStyle.textViewStyleSmall(
-                              context: context,
-                              color: AppColors.colorTextBlue,
-                              fontSizeDelta: 0,
-                              fontWeightDelta: 3),
+                          Global.replaceCurrencySign(mServiceModel.currency) + "" + mServiceModel.price,
+                          style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorTextBlue, fontSizeDelta: 0, fontWeightDelta: 3),
                         )),
                   ),
                   InkWell(
@@ -131,15 +110,10 @@ class ServiceProviderRated extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         height: AppDimens.dimens_20,
                         alignment: Alignment.center,
-                        decoration: AppViews.getGradientBoxDecoration(
-                            mBorderRadius: AppDimens.dimens_5),
+                        decoration: AppViews.getGradientBoxDecoration(mBorderRadius: AppDimens.dimens_5),
                         child: Text(
                           "View Details".tr,
-                          style: AppStyle.textViewStyleSmall(
-                              context: context,
-                              color: AppColors.colorWhite,
-                              fontSizeDelta: -3,
-                              fontWeightDelta: 2),
+                          style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorWhite, fontSizeDelta: -3, fontWeightDelta: 2),
                         )),
                     onTap: () {
                       onTap();
@@ -176,10 +150,7 @@ class ServiceProviderRated extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                     child: NetworkImageCustom(
-                        image: mServiceModel.getProviderImage(),
-                        fit: BoxFit.fill,
-                        height: AppDimens.dimens_60,
-                        width: AppDimens.dimens_60),
+                        image: mServiceModel.getProviderImage(), fit: BoxFit.fill, height: AppDimens.dimens_60, width: AppDimens.dimens_60),
                   ),
                 ),
                 Expanded(
@@ -193,10 +164,7 @@ class ServiceProviderRated extends StatelessWidget {
                           mServiceModel.mServiceProviderModel.getName() ?? '',
                           maxLines: 1,
                           style: AppStyle.textViewStyleNormalBodyText2(
-                              context: context,
-                              color: AppColors.colorBlack.withOpacity(0.8),
-                              fontSizeDelta: -3,
-                              fontWeightDelta: -2),
+                              context: context, color: AppColors.colorBlack.withOpacity(0.8), fontSizeDelta: -3, fontWeightDelta: -2),
                         )),
                     Container(
                         alignment: AlignmentDirectional.centerStart,
@@ -204,10 +172,7 @@ class ServiceProviderRated extends StatelessWidget {
                           mServiceModel.title,
                           maxLines: 1,
                           style: AppStyle.textViewStyleNormalBodyText2(
-                              context: context,
-                              color: AppColors.colorBlack,
-                              fontSizeDelta: -2,
-                              fontWeightDelta: 1),
+                              context: context, color: AppColors.colorBlack, fontSizeDelta: -2, fontWeightDelta: 1),
                         )),
                     RatingBarIndicator(
                       rating: mServiceModel.rating.toDouble(),
@@ -222,14 +187,8 @@ class ServiceProviderRated extends StatelessWidget {
                     Container(
                         alignment: AlignmentDirectional.centerStart,
                         child: Text(
-                          Global.replaceCurrencySign(mServiceModel.currency) +
-                              "" +
-                              mServiceModel.price,
-                          style: AppStyle.textViewStyleSmall(
-                              context: context,
-                              color: AppColors.colorBlack,
-                              fontSizeDelta: -2,
-                              fontWeightDelta: 1),
+                          Global.replaceCurrencySign(mServiceModel.currency) + "" + mServiceModel.price,
+                          style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack, fontSizeDelta: -2, fontWeightDelta: 1),
                         )),
                   ],
                 )),
@@ -238,15 +197,10 @@ class ServiceProviderRated extends StatelessWidget {
                       height: AppDimens.dimens_20,
                       alignment: Alignment.center,
                       padding: const EdgeInsets.symmetric(horizontal: 5),
-                      decoration: AppViews.getGradientBoxDecoration(
-                          mBorderRadius: AppDimens.dimens_5),
+                      decoration: AppViews.getGradientBoxDecoration(mBorderRadius: AppDimens.dimens_5),
                       child: Text(
                         "View Details".tr,
-                        style: AppStyle.textViewStyleSmall(
-                            context: context,
-                            color: AppColors.colorWhite,
-                            fontSizeDelta: -3,
-                            fontWeightDelta: 2),
+                        style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorWhite, fontSizeDelta: -3, fontWeightDelta: 2),
                       )),
                   onTap: () {
                     onTap();

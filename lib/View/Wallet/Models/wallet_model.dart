@@ -22,15 +22,28 @@ class WalletModel {
       required this.stripeWallet});
 
   factory WalletModel.fromJson(Map<String, dynamic> json) {
-    return WalletModel(
-      id: json['_id'].toString(),
-      totalWithdraw: json['totalWithdraw'].toString(),
-      earning: json['totalEarning'].toString(),
-      balance: json['balance'].toString(),
-      currency: json['currency'].toString(),
-      user: json['user'].toString(),
-      userType: json['userType'].toString(),
-      stripeWallet: json['stripeWallet'].toString(),
-    );
+    if (json != null) {
+      return WalletModel(
+        id: json['_id'].toString(),
+        totalWithdraw: json['totalWithdraw'].toString(),
+        earning: json['totalEarning'].toString(),
+        balance: json['balance'].toString(),
+        currency: json['currency'].toString(),
+        user: json['user'].toString(),
+        userType: json['userType'].toString(),
+        stripeWallet: json['stripeWallet'].toString(),
+      );
+    } else {
+      return WalletModel(
+        id: "0",
+        totalWithdraw: "0",
+        earning: "0",
+        balance: "0",
+        currency: "0",
+        user: "0",
+        userType: "0",
+        stripeWallet: "0",
+      );
+    }
   }
 }

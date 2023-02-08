@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -157,22 +159,24 @@ class ServiceScreenState extends State<ServiceScreen> {
             height: AppDimens.dimens_90,
             margin: const EdgeInsets.only(top: AppDimens.dimens_10),
             child: AppViews.getSetData(
-                context,
-                value.mShowData,
-                ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.all(0),
-                    itemBuilder: (BuildContext contextM, index) {
-                      ServiceModel mServiceModel = value.alServices[index];
-                      return ServiceProviderRated(
-                        mServiceModel: mServiceModel,
-                        isShowRating: true,
-                        onTap: () {
-                          value.gotoServiceDetail(mServiceModel, context);
-                        },
-                      );
-                    },
-                    itemCount: value.alServices.length)));
+              context,
+              value.mShowData,
+              ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.all(0),
+                  itemBuilder: (BuildContext contextM, index) {
+                    ServiceModel mServiceModel = value.alServices[index];
+
+                    return ServiceProviderRated(
+                      mServiceModel: mServiceModel,
+                      isShowRating: true,
+                      onTap: () {
+                        value.gotoServiceDetail(mServiceModel, context);
+                      },
+                    );
+                  },
+                  itemCount: value.alServices.length),
+            ));
       });
 
   _providerPopular() => GetBuilder<ServiceScreenController>(builder: (value) {

@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,27 +17,28 @@ class ServiceScreenController extends GetxController {
   TextEditingController controllerSearch = TextEditingController();
   int indexM = 0;
   getServiceProvider(catId, subCatId) async {
+    log("=================================");
     mShowData = ShowData.showLoading;
     // isShowLoader = true;
     update();
 
     HashMap<String, Object> requestParams = HashMap();
 
-    var categories = await ServicesRepo()
-        .getServices(requestParams, catId: catId, subCatId: subCatId);
+    var categories = await ServicesRepo().getServices(requestParams, catId: catId, subCatId: subCatId);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
 
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
       alServices = mResult.responseData as List<ServiceModel>;
+      log("++++++++++++++++");
+      inspect(mResult.responseData as List<ServiceModel>);
+      // inspect(alServices);
       if (alServices.isNotEmpty) {
+        log("++++++++Alservice found++++++++");
+        inspect(alServices);
         mShowData = ShowData.showData;
       } else {
         mShowData = ShowData.showNoDataFound;
@@ -46,10 +48,6 @@ class ServiceScreenController extends GetxController {
   }
 
   gotoServiceDetail(ServiceModel mServiceModel, BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                ServiceDetailScreen(mServiceModel: mServiceModel)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ServiceDetailScreen(mServiceModel: mServiceModel)));
   }
 }

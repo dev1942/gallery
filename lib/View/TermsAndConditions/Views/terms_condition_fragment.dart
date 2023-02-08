@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:otobucks/app/locator.dart';
 import 'package:otobucks/global/Models/main_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../../../global/app_colors.dart';
 import '../../../../../../global/app_dimens.dart';
@@ -32,6 +33,27 @@ class TermsConditionFragmentState extends State<TermsConditionFragment> {
     super.initState();
   }
 
+  var controller = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..setBackgroundColor(const Color(0x00000000))
+    ..setNavigationDelegate(
+      NavigationDelegate(
+        onProgress: (int progress) {
+          // Update loading bar.
+        },
+        onPageStarted: (String url) {},
+        onPageFinished: (String url) {},
+        onWebResourceError: (WebResourceError error) {},
+        onNavigationRequest: (NavigationRequest request) {
+          // if (request.url.startsWith('https://www.youtube.com/')) {
+          //   return NavigationDecision.prevent;
+          // }
+          return NavigationDecision.navigate;
+        },
+      ),
+    )
+    ..loadRequest(Uri.parse('https://otobucks.com/terms-and-condition'));
+
   @override
   Widget build(BuildContext context) {
     Widget widgetM = Container();
@@ -41,10 +63,7 @@ class TermsConditionFragmentState extends State<TermsConditionFragment> {
         itemBuilder: (BuildContext contextM, index) {
           // EstimatesModel mEstimatesModel = alEstimates[index];
           return Container(
-            margin: const EdgeInsets.only(
-                bottom: AppDimens.dimens_14,
-                right: AppDimens.dimens_14,
-                left: AppDimens.dimens_14),
+            margin: const EdgeInsets.only(bottom: AppDimens.dimens_14, right: AppDimens.dimens_14, left: AppDimens.dimens_14),
             color: Colors.transparent,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,26 +71,18 @@ class TermsConditionFragmentState extends State<TermsConditionFragment> {
               children: [
                 Container(
                     alignment: Alignment.centerLeft,
-                    margin: const EdgeInsets.only(
-                        top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
+                    margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
                     child: Text(
                       "For Permanent License Holders",
-                      style: AppStyle.textViewStyleNormalBodyText2(
-                          context: context,
-                          color: AppColors.colorBlack,
-                          fontSizeDelta: 0,
-                          fontWeightDelta: -1),
+                      style:
+                          AppStyle.textViewStyleNormalBodyText2(context: context, color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: -1),
                     )),
                 Container(
                     margin: const EdgeInsets.only(bottom: AppDimens.dimens_5),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                      style: AppStyle.textViewStyleSmall(
-                          context: context,
-                          color: AppColors.grayDashboardText,
-                          fontSizeDelta: -2,
-                          fontWeightDelta: 0),
+                      style: AppStyle.textViewStyleSmall(context: context, color: AppColors.grayDashboardText, fontSizeDelta: -2, fontWeightDelta: 0),
                     )),
               ],
             ),
@@ -101,7 +112,7 @@ class TermsConditionFragmentState extends State<TermsConditionFragment> {
                       height: 0,
                     ),
                     // Container(height: size.height, child: widgetM),
-                    widgetM,
+                    WebViewWidget(controller: controller),
                     AppViews.showLoadingWithStatus(isShowLoader)
                   ],
                 )));
@@ -133,15 +144,10 @@ class TermsConditionFragmentState extends State<TermsConditionFragment> {
 
     HashMap<String, Object> requestParams = HashMap();
 
-    var categories =
-        await ServicesRepo().getServiceDetails(requestParams, serviceId: "");
+    var categories = await ServicesRepo().getServiceDetails(requestParams, serviceId: "");
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       setState(() {
         mShowData = ShowData.showNoDataFound;
       });

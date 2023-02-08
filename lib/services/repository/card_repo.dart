@@ -13,27 +13,21 @@ import '../../global/Models/success.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
 
 class CardRepo {
-  Future<Either<Failure, Success>> getCards(
-      HashMap<String, Object> requestParams) async {
+  Future<Either<Failure, Success>> getCards(HashMap<String, Object> requestParams) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
-      String response = await ReqListener.fetchPost(
-          strUrl: 'cards',
-          requestParams: requestParams,
-          mReqType: ReqType.get,
-          mParamType: ParamType.simple);
+      String response =
+          await ReqListener.fetchPost(strUrl: 'cards', requestParams: requestParams, mReqType: ReqType.get, mParamType: ParamType.simple);
+
       Result? mResponse;
       if (response.isNotEmpty) {
+        log(response.toString());
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
@@ -46,10 +40,7 @@ class CardRepo {
           cards.add(card);
         }
 
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: cards,
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: cards, responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -58,49 +49,31 @@ class CardRepo {
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
       log(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
 
-  Future<Either<Failure, Success>> addCard(
-      HashMap<String, Object> requestParams) async {
+  Future<Either<Failure, Success>> addCard(HashMap<String, Object> requestParams) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
-      String response = await ReqListener.fetchPost(
-          strUrl: 'cards',
-          requestParams: requestParams,
-          mReqType: ReqType.post,
-          mParamType: ParamType.json);
+      String response =
+          await ReqListener.fetchPost(strUrl: 'cards', requestParams: requestParams, mReqType: ReqType.post, mParamType: ParamType.json);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: {},
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: {}, responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -109,49 +82,31 @@ class CardRepo {
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
       log(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
 
-  Future<Either<Failure, Success>> deletecard(
-      HashMap<String, Object> requestParams) async {
+  Future<Either<Failure, Success>> deletecard(HashMap<String, Object> requestParams) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
-      String response = await ReqListener.fetchPost(
-          strUrl: 'cards',
-          requestParams: requestParams,
-          mReqType: ReqType.delete,
-          mParamType: ParamType.json);
+      String response =
+          await ReqListener.fetchPost(strUrl: 'cards', requestParams: requestParams, mReqType: ReqType.delete, mParamType: ParamType.json);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: {},
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: {}, responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -160,18 +115,11 @@ class CardRepo {
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
       log(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
 }
