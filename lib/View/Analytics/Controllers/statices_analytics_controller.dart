@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:otobucks/View/Analytics/model/analytics_model.dart';
+import 'package:otobucks/global/url_collection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../global/constants.dart';
@@ -47,10 +48,10 @@ class StaticesAnalyticsController extends GetxController {
       isLoading(true);
       // var response = await NetworkApi.eventList();
       final headers = {'Authorization': "Bearer $token", "Content-Type": "application/json"};
-      final response = await http.get(Uri.parse("https://developmentapi-app.otobucks.com/v1/auth/customers/dashboard/statistics"), headers: headers);
+      final response = await http.get(Uri.parse(RequestBuilder.API_GET_STATISTICS), headers: headers);
       var data = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        log.i("Get booking API success");
+        log.i("Get analytics api success");
         return AnalyticsDataModel.fromJson(data);
       } else {
         log.e("Get Analytics  API Failed");

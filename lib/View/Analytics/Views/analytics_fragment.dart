@@ -29,7 +29,7 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
 
   @override
   void initState() {
-    //controller.getAllData();
+    controller.getAllData();
     apiData();
     super.initState();
   }
@@ -45,13 +45,6 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
   @override
   Widget build(BuildContext context) {
     Widget widgetM = Container();
-    // Map<String, double> dataMap = {
-    //   "January":apidata !=null?apidata!.result!.promotionBookings: 10,
-    //   "February": apidata !=null?apidata!.result!.serviceBookings: 6,
-    //   "March": 2,
-    //   "April": 2,
-    // };
-
     List<Color> colorList = [
       Colors.cyan.shade400,
       AppColors.colorPrimary,
@@ -204,7 +197,6 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
               aspectRatio: 11 / 9,
               child: PieChart(
                 dataMap: //dataMap,
-
                     {
                   "Promotion Bookings": apidata != null ? apidata!.result!.promotionBookings : 0,
                   "Service Bookings": apidata != null ? apidata!.result!.serviceBookings : 0,
@@ -232,7 +224,7 @@ class AnalyticsFragmentState extends State<AnalyticsFragment> {
                   showChartValues: true,
                   showChartValuesInPercentage: true,
                   showChartValuesOutside: true,
-                  decimalPlaces: 1,
+                  decimalPlaces: 0,
                 ),
                 // gradientList: ---To add gradient colors---
                 // emptyColorGradient: ---Empty Color gradient---
