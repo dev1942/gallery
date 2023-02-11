@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
             SizeConfig().init(constraints, orientation);
             return Scaffold(
               resizeToAvoidBottomInset: false,
-              backgroundColor: AppColors.colorWhite,
+              backgroundColor: AppColors.colorBlueEnd,
               body: Stack(
                 children: <Widget>[
                   Container(
@@ -56,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                   Positioned(
                     bottom: MediaQuery.of(context).size.height * 0.1,
-                    left: MediaQuery.of(context).size.width * 0.5,
+                    left: MediaQuery.of(context).size.width * 0.45,
                     child: const CircularProgressIndicator(
                       color: Colors.white,
                     ),
