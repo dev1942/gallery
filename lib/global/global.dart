@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -13,6 +14,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 // import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 import 'package:location/location.dart' as location_selection;
+import 'package:otobucks/View/Auth/controllers/login_controller.dart';
 import 'package:otobucks/global/Models/failure.dart';
 import 'package:otobucks/global/Models/time_model.dart';
 import 'package:otobucks/global/app_style.dart';
@@ -26,6 +28,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../View/Auth/Models/country_code.dart';
+import '../services/repository/login_repo.dart';
 import '../widgets/custom_ui/bot_sms.dart';
 import '../widgets/custom_ui/bottom_sheet.dart';
 import 'Models/date_model.dart';
@@ -582,6 +585,32 @@ class Global {
         strRightBtnText: Constants.STRING_OK,
         onTapRightBtn: () {
           setLogout(mContext);
+        });
+  }
+
+  static showDeleteAccountDialog(BuildContext mContext) {
+    AppViews.showCustomAlert(
+        context: mContext,
+        strTitle: Constants.STRING_DELETE_Account,
+        strMessage: Constants.STRING_DELETE_Account_msg,
+        strLeftBtnText: Constants.TEXT_CANCEL,
+        onTapLeftBtn: () {
+          Navigator.pop(mContext);
+        },
+        strRightBtnText: Constants.STRING_OK,
+        onTapRightBtn: () async {
+          HashMap<String, Object> requestParams = HashMap();
+          final prefManager = await SharedPreferences.getInstance();
+
+          var userId = prefManager.getString(SharedPrefKey.KEY_USER_ID);
+
+          var deleteUser = await LoginRepo().deleteAccount(requestParams, userId.toString());
+
+          deleteUser.fold((failure) {
+            Global.showToastAlert(context: mContext, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+          }, (mResult) {
+            Global.setLogout(mContext);
+          });
         });
   }
 

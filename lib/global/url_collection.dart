@@ -11,6 +11,7 @@ class RequestBuilder {
   static final String API_CURRENT_USER = "auth/users/currentUser";
   static final String API_UPDATE_USER = "auth/customers/updateMe";
   static final String API_FORGOT_PASSWORD = "auth/customers/forgotPassword";
+  static final String API_DELETE_ACCOUNT = "auth/customers/deleteAccount/";
   static final String API_RESET_PASSWORD = "auth/customers/resetPassword/";
   static final String API_SIGN_UP = "auth/customers/register";
   static final String API_DELETE_Booking = "bookings/bookService";

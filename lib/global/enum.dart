@@ -17,6 +17,7 @@ enum PageType {
   whatsapp,
   estimations,
   logout,
+  deleteAccount,
   promotions,
   thankYou,
 }
@@ -46,13 +47,6 @@ enum ShowData { showData, showNoDataFound, showLoading, showError }
 enum TOAST_TYPE { toastInfo, toastSuccess, toastWarning, toastError }
 
 //
-enum EstimationStatus {
-  pending,
-  inProgress,
-  complete,
-  cancelled,
-  submitted,
-  all
-}
+enum EstimationStatus { pending, inProgress, complete, cancelled, submitted, all }
 
 enum CarType { newCar, oldCar }

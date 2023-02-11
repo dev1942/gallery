@@ -36,10 +36,10 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
   String? editId;
   @override
   void initState() {
-    if (controller.carList.isEmpty && controller.mUserModel == null) {
-      controller.getCarList();
-      controller.getProfile();
-    }
+    // if (controller.carList.isEmpty && controller.mUserModel == null) {
+    controller.getCarList();
+    controller.getProfile();
+    // }
 
     super.initState();
   }

@@ -15,28 +15,20 @@ import 'package:otobucks/View/auth/Models/user_detail.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
 
 class LoginRepo {
-  Future<Either<Failure, Success>> login(
-      HashMap<String, Object> requestParams) async {
+  Future<Either<Failure, Success>> login(HashMap<String, Object> requestParams) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
 
     try {
       String response = await ReqListener.fetchPost(
-          strUrl: RequestBuilder.API_LOGIN,
-          requestParams: requestParams,
-          mReqType: ReqType.post,
-          mParamType: ParamType.json);
+          strUrl: RequestBuilder.API_LOGIN, requestParams: requestParams, mReqType: ReqType.post, mParamType: ParamType.json);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
@@ -68,10 +60,7 @@ class LoginRepo {
             accessToken: token);
         await Global.storeUserDetails(mUserAddressDetail);
 
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: "",
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: "", responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -80,49 +69,31 @@ class LoginRepo {
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
       log(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
 
-  Future<Either<Failure, Success>> forgotPassword(
-      HashMap<String, Object> requestParams) async {
+  Future<Either<Failure, Success>> forgotPassword(HashMap<String, Object> requestParams) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
       String response = await ReqListener.fetchPost(
-          strUrl: RequestBuilder.API_FORGOT_PASSWORD,
-          requestParams: requestParams,
-          mReqType: ReqType.patch,
-          mParamType: ParamType.json);
+          strUrl: RequestBuilder.API_FORGOT_PASSWORD, requestParams: requestParams, mReqType: ReqType.patch, mParamType: ParamType.json);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: "",
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: "", responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -131,18 +102,46 @@ class LoginRepo {
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
       log(e.toString());
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
+    }
+  }
+
+  Future<Either<Failure, Success>> deleteAccount(requestParams, String userId) async {
+    bool connectionStatus = await ConnectivityStatus.isConnected();
+    // HashMap<String, Object> map = {};
+    if (!connectionStatus) {
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
+    }
+    try {
+      String response = await ReqListener.fetchPost(
+          strUrl: RequestBuilder.API_DELETE_ACCOUNT + userId, requestParams: requestParams, mReqType: ReqType.delete, mParamType: ParamType.json);
+      log(response.toString());
+      Result? mResponse;
+      if (response.isNotEmpty) {
+        mResponse = Global.getData(response);
+      } else {
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+      }
+
+      if (mResponse?.responseStatus == true) {
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: "", responseMessage: mResponse.responseMessage);
+
+        return Right(mSuccess);
+      }
+
+      if (!Global.checkNull(mResponse!.responseMessage)) {
+        mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
+      }
+
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
+    } catch (e) {
+      log(e.toString());
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
 
@@ -152,30 +151,20 @@ class LoginRepo {
   ) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
-      return Left(Failure(
-          DATA: "",
-          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
-          STATUS: false));
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
       String response = await ReqListener.fetchPost(
-          strUrl: RequestBuilder.API_RESET_PASSWORD + token,
-          requestParams: requestParams,
-          mReqType: ReqType.patch,
-          mParamType: ParamType.json);
+          strUrl: RequestBuilder.API_RESET_PASSWORD + token, requestParams: requestParams, mReqType: ReqType.patch, mParamType: ParamType.json);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
       } else {
-        return Left(
-            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
 
       if (mResponse?.responseStatus == true) {
-        Success mSuccess = Success(
-            responseStatus: mResponse!.responseStatus,
-            responseData: "",
-            responseMessage: mResponse.responseMessage);
+        Success mSuccess = Success(responseStatus: mResponse!.responseStatus, responseData: "", responseMessage: mResponse.responseMessage);
 
         return Right(mSuccess);
       }
@@ -184,17 +173,10 @@ class LoginRepo {
         mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
       }
 
-      return Left(Failure(
-          MESSAGE: mResponse.responseMessage,
-          STATUS: false,
-          DATA: mResponse.responseData != null
-              ? mResponse.responseData as Object
-              : ""));
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
-      return Left(Failure(
-          STATUS: false,
-          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
-          DATA: ""));
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
 }

@@ -170,6 +170,27 @@ class LoginController extends GetxController {
     });
   }
 
+  deleteUserTask(BuildContext context) async {
+    isShowLoader = true;
+    update();
+
+    HashMap<String, Object> requestParams = HashMap();
+    final prefManager = await SharedPreferences.getInstance();
+
+    var userId = prefManager.getString(SharedPrefKey.KEY_USER_ID);
+
+    var deleteUser = await LoginRepo().deleteAccount(requestParams, userId.toString());
+
+    isShowLoader = false;
+    update();
+
+    deleteUser.fold((failure) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+    }, (mResult) {
+      Global.setLogout(context);
+    });
+  }
+
   void gotoMobileOTPScreen(BuildContext context) async {
     ModelOTP mModelOTP = ModelOTP(password: controllerPassword.text.toString(), emailId: controllerEmail.text.toString());
 

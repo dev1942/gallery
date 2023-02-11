@@ -46,19 +46,40 @@ class _SplashScreenState extends State<SplashScreen> {
             SizeConfig().init(constraints, orientation);
             return Scaffold(
               resizeToAvoidBottomInset: false,
-              backgroundColor: AppColors.colorWhite,
-              body: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Stack(
-                  children: <Widget>[
-                    VideoPlayer(_controller),
-                    ClosedCaption(text: _controller.value.caption.text),
-                    // _ControlsOverlay(controller: _controller),
-                    // VideoProgressIndicator(_controller, allowScrubbing: false),
-                  ],
-                ),
+              backgroundColor: AppColors.colorBlueEnd,
+              body: Stack(
+                children: <Widget>[
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/splash.jpg"), fit: BoxFit.fitHeight)),
+                  ),
+                  Positioned(
+                    bottom: MediaQuery.of(context).size.height * 0.1,
+                    left: MediaQuery.of(context).size.width * 0.45,
+                    child: const CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  )
+                  // _ControlsOverlay(controller: _controller),
+                  // VideoProgressIndicator(_controller, allowScrubbing: false),
+                ],
               ),
+
+              // if you want to replace image with video use this
+
+              // SizedBox(
+              //   height: MediaQuery.of(context).size.height,
+              //   width: MediaQuery.of(context).size.width,
+              //   child: Stack(
+              //     children: <Widget>[
+              //       VideoPlayer(_controller),
+              //       ClosedCaption(text: _controller.value.caption.text),
+              //       // _ControlsOverlay(controller: _controller),
+              //       // VideoProgressIndicator(_controller, allowScrubbing: false),
+              //     ],
+              //   ),
+              // ),
 
               // ConstrainedBox(
               //   constraints: const BoxConstraints.expand(),

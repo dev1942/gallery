@@ -121,7 +121,8 @@ class Constants {
       TAG_ENTER_YOUR_CAR_DETAILS = 'Enter your car details',
       //it was Estimations then text is replaced by My Bookings in drawerremaininh navigationis with same name of estimation just text changed
       TAG_ESTIMATION = 'My Booking'.tr,
-      TAG_LOG_OUT = 'Log Out';
+      TAG_LOG_OUT = 'Log Out',
+      TAG_DELETE_ACCOUNT = 'Delete Account';
 
   // dashboard
   static const String STATUS_PENDING = "pending",
@@ -370,6 +371,7 @@ class Constants {
 
   // Logout app dialog
   static const String STRING_SIGN_OUT = "Sign Out?", STRING_SIGN_OUT_MSG = "Do you want to Sign Out ?", STRING_OK = "Ok", STRING_BACK = "Back";
+  static const String STRING_DELETE_Account = "DELETE ACCOUNT", STRING_DELETE_Account_msg = "Are you sure you want to delete your account permanantly ?";
 
   static const String STRING_PRODUCT_QUANTITY = "Product Quantity",
       STRING_ORDER_DETAIL = "Order Detail",

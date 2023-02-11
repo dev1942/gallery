@@ -188,6 +188,8 @@ getDrawerItem(DrawerItem mDrawerItem, BuildContext context) {
       }
       if (mDrawerItem.pageType == PageType.logout) {
         Global.showLogoutDialog(Get.overlayContext!);
+      } else if (mDrawerItem.pageType == PageType.deleteAccount) {
+        Global.showDeleteAccountDialog(Get.overlayContext!);
       } else {
         Get.find<HomeScreenController>().callback(mDrawerItem.pageType);
       }
@@ -217,5 +219,6 @@ var alDrawerItem = [
   //     icon: AppImages.ic_drawer_about,
   //     pageType: PageType.aboutUs),
   DrawerItem(title: Constants.TAG_CUSTOMER, icon: AppImages.ic_whatsapp, pageType: PageType.whatsapp),
-  DrawerItem(title: Constants.TAG_LOG_OUT, icon: AppImages.ic_drawer_logout, pageType: PageType.logout)
+  DrawerItem(title: Constants.TAG_LOG_OUT, icon: AppImages.ic_drawer_logout, pageType: PageType.logout),
+  DrawerItem(title: Constants.TAG_DELETE_ACCOUNT, icon: AppImages.ic_delete_account, pageType: PageType.deleteAccount)
 ];
