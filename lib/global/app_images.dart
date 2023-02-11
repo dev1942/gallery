@@ -4,8 +4,7 @@
 class AppImages {
   // assert images Start
   static const String icAppIconWhite = "assets/images/ic_app_icon_white.png";
-  static const String icSplashScreenIcon =
-      "assets/images/side_drawer_logo.png";
+  static const String icSplashScreenIcon = "assets/images/side_drawer_logo.png";
   static const String ic_place_holder = "assets/images/ic_place_holder.png";
   static const String appLogo = "assets/images/autofix.png";
   static const String ic_alert_circle = "assets/images/ic_alert_circle.png";
@@ -35,47 +34,35 @@ class AppImages {
 
   static const String ic_drawer_about = "assets/images/ic_drawer_about.png";
   static const String ic_drawer_add_car = "assets/images/ic_drawer_add_car.png";
-  static const String ic_customer_support =
-      "assets/images/ic_customer_support.png";
-  static const String ic_drawer_analytics =
-      "assets/images/ic_drawer_analytics.png";
-  static const String ic_drawer_booking_history =
-      "assets/images/ic_drawer_booking_history.png";
-  static const String ic_drawer_estimation =
-      "assets/images/ic_drawer_estimation.png";
+  static const String ic_customer_support = "assets/images/ic_customer_support.png";
+  static const String ic_drawer_analytics = "assets/images/ic_drawer_analytics.png";
+  static const String ic_drawer_booking_history = "assets/images/ic_drawer_booking_history.png";
+  static const String ic_drawer_estimation = "assets/images/ic_drawer_estimation.png";
   static const String ic_drawer_invite = "assets/images/ic_drawer_invite.png";
-  static const String ic_drawer_my_profile =
-      "assets/images/ic_drawer_my_profile.png";
-  static const String ic_drawer_notification =
-      "assets/images/ic_drawer_notification.png";
+  static const String ic_drawer_my_profile = "assets/images/ic_drawer_my_profile.png";
+  static const String ic_drawer_notification = "assets/images/ic_drawer_notification.png";
   static const String ic_drawer_rating = "assets/images/ic_drawer_rating.png";
   static const String ic_drawer_terms = "assets/images/ic_drawer_terms.png";
-  static const String ic_drawer_transection_history =
-      "assets/images/ic_drawer_transection_history.png";
-  static const String ic_drawer_purchase_product =
-      "assets/images/ic_drawer_purchase_product.png";
+  static const String ic_drawer_transection_history = "assets/images/ic_drawer_transection_history.png";
+  static const String ic_drawer_purchase_product = "assets/images/ic_drawer_purchase_product.png";
   static const String ic_drawer_wallet = "assets/images/ic_drawer_wallet.png";
+  static const String ic_delete_account = "assets/images/delete_account.png";
   static const String ic_drawer_logout = "assets/images/ic_drawer_logout.png";
-  static const String ic_drawer_facebook =
-      "assets/images/ic_drawer_facebook.png";
+  static const String ic_drawer_facebook = "assets/images/ic_drawer_facebook.png";
   static const String ic_drawer_google = "assets/images/ic_drawer_google.png";
   static const String ic_drawer_insta = "assets/images/ic_drawer_insta.png";
-  static const String ic_round_blue_tick =
-      "assets/images/ic_round_blue_tick.png";
+  static const String ic_round_blue_tick = "assets/images/ic_round_blue_tick.png";
   static const String ic_camera = "assets/images/ic_camera.png";
   static const String ic_cloud = "assets/images/ic_cloud.png";
   static const String ic_video_cam = "assets/images/ic_video_cam.png";
   static const String ic_mic = "assets/images/ic_mic.png";
-  static const String ic_thank_you_service =
-      "assets/images/book_done.png";
+  static const String ic_thank_you_service = "assets/images/book_done.png";
   static const String ic_thank_you = "assets/images/ic_thank_you.png";
-  static const String ic_edit_profile_icon =
-      "assets/images/ic_edit_profile_icon.png";
+  static const String ic_edit_profile_icon = "assets/images/ic_edit_profile_icon.png";
   static const String ic_car = "assets/images/ic_car.png";
   static const String ic_color = "assets/images/ic_color.png";
   static const String ic_petrol = "assets/images/ic_petrol.png";
-  static const String ic_invite_friend_top_image =
-      "assets/images/ic_invite_friend_top_image.png";
+  static const String ic_invite_friend_top_image = "assets/images/ic_invite_friend_top_image.png";
 
   static const String ic_fb_share = "assets/images/ic_fb_share.png";
   static const String ic_linked = "assets/images/ic_linkedin.png";

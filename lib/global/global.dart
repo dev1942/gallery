@@ -13,6 +13,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 // import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 import 'package:location/location.dart' as location_selection;
+import 'package:otobucks/View/Auth/controllers/login_controller.dart';
 import 'package:otobucks/global/Models/failure.dart';
 import 'package:otobucks/global/Models/time_model.dart';
 import 'package:otobucks/global/app_style.dart';
@@ -583,6 +584,26 @@ class Global {
         onTapRightBtn: () {
           setLogout(mContext);
         });
+  }
+
+  static showDeleteAccountDialog(BuildContext mContext) {
+    AppViews.showCustomAlert(
+        context: mContext,
+        strTitle: Constants.STRING_DELETE_Account,
+        strMessage: Constants.STRING_DELETE_Account_msg,
+        strLeftBtnText: Constants.TEXT_CANCEL,
+        onTapLeftBtn: () {
+          Navigator.pop(mContext);
+        },
+        strRightBtnText: Constants.STRING_OK,
+        onTapRightBtn: () {
+          deleteAccountGlobal(mContext);
+        });
+  }
+
+  static deleteAccountGlobal(BuildContext mContext) {
+    final controller = Get.put(LoginController());
+    controller.deleteUserTask(mContext);
   }
 
   static setLogout(BuildContext mContext) async {
