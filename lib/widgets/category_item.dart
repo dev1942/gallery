@@ -50,6 +50,8 @@ class CategoryItem extends StatelessWidget {
           ),
           addVerticleSpace(15),
           ListTile(
+            isThreeLine: true,
+            dense: true,
             leading: Container(
               width: 50,
               height: 50,
