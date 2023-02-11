@@ -179,12 +179,12 @@ class LoginController extends GetxController {
 
     var userId = prefManager.getString(SharedPrefKey.KEY_USER_ID);
 
-    var signInEmail = await LoginRepo().deleteAccount(requestParams, userId.toString());
+    var deleteUser = await LoginRepo().deleteAccount(requestParams, userId.toString());
 
     isShowLoader = false;
     update();
 
-    signInEmail.fold((failure) {
+    deleteUser.fold((failure) {
       Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
     }, (mResult) {
       Global.setLogout(context);

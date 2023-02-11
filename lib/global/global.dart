@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -27,6 +28,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../View/Auth/Models/country_code.dart';
+import '../services/repository/login_repo.dart';
 import '../widgets/custom_ui/bot_sms.dart';
 import '../widgets/custom_ui/bottom_sheet.dart';
 import 'Models/date_model.dart';
@@ -596,14 +598,20 @@ class Global {
           Navigator.pop(mContext);
         },
         strRightBtnText: Constants.STRING_OK,
-        onTapRightBtn: () {
-          deleteAccountGlobal(mContext);
-        });
-  }
+        onTapRightBtn: () async {
+          HashMap<String, Object> requestParams = HashMap();
+          final prefManager = await SharedPreferences.getInstance();
 
-  static deleteAccountGlobal(BuildContext mContext) {
-    final controller = Get.put(LoginController());
-    controller.deleteUserTask(mContext);
+          var userId = prefManager.getString(SharedPrefKey.KEY_USER_ID);
+
+          var deleteUser = await LoginRepo().deleteAccount(requestParams, userId.toString());
+
+          deleteUser.fold((failure) {
+            Global.showToastAlert(context: mContext, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+          }, (mResult) {
+            Global.setLogout(mContext);
+          });
+        });
   }
 
   static setLogout(BuildContext mContext) async {
