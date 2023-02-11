@@ -72,7 +72,7 @@ class CategoryItem extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
                     border: Border.all(color: Colors.black)),
-                child: Text("OPEN",style: TextStyle(fontWeight: FontWeight.bold),),
+                child: Text("OPEN".tr,style: TextStyle(fontWeight: FontWeight.bold),),
               ),
             ),
           ),

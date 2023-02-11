@@ -76,7 +76,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                             Column(
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
-                                                imageWidget(imagePath: data.source?.image?.first),
+                                               imageWidget(imagePath:data.source!.image!.isNotEmpty? data.source?.image?.first:"https://i.tribune.com.pk/media/images/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0.jpg"),
                                                 const SizedBox(
                                                   height: AppDimens.dimens_12,
                                                 ),

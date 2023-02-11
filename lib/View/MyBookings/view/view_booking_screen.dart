@@ -422,7 +422,10 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                 child: NetworkImageCustom(
-                    image: widget.mEstimatesModel.source!.image!.first, fit: BoxFit.fill, height: AppDimens.dimens_120, width: AppDimens.dimens_120),
+                    image:
+                    widget.mEstimatesModel.source!.image!.isNotEmpty?
+
+                    widget.mEstimatesModel.source!.image!.first:"https://i.tribune.com.pk/media/images/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0.jpg", fit: BoxFit.fill, height: AppDimens.dimens_120, width: AppDimens.dimens_120),
               ),
             ),
             Expanded(

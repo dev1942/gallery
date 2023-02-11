@@ -305,7 +305,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
             //...................cars text
 
             child: Text(
-              "Cars".tr,
+              "Car".tr,
               style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
             ),
           ),
@@ -348,8 +348,8 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                 //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
               ),
               isExpanded: true,
-              hint: const Text(
-                "Choose Your Car",
+              hint:  Text(
+                "Choose Your Car".tr,
               ),
               icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
               iconSize: 30,

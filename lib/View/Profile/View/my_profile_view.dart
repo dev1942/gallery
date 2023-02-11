@@ -155,7 +155,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                     focusNode: value.mFocusNodeAddress,
                                     controller: value.controllerAddress,
                                     keyboardType: TextInputType.text,
-                                    hintText: Constants.STR_ADDRESS,
+                                    hintText: Constants.STR_ADDRESS.tr,
                                     inputFormatters: const [],
                                     obscureText: false,
                                     onChanged: (String value) {},
@@ -185,20 +185,20 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                           showDialog<String>(
                                               context: context,
                                               builder: (BuildContext context) => AlertDialog(
-                                                    title: const Text('Edit Number'),
+                                                    title:  Text('Edit Number'.tr),
                                                     content: TextField(
                                                       controller: value.controllerPhone,
                                                     ),
                                                     actions: <Widget>[
                                                       TextButton(
-                                                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                                                        child: const Text('Cancel'),
+                                                        onPressed: () => Navigator.pop(context, 'Cancel'.tr),
+                                                        child:  Text('Cancel'.tr),
                                                       ),
                                                       TextButton(
                                                         onPressed: () {
                                                           Navigator.pop(context, 'OK');
                                                         },
-                                                        child: const Text('Submit'),
+                                                        child:  Text('Submit'.tr),
                                                       ),
                                                     ],
                                                   ));
@@ -213,7 +213,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                 width: 50,
                                                 child: PrimaryButton(
                                                   color: null,
-                                                  label: const Text('verify'),
+                                                  label:  Text('Verify'.tr),
                                                   onPress: () {
                                                     gotoMobileOTPScreen(context, value.controllerPhone.text);
                                                   },
@@ -249,7 +249,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                 addVerticleSpace(AppDimens.dimens_12),
                                 //.........Emargency details section..............
                                 Text(
-                                  Constants.STR_EMERGENCY_CONTACT_DETAIL,
+                                  Constants.STR_EMERGENCY_CONTACT_DETAIL.tr,
                                   style: AppStyle.textViewStyleLarge(
                                       context: context, color: AppColors.colorPrimary, fontSizeDelta: 1, fontWeightDelta: 2),
                                 ),
@@ -261,7 +261,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                   focusNode: value.mFocusNodeEmgName,
                                   controller: value.controllerEmgName,
                                   keyboardType: TextInputType.text,
-                                  hintText: Constants.STR_NAME,
+                                  hintText: Constants.STR_NAME.tr,
                                   inputFormatters: const [],
                                   obscureText: false,
                                   onChanged: (String value) {},
@@ -302,7 +302,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         //IsAddCarTap =! IsAddCarTap;
                                       });
                                     },
-                                    strTitle: "Add Car" //Constants.STR_ENTER_YOUR_CAR_DETAILS
+                                    strTitle: "Add Car".tr //Constants.STR_ENTER_YOUR_CAR_DETAILS
                                     ),
 
                                 /*---------------------------------Add Car Inputs File Start---------------------------------------------*/
@@ -317,7 +317,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         enabled: true,
                                         controller: value.controllerCarBrand,
                                         keyboardType: TextInputType.text,
-                                        hintText: Constants.STR_CAR_BRAND,
+                                        hintText: Constants.STR_CAR_BRAND.tr,
                                         inputFormatters: const [],
                                         obscureText: false,
                                         onChanged: (String value) {},
@@ -330,7 +330,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         enabled: true,
                                         controller: value.controllerCarModelYear,
                                         keyboardType: TextInputType.text,
-                                        hintText: Constants.STR_CAR_MODEL_YEAR,
+                                        hintText: Constants.STR_CAR_MODEL_YEAR.tr,
                                         inputFormatters: const [],
                                         obscureText: false,
                                         onChanged: (String value) {},
@@ -343,7 +343,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         enabled: true,
                                         controller: value.controllerMileage,
                                         keyboardType: TextInputType.text,
-                                        hintText: Constants.STR_MILEAGE,
+                                        hintText: Constants.STR_MILEAGE.tr,
                                         inputFormatters: const [],
                                         obscureText: false,
                                         onChanged: (String value) {},
@@ -357,7 +357,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         enabled: true,
                                         controller: value.controllerColour,
                                         keyboardType: TextInputType.text,
-                                        hintText: Constants.STR_CAR_COLOUR,
+                                        hintText: Constants.STR_CAR_COLOUR.tr,
                                         inputFormatters: const [],
                                         obscureText: false,
                                         onChanged: (String value) {},
@@ -367,7 +367,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                       Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          'Car Plate Number',
+                                          'Car Plate Number'.tr,
                                           style: regularText600(15),
                                         ),
                                       ),
@@ -383,7 +383,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                               enabled: true,
                                               controller: value.controllerCode,
                                               keyboardType: TextInputType.text,
-                                              hintText: 'Code',
+                                              hintText: 'Code'.tr,
                                               inputFormatters: const [],
                                               obscureText: false,
                                               onChanged: (String value) {},
@@ -397,7 +397,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                               enabled: true,
                                               controller: value.controllerCity,
                                               keyboardType: TextInputType.text,
-                                              hintText: 'City',
+                                              hintText: 'City'.tr,
                                               inputFormatters: const [],
                                               obscureText: false,
                                               onChanged: (String value) {},
@@ -411,7 +411,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                               enabled: true,
                                               controller: value.controllerNumber,
                                               keyboardType: TextInputType.text,
-                                              hintText: 'Number',
+                                              hintText: 'Number'.tr,
                                               inputFormatters: const [],
                                               obscureText: false,
                                               onChanged: (String value) {},
@@ -441,7 +441,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                       isEditidTab = false;
                                                     });
                                                   },
-                                                  strTitle: "Cancel"),
+                                                  strTitle: "Cancel".tr),
                                             ),
                                             const SizedBox(width: 10.0),
                                             SizedBox(
@@ -482,7 +482,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                           toastType: TOAST_TYPE.toastError);
                                                     }
                                                   },
-                                                  strTitle: "Update"),
+                                                  strTitle: "Update".tr),
                                             ),
                                           ],
                                         ),
@@ -508,7 +508,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                       isAddCarTap = false;
                                                     });
                                                   },
-                                                  strTitle: "Cancel"),
+                                                  strTitle: "Cancel".tr),
                                             ),
                                             const SizedBox(width: 10.0),
                                             SizedBox(
@@ -547,7 +547,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                           toastType: TOAST_TYPE.toastError);
                                                     }
                                                   },
-                                                  strTitle: Constants.SAVE),
+                                                  strTitle: Constants.SAVE.tr),
                                             ),
                                           ],
                                         ),
@@ -623,7 +623,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                   const Icon(Icons.add_circle_outline_sharp),
                                                   Container(
                                                     child: Text(
-                                                      Constants.STR_ADD_MULKIA,
+                                                      Constants.STR_ADD_MULKIA.tr,
                                                       textAlign: TextAlign.center,
                                                       style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
                                                     ),
@@ -687,7 +687,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                   const Icon(Icons.add_circle_outline_sharp),
                                                   Container(
                                                     child: Text(
-                                                      Constants.STR_ADD_DRIVING_LICENCE,
+                                                      Constants.STR_ADD_DRIVING_LICENCE.tr,
                                                       textAlign: TextAlign.center,
                                                       style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
                                                     ),
@@ -756,7 +756,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                   const Icon(Icons.add_circle_outline_sharp),
                                                   Container(
                                                     child: Text(
-                                                      Constants.STR_ADD_EMIRATES_ID_FRONT,
+                                                      Constants.STR_ADD_EMIRATES_ID_FRONT.tr,
                                                       textAlign: TextAlign.center,
                                                       style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
                                                     ),
@@ -820,7 +820,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                     const Icon(Icons.add_circle_outline_sharp),
                                                     Container(
                                                       child: Text(
-                                                        Constants.STR_ADD_EMIRATES_ID_BACK,
+                                                        Constants.STR_ADD_EMIRATES_ID_BACK.tr,
                                                         textAlign: TextAlign.center,
                                                         style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
                                                       ),
@@ -882,7 +882,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         value.updateProfile(context);
                                       }
                                     },
-                                    strTitle: Constants.STR_UPDATE_YOUR_PROFILE),
+                                    strTitle: Constants.STR_UPDATE_YOUR_PROFILE.tr),
                                 addVerticleSpace(12),
                               ],
                             ),

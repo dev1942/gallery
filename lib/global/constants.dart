@@ -424,7 +424,7 @@ class Constants {
       STR_ADD_DRIVING_LICENCE = 'Add \n Driving Licence',
       STR_ADD_EMIRATES_ID_FRONT = 'Add \n Emirates id front',
       STR_ADD_EMIRATES_ID_BACK = 'Add \n Emirates id back',
-      STR_UPDATE_YOUR_PROFILE = 'Update your Profile';
+      STR_UPDATE_YOUR_PROFILE = 'Update Your Profile';
 
   static const String STR_IMAGE_MSG = "Upload image or Take a photo";
   static const String STR_MAX_SIZE = "(Up to 10 mb)";
