@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "443053986656-a6128vg3eg0f40627t506ai56qrd871s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.otobucks.app",
+            "certificate_hash": "74366274a8be288b0a14cf1ad91959d795832f87"
+          }
+        },
+        {
           "client_id": "443053986656-enjvko8f28qu5tate1m4s6m3gkdl3rp2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

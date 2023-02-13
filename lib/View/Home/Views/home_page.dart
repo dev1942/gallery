@@ -121,9 +121,9 @@ class _HomePageState extends State<HomePage> {
                     TabItem(
                       icon: Icons.home,
                     ),
-                    TabItem(
-                      icon: Icons.shopping_basket,
-                    ),
+                    // TabItem(
+                    //   icon: Icons.shopping_basket,
+                    // ),
                     TabItem(
                       icon: Icons.notifications,
                     ),

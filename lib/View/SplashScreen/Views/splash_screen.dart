@@ -54,13 +54,13 @@ class _SplashScreenState extends State<SplashScreen> {
                     width: MediaQuery.of(context).size.width,
                     decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/splash.jpg"), fit: BoxFit.fitHeight)),
                   ),
-                  Positioned(
-                    bottom: MediaQuery.of(context).size.height * 0.1,
-                    left: MediaQuery.of(context).size.width * 0.45,
-                    child: const CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  )
+                  // Positioned(
+                  //   bottom: MediaQuery.of(context).size.height * 0.1,
+                  //   left: MediaQuery.of(context).size.width * 0.45,
+                  //   child: const CircularProgressIndicator(
+                  //     color: Colors.white,
+                  //   ),
+                  // )
                   // _ControlsOverlay(controller: _controller),
                   // VideoProgressIndicator(_controller, allowScrubbing: false),
                 ],

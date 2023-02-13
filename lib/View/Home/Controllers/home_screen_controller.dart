@@ -108,7 +108,7 @@ class HomeScreenController extends GetxController {
 
       case PageType.myProfile:
         navigationPage = const MyProfileFragment();
-        indexM = 3;
+        indexM = 2;
         strTitle = Constants.TXT_PROFILE;
         break;
       case PageType.estimations:
@@ -119,7 +119,7 @@ class HomeScreenController extends GetxController {
 
       case PageType.notification:
         navigationPage = const NotificationFragment();
-        indexM = 2;
+        indexM = 1;
         strTitle = Constants.STR_NOTIFICATION;
         break;
 
@@ -203,15 +203,15 @@ class HomeScreenController extends GetxController {
       // case 1:
       //   callback(PageType.inbox);
       //   break;
+      // case 1:
+      //   callback(PageType.cart);
+      //callback(PageType.THANK_YOU);
+      // gotoDemo();
+      // break;
       case 1:
-        callback(PageType.cart);
-        //callback(PageType.THANK_YOU);
-        // gotoDemo();
-        break;
-      case 2:
         callback(PageType.notification);
         break;
-      case 3:
+      case 2:
         callback(PageType.myProfile);
         break;
     }
