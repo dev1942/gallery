@@ -170,7 +170,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                     CustomTextFieldMobile(
                                       strCountyCode: value.strCountyCode,
                                       textInputAction: TextInputAction.done,
-                                      readonly: true,
+                                      readonly: false,
                                       // enabled: false,
                                       //  enabled: true,
                                       height: 42,
@@ -185,20 +185,20 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                           showDialog<String>(
                                               context: context,
                                               builder: (BuildContext context) => AlertDialog(
-                                                    title:  Text('Edit Number'.tr),
+                                                    title: Text('Edit Number'.tr),
                                                     content: TextField(
                                                       controller: value.controllerPhone,
                                                     ),
                                                     actions: <Widget>[
                                                       TextButton(
                                                         onPressed: () => Navigator.pop(context, 'Cancel'.tr),
-                                                        child:  Text('Cancel'.tr),
+                                                        child: Text('Cancel'.tr),
                                                       ),
                                                       TextButton(
                                                         onPressed: () {
                                                           Navigator.pop(context, 'OK');
                                                         },
-                                                        child:  Text('Submit'.tr),
+                                                        child: Text('Submit'.tr),
                                                       ),
                                                     ],
                                                   ));
@@ -213,7 +213,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                 width: 50,
                                                 child: PrimaryButton(
                                                   color: null,
-                                                  label:  Text('Verify'.tr),
+                                                  label: Text('Verify'.tr),
                                                   onPress: () {
                                                     gotoMobileOTPScreen(context, value.controllerPhone.text);
                                                   },

@@ -363,18 +363,7 @@ class WalletFragmentState extends State<WalletFragment> {
                       style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack, fontSizeDelta: -2))
                 ],
               ),
-              CustomButton(
-                  isGradient: true,
-                  isRoundBorder: true,
-                  height: AppDimens.dimens_30,
-                  fontSize: -3,
-                  fontWeight: 0,
-                  fontColor: AppColors.colorWhite,
-                  width: AppDimens.dimens_130,
-                  onPressed: () {
-                    withdrawAlert();
-                  },
-                  strTitle: Constants.TXT_WITHDRAW_MONEY),
+              // 
             ],
           ),
         ),
