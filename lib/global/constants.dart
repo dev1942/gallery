@@ -436,7 +436,7 @@ class Constants {
   static const String STR_INBOX = 'Inbox';
   static const String STR_RESET = 'Reset', STR_APPLY = 'Apply';
 
-  static String STRING_OTP_SENT = "OTP Succesfully Sent";
+  static String STRING_OTP_SENT = "OTP Successfully Sent";
   static String STRING_OTP_FAILED = "OTP Sending Failed";
   static String STRING_OTP_SUCCESSFULLLY_SENT_FULL_ST = "Please check your phone for the verification code.";
 }
