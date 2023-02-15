@@ -53,6 +53,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
     double height = AppDimens.dimens_36;
     double imgHeight = AppDimens.dimens_90;
     double iconSize = AppDimens.dimens_18;
+
     return SafeArea(
         top: false,
         bottom: false,
