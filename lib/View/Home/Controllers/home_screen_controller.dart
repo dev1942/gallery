@@ -182,7 +182,7 @@ class HomeScreenController extends GetxController {
         navigationPage = const DashboardFragment();
         indexM = 0;
         strTitle = ' Hello ';
-        await launchUrl(Uri.parse('https://wa.me/+971588038049'), mode: LaunchMode.externalApplication);
+        await launchUrl(Uri.parse('https://wa.me/+971542457866'), mode: LaunchMode.externalApplication);
         break;
       case PageType.bookingHistory:
         log("Booking history");

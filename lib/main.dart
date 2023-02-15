@@ -7,7 +7,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -96,13 +95,13 @@ getNotifications() async {
 
 void onStart() {
   WidgetsFlutterBinding.ensureInitialized();
-  final service = FlutterBackgroundService();
-  service.startService().then((value) {
-    // Timer.periodic(const Duration(seconds: 30), (value) {
-    //   log("Check");
-    //   getNotifications();
-    // });
-  });
+  // final service = FlutterBackgroundService();
+  // service.startService().then((value) {
+  //   // Timer.periodic(const Duration(seconds: 30), (value) {
+  //   //   log("Check");
+  //   //   getNotifications();
+  //   // });
+  // });
 }
 
 // late Directory appDocsDir;
