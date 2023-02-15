@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:otobucks/global/enum.dart';
-
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
+
 import '../../../../../global/app_colors.dart';
 import '../../../../../global/app_dimens.dart';
 import '../../../../../global/app_style.dart';
 import '../../../../../global/app_views.dart';
 import '../../../../global/constants.dart';
 import '../../../../global/global.dart';
-import '../../../Rating/Views/rating_page.dart';
 import '../../Models/PromotionBookingModel.dart';
 import '../../controller/mybookings_controller.dart';
 import 'give_rating.dart';
