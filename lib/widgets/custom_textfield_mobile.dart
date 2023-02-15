@@ -141,7 +141,7 @@ class CustomTextFieldMobileState extends State<CustomTextFieldMobile> {
                                 return CustomBottomSheet(
                                     child: CountryCodeBottomSheet(
                                   onTap: (CountryCode mCountryCode) {
-                                    Get.find<RegistrationScreenController>()
+                                    Get.put(RegistrationScreenController())
                                         .strCountyCode = mCountryCode.dialCode;
 
                                     setState(() {

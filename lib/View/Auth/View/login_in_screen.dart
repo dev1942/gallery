@@ -30,28 +30,6 @@ class LogInScreen extends GetView<LoginController> {
             top: false,
             bottom: false,
             child: Scaffold(
-                appBar: AppBar(
-                  actions: [
-                    IconButton(
-                        onPressed: () {
-                          log("Test");
-                          var data = getDate(
-                              startDate: DateTime.now().toString(),
-                              endDate: DateTime.now().toString());
-                          log("::::::::::::::::::::::::::::::: $data");
-                        },
-                        icon: const Icon(Icons.add))
-                  ],
-                ),
-                floatingActionButton: FloatingActionButton(
-                  onPressed: () {
-                    log("Test");
-                    var data =
-                        getDate(startDate: "startDate", endDate: "endDate");
-                    log("::::::::::::::::::::::::::::::: $data");
-                  },
-                  child: const Icon(Icons.add),
-                ),
                 resizeToAvoidBottomInset: true,
                 backgroundColor: AppColors.colorWhite,
                 body: Stack(
