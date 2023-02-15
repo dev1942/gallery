@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:otobucks/global/enum.dart';
 
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
@@ -13,6 +14,7 @@ import '../../../../global/global.dart';
 import '../../../Rating/Views/rating_page.dart';
 import '../../Models/PromotionBookingModel.dart';
 import '../../controller/mybookings_controller.dart';
+import 'give_rating.dart';
 
 class PromotionsBookingView extends GetView<MyBookingsController> {
   const PromotionsBookingView({
@@ -81,47 +83,47 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
                                             ),
 
                                             /// onclick of view booking
-                                            InkWell(
-                                                child: Container(
-                                                    alignment: Alignment.center,
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              right: 8.0),
-                                                      child: Text(
-                                                        "Complete".tr,
-                                                        style: AppStyle
-                                                            .textViewStyleSmall(
-                                                                context:
-                                                                    context,
-                                                                color: AppColors
-                                                                    .colorTextBlue2,
-                                                                fontSizeDelta:
-                                                                    0,
-                                                                fontWeightDelta:
-                                                                    0),
-                                                      ),
-                                                    )),
-                                                onTap: () {
-                                                  markProvidedDialog();
-                                                  // if (data.status ==
-                                                  //     "inProgress") {
-                                                  //   //reschedule and decline
-                                                  //   Get.to(
-                                                  //       ViewBookingEstimation(
-                                                  //           status:
-                                                  //               "inProgress",
-                                                  //           mEstimatesModel:
-                                                  //               data,
-                                                  //           isPending:
-                                                  //               false));
-                                                  // } else {
-                                                  //   Get.to(
-                                                  //       ViewBookingEstimation(
-                                                  //           mEstimatesModel:
-                                                  //               data));
-                                                  // }
-                                                }),
+                                            // InkWell(
+                                            //     child: Container(
+                                            //         alignment: Alignment.center,
+                                            //         child: Padding(
+                                            //           padding:
+                                            //               const EdgeInsets.only(
+                                            //                   right: 8.0),
+                                            //           child: Text(
+                                            //             "Complete".tr,
+                                            //             style: AppStyle
+                                            //                 .textViewStyleSmall(
+                                            //                     context:
+                                            //                         context,
+                                            //                     color: AppColors
+                                            //                         .colorTextBlue2,
+                                            //                     fontSizeDelta:
+                                            //                         0,
+                                            //                     fontWeightDelta:
+                                            //                         0),
+                                            //           ),
+                                            //         )),
+                                            //     onTap: () {
+                                            //       markProvidedDialog();
+                                            //       // if (data.status ==
+                                            //       //     "inProgress") {
+                                            //       //   //reschedule and decline
+                                            //       //   Get.to(
+                                            //       //       ViewBookingEstimation(
+                                            //       //           status:
+                                            //       //               "inProgress",
+                                            //       //           mEstimatesModel:
+                                            //       //               data,
+                                            //       //           isPending:
+                                            //       //               false));
+                                            //       // } else {
+                                            //       //   Get.to(
+                                            //       //       ViewBookingEstimation(
+                                            //       //           mEstimatesModel:
+                                            //       //               data));
+                                            //       // }
+                                            //     }),
                                           ],
                                         ),
                                         addHorizontalSpace(8),
@@ -211,8 +213,14 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
                                                   Expanded(
                                                     child: InkWell(
                                                       onTap: () {
-                                                        displayTextInputDialog(
-                                                            context, data.sId!);
+                                                        if(data.status=="booked"){
+                                                          Global.showToastAlert(context: context, strTitle: "Message", strMsg: "Your booking is not completed yet", toastType: TOAST_TYPE.toastSuccess);
+                                                        }
+                                                        else{
+                                                          displayTextInputDialog(
+                                                              context, data.sId!);
+                                                        }
+
                                                       },
                                                       child: Container(
                                                           padding:
@@ -403,7 +411,7 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
   }
 
   displayTextInputDialog(BuildContext context, String bookingId) async {
-    Get.to(RatingScreen(
+    Get.to(PromotionRatingScreen(
       bookingId: bookingId,
     ));
   }
