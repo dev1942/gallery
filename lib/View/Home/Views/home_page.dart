@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                       ? controller.strTitle.tr + controller.firstName
                       : controller.strTitle.tr,
                   isShowNotification: true,
-                  isShowSOS: true,
+                  isShowSOS: false,
                   menuTap: () {
                     if (controller.currentPageType == PageType.home || controller.currentPageType == PageType.home2) {
                       scaffoldKey.currentState!.openDrawer();
