@@ -38,7 +38,7 @@ class _BlinkIconState extends State<BlinkIcon> with SingleTickerProviderStateMix
     return AnimatedBuilder(
       animation: _controller!,
       builder: (context, child) {
-        return Icon(Icons.whatsapp, size: 30, color: _colorAnimation!.value,);
+        return Icon(Icons.chat, size: 30, color: _colorAnimation!.value,);
       },
     );
   }
