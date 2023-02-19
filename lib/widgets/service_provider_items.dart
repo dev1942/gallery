@@ -21,6 +21,7 @@ class ServiceProviderRated extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     log(mServiceModel.rating.toString());
     if (isShowRating) {
       return Container(
