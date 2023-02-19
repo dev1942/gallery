@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/Home/Controllers/home_screen_controller.dart';
+import 'package:otobucks/View/Notifications/Views/NotificationController.dart';
 import 'package:otobucks/global/adaptive_helper.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
@@ -140,6 +141,7 @@ Future<void> _launchLink(String url) async {
 }
 
 getDrawerItem(DrawerItem mDrawerItem, BuildContext context) {
+  var notificationController = Get.put(NotificationsController());
   return InkResponse(
     child: SizedBox(
       height: AppDimens.dimens_50,
@@ -167,7 +169,7 @@ getDrawerItem(DrawerItem mDrawerItem, BuildContext context) {
                   decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(100)),
                   margin: const EdgeInsets.only(left: AppDimens.dimens_15, right: AppDimens.dimens_10),
                   child: Text(
-                    "40",
+                    notificationController.alNotification.length.toString() ?? "40",
                     style:
                         AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorWhite, fontWeightDelta: 1, fontSizeDelta: -1),
                   )

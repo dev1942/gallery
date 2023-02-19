@@ -27,21 +27,15 @@ class AllProviderRatingModel {
   int v;
   String allProviderRatingModelId;
 
-  factory AllProviderRatingModel.fromJson(String str) =>
-      AllProviderRatingModel.fromMap(json.decode(str));
+  factory AllProviderRatingModel.fromJson(String str) => AllProviderRatingModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory AllProviderRatingModel.fromMap(Map<String, dynamic> json) =>
-      AllProviderRatingModel(
-        customerToProvider: json["customer_to_provider"] == null
-            ? null
-            : CustomerToProvider.fromMap(json["customer_to_provider"]),
+  factory AllProviderRatingModel.fromMap(Map<String, dynamic> json) => AllProviderRatingModel(
+        customerToProvider: json["customer_to_provider"] == null ? null : CustomerToProvider.fromMap(json["customer_to_provider"]),
         id: json["_id"],
         booking: json["booking"],
-        customer: json["customer"] == null
-            ? null
-            : Customer.fromMap(json["customer"]),
+        customer: json["customer"] == null ? null : Customer.fromMap(json["customer"]),
         provider: json["provider"],
         createdAt: json["createdAt"],
         updatedAt: json["updatedAt"],
@@ -107,12 +101,10 @@ class CustomerToProvider {
   String review;
   int rating;
 
-  factory CustomerToProvider.fromJson(String str) =>
-      CustomerToProvider.fromMap(json.decode(str));
+  factory CustomerToProvider.fromJson(String str) => CustomerToProvider.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
-  factory CustomerToProvider.fromMap(Map<String, dynamic> json) =>
-      CustomerToProvider(
+  factory CustomerToProvider.fromMap(Map<String, dynamic> json) => CustomerToProvider(
         review: json["review"],
         rating: json["rating"],
       );

@@ -47,6 +47,7 @@ class RatingRepo {
       return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
+
   //Give ratinng to promotion booking
   Future<Either<Failure, Success>> giveRatingToPromotionBooking(HashMap<String, Object> requestParams) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
@@ -232,6 +233,7 @@ class RatingRepo {
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
+        inspect(mResponse);
       } else {
         return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
       }
@@ -243,13 +245,14 @@ class RatingRepo {
           for (var dataItem in data) {
             AllProviderRatingModel mReviewModel = AllProviderRatingModel.fromMap(dataItem);
             if (mReviewModel.customerToProvider != null && mReviewModel.customer != null) {
+              log("response is not empty");
               reviews.add(RatingComponentModel(
                   serviceType: '',
                   image: mReviewModel.customer!.image,
                   name: mReviewModel.customer!.firstName.toString() + ' ' + mReviewModel.customer!.lastName.toString(),
                   customerId: '',
                   providerId: mReviewModel.provider,
-                  rating: mReviewModel.customerToProvider!.rating.toDouble(),
+                  rating: mReviewModel.customerToProvider?.rating != null ? mReviewModel.customerToProvider!.rating.toDouble() : 0.0,
                   review: mReviewModel.customerToProvider!.review.toString(),
                   reviewId: mReviewModel.id));
             }
@@ -273,7 +276,7 @@ class RatingRepo {
       return Left(
           Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
     } catch (e) {
-      Logger().e(e.toString());
+      log("in exception" + e.toString());
       return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }

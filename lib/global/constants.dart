@@ -371,7 +371,8 @@ class Constants {
 
   // Logout app dialog
   static const String STRING_SIGN_OUT = "Sign Out?", STRING_SIGN_OUT_MSG = "Do you want to Sign Out ?", STRING_OK = "Ok", STRING_BACK = "Back";
-  static const String STRING_DELETE_Account = "DELETE ACCOUNT", STRING_DELETE_Account_msg = "Are you sure you want to delete your account permanantly ?";
+  static const String STRING_DELETE_Account = "DELETE ACCOUNT",
+      STRING_DELETE_Account_msg = "Are you sure you want to delete your account permanantly ?";
 
   static const String STRING_PRODUCT_QUANTITY = "Product Quantity",
       STRING_ORDER_DETAIL = "Order Detail",

@@ -1,23 +1,24 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:otobucks/View/auth/controllers/otp_controller.dart';
+import 'package:otobucks/View/Auth/controllers/otp_controller.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_images.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/global/constants.dart';
-import 'package:otobucks/View/auth/Models/model_otp.dart';
+import 'package:otobucks/View/Auth/Models/model_otp.dart';
 import 'package:otobucks/widgets/custom_button.dart';
 
 import '../../../widgets/custom_ui/otp/src/otp_pin_field_input_type.dart';
 import '../../../widgets/custom_ui/otp/src/otp_pin_field_style.dart';
 import '../../../widgets/custom_ui/otp/src/otp_pin_field_widget.dart';
+
 class OTPScreen extends StatefulWidget {
   final ModelOTP? mModelOTP;
   final String? phoneNumber;
-  const OTPScreen({Key? key,  this.mModelOTP,this.phoneNumber}) : super(key: key);
+  const OTPScreen({Key? key, this.mModelOTP, this.phoneNumber}) : super(key: key);
   @override
   State<OTPScreen> createState() => _OTPScreenState();
 }
@@ -54,17 +55,11 @@ class _OTPScreenState extends State<OTPScreen> {
                         Container(
                             alignment: Alignment.center,
                             margin: EdgeInsets.only(
-                                left: AppDimens.dimens_10,
-                                top: size.height / 8,
-                                bottom: size.height / 20,
-                                right: AppDimens.dimens_10),
+                                left: AppDimens.dimens_10, top: size.height / 8, bottom: size.height / 20, right: AppDimens.dimens_10),
                             child: Text(
                               Constants.TXT_ONE_TIME_PASSWORD.tr,
                               style: AppStyle.textViewStyleXXXLarge(
-                                  context: context,
-                                  color: AppColors.colorWhite,
-                                  fontSizeDelta: -3,
-                                  fontWeightDelta: 2),
+                                  context: context, color: AppColors.colorWhite, fontSizeDelta: -3, fontWeightDelta: 2),
                             )),
                         Expanded(
                             child: Container(
@@ -82,8 +77,7 @@ class _OTPScreenState extends State<OTPScreen> {
                           child: Column(
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(
-                                    top: AppDimens.dimens_30),
+                                margin: const EdgeInsets.only(top: AppDimens.dimens_30),
                                 child: Image.asset(
                                   AppImages.ic_otp_icon,
                                   width: AppDimens.dimens_50,
@@ -91,46 +85,33 @@ class _OTPScreenState extends State<OTPScreen> {
                                 ),
                               ),
                               Container(
-                                margin: const EdgeInsets.only(
-                                    top: AppDimens.dimens_40),
+                                margin: const EdgeInsets.only(top: AppDimens.dimens_40),
                                 child: Text(
                                   Constants.TXT_ENT_CODE_MSG.tr,
                                   textAlign: TextAlign.center,
                                   style: AppStyle.textViewStyleSmall(
-                                      context: context,
-                                      color: AppColors.colorTextFieldHint
-                                          .withOpacity(0.6),
-                                      fontSizeDelta: 0,
-                                      fontWeightDelta: -1),
+                                      context: context, color: AppColors.colorTextFieldHint.withOpacity(0.6), fontSizeDelta: 0, fontWeightDelta: -1),
                                 ),
                               ),
                               Text(
-                                widget.mModelOTP?.emailId??widget.phoneNumber??"", // "test@yopamil.com",
+                                widget.mModelOTP?.emailId ?? widget.phoneNumber ?? "", // "test@yopamil.com",
                                 textAlign: TextAlign.center,
-                                style: AppStyle.textViewStyleSmall(
-                                    context: context,
-                                    color: AppColors.colorBlack,
-                                    fontSizeDelta: 0,
-                                    fontWeightDelta: 2),
+                                style:
+                                    AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 2),
                               ),
                               Container(
-                                margin: const EdgeInsets.only(
-                                    top: AppDimens.dimens_40),
+                                margin: const EdgeInsets.only(top: AppDimens.dimens_40),
                                 child: OtpPinField(
-                                  otpPinFieldInputType:
-                                      OtpPinFieldInputType.none,
+                                  otpPinFieldInputType: OtpPinFieldInputType.none,
                                   onSubmit: (text) {
                                     log(text);
                                     controller.mControllerOTP.text = text;
                                   },
                                   otpPinFieldStyle: OtpPinFieldStyle(
-                                    defaultFieldBorderColor:
-                                        AppColors.greyOTPBg,
+                                    defaultFieldBorderColor: AppColors.greyOTPBg,
                                     activeFieldBorderColor: AppColors.lightGrey,
-                                    defaultFieldBackgroundColor:
-                                        AppColors.greyOTPBg,
-                                    activeFieldBackgroundColor: AppColors
-                                        .lightGrey, // Background Color for active/focused Otp_Pin_Field
+                                    defaultFieldBackgroundColor: AppColors.greyOTPBg,
+                                    activeFieldBackgroundColor: AppColors.lightGrey, // Background Color for active/focused Otp_Pin_Field
                                   ),
                                   maxLength: 6,
                                   highlightBorder: false,
@@ -138,46 +119,36 @@ class _OTPScreenState extends State<OTPScreen> {
                                   fieldHeight: otpwidth,
                                   keyboardType: TextInputType.number,
                                   autoFocus: false,
-                                  otpPinFieldDecoration: OtpPinFieldDecoration
-                                      .defaultPinBoxDecoration,
+                                  otpPinFieldDecoration: OtpPinFieldDecoration.defaultPinBoxDecoration,
                                 ),
                               ),
                               Container(
-                                margin: const EdgeInsets.only(
-                                    top: AppDimens.dimens_40, bottom: 20),
+                                margin: const EdgeInsets.only(top: AppDimens.dimens_40, bottom: 20),
                                 child: CustomButton(
                                     isGradient: true,
                                     isRoundBorder: true,
                                     fontColor: AppColors.colorWhite,
                                     width: size.width / 1.5,
                                     onPressed: () {
-                                      if(widget.mModelOTP!=null){
-                                        controller.verifyOTPTask(
-                                            context, widget.mModelOTP!);
-                                      }else{
+                                      if (widget.mModelOTP != null) {
+                                        controller.verifyOTPTask(context, widget.mModelOTP!);
+                                      } else {
                                         //phone number verification
-                                       // verifyNumberOTPTask
-                                        controller.verifyNumberOTPTask(
-                                            context, widget.phoneNumber
-                                        );
+                                        // verifyNumberOTPTask
+                                        controller.verifyNumberOTPTask(context, widget.phoneNumber);
                                       }
-
                                     },
                                     strTitle: Constants.TXT_SUBMIT.tr),
                               ),
                               TextButton(
                                   onPressed: () {
-                                    if(widget.mModelOTP!=null){
-                                      controller.sendOTPTask(
-                                          widget.mModelOTP!.emailId, context);
-                                    }else{
+                                    if (widget.mModelOTP != null) {
+                                      controller.sendOTPTask(widget.mModelOTP!.emailId, context);
+                                    } else {
                                       //phone number verification
-                                      controller.sendNumberOTPTask(
-                                          widget.phoneNumber!,context
-                                      );
+                                      controller.sendNumberOTPTask(widget.phoneNumber!, context);
                                     }
                                   },
-
                                   child: const Text('Resend'))
                             ],
                           ),
@@ -187,8 +158,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 GetBuilder<OtpController>(
                     init: controller,
                     builder: (value) {
-                      return AppViews.showLoadingWithStatus(
-                          controller.isShowLoader);
+                      return AppViews.showLoadingWithStatus(controller.isShowLoader);
                     })
               ],
             )));

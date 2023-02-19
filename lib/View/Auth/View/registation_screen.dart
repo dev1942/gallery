@@ -37,6 +37,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     controller.onIniteScreen();
     Future.delayed(Duration.zero, () {
       controller.setUpInviteCode(widget.referCode);
+      controller.controllerCountry.text = "United Arab Emirates";
+      FocusScope.of(context).requestFocus(controller.mFocusNodeFirstName);
     });
 
     super.initState();
@@ -63,10 +65,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 Container(
                     padding: const EdgeInsets.only(
-                        left: AppDimens.dimens_18,
-                        right: AppDimens.dimens_18,
-                        top: AppDimens.dimens_10,
-                        bottom: AppDimens.dimens_10),
+                        left: AppDimens.dimens_18, right: AppDimens.dimens_18, top: AppDimens.dimens_10, bottom: AppDimens.dimens_10),
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -74,38 +73,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         children: <Widget>[
                           Container(
                             alignment: Alignment.centerRight,
-                            margin:
-                                const EdgeInsets.only(top: AppDimens.dimens_50),
+                            margin: const EdgeInsets.only(top: AppDimens.dimens_50),
                             child: const LanguageDropdown(isWhite: true),
                           ),
                           Container(
                               alignment: Alignment.center,
                               margin: const EdgeInsets.only(
-                                  left: AppDimens.dimens_24,
-                                  top: AppDimens.dimens_10,
-                                  bottom: AppDimens.dimens_36,
-                                  right: AppDimens.dimens_24),
+                                  left: AppDimens.dimens_24, top: AppDimens.dimens_10, bottom: AppDimens.dimens_36, right: AppDimens.dimens_24),
                               child: Image.asset(AppImages.icAppIconWhite)),
+                          GetBuilder<RegistrationScreenController>(init: RegistrationScreenController(), builder: (model) => staticTextFileds(model)),
+                          GetBuilder<RegistrationScreenController>(builder: (model) => getCountryTextFiled(model)),
+                          GetBuilder<RegistrationScreenController>(builder: (model) => textFiledMobile(model)),
+                          GetBuilder<RegistrationScreenController>(builder: (model) => knowAboutUsDropDown(model)),
                           GetBuilder<RegistrationScreenController>(
-                              init: RegistrationScreenController(),
-                              builder: (model) => staticTextFileds(model)),
-                          GetBuilder<RegistrationScreenController>(
-                              builder: (model) => getCountryTextFiled(model)),
-                          GetBuilder<RegistrationScreenController>(
-                              builder: (model) => textFiledMobile(model)),
-                          GetBuilder<RegistrationScreenController>(
-                              builder: (model) => knowAboutUsDropDown(model)),
-                          GetBuilder<RegistrationScreenController>(
-                              builder: (model) => (Global.checkNull(model
-                                          .controllerHowAboutUs.text
-                                          .toString()) &&
-                                      Global.equalsIgnoreCase(
-                                          model.controllerHowAboutUs.text
-                                              .toString(),
-                                          "Other"))
+                              builder: (model) => (Global.checkNull(model.controllerHowAboutUs.text.toString()) &&
+                                      Global.equalsIgnoreCase(model.controllerHowAboutUs.text.toString(), "Other"))
                                   ? Container(
-                                      margin: const EdgeInsets.only(
-                                          top: AppDimens.dimens_18),
+                                      margin: const EdgeInsets.only(top: AppDimens.dimens_18),
                                       child: CustomTextFieldWithIcon(
                                         textInputAction: TextInputAction.next,
                                         enabled: true,
@@ -119,13 +103,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       ),
                                     )
                                   : Container()),
-                          GetBuilder<RegistrationScreenController>(
-                              builder: (model) {
+                          GetBuilder<RegistrationScreenController>(builder: (model) {
                             return Column(
                               children: [
                                 Container(
-                                  margin: const EdgeInsets.only(
-                                      top: AppDimens.dimens_18),
+                                  margin: const EdgeInsets.only(top: AppDimens.dimens_18),
                                   child: CustomTextFieldPassword(
                                     textInputAction: TextInputAction.done,
                                     enabled: true,
@@ -144,28 +126,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   height: 2.h,
                                 ),
                                 CustomButton(
-                                    isRoundBorder: true,
-                                    onPressed: () =>
-                                        model.registerUserTask(context),
-                                    strTitle: Constants.TXT_REGISTER.tr),
+                                    isRoundBorder: true, onPressed: () => model.registerUserTask(context), strTitle: Constants.TXT_REGISTER.tr),
                                 Container(
-                                  margin: const EdgeInsets.only(
-                                      top: AppDimens.dimens_40),
+                                  margin: const EdgeInsets.only(top: AppDimens.dimens_40),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Container(
-                                        margin: const EdgeInsets.only(
-                                            right: AppDimens.dimens_4),
+                                        margin: const EdgeInsets.only(right: AppDimens.dimens_4),
                                         child: Text(
                                           Constants.TXT_ALREADY_HAVE_AN_AC.tr,
                                           style: AppStyle.textViewStyleSmall(
-                                              context: context,
-                                              color: AppColors.colorWhite,
-                                              fontSizeDelta: 0,
-                                              fontWeightDelta: -10),
+                                              context: context, color: AppColors.colorWhite, fontSizeDelta: 0, fontWeightDelta: -10),
                                         ),
                                       ),
                                       InkWell(
@@ -174,8 +147,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           style: AppStyle.textViewStyleSmall(
                                               context: context,
                                               color: AppColors.colorWhite,
-                                              mDecoration:
-                                                  TextDecoration.underline,
+                                              mDecoration: TextDecoration.underline,
                                               fontSizeDelta: 0,
                                               fontWeightDelta: -10),
                                         ),
@@ -192,14 +164,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ],
                       ),
                     )),
-                GetBuilder<RegistrationScreenController>(
-                    builder: (model) =>
-                        AppViews.showLoadingWithStatus(model.isShowLoader))
+                GetBuilder<RegistrationScreenController>(builder: (model) => AppViews.showLoadingWithStatus(model.isShowLoader))
               ],
             )));
   }
 
-  Widget staticTextFileds(model) {
+  Widget staticTextFileds(RegistrationScreenController model) {
     return Column(
       children: [
         CustomTextFieldWithIcon(
@@ -209,9 +179,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           controller: model.controllerFirstName,
           keyboardType: TextInputType.text,
           hintText: Constants.STR_FIRST_NAME.tr,
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))
-          ],
+          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))],
           obscureText: false,
           onChanged: (String value) {},
           suffixIcon: Image.asset(
@@ -225,13 +193,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           child: CustomTextFieldWithIcon(
             textInputAction: TextInputAction.next,
             enabled: true,
-            focusNode: model.mFocusNodeLastName,
+            // focusNode: model.mFocusNodeLastName,
             controller: model.controllerLastName,
             keyboardType: TextInputType.text,
             hintText: 'Last Name'.tr,
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))
-            ],
+            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))],
             obscureText: false,
             onChanged: (String value) {},
             suffixIcon: Image.asset(
@@ -246,7 +212,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           child: CustomTextFieldWithIcon(
             textInputAction: TextInputAction.next,
             enabled: true,
-            focusNode: model.mFocusNodeEmail,
+            // focusNode: model.mFocusNodeEmail,
             controller: model.controllerEmail,
             keyboardType: TextInputType.emailAddress,
             hintText: 'Email'.tr,
@@ -264,7 +230,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  Widget textFiledMobile(model) {
+  Widget textFiledMobile(RegistrationScreenController model) {
     return Container(
       margin: const EdgeInsets.only(top: AppDimens.dimens_18),
       child: CustomTextFieldMobile(
@@ -272,12 +238,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         textInputAction: TextInputAction.done,
         enabled: true,
         controller: model.controllerPhone,
-        focusNode: model.mFocusNodePhone,
+        // focusNode: model.mFocusNodePhone,
       ),
     );
   }
 
-  Widget knowAboutUsDropDown(model) {
+  Widget knowAboutUsDropDown(RegistrationScreenController model) {
     return Container(
       margin: const EdgeInsets.only(top: AppDimens.dimens_18),
       child: InkWell(
@@ -311,7 +277,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  Widget getCountryTextFiled(model) {
+  Widget getCountryTextFiled(RegistrationScreenController model) {
     return Container(
       margin: const EdgeInsets.only(top: AppDimens.dimens_18),
       child: InkWell(
@@ -347,8 +313,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               builder: (context) {
                 return CustomBottomSheet(
                     child: CountryCodeBottomSheet(
-                  onTap: (CountryCode mCountryCode) =>
-                      model.updateCountryCode(mCountryCode),
+                  onTap: (CountryCode mCountryCode) => model.updateCountryCode(mCountryCode),
                 ));
               });
         },

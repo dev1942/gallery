@@ -32,7 +32,7 @@ import '../services/repository/login_repo.dart';
 import '../widgets/custom_ui/bot_sms.dart';
 import '../widgets/custom_ui/bottom_sheet.dart';
 import 'Models/date_model.dart';
-import '../View/auth/Models/user_detail.dart';
+import '../View/Auth/Models/user_detail.dart';
 import 'Models/result.dart';
 import 'app_colors.dart';
 import 'app_dimens.dart';
@@ -567,7 +567,13 @@ class Global {
 
       for (var countryCode in country_code) {
         CountryCode mCountryCode = CountryCode.fromJson(countryCode);
-        alCountryCode.add(mCountryCode);
+
+        if (mCountryCode.name.toLowerCase() == "united arab emirates" ||
+            mCountryCode.name.toLowerCase() == "pakistan" ||
+            mCountryCode.name.toLowerCase() == "india" ||
+            mCountryCode.name.toLowerCase() == "saudi arabia") {
+          alCountryCode.add(mCountryCode);
+        }
       }
     }
     return alCountryCode;

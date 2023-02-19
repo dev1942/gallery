@@ -16,6 +16,7 @@ class LocaleLanguages extends Translations {
           'create one': 'اصنع واحدا',
           'Customer Support': 'دعم العملاء',
           'Country': 'دولة',
+          "Remember me": 'تذكرنى',
           'Mobile Number': 'رقم الهاتف المحمول',
           'How did you here about us': 'كيف سمعت عنا',
           'Invitation Code': 'شفرة الدعوة',
@@ -25,9 +26,7 @@ class LocaleLanguages extends Translations {
           ' Hello ': 'مرحبًا',
           'One time password': 'كلمة السر لمرة واحدة',
           // ignore: prefer_adjacent_string_concatenation
-          'enter_code': "الرجاء إدخال رمز التحقق الذي أرسلناه " +
-              "\n" +
-              "إلى عنوان بريدك الإلكتروني",
+          'enter_code': "الرجاء إدخال رمز التحقق الذي أرسلناه " + "\n" + "إلى عنوان بريدك الإلكتروني",
           'SUBMIT': 'إرسال',
           'Or': 'أو',
           'Car': 'سيارة',
@@ -88,8 +87,7 @@ class LocaleLanguages extends Translations {
           'Thank you for booking.': 'شكرا لك على الحجز.',
           'The vendor will get back to you soon.': 'البائع سوف يقوم بالرد عليك قريبا',
           'Request Estimation': 'طلب تقدير',
-          'Thank you for booking. The vendor will get back to you shortly':
-              'شكرا لك على الحجز. البائع سوف يقوم بالرد عليك قريبا',
+          'Thank you for booking. The vendor will get back to you shortly': 'شكرا لك على الحجز. البائع سوف يقوم بالرد عليك قريبا',
           'Book Now': 'احجز الآن',
           'Pickup': 'يلتقط',
           'Code': 'شفرة',
@@ -139,14 +137,14 @@ class LocaleLanguages extends Translations {
           'Search by date': 'البحث بالتاريخ',
           'Service Title: ': "عنوان الخدمة:",
           'Booking Date : ': "تاريخ الحجز:",
-          "Price :  ":"سعر :  ",
-          "Paid  : ":"مدفوع  :",
+          "Price :  ": "سعر :  ",
+          "Paid  : ": "مدفوع  :",
           'View Booking': "عرض الحجز",
           'Requested': "مطلوب",
           'Accepted': "وافقت",
           'Declined': "انخفض",
-          "No data found":"لاتوجد بيانات",
-          "Balance Payment":"ميزان المدفوعات",
+          "No data found": "لاتوجد بيانات",
+          "Balance Payment": "ميزان المدفوعات",
           'View Estimation': "عرض التقدير",
           'Offering Amount': "عرض التقدير",
           'RATED': 'مصنفة',
@@ -201,8 +199,7 @@ class LocaleLanguages extends Translations {
           'Pickup': 'Pickup',
           'Auto Repair Services': 'Auto Repair Services',
           'Book Now': 'Book Now',
-          'Thank you for booking. The vendor will get back to you shortly':
-              'Thank you for booking. The vendor will get back to you shortly',
+          'Thank you for booking. The vendor will get back to you shortly': 'Thank you for booking. The vendor will get back to you shortly',
           'Request Estimation': 'Request Estimation',
           'Adress': 'Adress',
           'Write a message...': 'Write a message...',
@@ -246,6 +243,7 @@ class LocaleLanguages extends Translations {
           'First Name': 'First Name',
           'Last Name': 'Last Name',
           'Country': 'Country',
+          "Remember me": 'Remember me',
           'Mobile Number': 'Mobile Number',
           'How did you here about us': 'How did you here about us',
           'Invitation Code': 'Invitation Code',
@@ -255,9 +253,7 @@ class LocaleLanguages extends Translations {
           ' Hello ': ' Hello ',
           'One time password': 'ONE TIME PASSWORD',
           // ignore: prefer_adjacent_string_concatenation
-          'enter_code': "Please Enter The Verification Code We Sent" +
-              "\n" +
-              "to your email address",
+          'enter_code': "Please Enter The Verification Code We Sent" + "\n" + "to your email address",
           'SUBMIT': 'SUBMIT',
           'Or': 'Or',
           'Enter Token': 'Enter Token',
