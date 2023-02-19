@@ -32,6 +32,9 @@ class ServiceScreenState extends State<ServiceScreen> {
   @override
   void initState() {
     controller.getServiceProvider(widget.mCategoryModel.id, widget.mSubCategoryModel.id);
+    Get.find<ServiceScreenController>().controllerSearch.addListener(() {
+      controller.runFilter(Get.find<ServiceScreenController>().controllerSearch.text.toString());
+    });
 
     super.initState();
   }
@@ -87,7 +90,9 @@ class ServiceScreenState extends State<ServiceScreen> {
           inputFormatters: const [],
           obscureText: false,
           height: AppDimens.dimens_36,
-          onChanged: (String value) {},
+          onChanged: (String value) {
+            log("message");
+          },
           onSubmit: (String value) {},
           suffixIcon: InkWell(
             child: Image.asset(
@@ -154,7 +159,9 @@ class ServiceScreenState extends State<ServiceScreen> {
         ),
       );
 
-  _providersNearby() => GetBuilder<ServiceScreenController>(builder: (value) {
+  _providersNearby() => GetBuilder<ServiceScreenController>(
+      init: ServiceScreenController(),
+      builder: (value) {
         return Container(
             height: AppDimens.dimens_90,
             margin: const EdgeInsets.only(top: AppDimens.dimens_10),
@@ -165,7 +172,7 @@ class ServiceScreenState extends State<ServiceScreen> {
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.all(0),
                   itemBuilder: (BuildContext contextM, index) {
-                    ServiceModel mServiceModel = value.alServices[index];
+                    ServiceModel mServiceModel = value.alServicesfiltered[index];
 
                     return ServiceProviderRated(
                       mServiceModel: mServiceModel,
@@ -175,7 +182,7 @@ class ServiceScreenState extends State<ServiceScreen> {
                       },
                     );
                   },
-                  itemCount: value.alServices.length),
+                  itemCount: value.alServicesfiltered.length),
             ));
       });
 
@@ -191,7 +198,7 @@ class ServiceScreenState extends State<ServiceScreen> {
                     // itemExtent: AppDimens.dimens_100,
                     padding: const EdgeInsets.all(0),
                     itemBuilder: (BuildContext contextM, index) {
-                      ServiceModel mServiceModel = value.alServices[index];
+                      ServiceModel mServiceModel = value.alServicesfiltered[index];
                       return ServiceProviderRated(
                         mServiceModel: mServiceModel,
                         isShowRating: false,
@@ -200,7 +207,7 @@ class ServiceScreenState extends State<ServiceScreen> {
                         },
                       );
                     },
-                    itemCount: value.alServices.length)));
+                    itemCount: value.alServicesfiltered.length)));
       });
 
   _appBar() => AppViews.initAppBar(

@@ -14,6 +14,7 @@ class ServiceScreenController extends GetxController {
   bool connectionStatus = false;
   int intCurrentPage = 0;
   List<ServiceModel> alServices = [];
+  List<ServiceModel> alServicesfiltered = [];
   TextEditingController controllerSearch = TextEditingController();
   int indexM = 0;
   getServiceProvider(catId, subCatId) async {
@@ -33,6 +34,7 @@ class ServiceScreenController extends GetxController {
       update();
     }, (mResult) {
       alServices = mResult.responseData as List<ServiceModel>;
+      alServicesfiltered = alServices;
       log("++++++++++++++++");
       inspect(mResult.responseData as List<ServiceModel>);
       // inspect(alServices);
@@ -44,6 +46,21 @@ class ServiceScreenController extends GetxController {
         mShowData = ShowData.showNoDataFound;
       }
     });
+    update();
+  }
+
+  runFilter(String enteredKeyword) {
+    if (enteredKeyword.isEmpty) {
+      // if the search field is empty or only contains white-space, we'll display all users
+      alServicesfiltered = alServices;
+    } else {
+      alServicesfiltered = alServices.where((user) => user.title.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
+      if (alServicesfiltered.isEmpty) {
+        mShowData = ShowData.showNoDataFound;
+      }
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+    // Refresh the UI
     update();
   }
 

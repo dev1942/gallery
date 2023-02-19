@@ -131,12 +131,18 @@ class ServiceProviderRated extends StatelessWidget {
     } else {
       return Container(
           alignment: Alignment.center,
-          color: Colors.white,
+          // color: Colors.white,
+          margin: const EdgeInsets.symmetric(vertical: AppDimens.dimens_6, horizontal: AppDimens.dimens_6),
           padding: const EdgeInsetsDirectional.only(
             start: AppDimens.dimens_25,
             end: AppDimens.dimens_25,
             top: AppDimens.dimens_6,
             bottom: AppDimens.dimens_6,
+          ),
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: AppColors.grayDashboardItem,
+            borderRadius: BorderRadius.circular(AppDimens.dimens_5),
           ),
           child: InkWell(
             child: Row(
