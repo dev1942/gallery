@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -46,8 +48,17 @@ class CustomTextFieldMobileState extends State<CustomTextFieldMobile> {
   @override
   void initState() {
     if (widget.strCountyCode.isNotEmpty) {
-      strCountyCode = widget.strCountyCode;
+      log(widget.strCountyCode);
+      widget.strCountyCode = widget.strCountyCode;
+      strCountyFlag = widget.strCountyCode.contains("92")
+          ? "pk"
+          : widget.strCountyCode.contains("971")
+              ? "ae"
+              : widget.strCountyCode.contains("62")
+                  ? "id"
+                  : "in";
     }
+    setState(() {});
     super.initState();
   }
 
@@ -109,7 +120,7 @@ class CustomTextFieldMobileState extends State<CustomTextFieldMobile> {
                                 right: AppDimens.dimens_10,
                               ),
                               child: Text(
-                                strCountyCode,
+                                widget.strCountyCode.isEmpty ? strCountyCode : widget.strCountyCode,
                                 style: AppStyle.textViewStyleNormalBodyText2(
                                     color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
                               ),
@@ -129,6 +140,7 @@ class CustomTextFieldMobileState extends State<CustomTextFieldMobile> {
                                       strCountyCode = mCountryCode.dialCode;
                                       widget.strCountyCode = mCountryCode.dialCode;
                                       strCountyFlag = mCountryCode.code.toLowerCase();
+                                      log(strCountyFlag);
                                     });
                                   },
                                 ));

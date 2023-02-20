@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -8,9 +10,12 @@ import 'package:otobucks/View/Home/Controllers/home_screen_controller.dart';
 import 'package:otobucks/View/Drawer/Views/drawer_custom.dart';
 
 import '../../../global/app_colors.dart';
+import '../../../global/app_dimens.dart';
+import '../../../global/app_style.dart';
 import '../../../global/app_views.dart';
 import '../../../global/enum.dart';
 import '../../../widgets/bottom_bar.dart';
+import '../../Notifications/Views/NotificationController.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -65,6 +70,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var notificationController = Get.put(NotificationsController());
     return GetBuilder<HomeScreenController>(builder: (value) {
       return WillPopScope(
           onWillPop: controller.onWillPop,
@@ -117,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                     : value.currentPage,
                 bottomNavigationBar: BottomBarDefault(
                   color: AppColors.colorWhite.withOpacity(0.6),
-                  items: const [
+                  items: [
                     TabItem(
                       icon: Icons.home,
                     ),
@@ -125,8 +131,20 @@ class _HomePageState extends State<HomePage> {
                     //   icon: Icons.shopping_basket,
                     // ),
                     TabItem(
-                      icon: Icons.notifications,
-                    ),
+                        icon: Icons.notifications,
+                        count: Container(
+                            height: 20,
+                            width: 20,
+                            // padding: const EdgeInsets.all(3),
+                            decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(100)),
+                            margin: const EdgeInsets.only(left: AppDimens.dimens_6, top: AppDimens.dimens_2),
+                            child: Center(
+                              child: Text(
+                                notificationController.alNotification.length.toString() ?? "40",
+                                style: AppStyle.textViewStyleNormalSubtitle2(
+                                    context: context, color: AppColors.colorWhite, fontWeightDelta: 1, fontSizeDelta: -1),
+                              ),
+                            ))),
                     TabItem(
                       icon: Icons.person,
                     ),

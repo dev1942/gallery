@@ -27,6 +27,9 @@ class ForgotPasswordScreen extends StatelessWidget {
         child: Scaffold(
             resizeToAvoidBottomInset: true,
             backgroundColor: AppColors.colorWhite,
+            appBar: AppBar(
+              elevation: 0,
+            ),
             body: Stack(
               children: [
                 Container(
@@ -41,9 +44,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     _secondPage(size, context),
                   ],
                 ),
-                GetBuilder<ForgotPasswordController>(
-                    builder: (value) =>
-                        AppViews.showLoadingWithStatus(value.isShowLoader))
+                GetBuilder<ForgotPasswordController>(builder: (value) => AppViews.showLoadingWithStatus(value.isShowLoader))
               ],
             )));
   }
@@ -51,11 +52,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   _fistPage(size, BuildContext context) => Container(
       height: double.infinity,
       width: double.infinity,
-      padding: const EdgeInsets.only(
-          left: AppDimens.dimens_18,
-          right: AppDimens.dimens_18,
-          top: AppDimens.dimens_10,
-          bottom: AppDimens.dimens_10),
+      padding: const EdgeInsets.only(left: AppDimens.dimens_18, right: AppDimens.dimens_18, top: AppDimens.dimens_10, bottom: AppDimens.dimens_10),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -69,10 +66,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(
-                    left: AppDimens.dimens_24,
-                    top: AppDimens.dimens_90,
-                    bottom: AppDimens.dimens_80,
-                    right: AppDimens.dimens_24),
+                    left: AppDimens.dimens_24, top: AppDimens.dimens_90, bottom: AppDimens.dimens_80, right: AppDimens.dimens_24),
                 child: Image.asset(AppImages.icAppIconWhite)),
             CustomTextFieldWithIcon(
               textInputAction: TextInputAction.next,
@@ -131,10 +125,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             // ),
             Container(
               margin: const EdgeInsets.only(top: AppDimens.dimens_50),
-              child: CustomButton(
-                  isRoundBorder: true,
-                  onPressed: () => controller.loginUserTaskForget(context),
-                  strTitle: Constants.TXT_SUBMIT.tr),
+              child: CustomButton(isRoundBorder: true, onPressed: () => controller.loginUserTaskForget(context), strTitle: Constants.TXT_SUBMIT.tr),
             ),
           ],
         ),
@@ -143,11 +134,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   _secondPage(size, BuildContext context) => Container(
       height: double.infinity,
       width: double.infinity,
-      padding: const EdgeInsets.only(
-          left: AppDimens.dimens_18,
-          right: AppDimens.dimens_18,
-          top: AppDimens.dimens_10,
-          bottom: AppDimens.dimens_10),
+      padding: const EdgeInsets.only(left: AppDimens.dimens_18, right: AppDimens.dimens_18, top: AppDimens.dimens_10, bottom: AppDimens.dimens_10),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -161,10 +148,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(
-                    left: AppDimens.dimens_24,
-                    top: AppDimens.dimens_90,
-                    bottom: AppDimens.dimens_80,
-                    right: AppDimens.dimens_24),
+                    left: AppDimens.dimens_24, top: AppDimens.dimens_90, bottom: AppDimens.dimens_80, right: AppDimens.dimens_24),
                 child: Image.asset(AppImages.icAppIconWhite)),
             CustomTextFieldPassword(
               enabled: true,
@@ -199,10 +183,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(top: AppDimens.dimens_50),
-              child: CustomButton(
-                  isRoundBorder: true,
-                  onPressed: () => controller.resetPassword(context),
-                  strTitle: Constants.TXT_SUBMIT.tr),
+              child: CustomButton(isRoundBorder: true, onPressed: () => controller.resetPassword(context), strTitle: Constants.TXT_SUBMIT.tr),
             ),
           ],
         ),

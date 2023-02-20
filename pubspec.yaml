@@ -70,7 +70,7 @@ dependencies:
   basic_utils: ^5.5.0
   image_collapse: ^1.0.1
   just_audio: ^0.9.28
-  light_compressor: ^2.0.1
+  light_compressor: ^1.2.2
   image_downloader: ^0.31.0
   flutter_sound_lite: ^8.5.0
   file_picker:
@@ -80,7 +80,7 @@ dependencies:
   get_it: ^7.2.0
   injectable: ^2.1.0
   dependencies:
-  flutter_svg: ^2.0.1
+  flutter_svg:
   stacked_services: ^0.9.9
   animations: ^2.0.2
   dio: ^5.0.0

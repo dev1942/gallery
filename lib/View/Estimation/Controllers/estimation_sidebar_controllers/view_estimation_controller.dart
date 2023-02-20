@@ -21,6 +21,7 @@ import 'package:otobucks/View/Services_All/Views/service_provider_profile_screen
 import 'package:otobucks/services/repository/booking_repo.dart';
 import 'package:otobucks/services/repository/estimates_repo.dart';
 import '../../../../global/Models/time_model.dart';
+
 class ViewEstimationController extends GetxController {
   bool connectionStatus = false;
   bool isShowLoader = false;
@@ -65,24 +66,16 @@ class ViewEstimationController extends GetxController {
   getLocationAdress() async {
     Location location = Location();
     PermissionStatus _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.granted ||
-        _permissionGranted == PermissionStatus.grantedLimited) {
+    if (_permissionGranted == PermissionStatus.granted || _permissionGranted == PermissionStatus.grantedLimited) {
       var currentLocation = await location.getLocation();
       log(currentLocation.latitude.toString());
-      LatLng _mLatLng =
-          LatLng(currentLocation.latitude!, currentLocation.longitude!);
-      List<i.Placemark> placemarks = await i.placemarkFromCoordinates(
-          _mLatLng.latitude, _mLatLng.longitude);
-      addressNote.text =
-          '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
+      LatLng _mLatLng = LatLng(currentLocation.latitude!, currentLocation.longitude!);
+      List<i.Placemark> placemarks = await i.placemarkFromCoordinates(_mLatLng.latitude, _mLatLng.longitude);
+      addressNote.text = '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
 
       mLatLng = _mLatLng;
     } else {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: 'Enable Location From setting!',
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Enable Location From setting!', toastType: TOAST_TYPE.toastError);
       mLatLng = Global.mLatLng;
     }
     update();
@@ -90,8 +83,7 @@ class ViewEstimationController extends GetxController {
 
   Future getImage(ImageSource imageSource) async {
     // ignore: invalid_use_of_visible_for_testing_member
-    var image = await ImagePicker.platform
-        .pickImage(source: imageSource, imageQuality: 70);
+    var image = await ImagePicker.platform.pickImage(source: imageSource, imageQuality: 70);
 
     pickedImage = image!.path;
     update();
@@ -99,23 +91,20 @@ class ViewEstimationController extends GetxController {
 
   Future pickVideo(ImageSource imageSource) async {
     // ignore: invalid_use_of_visible_for_testing_member
-    var image = await ImagePicker.platform.pickVideo(
-        source: imageSource, maxDuration: const Duration(seconds: 30));
+    var image = await ImagePicker.platform.pickVideo(source: imageSource, maxDuration: const Duration(seconds: 30));
 
     if (image != null) {
       isVideoCompressed = true;
       update();
       String _desFile = await Global.destinationFile("mp4");
       final dynamic response = await lightCompressor.compressVideo(
-          path: image.path,
-          android: AndroidConfig(isSharedStorage: true,
-              saveAt: SaveAt.Movies),
-         // destinationPath: _desFile,
-          video: Video(videoName: _desFile),
-          ios: IOSConfig(saveInGallery: false),
-          videoQuality: VideoQuality.very_low,
-          isMinBitrateCheckEnabled: false,
-          //iosSaveInGallery: false
+        path: image.path,
+
+        destinationPath: _desFile,
+
+        videoQuality: VideoQuality.very_low,
+        isMinBitrateCheckEnabled: false,
+        //iosSaveInGallery: false
       );
 
       if (response is OnSuccess) {
@@ -159,26 +148,14 @@ class ViewEstimationController extends GetxController {
 
   isValid() {
     if (!Global.checkNull(addressNote.text)) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: 'Please Enter Address',
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Please Enter Address', toastType: TOAST_TYPE.toastError);
       return false;
     }
     if (!Global.checkNull(selectedDate)) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_SELECT_DATE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_SELECT_DATE, toastType: TOAST_TYPE.toastError);
       return false;
     } else if (mTimeModel == null) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_SELECT_TIME,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_SELECT_TIME, toastType: TOAST_TYPE.toastError);
       return false;
     }
 
@@ -187,8 +164,7 @@ class ViewEstimationController extends GetxController {
 
   checkDateTime(BuildContext context) {
     if (estimatesModel!.date.split('T')[0] == selectedDate &&
-        (mTimeModel!.time_24hr.toString() ==
-            estimatesModel!.getTimeModel().time_24hr.toString())) {
+        (mTimeModel!.time_24hr.toString() == estimatesModel!.getTimeModel().time_24hr.toString())) {
       AppViews.showCustomAlert(
           context: Get.overlayContext!,
           strTitle: 'Alert!',
@@ -208,16 +184,11 @@ class ViewEstimationController extends GetxController {
     }
   }
 
-
   rescheduleEstimation(BuildContext context) async {
     if (Global.checkNull(pickedVideo)) {
       double fileSize = await Global.getFileSize(pickedVideo);
       if (fileSize > 10) {
-        Global.showToastAlert(
-            context: Get.overlayContext!,
-            strTitle: "",
-            strMsg: AppAlert.ALERT_FILE_SIZE,
-            toastType: TOAST_TYPE.toastError);
+        Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_FILE_SIZE, toastType: TOAST_TYPE.toastError);
         return "";
       }
     }
@@ -231,21 +202,16 @@ class ViewEstimationController extends GetxController {
     HashMap<String, String> requestParamsImage = HashMap();
     // requestParams[PARAMS.PARAM_SOURCE] = mServiceModel.id;
     requestParams[PARAMS.PARAM_DATE] = selectedDate;
-    requestParams[PARAMS.PARAM_TIME] =
-        mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
+    requestParams[PARAMS.PARAM_TIME] = mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
     requestParams[PARAMS.PARAM_CUTOMERNOTE] = strNote;
     requestParams[PARAMS.PARAM_ADDRESS] = addressNote.text;
     requestParams[PARAMS.PARAM_SOURCE] = estimatesModel!.source!.id;
     if (mLatLng != null) {
-      requestParams[PARAMS.PARAM_LATITUDE] =
-          mLatLng!.latitude.toStringAsFixed(4);
-      requestParams[PARAMS.PARAM_LONGITUDE] =
-          mLatLng!.longitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LATITUDE] = mLatLng!.latitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LONGITUDE] = mLatLng!.longitude.toStringAsFixed(4);
     } else {
-      requestParams[PARAMS.PARAM_LATITUDE] =
-          Global.mLatLng.latitude.toStringAsFixed(4);
-      requestParams[PARAMS.PARAM_LONGITUDE] =
-          Global.mLatLng.longitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LATITUDE] = Global.mLatLng.latitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LONGITUDE] = Global.mLatLng.longitude.toStringAsFixed(4);
     }
 
     if (Global.checkNull(pickedImage)) {
@@ -260,25 +226,20 @@ class ViewEstimationController extends GetxController {
     }
 
     var categories = await EstimatesRepo().rescheduleEstimates(
-        requestParams, requestParamsImage, ReqType.patch,);
+      requestParams,
+      requestParamsImage,
+      ReqType.patch,
+    );
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
 
       isShowLoader = false;
       update();
     }, (mResult) {
       isShowLoader = false;
       update();
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
 
       Get.offAll(() => const ThankYouFragment());
     });
@@ -293,23 +254,14 @@ class ViewEstimationController extends GetxController {
 
     requestParams['cancelReason'] = reason;
 
-    var categories =
-        await BookingRepo().cancleBookings(requestParams, estimatesModel!.id);
+    var categories = await BookingRepo().cancleBookings(requestParams, estimatesModel!.id);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       isShowLoader = false;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       isShowLoader = false;
       update();
       Get.back();
@@ -321,10 +273,7 @@ class ViewEstimationController extends GetxController {
         context,
         MaterialPageRoute(
             builder: (context) => ServiceProviderProfileScreen(
-                rating: 0,
-                totalRatings: 0,
-                mServiceProviderModel: estimatesModel!.mServiceProviderModel!,
-                title: estimatesModel!.source!.title)));
+                rating: 0, totalRatings: 0, mServiceProviderModel: estimatesModel!.mServiceProviderModel!, title: estimatesModel!.source!.title)));
   }
 
   updateLatLang(LatLng mLatLng_) async {
@@ -349,19 +298,10 @@ class ViewEstimationController extends GetxController {
                       description: '',
                       id: estimatesModel.source!.id,
                       mCategoryModel: CategoryModel(
-                          id: estimatesModel.source!.id,
-                          title: estimatesModel.source!.title.toString(),
-                          description: "",
-                          image: "",
-                          type: ""),
-                      mServiceProviderModel:
-                          estimatesModel.mServiceProviderModel!,
+                          id: estimatesModel.source!.id, title: estimatesModel.source!.title.toString(), description: "", image: "", type: ""),
+                      mServiceProviderModel: estimatesModel.mServiceProviderModel!,
                       mSubCategoryModel: CategoryModel(
-                          id: estimatesModel.source!.id,
-                          title: estimatesModel.source!.title.toString(),
-                          description: "",
-                          image: "",
-                          type: ""),
+                          id: estimatesModel.source!.id, title: estimatesModel.source!.title.toString(), description: "", image: "", type: ""),
                       price: estimatesModel.source!.price,
                       title: estimatesModel.source!.title),
                 )));
