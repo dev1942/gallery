@@ -116,7 +116,7 @@ class AppViews {
                       style: AppStyle.textViewStyleLarge(context: mContext, color: AppColors.colorWhite, fontWeightDelta: 2)),
                   margin: const EdgeInsets.only(bottom: 1),
                 ),
-                Text("welcome to outobucks".tr,
+                Text("welcome to Otobucks".tr,
                     textScaleFactor: Global.getScalFactor(),
                     softWrap: true,
                     maxLines: 1,

@@ -207,6 +207,31 @@ class ProfileScreenController extends GetxController {
       getProfile();
     });
   }
+  //update image
+  updateImage(BuildContext context) async {
+    isShowLoader = true;
+    update();
+
+    HashMap<String, String> requestParams = HashMap();
+    HashMap<String, String> requestParamsImage = HashMap();
+    if (Global.checkNull(imgProfilePic)) {
+      if (Global.isURL(imgProfilePic)) {
+        requestParams[PARAMS.PARAM_IMAGE] = imgProfilePic;
+      } else {
+        requestParamsImage[PARAMS.PARAM_IMAGE] = imgProfilePic;
+      }
+    }
+
+    var categories = await UserRepo().updateUser(requestParams, requestParamsImage, ReqType.patch);
+    isShowLoader = false;
+    update();
+    categories.fold((failure) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+    }, (mResult) async {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
+      getProfile();
+    });
+  }
 
   selectDocs(IdType mIdType, BuildContext context) {
     Get.bottomSheet(ImageSelection(
@@ -313,6 +338,7 @@ class ProfileScreenController extends GetxController {
             mImagePath: (String strPath) {
               imgProfilePic = strPath;
               update();
+              updateProfile(Get.context!);
             },
             mMaxHeight: 1024,
             mMaxWidth: 1024,
