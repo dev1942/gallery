@@ -108,10 +108,15 @@ class ViewEstimationController extends GetxController {
       String _desFile = await Global.destinationFile("mp4");
       final dynamic response = await lightCompressor.compressVideo(
           path: image.path,
-          destinationPath: _desFile,
+          android: AndroidConfig(isSharedStorage: true,
+              saveAt: SaveAt.Movies),
+         // destinationPath: _desFile,
+          video: Video(videoName: _desFile),
+          ios: IOSConfig(saveInGallery: false),
           videoQuality: VideoQuality.very_low,
           isMinBitrateCheckEnabled: false,
-          iosSaveInGallery: false);
+          //iosSaveInGallery: false
+      );
 
       if (response is OnSuccess) {
         pickedVideo = response.destinationPath;
