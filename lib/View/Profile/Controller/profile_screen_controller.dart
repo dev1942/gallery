@@ -338,7 +338,7 @@ class ProfileScreenController extends GetxController {
             mImagePath: (String strPath) {
               imgProfilePic = strPath;
               update();
-              updateProfile(Get.context!);
+              updateImage(Get.context!);
             },
             mMaxHeight: 1024,
             mMaxWidth: 1024,
