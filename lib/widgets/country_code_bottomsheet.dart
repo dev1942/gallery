@@ -11,8 +11,7 @@ import '../View/Auth/Models/country_code.dart';
 class CountryCodeBottomSheet extends StatefulWidget {
   final Function onTap;
 
-  const CountryCodeBottomSheet({Key? key, required this.onTap})
-      : super(key: key);
+  const CountryCodeBottomSheet({Key? key, required this.onTap}) : super(key: key);
 
   @override
   CountryCodeBottomSheetState createState() => CountryCodeBottomSheetState();
@@ -29,10 +28,7 @@ class CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
       // if the search field is empty or only contains white-space, we'll display all users
       countyCodeFiltered = countyCodeAll;
     } else {
-      countyCodeFiltered = countyCodeAll
-          .where((user) =>
-              user.name.toLowerCase().contains(enteredKeyword.toLowerCase()))
-          .toList();
+      countyCodeFiltered = countyCodeAll.where((user) => user.name.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
       // we use the toLowerCase() method to make it case-insensitive
     }
 
@@ -76,9 +72,7 @@ class CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
               child: Row(
                 children: <Widget>[
                   Image.asset(
-                    'assets/images/flag_' +
-                        mCountryCode.code.toLowerCase() +
-                        '.png',
+                    'assets/images/flag_' + mCountryCode.code.toLowerCase() + '.png',
                     height: AppDimens.dimens_26,
                     width: AppDimens.dimens_26,
                   ),
@@ -90,10 +84,7 @@ class CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
                             mCountryCode.name + " (${mCountryCode.code})",
                             softWrap: true,
                             style: AppStyle.textViewStyleNormalBodyText2(
-                                color: AppColors.colorBlack,
-                                fontSizeDelta: 0,
-                                fontWeightDelta: 0,
-                                context: context),
+                                color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
                           )))
                 ],
               ),
@@ -124,11 +115,8 @@ class CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
                     child: TextField(
                       keyboardType: TextInputType.text,
                       textAlign: TextAlign.start,
-                      style: AppStyle.textViewStyleNormalBodyText2(
-                          color: AppColors.colorBlack,
-                          fontSizeDelta: 0,
-                          fontWeightDelta: 0,
-                          context: context),
+                      style:
+                          AppStyle.textViewStyleNormalBodyText2(color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
                       controller: controllerSearch,
                       onChanged: (value) => _runFilter(value),
                       decoration: InputDecoration(
@@ -136,10 +124,7 @@ class CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
                           filled: true,
                           fillColor: AppColors.colorWhite,
                           hintStyle: AppStyle.textViewStyleNormalBodyText2(
-                              color: AppColors.colorTextFieldHint,
-                              fontSizeDelta: 0,
-                              fontWeightDelta: 0,
-                              context: context),
+                              color: AppColors.colorTextFieldHint, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
                           hintText: Constants.TXT_SEARCH),
                     ),
                   ),
@@ -158,7 +143,8 @@ class CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
           ),
           AppViews.addDivider(),
           Expanded(
-              child: ListView.builder(
+              child: ListView.separated(
+            separatorBuilder: (BuildContext context, int index) => const Divider(),
             itemCount: countyCodeFiltered.length,
             itemBuilder: (BuildContext context, int index) {
               CountryCode mCountryCode = countyCodeFiltered[index];

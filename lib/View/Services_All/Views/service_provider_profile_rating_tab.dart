@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:otobucks/global/app_dimens.dart';
@@ -14,17 +15,13 @@ import '../../../global/global.dart';
 class ServiceProviderProfileRatingTab extends StatefulWidget {
   final String servicePrviderID;
 
-  const ServiceProviderProfileRatingTab(
-      {Key? key, required this.servicePrviderID})
-      : super(key: key);
+  const ServiceProviderProfileRatingTab({Key? key, required this.servicePrviderID}) : super(key: key);
 
   @override
-  ServiceProviderProfileRatingTabState createState() =>
-      ServiceProviderProfileRatingTabState();
+  ServiceProviderProfileRatingTabState createState() => ServiceProviderProfileRatingTabState();
 }
 
-class ServiceProviderProfileRatingTabState
-    extends State<ServiceProviderProfileRatingTab> {
+class ServiceProviderProfileRatingTabState extends State<ServiceProviderProfileRatingTab> {
   ShowData mShowData = ShowData.showData;
 
   bool connectionStatus = false;
@@ -45,9 +42,7 @@ class ServiceProviderProfileRatingTabState
         padding: const EdgeInsets.all(AppDimens.dimens_10),
         itemBuilder: (BuildContext contextM, index) {
           RatingComponentModel ratingComponentModel = alReviewModel[index];
-          return RatingListItem(
-              ratingComponentModel: ratingComponentModel,
-              mRatingType: RatingType.given);
+          return RatingListItem(ratingComponentModel: ratingComponentModel, mRatingType: RatingType.given);
         },
         itemCount: alReviewModel.length);
     widgetM = AppViews.getSetData(context, mShowData, mShowWidget);
@@ -67,15 +62,11 @@ class ServiceProviderProfileRatingTabState
 
     HashMap<String, Object> requestParams = HashMap();
 
-    var categories = await RatingRepo()
-        .getAllRatingsProvider(requestParams, widget.servicePrviderID);
+    var categories = await RatingRepo().getAllRatingsProvider(requestParams, widget.servicePrviderID);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      log("message");
+      Global.showToastAlert(context: context, strTitle: "", strMsg: "No Reviews Found", toastType: TOAST_TYPE.toastError);
       setState(() {
         mShowData = ShowData.showNoDataFound;
       });

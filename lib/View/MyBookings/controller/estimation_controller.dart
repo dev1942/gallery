@@ -35,10 +35,16 @@ class CreateEstimationController extends GetxController {
   Location location = Location();
   LightCompressor lightCompressor = LightCompressor();
   bool isVideoCompressed = false;
+  Future<void> showLoader() async {
+    isShowLoader = true;
+    update();
+  }
 
   getLocationAdress() async {
     Location location = Location();
     log('method callled');
+    isShowLoader = true;
+    update();
     selectedDate = "";
     pickedImage = "";
     pickedVideo = "";
@@ -54,6 +60,8 @@ class CreateEstimationController extends GetxController {
       addressNote.text = '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
 
       log("addresssssis${addressNote.text}");
+      isShowLoader = false;
+      update();
       mLatLng = _mLatLng;
     } else {
       Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Enable Location From setting!', toastType: TOAST_TYPE.toastError);
@@ -62,17 +70,24 @@ class CreateEstimationController extends GetxController {
     update();
   }
 
-  Future getImage(ImageSource imageSource) async {
-    // ignore: invalid_use_of_visible_for_testing_member
-    var image = await ImagePicker.platform.pickImage(source: imageSource, imageQuality: 70);
+  final ImagePicker _picker = ImagePicker();
 
+  Future getImage(ImageSource imageSource) async {
+    isShowLoader = true;
+    update();
+
+    // ignore: invalid_use_of_visible_for_testing_member
+    var image = await _picker.pickImage(source: imageSource, imageQuality: 70);
+    isShowLoader = false;
+    update();
     pickedImage = image!.path;
+
     update();
   }
 
   Future pickVideo(ImageSource imageSource) async {
     // ignore: invalid_use_of_visible_for_testing_member
-    var image = await ImagePicker.platform.pickVideo(source: imageSource, maxDuration: const Duration(seconds: 30));
+    var image = await _picker.pickVideo(source: imageSource, maxDuration: const Duration(seconds: 30));
 
     if (image != null) {
       isVideoCompressed = true;
@@ -93,6 +108,7 @@ class CreateEstimationController extends GetxController {
       }
     }
     isVideoCompressed = false;
+    isShowLoader = false;
 
     update();
   }

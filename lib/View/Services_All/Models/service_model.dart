@@ -4,6 +4,7 @@ import 'package:otobucks/View/Services_All/Models/store_model.dart';
 
 import '../../../global/global.dart';
 import '../../Dashboard/Models/category_model.dart';
+
 class ServiceModel {
   String id;
   String title;
@@ -115,7 +116,7 @@ class ServiceModel {
       var provider = json['provider'];
       mServiceProviderModel = ServiceProviderModel.fromJson(provider);
     } catch (e) {
-      log(e.toString());
+      log("logging" + e.toString());
     }
 
     try {

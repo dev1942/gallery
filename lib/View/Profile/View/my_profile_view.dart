@@ -18,8 +18,8 @@ import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/image_view.dart';
 import 'package:otobucks/widgets/small_button.dart';
 import '../../Auth/controllers/registration_controller.dart';
-import '../../auth/View/otp_screen.dart';
-import '../../auth/controllers/otp_controller.dart';
+import '../../Auth/View/otp_screen.dart';
+import '../../Auth/controllers/otp_controller.dart';
 import '../Model/car_list_model.dart';
 
 class MyProfileFragment extends StatefulWidget {

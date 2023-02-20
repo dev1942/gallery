@@ -7,7 +7,7 @@ import 'package:otobucks/View/Profile/View/my_profile_view.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
-import 'package:otobucks/View/auth/Models/model_otp.dart';
+import 'package:otobucks/View/Auth/Models/model_otp.dart';
 import 'package:otobucks/services/repository/login_repo.dart';
 import 'package:otobucks/services/repository/otp_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,22 +25,15 @@ class OtpController extends GetxController {
     log(strOTP);
 
     if (!Global.checkNull(strOTP)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_OTP,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_OTP, toastType: TOAST_TYPE.toastError);
       return false;
     } else if (strOTP.length != 6) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_VALID_OTP,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_OTP, toastType: TOAST_TYPE.toastError);
       return false;
     }
     return true;
   }
+
 //---------------For Email
   sendOTPTask(String strEmailID, BuildContext context) async {
     isShowLoader = true;
@@ -50,19 +43,11 @@ class OtpController extends GetxController {
     var signInEmail = await OTPRepo().sentOTPToEmail(requestParams);
 
     signInEmail.fold((failure) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       isShowLoader = false;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       isShowLoader = false;
       update();
     });
@@ -86,17 +71,9 @@ class OtpController extends GetxController {
     update();
 
     signInEmail.fold((failure) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
     }, (mResult) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       loginUserTask(context, modelOTP);
     });
   }
@@ -113,33 +90,25 @@ class OtpController extends GetxController {
     var signInEmail = await OTPRepo().sentOTPToNumber(requestParams);
 
     signInEmail.fold((failure) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       isShowLoader = false;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       isShowLoader = false;
       update();
     });
   }
 
 //--------------------number otp verify ----------------------------
-  verifyNumberOTPTask(BuildContext context,String? phoneNumber) async {
+  verifyNumberOTPTask(BuildContext context, String? phoneNumber) async {
     if (!isValid(context)) {
       return;
     }
     isShowLoader = true;
     update();
     String strOTP = mControllerOTP.text.toString();
-    String strPhoneNumber = phoneNumber!;//modelOTP.emailId;
+    String strPhoneNumber = phoneNumber!; //modelOTP.emailId;
     HashMap<String, Object> requestParams = HashMap();
     requestParams[PARAMS.PARAM_PHONE] = strPhoneNumber;
     var signInEmail = await OTPRepo().verifyNumberOTP(requestParams, strOTP);
@@ -147,22 +116,14 @@ class OtpController extends GetxController {
     update();
 
     signInEmail.fold((failure) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
     }, (mResult) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       log("Navigator pop context--- otp verify-------");
       // Navigator.Pu
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const MyProfileFragment()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyProfileFragment()));
       //Navigator.pushReplacementNamed(context, Constants.ACT_HOME);
-    //  loginUserTask(context, modelOTP);
+      //  loginUserTask(context, modelOTP);
     });
   }
 
@@ -176,19 +137,14 @@ class OtpController extends GetxController {
     HashMap<String, Object> requestParams = HashMap();
     requestParams[PARAMS.PARAM_EMAIL] = strEmailID;
     requestParams[PARAMS.PARAM_PASSWORD] = strPassword;
-    requestParams[PARAMS.PARAM_FIREBASE_TOKEN] =
-        fcmToken != null && Global.checkNull(fcmToken) ? fcmToken : "";
+    requestParams[PARAMS.PARAM_FIREBASE_TOKEN] = fcmToken != null && Global.checkNull(fcmToken) ? fcmToken : "";
 
     var signInEmail = await LoginRepo().login(requestParams);
 
     isShowLoader = false;
     update();
     signInEmail.fold((failure) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
     }, (mResult) {
       navigateToHomePage(context);
     });

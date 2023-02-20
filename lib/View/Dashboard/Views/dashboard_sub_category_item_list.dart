@@ -1,4 +1,6 @@
 // ignore_for_file: must_be_immutable
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/CatAssesories/Views/auto_repair_sub_cat_screen.dart';
@@ -53,7 +55,9 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList> with
                   hintText: Constants.STR_SEARCH.tr,
                   inputFormatters: const [],
                   obscureText: false,
-                  onChanged: (String value) {},
+                  onChanged: (String value) {
+                    log("12345");
+                  },
                   suffixIcon: InkWell(
                     child: Image.asset(
                       AppImages.ic_search,
@@ -66,7 +70,7 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList> with
               Padding(
                 padding: const EdgeInsets.only(left: 20.0),
                 child: Text(
-                  "Categories".tr,
+                  "Categoriess".tr,
                   style: AppStyle.textViewStyleLarge(fontWeightDelta: 1, fontSizeDelta: 2, context: context, color: AppColors.colorYellowShade),
                 ),
               ),

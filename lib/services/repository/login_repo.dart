@@ -11,7 +11,7 @@ import 'package:otobucks/global/url_collection.dart';
 import '../../global/Models/failure.dart';
 import '../../global/Models/result.dart';
 import '../../global/Models/success.dart';
-import 'package:otobucks/View/auth/Models/user_detail.dart';
+import 'package:otobucks/View/Auth/Models/user_detail.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
 
 class LoginRepo {

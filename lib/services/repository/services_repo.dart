@@ -39,6 +39,7 @@ class ServicesRepo {
         List<ServiceModel> alServices = [];
         List data = mResponse?.responseData as List;
         for (var dataItem in data) {
+          log("this is before parsing services");
           ServiceModel mServiceModel = ServiceModel.fromJson(dataItem);
           alServices.add(mServiceModel);
         }

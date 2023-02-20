@@ -39,10 +39,7 @@ class LogInScreen extends GetView<LoginController> {
                     ),
                     Container(
                         padding: const EdgeInsets.only(
-                            left: AppDimens.dimens_18,
-                            right: AppDimens.dimens_18,
-                            top: AppDimens.dimens_10,
-                            bottom: AppDimens.dimens_10),
+                            left: AppDimens.dimens_18, right: AppDimens.dimens_18, top: AppDimens.dimens_10, bottom: AppDimens.dimens_10),
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -50,17 +47,13 @@ class LogInScreen extends GetView<LoginController> {
                             children: <Widget>[
                               Container(
                                 alignment: Alignment.centerRight,
-                                margin:
-                                    EdgeInsets.only(top: size.height * 0.04),
+                                margin: EdgeInsets.only(top: size.height * 0.04),
                                 child: const LanguageDropdown(isWhite: true),
                               ),
                               Container(
                                   alignment: Alignment.center,
                                   margin: const EdgeInsets.only(
-                                      left: AppDimens.dimens_24,
-                                      top: AppDimens.dimens_90,
-                                      bottom: AppDimens.dimens_80,
-                                      right: AppDimens.dimens_24),
+                                      left: AppDimens.dimens_24, top: AppDimens.dimens_90, bottom: AppDimens.dimens_80, right: AppDimens.dimens_24),
                                   child: Image.asset(AppImages.icAppIconWhite)),
                               SizedBox(
                                 child: CustomTextFieldWithIcon(
@@ -84,8 +77,7 @@ class LogInScreen extends GetView<LoginController> {
                                 ),
                               ),
                               Container(
-                                margin: const EdgeInsets.only(
-                                    top: AppDimens.dimens_18),
+                                margin: const EdgeInsets.only(top: AppDimens.dimens_18),
                                 child: CustomTextFieldPassword(
                                     textInputAction: TextInputAction.done,
                                     enabled: true,
@@ -93,15 +85,12 @@ class LogInScreen extends GetView<LoginController> {
                                     controller: model.controllerPassword,
                                     focusNode: model.mFocusNodePassword,
                                     obscureText: model.obscureTextM,
-                                    onChanged: (bool value) =>
-                                        model.textObscureTap(value)),
+                                    onChanged: (bool value) => model.textObscureTap(value)),
                               ),
                               Container(
-                                margin: const EdgeInsets.only(
-                                    top: AppDimens.dimens_5),
+                                margin: const EdgeInsets.only(top: AppDimens.dimens_5),
                                 child: TextButton(
-                                  onPressed: () =>
-                                      model.forgoPasswordScreen(context),
+                                  onPressed: () => model.forgoPasswordScreen(context),
                                   child: Text(
                                     Constants.TXT_FORGOT_PASSWORD.tr,
                                     style: AppStyle.textViewStyleSmall(
@@ -114,27 +103,19 @@ class LogInScreen extends GetView<LoginController> {
                                 ),
                                 alignment: Alignment.centerRight,
                               ),
-                              CustomButton(
-                                  isRoundBorder: true,
-                                  onPressed: () => model.loginUserTask(context),
-                                  strTitle: 'LOGIN'.tr),
+                              CustomButton(isRoundBorder: true, onPressed: () => model.loginUserTask(context), strTitle: 'LOGIN'.tr),
                               Container(
-                                margin: const EdgeInsets.only(
-                                    top: AppDimens.dimens_40),
+                                margin: const EdgeInsets.only(top: AppDimens.dimens_40),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
-                                      margin: const EdgeInsets.only(
-                                          right: AppDimens.dimens_4),
+                                      margin: const EdgeInsets.only(right: AppDimens.dimens_4),
                                       child: Text(
                                         'donot have'.tr,
                                         style: AppStyle.textViewStyleSmall(
-                                            context: context,
-                                            color: AppColors.colorWhite,
-                                            fontSizeDelta: 0,
-                                            fontWeightDelta: -10),
+                                            context: context, color: AppColors.colorWhite, fontSizeDelta: 0, fontWeightDelta: -10),
                                       ),
                                     ),
                                     InkWell(
@@ -143,8 +124,7 @@ class LogInScreen extends GetView<LoginController> {
                                         style: AppStyle.textViewStyleSmall(
                                             context: context,
                                             color: AppColors.colorWhite,
-                                            mDecoration:
-                                                TextDecoration.underline,
+                                            mDecoration: TextDecoration.underline,
                                             fontSizeDelta: 0,
                                             fontWeightDelta: -10),
                                       ),
@@ -161,18 +141,13 @@ class LogInScreen extends GetView<LoginController> {
                                   Checkbox(
                                       checkColor: AppColors.colorBlueStart,
                                       activeColor: Colors.white,
-                                      fillColor: MaterialStateProperty.all(
-                                          Colors.white),
+                                      fillColor: MaterialStateProperty.all(Colors.white),
                                       value: model.rememberMe,
-                                      onChanged: (val) =>
-                                          model.changeRemember(val!)),
+                                      onChanged: (val) => model.changeRemember(val!)),
                                   Text(
-                                    'Remember me',
+                                    'Remember me'.tr,
                                     style: AppStyle.textViewStyleSmall(
-                                        context: context,
-                                        color: AppColors.colorWhite,
-                                        fontSizeDelta: 0,
-                                        fontWeightDelta: -10),
+                                        context: context, color: AppColors.colorWhite, fontSizeDelta: 0, fontWeightDelta: -10),
                                   )
                                 ],
                               )

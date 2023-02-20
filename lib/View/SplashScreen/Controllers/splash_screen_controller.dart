@@ -34,7 +34,7 @@ class SplashScreenController extends GetxController {
     bool? isStatus = prefManager.getBool(Constants.STATUS) ?? true;
     bool? isLogin = prefManager.getBool(SharedPrefKey.KEY_IS_LOGIN) ?? false;
 
-    var _duration = const Duration(seconds: 8);
+    var _duration = const Duration(milliseconds: 4200);
     if (!isStatus) return;
     if (isLogin) {
       // navigateToHomePage();
@@ -92,8 +92,7 @@ class SplashScreenController extends GetxController {
     log('token $token');
   }
 
-  processNotification(
-      Map<String, dynamic> message, BuildContext context) async {
+  processNotification(Map<String, dynamic> message, BuildContext context) async {
     final prefManager = await SharedPreferences.getInstance();
 
     String strAppStatus = message["AAP_STATUS"].toString();

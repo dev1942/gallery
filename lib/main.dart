@@ -11,7 +11,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:otobucks/View/Notifications/Models/notification_model.dart';
-import 'package:otobucks/View/auth/View/login_in_screen.dart';
+import 'package:otobucks/View/Auth/View/login_in_screen.dart';
 import 'package:otobucks/app/locator.dart';
 import 'package:otobucks/global/theme_data/theme_data.dart';
 import 'package:otobucks/helper/local_notifications_helper.dart';
@@ -169,7 +169,7 @@ class BoosterMaterialApp extends StatelessWidget {
           theme: BoosterThemeData.of(context).light,
           debugShowCheckedModeBanner: false,
           initialBinding: InitialBinding(),
-          home: const SplashScreen(),
+          home: const AppSplashScreen(),
           //home: NotificationDetails(notificationModel: notificationModel),
           builder: (context, child) {
             //ignore system scale factor

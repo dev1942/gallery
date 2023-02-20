@@ -58,7 +58,7 @@ class NotificationsController extends GetxController {
     // });
   }
 
-  Future<void>getNotifications(BuildContext context) async {
+  Future<void> getNotifications(BuildContext context) async {
     mShowData.value = ShowData.showLoading;
     update();
 
@@ -67,7 +67,6 @@ class NotificationsController extends GetxController {
     var categories = await NotificationsRepo().getNotifications(requestParams);
 
     categories.fold((failure) {
-    
       Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
 
       mShowData.value = ShowData.showNoDataFound;
@@ -81,7 +80,7 @@ class NotificationsController extends GetxController {
 
         if (preferences.getnotificationId() != alNotification.last.id) {
           preferences.setNotificationId(alNotification.last.id);
-          createanddisplaynotification(title: alNotification.last.title, body: alNotification.last.title, payload: alNotification.last.id);
+          // createanddisplaynotification(title: alNotification.last.title, body: alNotification.last.title, payload: alNotification.last.id);
           update();
         }
       } else {
@@ -91,7 +90,6 @@ class NotificationsController extends GetxController {
       update();
     });
   }
-  
 
   static void createanddisplaynotification({required String title, required String body, required String payload}) async {
     try {

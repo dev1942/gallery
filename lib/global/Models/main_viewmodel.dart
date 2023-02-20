@@ -2,11 +2,11 @@ import 'dart:collection';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:otobucks/View/auth/View/registation_screen.dart';
+import 'package:otobucks/View/Auth/View/registation_screen.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
-import 'package:otobucks/View/auth/Models/model_otp.dart';
+import 'package:otobucks/View/Auth/Models/model_otp.dart';
 
 import 'package:otobucks/services/navigation_service.dart' as my_nav_service;
 import 'package:otobucks/services/repository/login_repo.dart';
@@ -14,9 +14,9 @@ import 'package:otobucks/services/repository/registration_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../View/auth/View/forgot_password_screen.dart';
-import '../../View/auth/View/login_in_screen.dart';
-import '../../View/auth/View/otp_screen.dart';
+import '../../View/Auth/View/forgot_password_screen.dart';
+import '../../View/Auth/View/login_in_screen.dart';
+import '../../View/Auth/View/otp_screen.dart';
 
 class MainViewModel extends BaseViewModel {
   var navigationService = my_nav_service.NavigationService();
@@ -48,28 +48,15 @@ class MainViewModel extends BaseViewModel {
     String strPassword = controllerPassword.text.toString();
 
     if (!Global.checkNull(strEmail)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_EMAIL,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMAIL, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
-    } else if (Global.checkNull(strEmail) &&
-        !Global.checkValidEmail(strEmail)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_VALID_EMAIL,
-          toastType: TOAST_TYPE.toastError);
+    } else if (Global.checkNull(strEmail) && !Global.checkValidEmail(strEmail)) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_EMAIL, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
     } else if (!Global.checkNull(strPassword)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_PASSWORD,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_PASSWORD, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodePassword);
       return false;
     }
@@ -86,8 +73,7 @@ class MainViewModel extends BaseViewModel {
 
     requestParams[PARAMS.PARAM_EMAIL] = strEmailID;
     requestParams[PARAMS.PARAM_PASSWORD] = strPassword;
-    requestParams[PARAMS.PARAM_FIREBASE_TOKEN] =
-        fcmToken != null && Global.checkNull(fcmToken) ? fcmToken : "";
+    requestParams[PARAMS.PARAM_FIREBASE_TOKEN] = fcmToken != null && Global.checkNull(fcmToken) ? fcmToken : "";
 
     var signInEmail = await LoginRepo().login(requestParams);
 
@@ -95,11 +81,7 @@ class MainViewModel extends BaseViewModel {
     notifyListeners();
 
     signInEmail.fold((failure) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
     }, (mResult) {
       navigateToHomePage(context);
     });
@@ -112,13 +94,11 @@ class MainViewModel extends BaseViewModel {
   }
 
   void pushRegisterScreen(BuildContext context) async {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const RegistrationScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const RegistrationScreen()));
   }
 
   void forgoPasswordScreen(BuildContext context) async {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
   }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -158,69 +138,35 @@ class MainViewModel extends BaseViewModel {
     String strPassword = controllerPassword.text.toString();
 
     if (!Global.checkNull(strFirstName)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_FN,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_FN, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeFirstName);
       return false;
     } else if (!Global.checkNull(strLastName)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_LN,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_LN, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeLastName);
       return false;
     } else if (!Global.checkNull(strEmail)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_EMAIL,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMAIL, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
-    } else if (Global.checkNull(strEmail) &&
-        !Global.checkValidEmail(strEmail)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_VALID_EMAIL,
-          toastType: TOAST_TYPE.toastError);
+    } else if (Global.checkNull(strEmail) && !Global.checkValidEmail(strEmail)) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_EMAIL, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
     } else if (!Global.checkNull(strCountry)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_SELECT_COUNTRY,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_SELECT_COUNTRY, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeCountry);
       return false;
     } else if (!Global.checkNull(strPhone)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_NUMBER,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_NUMBER, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodePhone);
       return false;
-    } else if (Global.checkNull(strPhone) &&
-        !Global.checkValidMobile(strPhone)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER,
-          toastType: TOAST_TYPE.toastError);
+    } else if (Global.checkNull(strPhone) && !Global.checkValidMobile(strPhone)) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodePhone);
       return false;
     } else if (!Global.checkNull(strPassword)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_PASSWORD,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_PASSWORD, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodePassword);
       return false;
     }
@@ -252,18 +198,13 @@ class MainViewModel extends BaseViewModel {
     requestParams[PARAMS.PARAM_HEAREDABOUTUS] = strHowHear;
     requestParams[PARAMS.PARAM_INVITE] = strInviteCode;
     requestParams[PARAMS.PARAM_COUNTRY_CODE] = strCountyCode;
-    requestParams[PARAMS.PARAM_FIREBASE_TOKEN] =
-        fcmToken != null && Global.checkNull(fcmToken) ? fcmToken : "test";
+    requestParams[PARAMS.PARAM_FIREBASE_TOKEN] = fcmToken != null && Global.checkNull(fcmToken) ? fcmToken : "test";
 
     var signInEmail = await RegistrationRepo().registration(requestParams);
     isShowLoader = false;
     notifyListeners();
     signInEmail.fold((failure) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
     }, (mResult) {
       gotoMobileOTPScreen(context);
     });
@@ -274,15 +215,11 @@ class MainViewModel extends BaseViewModel {
     String strPassword = controllerPassword.text.toString();
     ModelOTP mModelOTP = ModelOTP(password: strPassword, emailId: strEmail);
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => OTPScreen(mModelOTP: mModelOTP)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen(mModelOTP: mModelOTP)));
   }
 
   void pushRegisterScreen1(BuildContext context) async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const LogInScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const LogInScreen()));
   }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -308,39 +245,19 @@ class MainViewModel extends BaseViewModel {
     }
 
     if (!isMobile && !Global.checkNull(strEmail)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_EMAIL,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMAIL, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
-    } else if (!isMobile &&
-        Global.checkNull(strEmail) &&
-        !Global.checkValidEmail(strEmail)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_VALID_EMAIL,
-          toastType: TOAST_TYPE.toastError);
+    } else if (!isMobile && Global.checkNull(strEmail) && !Global.checkValidEmail(strEmail)) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_EMAIL, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
     } else if (isMobile && !Global.checkNull(strPhone)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_NUMBER,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_NUMBER, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodePhone);
       return false;
-    } else if (isMobile &&
-        Global.checkNull(strPhone) &&
-        !Global.checkValidMobile(strPhone)) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER,
-          toastType: TOAST_TYPE.toastError);
+    } else if (isMobile && Global.checkNull(strPhone) && !Global.checkValidMobile(strPhone)) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodePhone);
       return false;
     }
@@ -354,24 +271,15 @@ class MainViewModel extends BaseViewModel {
     String strPhone = controllerPhone.text.toString();
     HashMap<String, Object> requestParams = HashMap();
 
-    requestParams[PARAMS.PARAM_DATA] =
-        Global.checkNull(strEmailID) ? strEmailID : strCountyCode + strPhone;
+    requestParams[PARAMS.PARAM_DATA] = Global.checkNull(strEmailID) ? strEmailID : strCountyCode + strPhone;
 
     var signInEmail = await LoginRepo().forgotPassword(requestParams);
     isShowLoader = false;
     notifyListeners();
     signInEmail.fold((failure) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
     }, (mResult) {
-      Global.showToastAlert(
-          context: context,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       navigateToLogin(context);
     });
   }

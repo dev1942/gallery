@@ -10,7 +10,7 @@ import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/container_properties.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
-import 'package:otobucks/View/auth/Models/model_otp.dart';
+import 'package:otobucks/View/Auth/Models/model_otp.dart';
 import 'package:otobucks/services/repository/login_repo.dart';
 import 'package:otobucks/services/repository/otp_repo.dart';
 import 'package:package_info_plus/package_info_plus.dart';

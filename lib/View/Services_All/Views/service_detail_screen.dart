@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:otobucks/View/Profile/Controller/profile_screen_controller.dart';
 import 'package:otobucks/View/Services_All/Controllers/services_detail_screen_controller.dart';
 
-
 import 'package:otobucks/global/adaptive_helper.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
@@ -22,8 +21,7 @@ import 'package:otobucks/widgets/video_view.dart';
 class ServiceDetailScreen extends StatefulWidget {
   final ServiceModel mServiceModel;
 
-  const ServiceDetailScreen({Key? key, required this.mServiceModel})
-      : super(key: key);
+  const ServiceDetailScreen({Key? key, required this.mServiceModel}) : super(key: key);
 
   @override
   ServiceDetailScreenState createState() => ServiceDetailScreenState();
@@ -37,7 +35,6 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
     super.initState();
     controller.mServiceModel = widget.mServiceModel;
     profileController.getCarList();
-
   }
 
   @override
@@ -53,10 +50,7 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
 
             Container(
               margin: const EdgeInsetsDirectional.only(
-                  start: AppDimens.dimens_30,
-                  top: AppDimens.dimens_20,
-                  bottom: AppDimens.dimens_30,
-                  end: AppDimens.dimens_20),
+                  start: AppDimens.dimens_30, top: AppDimens.dimens_20, bottom: AppDimens.dimens_30, end: AppDimens.dimens_20),
               alignment: Alignment.center,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -81,36 +75,23 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        controller.mServiceModel.mServiceProviderModel
-                                .getName() ??
-                            '',
+                        controller.mServiceModel.mServiceProviderModel.getName() ?? '',
                         softWrap: true,
                         overflow: TextOverflow.clip,
                         maxLines: 2,
-                        style: AppStyle.textViewStyleLarge(
-                            context: context,
-                            color: AppColors.colorWhite,
-                            fontSizeDelta: 3,
-                            fontWeightDelta: -2),
+                        style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorWhite, fontSizeDelta: 3, fontWeightDelta: -2),
                       ),
                       Text(
                         // ignore: unnecessary_null_comparison
-                        controller.mServiceModel.mServiceProviderModel != null
-                            ? controller.mServiceModel.title
-                            : "",
+                        controller.mServiceModel.mServiceProviderModel != null ? controller.mServiceModel.title : "",
                         softWrap: true,
                         overflow: TextOverflow.clip,
                         maxLines: 2,
-                        style: AppStyle.textViewStyleLarge(
-                            context: context,
-                            color: AppColors.colorWhite,
-                            fontSizeDelta: -3,
-                            fontWeightDelta: -2),
+                        style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorWhite, fontSizeDelta: -3, fontWeightDelta: -2),
                       ),
                       InkWell(
                         child: Container(
-                            margin: const EdgeInsetsDirectional.only(
-                                top: AppDimens.dimens_5),
+                            margin: const EdgeInsetsDirectional.only(top: AppDimens.dimens_5),
                             child: Text(
                               "View Profile".tr,
                               style: AppStyle.textViewStyleSmall(
@@ -134,8 +115,7 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
         ),
         //video and images
         Container(
-          padding: const EdgeInsetsDirectional.only(
-              start: AppDimens.dimens_20, end: AppDimens.dimens_20),
+          padding: const EdgeInsetsDirectional.only(start: AppDimens.dimens_20, end: AppDimens.dimens_20),
           alignment: AlignmentDirectional.centerStart,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,8 +152,7 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
                           ),
                           child: InkWell(
                             child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.circular(AppDimens.dimens_5),
+                                borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                                 child: NetworkImageCustom(
                                   image: image,
                                   height: 70,
@@ -181,8 +160,7 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
                                 )),
                             onTap: () {
                               final imageProvider = Image.network(image).image;
-                              showImageViewer(context, imageProvider,
-                                  useSafeArea: true, onViewerDismissed: () {});
+                              showImageViewer(context, imageProvider, useSafeArea: true, onViewerDismissed: () {});
                             },
                           ),
                         );
@@ -195,41 +173,8 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
                   end: AppDimens.dimens_8,
                 ),
                 child: GradientText(
-                  "Description".tr,
-                  style: AppStyle.textViewStyleNormalSubtitle2(
-                      context: context,
-                      color: AppColors.colorBlack,
-                      fontWeightDelta: 1,
-                      fontSizeDelta: 1),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsetsDirectional.only(
-                  top: AppDimens.dimens_8,
-                  start: AppDimens.dimens_8,
-                  end: AppDimens.dimens_8,
-                ),
-                child: Text(
-                  Global.getString(controller.mServiceModel.description),
-                  style: AppStyle.textViewStyleSmall(
-                      context: context,
-                      color: AppColors.colorBlack2,
-                      fontWeightDelta: -2),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsetsDirectional.only(
-                  top: AppDimens.dimens_15,
-                  start: AppDimens.dimens_8,
-                  end: AppDimens.dimens_8,
-                ),
-                child: GradientText(
                   "Key Features".tr,
-                  style: AppStyle.textViewStyleNormalSubtitle2(
-                      context: context,
-                      color: AppColors.colorBlack,
-                      fontWeightDelta: 1,
-                      fontSizeDelta: 1),
+                  style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack, fontWeightDelta: 1, fontSizeDelta: 1),
                 ),
               ),
               Container(
@@ -242,28 +187,21 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (BuildContext contextM, index) {
-                      String strFeatures =
-                          controller.mServiceModel.alFeatures[index];
+                      String strFeatures = controller.mServiceModel.alFeatures[index];
                       return Container(
-                        margin: const EdgeInsetsDirectional.only(
-                            bottom: AppDimens.dimens_15),
+                        margin: const EdgeInsetsDirectional.only(bottom: AppDimens.dimens_15),
                         child: Row(
                           children: [
                             Container(
                               margin: const EdgeInsetsDirectional.only(
                                 end: AppDimens.dimens_10,
                               ),
-                              child: Image.asset(AppImages.ic_round_blue_tick,
-                                  width: AppDimens.dimens_16,
-                                  height: AppDimens.dimens_16),
+                              child: Image.asset(AppImages.ic_round_blue_tick, width: AppDimens.dimens_16, height: AppDimens.dimens_16),
                             ),
                             Expanded(
                               child: Text(
                                 strFeatures,
-                                style: AppStyle.textViewStyleSmall(
-                                    context: context,
-                                    color: AppColors.colorBlack2,
-                                    fontWeightDelta: -2),
+                                style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack2, fontWeightDelta: -2),
                                 maxLines: 1,
                               ),
                             ),
@@ -274,12 +212,31 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
                     itemCount: controller.mServiceModel.alFeatures.length),
               ),
               Container(
+                margin: const EdgeInsetsDirectional.only(
+                  top: AppDimens.dimens_15,
+                  start: AppDimens.dimens_8,
+                  end: AppDimens.dimens_8,
+                ),
+                child: GradientText(
+                  "Description".tr,
+                  style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack, fontWeightDelta: 1, fontSizeDelta: 1),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsetsDirectional.only(
+                  top: AppDimens.dimens_8,
+                  start: AppDimens.dimens_8,
+                  end: AppDimens.dimens_8,
+                ),
+                child: Text(
+                  Global.getString(controller.mServiceModel.description),
+                  style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack2, fontWeightDelta: -2),
+                ),
+              ),
+              Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsetsDirectional.only(
-                    top: AppDimens.dimens_20,
-                    bottom: AppDimens.dimens_20,
-                    start: AppDimens.dimens_10,
-                    end: AppDimens.dimens_10),
+                    top: AppDimens.dimens_20, bottom: AppDimens.dimens_20, start: AppDimens.dimens_10, end: AppDimens.dimens_10),
                 child: CustomButton(
                     isGradient: true,
                     isRoundBorder: true,
@@ -287,8 +244,7 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
                     width: Responsive.screenWidth,
                     onPressed: () {
                       controller.gotoCreateEstimation(context);
-
-    },
+                    },
                     strTitle: Constants.TXT_BOOK_NOW.tr),
               ),
             ],

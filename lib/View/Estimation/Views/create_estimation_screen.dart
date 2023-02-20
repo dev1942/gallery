@@ -27,7 +27,7 @@ import 'package:otobucks/widgets/image_view.dart';
 import 'package:otobucks/widgets/media_button.dart';
 import 'package:otobucks/widgets/time_selector.dart';
 import 'package:otobucks/widgets/voice_note_buttons.dart';
-
+import 'dart:io' show Platform;
 import '../../../global/Models/time_model.dart';
 
 class CreateEstimationScreen extends StatefulWidget {
@@ -115,7 +115,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                     //Upload Video or Shoot a video
                     if (widget.screenType != 'promotion') _videoSection(),
                     //Voice Note
-                    if (widget.screenType != 'promotion') _voiceNoteSection(),
+                    // if (widget.screenType != 'promotion') _voiceNoteSection(),
                     //Leave Note (if any)
                     //if (widget.screenType != 'promotion')
 
@@ -348,7 +348,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                 //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
               ),
               isExpanded: true,
-              hint:  Text(
+              hint: Text(
                 "Choose Your Car".tr,
               ),
               icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
@@ -443,183 +443,59 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
 //   }
 // }
   _uploadImagesSection() {
-    return GetBuilder<CreateEstimationController>(builder: (value) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          //Upload image or Take a photo
-          Container(
-            margin: const EdgeInsets.only(
-              top: AppDimens.dimens_15,
-              left: AppDimens.dimens_14,
-              right: AppDimens.dimens_14,
-            ),
-            child: Row(
-              children: [
-                Flexible(
-                  child: Text(
-                    Constants.STR_IMAGE_MSG.tr,
-                    style:
-                        AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
-                  ),
+    return GetBuilder<CreateEstimationController>(
+        init: CreateEstimationController(),
+        builder: (value) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              //Upload image or Take a photo
+              Container(
+                margin: const EdgeInsets.only(
+                  top: AppDimens.dimens_15,
+                  left: AppDimens.dimens_14,
+                  right: AppDimens.dimens_14,
                 ),
-                const SizedBox(width: AppDimens.dimens_5),
-                Text(
-                  Constants.STR_MAX_SIZE.tr,
-                  style:
-                      AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(
-              top: AppDimens.dimens_10,
-              left: AppDimens.dimens_14,
-              right: AppDimens.dimens_14,
-            ),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  Visibility(
-                    child: Container(
-                      margin: const EdgeInsets.only(right: AppDimens.dimens_15),
-                      height: AppDimens.dimens_100,
-                      width: AppDimens.dimens_100,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(AppDimens.dimens_5),
-                            ),
-                            height: AppDimens.dimens_100,
-                            width: AppDimens.dimens_100,
-                            child: ImageView(strImage: value.pickedImage),
-                          ),
-                          Positioned(
-                              right: 0,
-                              top: 0,
-                              child: InkWell(
-                                child: const Icon(Icons.close),
-                                onTap: () => value.onDeleteImage(),
-                              ))
-                        ],
-                      ),
-                    ),
-                    visible: Global.checkNull(value.pickedImage),
-                  ),
-                  Visibility(
-                      visible: !Global.checkNull(value.pickedImage),
-                      child: Row(
-                        children: [
-                          MediaButton(
-                            strImage: AppImages.ic_cloud,
-                            onPressed: () {
-                              value.getImage(ImageSource.gallery);
-                            },
-                          ),
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(start: AppDimens.dimens_15),
-                            child: MediaButton(
-                              strImage: AppImages.ic_camera,
-                              onPressed: () {
-                                value.getImage(ImageSource.camera);
-                              },
-                            ),
-                          ),
-                        ],
-                      ))
-                ],
-              ),
-            ),
-          ),
-        ],
-      );
-    });
-  }
-
-  _videoSection() {
-    return GetBuilder<CreateEstimationController>(builder: (value) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(
-              top: AppDimens.dimens_20,
-              left: AppDimens.dimens_14,
-              right: AppDimens.dimens_14,
-            ),
-            child: Row(
-              children: [
-                Flexible(
-                  child: Text(
-                    Constants.STR_VIDEO_MSG.tr,
-                    style:
-                        AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
-                  ),
-                ),
-                const SizedBox(width: AppDimens.dimens_5),
-                Text(
-                  Constants.STR_MAX_SIZE.tr,
-                  style:
-                      AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
-                ),
-              ],
-            ),
-          ),
-          Visibility(
-            visible: value.isVideoCompressed,
-            child: StreamBuilder<double>(
-              stream: value.lightCompressor.onProgressUpdated,
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.data != null && snapshot.data > 0) {
-                  return Container(
-                    margin: const EdgeInsets.only(
-                      top: AppDimens.dimens_10,
-                      left: AppDimens.dimens_14,
-                      right: AppDimens.dimens_14,
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        LinearProgressIndicator(
-                          minHeight: AppDimens.dimens_5,
-                          color: AppColors.colorBlueEnd,
-                          value: snapshot.data / 100,
-                        ),
-                        Container(
-                          child: Text(
-                            Constants.TXT_PLEASE_WAIT + ' ${snapshot.data.toStringAsFixed(0)}%',
-                            style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
-                          ),
-                          margin: const EdgeInsets.only(top: AppDimens.dimens_8),
-                        )
-                      ],
-                    ),
-                  );
-                }
-                return const SizedBox.shrink();
-              },
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(
-              top: AppDimens.dimens_10,
-              left: AppDimens.dimens_14,
-              right: AppDimens.dimens_14,
-            ),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Visibility(
                 child: Row(
                   children: [
-                    Visibility(
-                        visible: Global.checkNull(value.pickedVideo),
+                    Flexible(
+                      child: Text(
+                        Constants.STR_IMAGE_MSG.tr,
+                        style: AppStyle.textViewStyleNormalSubtitle2(
+                            context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
+                      ),
+                    ),
+                    const SizedBox(width: AppDimens.dimens_5),
+                    Text(
+                      Constants.STR_MAX_SIZE.tr,
+                      style: AppStyle.textViewStyleNormalSubtitle2(
+                          context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
+                    ),
+                  ],
+                ),
+              ),
+              Platform.isIOS
+                  ? Text(
+                      "(it can take sometime opening camera for the first time)",
+                      style: AppStyle.textViewStyleNormalSubtitle2(
+                          context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
+                    )
+                  : Container(),
+
+              Container(
+                margin: const EdgeInsets.only(
+                  top: AppDimens.dimens_10,
+                  left: AppDimens.dimens_14,
+                  right: AppDimens.dimens_14,
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      Visibility(
                         child: Container(
-                          margin: const EdgeInsetsDirectional.only(end: AppDimens.dimens_15),
+                          margin: const EdgeInsets.only(right: AppDimens.dimens_15),
                           height: AppDimens.dimens_100,
                           width: AppDimens.dimens_100,
                           child: Stack(
@@ -631,65 +507,205 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                 ),
                                 height: AppDimens.dimens_100,
                                 width: AppDimens.dimens_100,
-                                child: InkWell(
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(AppDimens.dimens_5),
-                                      child: Container(
-                                        color: AppColors.colorGray2,
-                                        child: Icon(
-                                          Icons.play_arrow,
-                                          color: AppColors.curiousBlue,
-                                        ),
-                                        padding: const EdgeInsets.all(AppDimens.dimens_35),
-                                        // width: width != null ? width : AppDimens.dimens_100,
-                                        // height: height != null ? height : AppDimens.dimens_100,
-                                      )),
-                                  onTap: () {
-                                    Global.gotoVideoView(context, value.pickedVideo);
-                                  },
-                                ),
+                                child: ImageView(strImage: value.pickedImage),
                               ),
                               Positioned(
                                   right: 0,
                                   top: 0,
                                   child: InkWell(
                                     child: const Icon(Icons.close),
-                                    onTap: () => value.onDeleteVideo(),
+                                    onTap: () => value.onDeleteImage(),
                                   ))
                             ],
                           ),
-                        )),
-                    Visibility(
-                      visible: !Global.checkNull(value.pickedVideo),
-                      child: Row(
-                        children: [
-                          MediaButton(
-                            strImage: AppImages.ic_cloud,
-                            onPressed: () {
-                              value.pickVideo(ImageSource.gallery);
-                            },
-                          ),
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(start: AppDimens.dimens_15),
-                            child: MediaButton(
-                              strImage: AppImages.ic_video_cam,
-                              onPressed: () {
-                                value.pickVideo(ImageSource.camera);
-                              },
-                            ),
-                          ),
-                        ],
+                        ),
+                        visible: Global.checkNull(value.pickedImage),
                       ),
-                    )
+                      value.pickedImage == null || value.pickedImage.isEmpty
+                          ? Row(
+                              children: [
+                                MediaButton(
+                                  strImage: AppImages.ic_cloud,
+                                  onPressed: () async {
+                                    value.showLoader().then((voi) {
+                                      value.getImage(ImageSource.gallery);
+                                    });
+                                  },
+                                ),
+                                Container(
+                                  margin: const EdgeInsetsDirectional.only(start: AppDimens.dimens_15),
+                                  child: MediaButton(
+                                    strImage: AppImages.ic_camera,
+                                    onPressed: () {
+                                      value.showLoader().then((voi) => value.getImage(ImageSource.camera));
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Container()
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
+  _videoSection() {
+    return GetBuilder<CreateEstimationController>(
+        init: CreateEstimationController(),
+        builder: (value) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(
+                  top: AppDimens.dimens_20,
+                  left: AppDimens.dimens_14,
+                  right: AppDimens.dimens_14,
+                ),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        Constants.STR_VIDEO_MSG.tr,
+                        style: AppStyle.textViewStyleNormalSubtitle2(
+                            context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
+                      ),
+                    ),
+                    const SizedBox(width: AppDimens.dimens_5),
+                    Text(
+                      Constants.STR_MAX_SIZE.tr,
+                      style: AppStyle.textViewStyleNormalSubtitle2(
+                          context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
+                    ),
                   ],
                 ),
-                visible: !value.isVideoCompressed,
               ),
-            ),
-          ),
-        ],
-      );
-    });
+              Visibility(
+                visible: value.isVideoCompressed,
+                child: StreamBuilder<double>(
+                  stream: value.lightCompressor.onProgressUpdated,
+                  builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.data != null && snapshot.data > 0) {
+                      return Container(
+                        margin: const EdgeInsets.only(
+                          top: AppDimens.dimens_10,
+                          left: AppDimens.dimens_14,
+                          right: AppDimens.dimens_14,
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            LinearProgressIndicator(
+                              minHeight: AppDimens.dimens_5,
+                              color: AppColors.colorBlueEnd,
+                              value: snapshot.data / 100,
+                            ),
+                            Container(
+                              child: Text(
+                                Constants.TXT_PLEASE_WAIT + ' ${snapshot.data.toStringAsFixed(0)}%',
+                                style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
+                              ),
+                              margin: const EdgeInsets.only(top: AppDimens.dimens_8),
+                            )
+                          ],
+                        ),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: AppDimens.dimens_10,
+                  left: AppDimens.dimens_14,
+                  right: AppDimens.dimens_14,
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Visibility(
+                    child: Row(
+                      children: [
+                        Visibility(
+                            visible: Global.checkNull(value.pickedVideo),
+                            child: Container(
+                              margin: const EdgeInsetsDirectional.only(end: AppDimens.dimens_15),
+                              height: AppDimens.dimens_100,
+                              width: AppDimens.dimens_100,
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+                                    ),
+                                    height: AppDimens.dimens_100,
+                                    width: AppDimens.dimens_100,
+                                    child: InkWell(
+                                      child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+                                          child: Container(
+                                            color: AppColors.colorGray2,
+                                            child: Icon(
+                                              Icons.play_arrow,
+                                              color: AppColors.curiousBlue,
+                                            ),
+                                            padding: const EdgeInsets.all(AppDimens.dimens_35),
+                                            // width: width != null ? width : AppDimens.dimens_100,
+                                            // height: height != null ? height : AppDimens.dimens_100,
+                                          )),
+                                      onTap: () {
+                                        Global.gotoVideoView(context, value.pickedVideo);
+                                      },
+                                    ),
+                                  ),
+                                  Positioned(
+                                      right: 0,
+                                      top: 0,
+                                      child: InkWell(
+                                        child: const Icon(Icons.close),
+                                        onTap: () => value.onDeleteVideo(),
+                                      ))
+                                ],
+                              ),
+                            )),
+                        Visibility(
+                          visible: !Global.checkNull(value.pickedVideo),
+                          child: Row(
+                            children: [
+                              MediaButton(
+                                strImage: AppImages.ic_cloud,
+                                onPressed: () {
+                                  value.showLoader();
+                                  value.pickVideo(ImageSource.gallery);
+                                },
+                              ),
+                              Container(
+                                margin: const EdgeInsetsDirectional.only(start: AppDimens.dimens_15),
+                                child: MediaButton(
+                                  strImage: AppImages.ic_video_cam,
+                                  onPressed: () {
+                                    value.showLoader();
+                                    value.pickVideo(ImageSource.camera);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    visible: !value.isVideoCompressed,
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
   }
 
   _voiceNoteSection() => GetBuilder<CreateEstimationController>(builder: (value) {
@@ -856,7 +872,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
             ),
             height: AppDimens.dimens_50,
           ),
-          decoration: AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
+          // decoration: AppViews.getBoxDecorColorVise(mBorderRadius: AppDimens.dimens_5),
         )
       ],
     );
