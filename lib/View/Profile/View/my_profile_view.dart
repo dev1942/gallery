@@ -118,6 +118,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                       child: InkWell(
                                         child: CircleAvatar(
                                           radius: 17,
+
                                           child: Image.asset(AppImages.ic_edit_profile_icon,
                                               width: AppDimens.dimens_15, color: AppColors.colorWhite, height: AppDimens.dimens_20),
                                         ),
