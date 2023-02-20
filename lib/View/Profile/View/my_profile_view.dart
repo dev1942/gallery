@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:otobucks/View/Profile/View/widget/my_car_list_widget.dart';
 import 'package:otobucks/View/Profile/Controller/profile_screen_controller.dart';
 import 'package:otobucks/global/app_colors.dart';
@@ -105,11 +106,11 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                               height: AppDimens.dimens_130,
                                               width: AppDimens.dimens_130,
                                               padding: const EdgeInsets.all(AppDimens.dimens_16),
+                                              color: Colors.grey.withOpacity(0.7),
                                               child: Image.asset(
                                                 AppImages.ic_user_sufix,
                                                 color: Colors.white,
                                               ),
-                                              color: Colors.grey.withOpacity(0.7),
                                             ),
                                           ),
                                     Positioned(
@@ -906,6 +907,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen(phoneNumber: phoneNumber)));
     // sendOTPTask();
     otpcontroller.sendNumberOTPTask(phoneNumber, context);
+    Logger().w(phoneNumber);
     //sentOTPToNumber();
   }
 
