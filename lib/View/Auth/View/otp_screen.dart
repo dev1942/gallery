@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,35 @@ class _OTPScreenState extends State<OTPScreen> {
   @override
   void initState() {
     controller.mControllerOTP.clear();
+    startTimer();
     super.initState();
+  }
+
+  Timer? _timer;
+  int _start = 30;
+
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer!.cancel();
+    super.dispose();
   }
 
   @override
@@ -140,16 +169,18 @@ class _OTPScreenState extends State<OTPScreen> {
                                     },
                                     strTitle: Constants.TXT_SUBMIT.tr),
                               ),
-                              TextButton(
-                                  onPressed: () {
-                                    if (widget.mModelOTP != null) {
-                                      controller.sendOTPTask(widget.mModelOTP!.emailId, context);
-                                    } else {
-                                      //phone number verification
-                                      controller.sendNumberOTPTask(widget.phoneNumber!, context);
-                                    }
-                                  },
-                                  child: const Text('Resend'))
+                              _start != 0
+                                  ? Text("$_start")
+                                  : TextButton(
+                                      onPressed: () {
+                                        if (widget.mModelOTP != null) {
+                                          controller.sendOTPTask(widget.mModelOTP!.emailId, context);
+                                        } else {
+                                          //phone number verification
+                                          controller.sendNumberOTPTask(widget.phoneNumber!, context);
+                                        }
+                                      },
+                                      child: Text('Resend'.tr))
                             ],
                           ),
                         )),
