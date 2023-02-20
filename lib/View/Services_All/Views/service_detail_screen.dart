@@ -46,6 +46,7 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
             Container(
               color: AppColors.colorBlueStart,
               height: AppDimens.dimens_120,
+
             ),
 
             Container(
