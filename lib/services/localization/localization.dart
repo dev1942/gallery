@@ -97,6 +97,7 @@ class LocaleLanguages extends Translations {
           'KM': 'كم',
           'Car model year': 'سنة طراز السيارة',
           'Number': 'رقم',
+          'Delete Account': 'حذف الحساب',
           'Save': 'يحفظ',
           'Update': 'تحديث',
           'Car Plate Number': 'رقم لوحة سيارة',

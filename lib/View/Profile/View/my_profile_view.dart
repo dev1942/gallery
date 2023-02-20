@@ -47,7 +47,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(RegistrationScreenController());
+    ///Get.put(RegistrationScreenController());
     var size = MediaQuery.of(context).size;
     // double marginBoth = AppDimens.dimens_20;
     double height = AppDimens.dimens_36;
