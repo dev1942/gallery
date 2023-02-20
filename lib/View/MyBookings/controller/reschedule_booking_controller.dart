@@ -107,12 +107,11 @@ class RescheduleBookingController extends GetxController {
       update();
       String _desFile = await Global.destinationFile("mp4");
       final dynamic response = await lightCompressor.compressVideo(
-        android: AndroidConfig(isSharedStorage: true,
-            saveAt: SaveAt.Movies),
-        // destinationPath: _desFile,
-        video: Video(videoName: _desFile),
-        ios: IOSConfig(saveInGallery: false),
-          path: image.path, videoQuality: VideoQuality.very_low, isMinBitrateCheckEnabled: false,);
+        destinationPath: _desFile,
+        path: image.path,
+        videoQuality: VideoQuality.very_low,
+        isMinBitrateCheckEnabled: false,
+      );
 
       if (response is OnSuccess) {
         pickedVideo = response.destinationPath;
