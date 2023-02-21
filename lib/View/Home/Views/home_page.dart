@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var notificationController = Get.put(NotificationsController());
+    // var notificationController = Get.put(NotificationsController());
     return GetBuilder<HomeScreenController>(builder: (value) {
       return WillPopScope(
           onWillPop: controller.onWillPop,
@@ -132,19 +132,23 @@ class _HomePageState extends State<HomePage> {
                     // ),
                     TabItem(
                         icon: Icons.notifications,
-                        count: Container(
-                            height: 20,
-                            width: 20,
-                            // padding: const EdgeInsets.all(3),
-                            decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(100)),
-                            margin: const EdgeInsets.only(left: AppDimens.dimens_6, top: AppDimens.dimens_2),
-                            child: Center(
-                              child: Text(
-                                notificationController.alNotification.length.toString() ?? "40",
-                                style: AppStyle.textViewStyleNormalSubtitle2(
-                                    context: context, color: AppColors.colorWhite, fontWeightDelta: 1, fontSizeDelta: -1),
-                              ),
-                            ))),
+                        count: GetBuilder<NotificationsController>(
+                            init: NotificationsController(),
+                            builder: (value) {
+                              return Container(
+                                  height: 20,
+                                  width: 20,
+                                  // padding: const EdgeInsets.all(3),
+                                  decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(100)),
+                                  margin: const EdgeInsets.only(left: AppDimens.dimens_6, top: AppDimens.dimens_2),
+                                  child: Center(
+                                    child: Text(
+                                      value.alNotification.length.toString() ?? "0",
+                                      style: AppStyle.textViewStyleNormalSubtitle2(
+                                          context: context, color: AppColors.colorWhite, fontWeightDelta: 1, fontSizeDelta: -1),
+                                    ),
+                                  ));
+                            })),
                     TabItem(
                       icon: Icons.person,
                     ),

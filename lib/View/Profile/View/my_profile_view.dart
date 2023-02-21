@@ -40,7 +40,9 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
   void initState() {
     // if (controller.carList.isEmpty && controller.mUserModel == null) {
     controller.getCarList();
-    controller.getProfile();
+    controller.getProfile().then((value) {
+      setState(() {});
+    });
     // }
 
     super.initState();
@@ -172,7 +174,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                 Stack(
                                   children: [
                                     CustomTextFieldMobile(
-                                      strCountyCode: value.strCountyCode,
+                                      strCountyCode: value.strCountyCode.value,
                                       textInputAction: TextInputAction.done,
                                       readonly: false,
                                       // enabled: false,
@@ -277,7 +279,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                 ),
                                 addVerticleSpace(AppDimens.dimens_16),
                                 CustomTextFieldMobile(
-                                  strCountyCode: value.strEmgCountyECode,
+                                  strCountyCode: value.strEmgCountyECode.value,
                                   textInputAction: TextInputAction.done,
                                   enabled: value.isEnableEmgPhone,
                                   height: 42,
