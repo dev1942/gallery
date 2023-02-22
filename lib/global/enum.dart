@@ -20,6 +20,7 @@ enum PageType {
   deleteAccount,
   promotions,
   thankYou,
+  customerSupport,
 }
 
 // Req Type

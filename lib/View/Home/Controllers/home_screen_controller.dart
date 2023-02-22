@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/View/CustomerSupport/Views/CustomerSupportView.dart';
 import 'package:otobucks/View/Promotion_discount/View/promotion_detail_view.dart';
 import 'package:otobucks/View/Promotion_discount/model/promotion_model.dart';
 import 'package:otobucks/View/Analytics/Views/analytics_fragment.dart';
@@ -105,6 +106,11 @@ class HomeScreenController extends GetxController {
         indexM = 0;
         strTitle = ' Hello ';
         break;
+      case PageType.customerSupport:
+        navigationPage = const CustomerSupportView();
+        indexM = 1;
+        strTitle = 'Customer Support';
+        break;
 
       case PageType.myProfile:
         navigationPage = const MyProfileFragment();
@@ -119,7 +125,7 @@ class HomeScreenController extends GetxController {
 
       case PageType.notification:
         navigationPage = const NotificationFragment();
-        indexM = 1;
+        indexM = 2;
         strTitle = Constants.STR_NOTIFICATION;
         break;
 
@@ -203,15 +209,16 @@ class HomeScreenController extends GetxController {
       // case 1:
       //   callback(PageType.inbox);
       //   break;
-      // case 1:
-      //   callback(PageType.cart);
+      case 1:
+        callback(PageType.customerSupport);
+        break;
       //callback(PageType.THANK_YOU);
       // gotoDemo();
       // break;
-      case 1:
+      case 2:
         callback(PageType.notification);
         break;
-      case 2:
+      case 3:
         callback(PageType.myProfile);
         break;
     }

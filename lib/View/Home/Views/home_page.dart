@@ -131,6 +131,9 @@ class _HomePageState extends State<HomePage> {
                     //   icon: Icons.shopping_basket,
                     // ),
                     TabItem(
+                      icon: Icons.support_agent_outlined,
+                    ),
+                    TabItem(
                         icon: Icons.notifications,
                         count: Container(
                             height: 20,

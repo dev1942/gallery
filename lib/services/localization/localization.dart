@@ -16,6 +16,8 @@ class LocaleLanguages extends Translations {
           'create one': 'اصنع واحدا',
           'Customer Support': 'دعم العملاء',
           'Country': 'دولة',
+          'Our customer support team is always available to help you with any questions, Let us assist you with anything you need': 'فريق دعم العملاء لدينا متاح دائمًا لمساعدتك في أي أسئلة ، دعنا نساعدك في أي شيء تحتاجه',
+          'Talk Now': 'تحدث الآن',
           "Remember me": 'تذكرنى',
           'Mobile Number': 'رقم الهاتف المحمول',
           'How did you here about us': 'كيف سمعت عنا',
