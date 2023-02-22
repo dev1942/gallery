@@ -191,9 +191,9 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                 //.................chat icon.................
                                                 InkWell(
                                                     onTap: () {
-                                                      controller.launchWhatsappSendMessage(data.provider?.phone?.split(" ")[0].toString(),
-                                                          "Hi ${data.provider?.firstName}! How Are You?");
-                                                      Logger().i(data.provider?.phone?.split(" ")[0].toString());
+                                                      controller.launchWhatsappSendMessage("+971542457866",
+                                                          "Hi this is ${data.customer?.firstName}! How Are You?");
+                                                      Logger().i("Phone number for whats app is${data.provider?.phone}${data.provider?.firstName} ");
                                                     },
                                                     child: BlinkIcon()),
                                               ],
