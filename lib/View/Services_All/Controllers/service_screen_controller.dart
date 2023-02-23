@@ -51,12 +51,19 @@ class ServiceScreenController extends GetxController {
 
   runFilter(String enteredKeyword) {
     if (enteredKeyword.isEmpty) {
+      log("key is emty");
       // if the search field is empty or only contains white-space, we'll display all users
       alServicesfiltered = alServices;
+      mShowData = ShowData.showData;
+      update();
     } else {
+      log("key is not emty");
+      log(alServices.length.toString());
       alServicesfiltered = alServices.where((user) => user.title.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
       if (alServicesfiltered.isEmpty) {
         mShowData = ShowData.showNoDataFound;
+      } else {
+        mShowData = ShowData.showData;
       }
       // we use the toLowerCase() method to make it case-insensitive
     }

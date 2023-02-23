@@ -401,6 +401,8 @@ class Constants {
       STR_LAST_NAME = 'Last Name',
       STR_EMAIL = 'Email',
       STR_SEARCH = 'Search',
+      STR_SEARCH_SUB_CAT = 'Search sub categories',
+      STR_SEARCH_PROVIDER = 'Search providers',
       STR_HOW_DID = 'How did you here about us',
       STR_COUNTRY = 'Country',
       STR_PASSWORD = 'Password',

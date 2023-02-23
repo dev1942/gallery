@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -72,39 +73,42 @@ class RegistrationScreenController extends GetxController {
     String strPassword = controllerPassword.text.toString();
 
     if (!Global.checkNull(strFirstName)) {
-      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_FN, toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_FN.tr, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeFirstName);
       return false;
     } else if (!Global.checkNull(strLastName)) {
-      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_LN, toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_LN.tr, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeLastName);
       return false;
     } else if (!Global.checkNull(strEmail)) {
-      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMAIL, toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMAIL.tr, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
     } else if (Global.checkNull(strEmail) && !Global.checkValidEmail(strEmail)) {
-      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_EMAIL, toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_EMAIL.tr, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
     } else if (!Global.checkNull(strCountry)) {
-      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_SELECT_COUNTRY, toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_SELECT_COUNTRY.tr, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeCountry);
       return false;
-    } else if (!Global.checkNull(strPhone)) {
-      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_NUMBER, toastType: TOAST_TYPE.toastError);
-      FocusScope.of(context).requestFocus(mFocusNodePhone);
-      return false;
-    } else if (Global.checkNull(strPhone) && !Global.checkValidMobile(strPhone)) {
-      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER, toastType: TOAST_TYPE.toastError);
-      FocusScope.of(context).requestFocus(mFocusNodePhone);
-      return false;
-    } else if (!Global.checkNull(strPassword)) {
-      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_PASSWORD, toastType: TOAST_TYPE.toastError);
+    }
+    // else if (!Global.checkNull(strPhone)) {
+    //   Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_NUMBER.tr, toastType: TOAST_TYPE.toastError);
+    //   FocusScope.of(context).requestFocus(mFocusNodePhone);
+    //   return false;
+    // }
+    // else if (Global.checkNull(strPhone) && !Global.checkValidMobile(strPhone)) {
+    //   Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER.tr, toastType: TOAST_TYPE.toastError);
+    //   FocusScope.of(context).requestFocus(mFocusNodePhone);
+    //   return false;
+    // }
+    else if (!Global.checkNull(strPassword)) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_PASSWORD.tr, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodePassword);
       return false;
     } else if (strPassword.length < 8) {
-      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_PASSWORD_LESS, toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_PASSWORD_LESS.tr, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodePassword);
       return false;
     }
@@ -126,6 +130,7 @@ class RegistrationScreenController extends GetxController {
     String strHowHear = controllerHowAboutUs.text.toString();
     String firebaseToken = await FirebaseMessaging.instance.getToken() ?? '';
     await Global.taskStoreToken(firebaseToken);
+    log("p" + strMobileNumber);
 
     HashMap<String, Object> requestParams = HashMap();
     requestParams[PARAMS.PARAM_PASSWORD] = strPassword;
@@ -133,7 +138,7 @@ class RegistrationScreenController extends GetxController {
     requestParams[PARAMS.PARAM_LASTNAME] = strLastName;
     requestParams[PARAMS.PARAM_EMAIL] = strMobileEmail;
     requestParams[PARAMS.PARAM_COUNTRY] = strCountry;
-    requestParams[PARAMS.PARAM_PHONE] = strMobileNumber;
+    requestParams[PARAMS.PARAM_PHONE] = strMobileNumber.isEmpty ? "+97100000000" : strMobileNumber;
     requestParams[PARAMS.PARAM_PASSWORD] = strPassword;
     requestParams[PARAMS.PARAM_PASSWORD_CONFIRM] = strPassword;
     requestParams[PARAMS.PARAM_HEAREDABOUTUS] = strHowHear;

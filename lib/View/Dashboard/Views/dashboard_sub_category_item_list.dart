@@ -52,7 +52,7 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList> with
                   enabled: true,
                   controller: value.controllerSearch,
                   keyboardType: TextInputType.emailAddress,
-                  hintText: Constants.STR_SEARCH.tr,
+                  hintText: Constants.STR_SEARCH_SUB_CAT.tr,
                   inputFormatters: const [],
                   obscureText: false,
                   onChanged: (String value) {
@@ -70,7 +70,7 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList> with
               Padding(
                 padding: const EdgeInsets.only(left: 20.0),
                 child: Text(
-                  "Categoriess".tr,
+                  "Categories".tr,
                   style: AppStyle.textViewStyleLarge(fontWeightDelta: 1, fontSizeDelta: 2, context: context, color: AppColors.colorYellowShade),
                 ),
               ),

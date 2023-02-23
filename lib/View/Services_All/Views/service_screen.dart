@@ -86,12 +86,13 @@ class ServiceScreenState extends State<ServiceScreen> {
           enabled: true,
           controller: controller.controllerSearch,
           keyboardType: TextInputType.text,
-          hintText: Constants.STR_SEARCH.tr,
+          hintText: Constants.STR_SEARCH_PROVIDER.tr,
           inputFormatters: const [],
           obscureText: false,
           height: AppDimens.dimens_36,
           onChanged: (String value) {
-            log("message");
+            log("message service");
+            controller.runFilter(Get.find<ServiceScreenController>().controllerSearch.text.toString());
           },
           onSubmit: (String value) {},
           suffixIcon: InkWell(

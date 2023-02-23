@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:developer';
 import 'package:otobucks/services/repository/my_profile_repo.dart';
 
 import '../../../../../global/global.dart';
@@ -43,8 +44,8 @@ class ProfileScreenController extends GetxController {
   String imgEmIdFront = "";
   String imgEmIdBack = "";
 
-  String strCountyCode = "";
-  String strEmgCountyECode = "";
+  Rx<String> strCountyCode = "".obs;
+  Rx<String> strEmgCountyECode = "".obs;
 
   bool isEmailVerified = false;
   bool isPhoneVerified = false;
@@ -92,7 +93,7 @@ class ProfileScreenController extends GetxController {
     update();
   }
 
-  getProfile() async {
+  Future<void> getProfile() async {
     mShowData = ShowData.showLoading;
     update();
 
@@ -102,7 +103,7 @@ class ProfileScreenController extends GetxController {
       Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
-    }, (mResult) {
+    }, (mResult) async {
       mUserModel = mResult.responseData as UserModel;
       if (mUserModel != null) {
         controllerAddress.text = Global.getString(mUserModel!.address);
@@ -126,10 +127,12 @@ class ProfileScreenController extends GetxController {
         imgDrivingLicence = Global.getString(mUserModel!.customer.drivingLicence);
         imgEmIdFront = Global.getString(mUserModel!.customer.emiratesIDFront);
         imgEmIdBack = Global.getString(mUserModel!.customer.emiratesIDBack);
+        log("this is country code${mUserModel!.countryCode}");
 
         if (Global.checkNull(mUserModel!.countryCode)) {
-          strCountyCode = mUserModel!.countryCode;
-          strEmgCountyECode = mUserModel!.countryCode;
+          strCountyCode.value = mUserModel!.countryCode;
+          strEmgCountyECode.value = mUserModel!.countryCode;
+          update();
         }
       }
 
@@ -156,7 +159,7 @@ class ProfileScreenController extends GetxController {
     requestParams[PARAMS.PARAM_LASTNAME] = strLname;
     requestParams[PARAMS.PARAM_EMERGENCYNAME] = strEmgName;
     requestParams[PARAMS.PARAM_EMERGENCYPHONE] = strEmgPhone;
-    requestParams[PARAMS.PARAM_COUNTRYCODE] = strCountyCode;
+    requestParams[PARAMS.PARAM_COUNTRYCODE] = strCountyCode.value;
 
     if (Global.checkNull(imgMulkia)) {
       if (Global.isURL(imgMulkia)) {
@@ -349,7 +352,7 @@ class ProfileScreenController extends GetxController {
   }
 
 //---------------------------get car list ---------
-  getCarList() async {
+  Future<void> getCarList() async {
     HashMap<String, Object> requestParams = HashMap();
     var categorie1 = await MyProfileRepository().getCarList(requestParams);
 
