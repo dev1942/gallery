@@ -43,7 +43,7 @@ class CancelledFragment extends GetView<MyBookingsController> {
                         itemBuilder: (BuildContext contextM, index) {
                           List inProcgressList = snapshot.data!.result!.reversed.toList();
                           var data = controller.isSearching == false ? inProcgressList[index] : controller.filteredBookingList![index];
-                          if (data.status == "cancelled" || data.status == "declined" && data.deleted == false) {
+                          if ((data.status == "cancelled" || data.status == "declined" && data.deleted == false)&& data.provider!=null) {
                             return Padding(
                               padding: const EdgeInsets.symmetric(vertical: 6.0),
                               child: Stack(

@@ -50,7 +50,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                         itemBuilder: (BuildContext contextM, index) {
                           List inProcgressList = snapshot.data!.result!.reversed.toList();
                           var data = controller.isSearching == false ? inProcgressList[index] : controller.filteredBookingList![index];
-                          if (data.status == "completed" && data.deleted == false) {
+                          if ((data.status == "completed" && data.deleted == false)&& data.provider!=null) {
                             log("data rated-------");
 
                             return Padding(

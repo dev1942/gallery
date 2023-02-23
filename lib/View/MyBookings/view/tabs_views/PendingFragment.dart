@@ -56,7 +56,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                                 controller.pendingsbookinglist = snapshot.data!.result!.reversed.toList();
                                 var data =
                                     controller.isSearching == false ? controller.pendingsbookinglist![index] : controller.filteredBookingList![index];
-                                if (data.status == "submitted" || data.status == "pending" || data.status == "reSubmitted") {
+                                if ((data.status == "submitted"|| data.status == "pending" || data.status == "reSubmitted")&& data.provider!=null) {
                                   return Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 6.0),
                                     child: Container(
