@@ -13,6 +13,7 @@ class RequestBuilder {
   static final String API_FORGOT_PASSWORD = "auth/customers/forgotPassword";
   static final String API_DELETE_ACCOUNT = "auth/customers/deleteAccount/";
   static final String API_RESET_PASSWORD = "auth/customers/resetPassword/";
+  static final String API_EMERGENCY = "auth/customers/emergency";
   static final String API_SIGN_UP = "auth/customers/register";
   static final String API_DELETE_Booking = "bookings/bookService";
   static final String API_SEND_EMAIL_VERIFICATION_TOKEN = "auth/users/send-email-verification-token";
