@@ -92,18 +92,15 @@ class RegistrationScreenController extends GetxController {
       Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_SELECT_COUNTRY.tr, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeCountry);
       return false;
-    }
-    // else if (!Global.checkNull(strPhone)) {
-    //   Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_NUMBER.tr, toastType: TOAST_TYPE.toastError);
-    //   FocusScope.of(context).requestFocus(mFocusNodePhone);
-    //   return false;
-    // }
-    // else if (Global.checkNull(strPhone) && !Global.checkValidMobile(strPhone)) {
-    //   Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER.tr, toastType: TOAST_TYPE.toastError);
-    //   FocusScope.of(context).requestFocus(mFocusNodePhone);
-    //   return false;
-    // }
-    else if (!Global.checkNull(strPassword)) {
+    } else if (!Global.checkNull(strPhone)) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_NUMBER.tr, toastType: TOAST_TYPE.toastError);
+      FocusScope.of(context).requestFocus(mFocusNodePhone);
+      return false;
+    } else if (Global.checkNull(strPhone) && !Global.checkValidMobile(strPhone)) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER.tr, toastType: TOAST_TYPE.toastError);
+      FocusScope.of(context).requestFocus(mFocusNodePhone);
+      return false;
+    } else if (!Global.checkNull(strPassword)) {
       Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_PASSWORD.tr, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodePassword);
       return false;

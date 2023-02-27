@@ -16,6 +16,8 @@ import '../View/Auth/Models/country_code.dart';
 import 'custom_ui/bottom_sheet.dart';
 
 // ignore: must_be_immutable
+typedef void LoggerOutputFunction(String msg);
+
 class CustomTextFieldMobile extends StatefulWidget {
   TextEditingController? controller;
   bool? enabled;
@@ -25,18 +27,20 @@ class CustomTextFieldMobile extends StatefulWidget {
   Widget? suffixIcon;
   TextInputAction? textInputAction;
   String strCountyCode;
+  LoggerOutputFunction? onchanged;
 
-  CustomTextFieldMobile(
-      {Key? key,
-      required this.controller,
-      required this.strCountyCode,
-      this.readonly,
-      this.focusNode,
-      this.suffixIcon,
-      this.height,
-      this.textInputAction,
-      this.enabled})
-      : super(key: key);
+  CustomTextFieldMobile({
+    Key? key,
+    required this.controller,
+    required this.strCountyCode,
+    this.readonly,
+    this.focusNode,
+    this.suffixIcon,
+    this.height,
+    this.textInputAction,
+    this.enabled,
+    this.onchanged,
+  }) : super(key: key);
 
   @override
   CustomTextFieldMobileState createState() => CustomTextFieldMobileState();
@@ -72,6 +76,7 @@ class CustomTextFieldMobileState extends State<CustomTextFieldMobile> {
           return SizedBox(
             height: widget.height ?? 50,
             child: TextField(
+              onChanged: widget.onchanged,
               keyboardType: TextInputType.phone,
               maxLength: 10,
               readOnly: widget.readonly ?? false,

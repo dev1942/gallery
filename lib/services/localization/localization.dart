@@ -16,7 +16,8 @@ class LocaleLanguages extends Translations {
           'create one': 'اصنع واحدا',
           'Customer Support': 'دعم العملاء',
           'Country': 'دولة',
-          'Our customer support team is always available to help you with any questions, Let us assist you with anything you need': 'فريق دعم العملاء لدينا متاح دائمًا لمساعدتك في أي أسئلة ، دعنا نساعدك في أي شيء تحتاجه',
+          'Our customer support team is always available to help you with any questions, Let us assist you with anything you need':
+              'فريق دعم العملاء لدينا متاح دائمًا لمساعدتك في أي أسئلة ، دعنا نساعدك في أي شيء تحتاجه',
           'Talk Now': 'تحدث الآن',
           "Remember me": 'تذكرنى',
           'Mobile Number': 'رقم الهاتف المحمول',
@@ -90,7 +91,7 @@ class LocaleLanguages extends Translations {
           'Write a message...': 'اكتب رسالة...',
           'Adress': 'العنوان',
           'Thank you for booking.': 'شكرا لك على الحجز.',
-          'The vendor will get back to you soon.': 'البائع سوف يقوم بالرد عليك قريبا',
+          'The vendor will get back to you soon.': 'سيتصل بك البائع قريبًا على رقم هاتفك المحمول المسجل',
           'Request Estimation': 'طلب تقدير',
           'Thank you for booking. The vendor will get back to you shortly': 'شكرا لك على الحجز. البائع سوف يقوم بالرد عليك قريبا',
           'Book Now': 'احجز الآن',
@@ -184,6 +185,7 @@ class LocaleLanguages extends Translations {
           'Please enter Email and Password': 'الرجاء إدخال البريد الإلكتروني وكلمة المرور',
         },
         'en_US': {
+          'The vendor will get back to you soon.': 'The vendor will contact you soon on your registered mobile number',
           'Search providers': 'Search providers',
           'Please enter First name.': 'Please enter First name.',
           'Please enter mobile number.': 'Please enter mobile number.',
