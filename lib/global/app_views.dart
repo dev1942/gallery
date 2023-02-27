@@ -1,9 +1,13 @@
-import 'dart:developer';
+import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_text/circular_text.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:logger/logger.dart';
 import 'package:shimmer/shimmer.dart';
+import '../services/repository/my_profile_repo.dart';
 import '../widgets/custom_ui/drop_down/dropdown_button2.dart';
 import '../widgets/custom_ui/loader/three_bounce.dart';
 import 'app_colors.dart';
@@ -31,10 +35,21 @@ class AppViews {
     if (isShowSOS) {
       actionsList.add(GestureDetector(
         onTap: () async {
-          log("click");
+          Logger().i("click");
           // await LocationHelper.getCurrentLocation(mContext, (p0, p1){
           //   log("${p0}  ${p1}");
           // });
+          LatLng position = await Global.getCurrentLocation(context: Get.context!);
+          HashMap<String, Object> requestParams = HashMap();
+          requestParams[PARAMS.PARAM_LONGITUDE]=position.latitude;
+          requestParams[PARAMS.PARAM_LATITUDE]=position.longitude;
+          var signInEmail = await MyProfileRepository().sendEmergency(requestParams);
+          signInEmail.fold((failure) {
+            Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+          }, (mResult) {
+            Logger().i("Success");
+            Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
+          });
           //Global.inProgressAlert(mContext);
         },
         child: Padding(
