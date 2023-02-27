@@ -138,7 +138,7 @@ class RegistrationScreenController extends GetxController {
     requestParams[PARAMS.PARAM_LASTNAME] = strLastName;
     requestParams[PARAMS.PARAM_EMAIL] = strMobileEmail;
     requestParams[PARAMS.PARAM_COUNTRY] = strCountry;
-    requestParams[PARAMS.PARAM_PHONE] = strMobileNumber.isEmpty ? "+97100000000" : strMobileNumber;
+    requestParams[PARAMS.PARAM_PHONE] = strMobileNumber.isEmpty ? "100000000" : strMobileNumber;
     requestParams[PARAMS.PARAM_PASSWORD] = strPassword;
     requestParams[PARAMS.PARAM_PASSWORD_CONFIRM] = strPassword;
     requestParams[PARAMS.PARAM_HEAREDABOUTUS] = strHowHear;
