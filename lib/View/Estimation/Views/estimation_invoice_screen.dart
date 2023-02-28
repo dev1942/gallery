@@ -701,7 +701,7 @@ class EstimationDetailsPDFScreenState
                   right: AppDimens.dimens_20),
               child: Row(
                 children: [
-                  allBookingsModel.estimation!.estimationImage!.isNotEmpty? Container(
+                  allBookingsModel.estimation!.estimationImage!=null? Container(
 
                     height:50,
                     width: 100,

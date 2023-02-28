@@ -250,4 +250,48 @@ class BookingRepo {
           DATA: ""));
     }
   }
+  //------------------OpenDispute API Call-------------------------------
+  Future<Either<Failure, Success>> openDispute(
+      HashMap<String, Object> requestParams) async {
+    bool connectionStatus = await ConnectivityStatus.isConnected();
+    if (!connectionStatus) {
+      return Left(Failure(
+          DATA: "",
+          MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
+          STATUS: false));
+    }
+    try {
+      String response = await ReqListener.fetchPost(
+          strUrl: RequestBuilder.API_OPEN_DISPUTE,
+          requestParams: requestParams,
+          mReqType: ReqType.post,
+          mParamType: ParamType.json);
+      Result? mResponse;
+      if (response.isNotEmpty) {
+        mResponse = Global.getData(response);
+      } else {
+        return Left(
+            Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+      }
+
+      if (mResponse?.responseStatus == true) {
+        Success mSuccess = Success(
+            responseStatus: mResponse!.responseStatus,
+            responseData: "mUserAddressDetail",
+            responseMessage: mResponse.responseMessage);
+        return Right(mSuccess);
+      }
+      return Left(Failure(
+          MESSAGE: mResponse!.responseMessage,
+          STATUS: false,
+          DATA: mResponse.responseData != null
+              ? mResponse.responseData as Object
+              : ""));
+    } catch (e) {
+      return Left(Failure(
+          STATUS: false,
+          MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING,
+          DATA: ""));
+    }
+  }
 }

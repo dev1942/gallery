@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:otobucks/View/CheckOut/Views/checkout_screen.dart';
 import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart';
+import 'package:otobucks/View/MyBookings/view/tabs_views/dispute_details_view.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
 import '../../../../../global/app_colors.dart';
@@ -17,10 +18,9 @@ import '../../../../global/global.dart';
 import '../../controller/mybookings_controller.dart';
 import '../../widget/BlinkingIcon.dart';
 import '../view_booking_screen.dart';
-import 'open_dispute_screen.dart';
 
-class InProgressFragment extends GetView<MyBookingsController> {
-  const InProgressFragment({
+class DisputeBookings extends GetView<MyBookingsController> {
+  const DisputeBookings({
     Key? key,
   }) : super(key: key);
 
@@ -48,8 +48,8 @@ class InProgressFragment extends GetView<MyBookingsController> {
                         itemBuilder: (BuildContext contextM, index) {
                           controller.pendingsbookinglist = snapshot.data!.result!.reversed.toList();
                           var data =
-                              controller.isSearching == false ? controller.pendingsbookinglist![index] : controller.filteredBookingList![index];
-                          if (data.status == "inProgress" && data.provider!=null) {
+                          controller.isSearching == false ? controller.pendingsbookinglist![index] : controller.filteredBookingList![index];
+                          if (data.status == "completed" && data.provider!=null) {
                             return Padding(
                               padding: const EdgeInsets.symmetric(vertical: 6.0),
                               child: Container(
@@ -98,14 +98,13 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                                   child: Padding(
                                                     padding: const EdgeInsets.only(right: 8.0),
                                                     child: Text(
-                                                      Constants.TXT_OPEN_DISPUTE.tr,
+                                                      Constants.TXT_VIEW_DISPUTE.tr,
                                                       style: AppStyle.textViewStyleSmall(
-                                                          context: context, color: AppColors.colorCancelledText, fontSizeDelta: 0, fontWeightDelta: 0),
+                                                          context: context, color: AppColors.colorTextBlue2, fontSizeDelta: 0, fontWeightDelta: 0),
                                                     ),
                                                   )),
                                               onTap: () {
-                                                Logger().i("Boking ID is${data.id!}");
-                                                Get.to(()=>OpenDisputeView(bookingID: data.id!,));
+                                               Get.to(()=>DisputeDetailsView());
                                               }),
                                         ],
                                       ),
@@ -173,34 +172,148 @@ class InProgressFragment extends GetView<MyBookingsController> {
                                               mainAxisAlignment: MainAxisAlignment.start,
                                               //     : MainAxisAlignment.center,
                                               children: [
-                                                ///on click view estimation
-                                                InkWell(
-                                                  child: Container(
-                                                      width: Get.width / 2.6,
+
+                                                data.estimation?.isOfferCreated == false
+                                                    ? Expanded(
+                                                  child: InkWell(
+                                                    child: Container(
                                                       padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 5.0),
-                                                      decoration: AppViews.getGradientBoxDecoration(mBorderRadius: 2),
+                                                      decoration: BoxDecoration(
+                                                        color: data.estimation?.offerStatus == "accepted"
+                                                            ? AppColors.colorSuccessBackground
+                                                            : data.estimation?.offerStatus == "declined"
+                                                            ? AppColors.colorCancelledBackground
+                                                            : AppColors.colorPendingBackground,
+                                                        borderRadius: BorderRadius.circular(2.0),
+                                                        border: Border.all(
+                                                          width: 1,
+                                                          color: data.estimation?.offerStatus == "accepted"
+                                                              ? AppColors.colorSuccessBorder
+                                                              : data.estimation?.offerStatus == "declined"
+                                                              ? AppColors.colorCancelledBorder
+                                                              : AppColors.colorPendingBorder,
+                                                        ),
+                                                      ),
                                                       child: Center(
                                                         child: Text(
-                                                          "Balance Payment".tr.toUpperCase(),
-                                                          style: TextStyle(color: AppColors.colorWhite, fontSize: 12, fontWeight: FontWeight.w500),
+                                                          "${data.estimation?.offerStatus}".tr.toUpperCase(),
+                                                          style: TextStyle(
+                                                            color: data.estimation?.offerStatus == "accepted"
+                                                                ? AppColors.colorSuccessText
+                                                                : data.estimation?.offerStatus == "declined"
+                                                                ? AppColors.colorCancelledText
+                                                                : AppColors.colorPendingText,
+                                                            fontSize: 10,
+                                                            fontWeight: FontWeight.w500,
+                                                          ),
                                                         ),
-                                                      )),
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) => CheckoutScreen(
-                                                                  isFullyPay: true,
-                                                                  bookingID: data.id,
-                                                                  amount: data.paymentCompleted.toString(),
-                                                                  previousAmount: data.totalprice.toString(),
-                                                                )));
+                                                      ),
+                                                    ),
+                                                    onTap: () {
+                                                      showDialog<String>(
+                                                          context: Get.context!,
+                                                          builder: (BuildContext context) => AlertDialog(
+                                                            title: const Text(
+                                                              'Offering Amount',
+                                                              textAlign: TextAlign.center,
+                                                              style: TextStyle(fontWeight: FontWeight.bold),
+                                                            ),
+                                                            content: Column(
+                                                              mainAxisSize: MainAxisSize.min,
+                                                              children: [
+                                                                Text(
+                                                                  "${data.estimation?.offerAmount} AED".tr,
+                                                                  style: AppStyle.textViewStyleSmall(
+                                                                      context: context,
+                                                                      color: AppColors.colorBlack,
+                                                                      fontSizeDelta: 8,
+                                                                      fontWeightDelta: 2),
+                                                                ),
+                                                                SizedBox(
+                                                                  child: Text(
+                                                                    // " dsfjlasd ladjfl klfjl;asf l;sa lsjflks jlkdf lkdfkadjlfjal; fkdalkdf dlkfj;la sd",
+                                                                    "${data.estimation?.offerNote}",
+                                                                    textAlign: TextAlign.center,
+                                                                    style: AppStyle.textViewStyleSmall(
+                                                                        context: context,
+                                                                        color: AppColors.colorBlack,
+                                                                        fontSizeDelta: 3,
+                                                                        fontWeightDelta: -1),
+                                                                  ),
+                                                                ),
+                                                                InkWell(
+                                                                  onTap: () {
+                                                                    Navigator.pop(context);
+                                                                  },
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: Container(
+                                                                      decoration: BoxDecoration(
+                                                                        gradient: LinearGradient(
+                                                                          begin: Alignment.topCenter,
+                                                                          end: Alignment.bottomCenter,
+                                                                          colors: [
+                                                                            AppColors.colorBlueEnd,
+                                                                            AppColors.colorBlueStart,
+                                                                          ],
+                                                                        ),
+                                                                        borderRadius: BorderRadius.circular(5.0),
+                                                                      ),
+                                                                      child: Padding(
+                                                                        padding: const EdgeInsets.symmetric(
+                                                                            horizontal: 30.0, vertical: 5.0),
+                                                                        child: Text('Close'.tr,
+                                                                            textAlign: TextAlign.center,
+                                                                            style: AppStyle.textViewStyleNormalButton(
+                                                                                context: context,
+                                                                                color: Colors.white,
+                                                                                fontSizeDelta: 0,
+                                                                                fontWeightDelta: 2)),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ));
 
-                                                    // gotoViewEstimation(
-                                                    //     AllBookingsModel(),
-                                                    //     false);false
-                                                  },
-                                                ),
+                                                      // if (data.estimation?.offerStatus == 'submitted') {
+                                                      //   gotoViewEstimation(data, false);
+                                                      // }
+                                                    },
+                                                  ),
+                                                )
+                                                    : const SizedBox()
+
+                                                ///Dispute status
+                                                // InkWell(
+                                                //   child: Container(
+                                                //       width: Get.width / 2.6,
+                                                //       padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 5.0),
+                                                //       decoration: AppViews.getGradientBoxDecoration(mBorderRadius: 2),
+                                                //       child: Center(
+                                                //         child: Text(
+                                                //           "Balance Payment".tr.toUpperCase(),
+                                                //           style: TextStyle(color: AppColors.colorWhite, fontSize: 12, fontWeight: FontWeight.w500),
+                                                //         ),
+                                                //       )),
+                                                //   onTap: () {
+                                                //     Navigator.push(
+                                                //         context,
+                                                //         MaterialPageRoute(
+                                                //             builder: (context) => CheckoutScreen(
+                                                //               isFullyPay: true,
+                                                //               bookingID: data.id,
+                                                //               amount: data.paymentCompleted.toString(),
+                                                //               previousAmount: data.totalprice.toString(),
+                                                //             )));
+                                                //
+                                                //     // gotoViewEstimation(
+                                                //     //     AllBookingsModel(),
+                                                //     //     false);false
+                                                //   },
+                                                // ),,
+                                                ,
                                                 const SizedBox(
                                                   width: 15,
                                                 ),
@@ -266,10 +379,10 @@ class InProgressFragment extends GetView<MyBookingsController> {
   Widget userNameWidget({String? userName}) {
     return SizedBox(
         child: Text(
-      userName ?? "".tr,
-      maxLines: 1,
-      style: AppStyle.textViewStyleNormalBodyText2(context: Get.context!, color: AppColors.colorBlack2, fontSizeDelta: 1, fontWeightDelta: 1),
-    ));
+          userName ?? "".tr,
+          maxLines: 1,
+          style: AppStyle.textViewStyleNormalBodyText2(context: Get.context!, color: AppColors.colorBlack2, fontSizeDelta: 1, fontWeightDelta: 1),
+        ));
   }
 
   Widget imageWidget({String? imagePath}) {
@@ -291,8 +404,8 @@ class InProgressFragment extends GetView<MyBookingsController> {
     return Container(
         alignment: Alignment.centerLeft,
         child:
-            // "AED ${mEstimatesModel.grandTotal}/-",
-            GradientText(
+        // "AED ${mEstimatesModel.grandTotal}/-",
+        GradientText(
           "AED $price /-".tr,
           // Global.checkNull(mEstimatesModel
           //     .source
