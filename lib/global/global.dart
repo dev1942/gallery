@@ -568,11 +568,13 @@ class Global {
       for (var countryCode in country_code) {
         CountryCode mCountryCode = CountryCode.fromJson(countryCode);
 
-        if (mCountryCode.name.toLowerCase() == "united arab emirates" ||
-            mCountryCode.name.toLowerCase() == "pakistan" ||
-            mCountryCode.name.toLowerCase() == "india" ||
-            mCountryCode.name.toLowerCase() == "saudi arabia" ||
-            mCountryCode.name.toLowerCase() == "indonesia") {
+        if (mCountryCode.name.toLowerCase() == "united arab emirates"
+            //  ||
+            // mCountryCode.name.toLowerCase() == "pakistan" ||
+            // mCountryCode.name.toLowerCase() == "india" ||
+            // mCountryCode.name.toLowerCase() == "saudi arabia" ||
+            // mCountryCode.name.toLowerCase() == "indonesia"
+            ) {
           alCountryCode.add(mCountryCode);
         }
       }

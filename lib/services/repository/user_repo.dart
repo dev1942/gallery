@@ -81,6 +81,7 @@ class UserRepo {
     }
 
     try {
+      log(RequestBuilder.API_UPDATE_USER);
       String response = await ReqListenerMultiPart.fetchPost(
           strUrl: RequestBuilder.API_UPDATE_USER, requestParams: requestParams, requestParamsImages: requestParamsImages, mReqType: mReqType);
       Result? mResponse;

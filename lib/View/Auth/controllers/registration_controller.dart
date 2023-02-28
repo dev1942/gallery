@@ -92,18 +92,15 @@ class RegistrationScreenController extends GetxController {
       Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_SELECT_COUNTRY.tr, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeCountry);
       return false;
-    }
-    // else if (!Global.checkNull(strPhone)) {
-    //   Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_NUMBER.tr, toastType: TOAST_TYPE.toastError);
-    //   FocusScope.of(context).requestFocus(mFocusNodePhone);
-    //   return false;
-    // }
-    // else if (Global.checkNull(strPhone) && !Global.checkValidMobile(strPhone)) {
-    //   Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER.tr, toastType: TOAST_TYPE.toastError);
-    //   FocusScope.of(context).requestFocus(mFocusNodePhone);
-    //   return false;
-    // }
-    else if (!Global.checkNull(strPassword)) {
+    } else if (!Global.checkNull(strPhone)) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_NUMBER.tr, toastType: TOAST_TYPE.toastError);
+      FocusScope.of(context).requestFocus(mFocusNodePhone);
+      return false;
+    } else if (Global.checkNull(strPhone) && !Global.checkValidMobile(strPhone)) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER.tr, toastType: TOAST_TYPE.toastError);
+      FocusScope.of(context).requestFocus(mFocusNodePhone);
+      return false;
+    } else if (!Global.checkNull(strPassword)) {
       Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_PASSWORD.tr, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodePassword);
       return false;
@@ -138,7 +135,7 @@ class RegistrationScreenController extends GetxController {
     requestParams[PARAMS.PARAM_LASTNAME] = strLastName;
     requestParams[PARAMS.PARAM_EMAIL] = strMobileEmail;
     requestParams[PARAMS.PARAM_COUNTRY] = strCountry;
-    requestParams[PARAMS.PARAM_PHONE] = strMobileNumber.isEmpty ? "+97100000000" : strMobileNumber;
+    requestParams[PARAMS.PARAM_PHONE] = strMobileNumber.isEmpty ? "100000000" : strMobileNumber;
     requestParams[PARAMS.PARAM_PASSWORD] = strPassword;
     requestParams[PARAMS.PARAM_PASSWORD_CONFIRM] = strPassword;
     requestParams[PARAMS.PARAM_HEAREDABOUTUS] = strHowHear;

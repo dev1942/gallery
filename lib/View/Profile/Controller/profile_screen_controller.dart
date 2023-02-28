@@ -199,6 +199,7 @@ class ProfileScreenController extends GetxController {
         requestParamsImage[PARAMS.PARAM_IMAGE] = imgProfilePic;
       }
     }
+    inspect(requestParams);
 
     var categories = await UserRepo().updateUser(requestParams, requestParamsImage, ReqType.patch);
     isShowLoader = false;
@@ -210,6 +211,7 @@ class ProfileScreenController extends GetxController {
       getProfile();
     });
   }
+
   //update image
   updateImage(BuildContext context) async {
     isShowLoader = true;
