@@ -17,6 +17,7 @@ import '../../../../../global/app_dimens.dart';
 import '../../../../../global/app_style.dart';
 import '../../../../../global/app_views.dart';
 import '../../../../global/constants.dart';
+import '../../../../global/enum.dart';
 import '../../../../global/global.dart';
 import '../../controller/mybookings_controller.dart';
 import '../view_booking_screen.dart';
@@ -124,8 +125,8 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                     //---------------UserName
                                                     Expanded(
                                                       child: userNameWidget(
-                                                          userName: "${data.customer?.firstName}"
-                                                              "${data.customer?.lastName} "),
+                                                          userName: "${data.provider?.firstName}"+" "+
+                                                              "${data.provider?.lastName} "),
                                                     ),
                                                   ],
                                                 ),
@@ -197,7 +198,8 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                     Expanded(
                                                       child: InkWell(
                                                         onTap: () {
-                                                          data.rated! ? null : displayTextInputDialog(context, data.id!);
+                                                          data.rated! ?                       Global.showToastAlert(context: context, strTitle: "Rated", strMsg: "you gave rating to provider", toastType: TOAST_TYPE.toastSuccess)
+                                                          : displayTextInputDialog(context, data.id!);
                                                         },
                                                         child: Container(
                                                             padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),

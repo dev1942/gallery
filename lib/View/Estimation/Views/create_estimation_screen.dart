@@ -304,10 +304,11 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
             ),
             //...................cars text
 
-            child: Text(
+            child:
+            carNamesList!=[]?Text(
               "Car".tr,
               style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
-            ),
+            ):Text("You have no added car details yet. Go to profile first and add one.",style: TextStyle(color: Colors.red),),
           ),
           //..................drop down car list..........................
           Container(
@@ -317,19 +318,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
               right: AppDimens.dimens_14,
             ),
             child:
-                //     AppViews.defaultDropDownInPutFieldButton(
-                //
-                //         itemsList:
-                //
-                // carNamesList??[]
-                //     // [
-                //     //   "Suzuki",
-                //     //   "Tesla",
-                //     //   "Tesla 2",
-                //     // ]
-                //
-                //         , selectedValue:  , hintText: "Choose Your Car"),
-
+carNamesList!=[]?
                 DropdownButtonFormField2(
               buttonHeight: 45,
               decoration: InputDecoration(
@@ -381,7 +370,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                 selectedValue = value.toString();
                 setState(() {});
               },
-            ),
+            ):SizedBox()
           ),
 
           Container(

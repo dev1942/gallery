@@ -11,19 +11,23 @@ class AnalyticsDataModelResult {
 
   int? serviceBookings;
   int? promotionBookings;
+  int? invites;
 
   AnalyticsDataModelResult({
     this.serviceBookings,
     this.promotionBookings,
+    this.invites
   });
   AnalyticsDataModelResult.fromJson(Map<String, dynamic> json) {
     serviceBookings = json['serviceBookings']?.toInt();
     promotionBookings = json['promotionBookings']?.toInt();
+    invites = json['totalInvites']?.toInt();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['serviceBookings'] = serviceBookings;
     data['promotionBookings'] = promotionBookings;
+    data['totalInvites'] = invites;
     return data;
   }
 }

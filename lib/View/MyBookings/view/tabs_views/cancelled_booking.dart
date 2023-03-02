@@ -100,8 +100,8 @@ class CancelledFragment extends GetView<MyBookingsController> {
                                                     //---------------UserName
                                                     Expanded(
                                                       child: userNameWidget(
-                                                          userName: "${data.customer?.firstName}"
-                                                              "${data.customer?.lastName} "),
+                                                          userName: "${data.provider?.firstName}" " "
+                                                              "${data.provider?.lastName} "),
                                                     ),
                                                   ],
                                                 ),
