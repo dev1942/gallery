@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
@@ -41,8 +43,8 @@ class AppViews {
           // });
           LatLng position = await Global.getCurrentLocation(context: Get.context!);
           HashMap<String, Object> requestParams = HashMap();
-          requestParams[PARAMS.PARAM_LONGITUDE]=position.latitude;
-          requestParams[PARAMS.PARAM_LATITUDE]=position.longitude;
+          requestParams[PARAMS.PARAM_LONGITUDE] = position.latitude;
+          requestParams[PARAMS.PARAM_LATITUDE] = position.longitude;
           var signInEmail = await MyProfileRepository().sendEmergency(requestParams);
           signInEmail.fold((failure) {
             Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
@@ -131,7 +133,7 @@ class AppViews {
                       style: AppStyle.textViewStyleLarge(context: mContext, color: AppColors.colorWhite, fontWeightDelta: 2)),
                   margin: const EdgeInsets.only(bottom: 1),
                 ),
-                Text("welcome to Otobucks".tr,
+                Text("welcome to outobucks".tr,
                     textScaleFactor: Global.getScalFactor(),
                     softWrap: true,
                     maxLines: 1,
