@@ -627,6 +627,7 @@ class EstimationDetailsPDFScreenState
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child: Container(
                           alignment: Alignment.center,
+                          height: AppDimens.dimens_25,
                           child: Text(
                               allBookingsModel.estimation!.serviceTax!
                                   .roundToDouble()
@@ -636,7 +637,6 @@ class EstimationDetailsPDFScreenState
                                   color: AppColors.colorBlack2,
                                   fontWeightDelta: 0,
                                   fontSizeDelta: -2)),
-                          height: AppDimens.dimens_25,
                         )),
                   ]),
                   TableRow(
