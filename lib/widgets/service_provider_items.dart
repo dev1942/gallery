@@ -44,6 +44,7 @@ class ServiceProviderRated extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+
                     margin: const EdgeInsetsDirectional.only(
                       end: AppDimens.dimens_10,
                     ),
