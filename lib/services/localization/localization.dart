@@ -33,6 +33,7 @@ class LocaleLanguages extends Translations {
           'REGISTER': 'تسجيل',
           'Already Have Account?': 'لديك حساب بالفعل؟',
           'welcome to outobucks': 'مرحبا بكم في OTOBUCKS',
+          'location_denied': 'السماح بإذن الموقع في الإعدادات وحاول مرة أخرى',
           ' Hello ': 'مرحبًا',
           'One time password': 'كلمة السر لمرة واحدة',
           // ignore: prefer_adjacent_string_concatenation
@@ -183,6 +184,7 @@ class LocaleLanguages extends Translations {
           'Give rating': 'إعطاء التقييم',
           'Reschedule': 'إعادة الجدولة',
           'Please enter First name.': 'الرجاء إدخال الاسم الأول.',
+          'Please enter Last name.': 'الرجاء إدخال الاسم الأخير.',
           'Please enter mobile number.': 'الرجاء إدخال رقم الهاتف المحمول.',
           'Please enter Email.': 'الرجاء إدخال البريد الإلكتروني.',
           'Please enter valid Email.': 'الرجاء إدخال بريد إلكتروني صحيح.',
@@ -195,6 +197,7 @@ class LocaleLanguages extends Translations {
           'The vendor will get back to you soon.': 'The vendor will contact you soon on your registered mobile number',
           'Search providers': 'Search providers',
           'Please enter First name.': 'Please enter First name.',
+          'Please enter Last name.': 'Please enter Last name.',
           'Please enter mobile number.': 'Please enter mobile number.',
           'Please enter Email.': 'Please enter Email.',
           'Please enter valid Email.': 'Please enter valid Email.',
@@ -285,6 +288,7 @@ class LocaleLanguages extends Translations {
           'REGISTER': 'REGISTER',
           'Already Have Account?': 'Already Have Account?',
           'welcome to outobucks': 'WELCOME TO OTOBUCKS',
+          'location_denied': 'Allow location permission in settings and try again',
           ' Hello ': ' Hello ',
           'One time password': 'ONE TIME PASSWORD',
           // ignore: prefer_adjacent_string_concatenation

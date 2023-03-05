@@ -185,10 +185,10 @@ class HomeScreenController extends GetxController {
         break;
       case PageType.whatsapp:
         currentPageType = PageType.home;
-        navigationPage = const DashboardFragment();
-        indexM = 0;
+        navigationPage = const CustomerSupportView();
+        indexM = 1;
         strTitle = ' Hello ';
-        await launchUrl(Uri.parse('https://wa.me/+971542457866'), mode: LaunchMode.externalApplication);
+        // await launchUrl(Uri.parse('https://wa.me/+971542457866'), mode: LaunchMode.externalApplication);
         break;
       case PageType.bookingHistory:
         log("Booking history");
