@@ -25,9 +25,11 @@ class AnalyticsFragment extends StatefulWidget {
 class AnalyticsFragmentState extends State<AnalyticsFragment> {
   var controller = Get.put(AnalyticsController());
   var staticscontroller = Get.put(StaticesAnalyticsController());
-double promotionBookings=0;
-double serviceBookings=0;
-double invites=0;
+  double promotionBookings = 0;
+  double serviceBookings = 0;
+  double totalAmountSpent = 0;
+  double invites = 0;
+
   @override
   void initState() {
     controller.getAllData();
@@ -41,14 +43,16 @@ double invites=0;
     log("------my data-----1--------");
     var apidata = await staticscontroller.fetchdata();
     log("------my data--------2-----");
-   setState(() {
-     promotionBookings= double.parse(apidata!.result!.promotionBookings!.toString());
-     serviceBookings=double.parse(apidata.result!.serviceBookings!.toString());
-     //invites=double.parse(apidata.result!.invites!.toString());
-     log(promotionBookings.toString());
-     log(serviceBookings.toString());
-   });
-
+    setState(() {
+      promotionBookings =
+          double.parse(apidata!.result!.promotionBookings!.toString());
+      serviceBookings =
+          double.parse(apidata.result!.serviceBookings!.toString());
+      invites=double.parse(apidata.result!.invites!.toString());
+      totalAmountSpent=double.parse(apidata.result!.totalAmountSpent!.toString());
+      log(promotionBookings.toString());
+      log(serviceBookings.toString());
+    });
   }
 
   @override
@@ -59,6 +63,7 @@ double invites=0;
       Colors.cyan.shade400,
       AppColors.colorPrimary,
       Colors.blue.shade500,
+      AppColors.colorYellowShade
     ];
     widgetM = SingleChildScrollView(
       child: Column(
@@ -209,8 +214,9 @@ double invites=0;
                 dataMap: //dataMap,
                     {
                   "Promotion Bookings": promotionBookings.toDouble(),
-                  "Service Bookings":serviceBookings.toDouble(),
-                  "Invites": invites,
+                  "Service Bookings": serviceBookings.toDouble(),
+                  "Invites": invites.toDouble(),
+                      "Amount Spent":totalAmountSpent.toDouble()/100.0
                 },
                 animationDuration: const Duration(milliseconds: 800),
                 chartLegendSpacing: 100,

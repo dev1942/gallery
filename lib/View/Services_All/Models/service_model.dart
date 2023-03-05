@@ -152,7 +152,7 @@ class ServiceModel {
   getProviderImage() {
     // ignore: unnecessary_null_comparison
     if (mServiceProviderModel != null) {
-      return mServiceProviderModel.coverImage;
+      return mServiceProviderModel.image;
     } else {
       return "";
     }

@@ -51,7 +51,7 @@ class ServiceProviderRated extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                       child: NetworkImageCustom(
-                          image:   mServiceModel.mServiceProviderModel.coverImage, fit: BoxFit.fill, height: AppDimens.dimens_40, width: AppDimens.dimens_40),
+                          image:   mServiceModel.alImages.first, fit: BoxFit.fill, height: AppDimens.dimens_40, width: AppDimens.dimens_40),
                     ),
                   ),
                   Expanded(
