@@ -10,8 +10,10 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:otobucks/View/Chat/Views/chat_detail_screen.dart';
 import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart';
+import 'package:otobucks/services/repository/booking_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../widgets/image_selection_bottom_sheet.dart';
 import '../../Home/Controllers/home_screen_controller.dart';
 import '../../../global/constants.dart';
 import '../../../global/enum.dart';
@@ -31,8 +33,31 @@ class MyBookingsController extends GetxController {
   bool chatNowLoading = false;
   bool isShowLoader = false;
   String chatNowRoomId = '';
+  TextEditingController disputeTitleController=TextEditingController();
+  TextEditingController disputeDescriptionController=TextEditingController();
   bool isSearching = false;
   bool isSearchingTypePromotion = false;
+  String selectDisputeImage = "";
+  //Select Image
+  selectProfilePic(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return ImageSelection(
+            isCropImage: true,
+            mImagePath: (String strPath) {
+              selectDisputeImage = strPath;
+              update();
+              //updateImage(Get.context!);
+            },
+            mMaxHeight: 1024,
+            mMaxWidth: 1024,
+            mRatioX: 1.0,
+            mRatioY: 1.0,
+          );
+        });
+  }
   @override
   void onInit() {
     super.onInit();
@@ -250,7 +275,10 @@ class MyBookingsController extends GetxController {
 
   Future<void> selectDate(BuildContext context) async {
     final DateTime? picked =
-        await showDatePicker(context: context, initialDate: selectedDate, firstDate: DateTime(2015, 8), lastDate: DateTime(2101));
+    await showDatePicker(context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate) {
       selectedDate = picked;
 
@@ -264,5 +292,40 @@ class MyBookingsController extends GetxController {
       searchbyDatePromotion(datePickerController.text);
       update();
     }
+
+
+  }
+  //openDispute method
+  openDispute(String bookingID) async {
+   if(disputeDescriptionController.text.isNotEmpty&&
+   disputeDescriptionController.text.isNotEmpty&&
+   selectDisputeImage.isNotEmpty
+   ){
+     HashMap<String, Object> requestParams = HashMap();
+     requestParams[PARAMS.PARAM_DISPUTE_TITLE] = disputeTitleController.text;
+     requestParams[PARAMS.PARAM_DISPUTE_DESC] =
+         disputeDescriptionController.text;
+     requestParams[PARAMS.PARAM_DISPUTE_IMAGE] = selectDisputeImage;
+     var signInEmail = await BookingRepo().openDispute(requestParams);
+     signInEmail.fold((failure) {
+       Global.showToastAlert(context: Get.context!,
+           strTitle: "",
+           strMsg: failure.MESSAGE,
+           toastType: TOAST_TYPE.toastError);
+     }, (mResult) {
+       Logger().i("Success");
+       Global.showToastAlert(context: Get.context!,
+           strTitle: "",
+           strMsg: mResult.responseMessage,
+           toastType: TOAST_TYPE.toastSuccess);
+     });
+   }
+   else if(  bookingID==null){
+     Global.showToastAlert(context: Get.context!, strTitle: "Error", strMsg: "Booking not found", toastType: TOAST_TYPE.toastError);
+
+   }
+   else{
+     Global.showToastAlert(context: Get.context!, strTitle: "Error", strMsg: "Please fill all fields", toastType: TOAST_TYPE.toastError);
+   }
   }
 }

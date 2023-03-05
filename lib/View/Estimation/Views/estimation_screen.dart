@@ -11,6 +11,7 @@ import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/View/MyBookings/controller/estimation_screen_controller.dart';
+import '../../MyBookings/view/tabs_views/disputes_bookings.dart';
 import '../../MyBookings/view/tabs_views/promotions_booking.dart';
 
 class EstimationFragment extends StatefulWidget {
@@ -29,7 +30,7 @@ class EstimationFragmentState extends State<EstimationFragment>
 
   @override
   void initState() {
-    controller.tabController = TabController(length: 5, vsync: this);
+    controller.tabController = TabController(length: 6, vsync: this);
     controller.activeTabIndex = 0;
     super.initState();
   }
@@ -54,6 +55,8 @@ class EstimationFragmentState extends State<EstimationFragment>
                       ),
                       Container(
                         alignment: Alignment.center,
+                        margin: const EdgeInsets.only(
+                            top: AppDimens.dimens_10, left: AppDimens.dimens_3),
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
@@ -98,6 +101,10 @@ class EstimationFragmentState extends State<EstimationFragment>
                                       title: "Cancelled",
                                       activeindex: value.activeTabIndex,
                                       id: 4),
+                                  tabButtons(
+                                      title: "Dispute",
+                                      activeindex: value.activeTabIndex,
+                                      id: 5),
                                 ],
                                 controller: value.tabController,
                               ),
@@ -224,8 +231,6 @@ class EstimationFragmentState extends State<EstimationFragment>
                             ],
                           ),
                         ),
-                        margin: const EdgeInsets.only(
-                            top: AppDimens.dimens_10, left: AppDimens.dimens_3),
                       ),
                     ],
                   ),
@@ -239,6 +244,7 @@ class EstimationFragmentState extends State<EstimationFragment>
                         CompletedFragment(),
                         const PromotionsBookingView(),
                         const CancelledFragment(),
+                        const DisputeBookings(),
                       ],
                     ),
                   ), // Expanded(child: Container()),

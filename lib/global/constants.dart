@@ -37,7 +37,11 @@ class PARAMS {
       PARAM_ADDRESS = 'address',
       PARAM_IMAGE = 'image',
       PARAM_VOICE_NOTE = 'voiceNote',
-      PARAM_VIDEO = 'video';
+      PARAM_VIDEO = 'video',
+  PARAM_DISPUTE_IMAGE = 'disputeimage',
+  PARAM_DISPUTE_TITLE = 'title',
+  PARAM_DISPUTE_CUSTOMER = 'customer',
+  PARAM_DISPUTE_DESC = 'description';
 
   // update Profile
   static const String
@@ -235,6 +239,8 @@ class Constants {
       TXT_UPDATE_DETAILS = "UPDATE DETAILS",
       TXT_PROFILE = "Profile",
       TXT_VIEW_BOOKING = "View Booking",
+      TXT_VIEW_DISPUTE = "View Dispute",
+      TXT_OPEN_DISPUTE = "Open Dispute",
       TXT_CHAT_NOW = "Chat Now",
       TXT_WRITE_A_MESSAGE = "Write a message...",
       TXT_RATE_THIS_SERVICE = "Rate this service",
@@ -399,6 +405,8 @@ class Constants {
 
   static const String STR_FIRST_NAME = 'First Name',
       STR_LAST_NAME = 'Last Name',
+      STR_DISPUTE_TITLE = 'Enter Dispute Title',
+      STR_DISPUTE_Desc = 'Enter Dispute Description',
       STR_EMAIL = 'Email',
       STR_SEARCH = 'Search',
       STR_SEARCH_SUB_CAT = 'Search sub categories',

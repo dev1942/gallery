@@ -627,16 +627,16 @@ class EstimationDetailsPDFScreenState
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child: Container(
                           alignment: Alignment.center,
-                          child: Text(
-                              allBookingsModel.estimation!.serviceTax!
+                          height: AppDimens.dimens_25,
+                          child: Text(allBookingsModel.estimation!.serviceTax!=null?
+                              allBookingsModel.estimation!.serviceTax
                                   .roundToDouble()
-                                  .toString(),
+                                  .toString():"",
                               style: AppStyle.textViewStyleSmall(
                                   context: context,
                                   color: AppColors.colorBlack2,
                                   fontWeightDelta: 0,
                                   fontSizeDelta: -2)),
-                          height: AppDimens.dimens_25,
                         )),
                   ]),
                   TableRow(
@@ -701,7 +701,7 @@ class EstimationDetailsPDFScreenState
                   right: AppDimens.dimens_20),
               child: Row(
                 children: [
-                  allBookingsModel.estimation!.estimationImage!.isNotEmpty? Container(
+                  allBookingsModel.estimation!.estimationImage!=null? Container(
 
                     height:50,
                     width: 100,
@@ -815,33 +815,45 @@ class EstimationDetailsPDFScreenState
                           if (widget
                                   .allBookingsModel.estimation?.offerStatus ==
                               "pending") {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CheckoutScreen(
-                                          isPartialPay: true,
-                                          bookingID: allBookingsModel.id,
-                                          amount: allBookingsModel
-                                              .estimation!.grandTotal
-                                              .toString(),
-                                          previousAmount: allBookingsModel
-                                              .estimation!.subTotal
-                                              .toString(),
-                                        )));
+                            if(allBookingsModel
+                                .estimation!.grandTotal!=null){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CheckoutScreen(
+                                        isPartialPay: true,
+                                        bookingID: allBookingsModel.id,
+                                        amount: allBookingsModel
+                                            .estimation!.grandTotal
+                                            .toString(),
+                                        previousAmount: allBookingsModel
+                                            .estimation!.subTotal
+                                            .toString(),
+                                      )));
+                            }else{
+                              Global.showToastAlert(context: context, strTitle: "Amount Undefined", strMsg: "Amount provided is null for transaction", toastType: TOAST_TYPE.toastError);
+
+                            }
                           }else{
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CheckoutScreen(
-                                      isPartialPay: true,
-                                      bookingID: allBookingsModel.id,
-                                      amount: allBookingsModel
-                                          .estimation!.grandTotal
-                                          .toString(),
-                                      previousAmount: allBookingsModel
-                                          .estimation!.subTotal
-                                          .toString(),
-                                    )));
+                            if(allBookingsModel
+                                .estimation!.grandTotal!=null){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CheckoutScreen(
+                                        isPartialPay: true,
+                                        bookingID: allBookingsModel.id,
+                                        amount: allBookingsModel
+                                            .estimation!.grandTotal
+                                            .toString(),
+                                        previousAmount: allBookingsModel
+                                            .estimation!.subTotal
+                                            .toString(),
+                                      )));
+                            }
+                            else{
+                              Global.showToastAlert(context: context, strTitle: "Amount Undefined", strMsg: "Amount provided is null for transaction", toastType: TOAST_TYPE.toastError);
+                            }
                           }
                           // Navigator.push(
                           //     context,

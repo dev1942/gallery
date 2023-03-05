@@ -20,14 +20,10 @@ class GivenRatingController extends GetxController {
   getRating(BuildContext context) async {
     mShowData.value = ShowData.showLoading;
     update();
-
     HashMap<String, Object> requestParams = HashMap();
-
     var categories = await RatingRepo().getRatingsIndividual(requestParams, RatingType.given, Get.find<HomeScreenController>().userId);
-
     categories.fold((failure) {
       Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
-
       mShowData.value = ShowData.showNoDataFound;
       update();
     }, (mResult) {

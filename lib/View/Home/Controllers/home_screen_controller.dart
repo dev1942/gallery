@@ -114,7 +114,7 @@ class HomeScreenController extends GetxController {
 
       case PageType.myProfile:
         navigationPage = const MyProfileFragment();
-        indexM = 2;
+        indexM = 3;
         strTitle = Constants.TXT_PROFILE;
         break;
       case PageType.estimations:
@@ -192,6 +192,9 @@ class HomeScreenController extends GetxController {
         break;
       case PageType.bookingHistory:
         log("Booking history");
+        break;
+      case PageType.deleteAccount:
+        // TODO: Handle this case.
         break;
     }
 

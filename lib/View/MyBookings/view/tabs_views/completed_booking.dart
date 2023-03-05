@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart';
 import 'package:otobucks/View/MyBookings/controller/estimation_screen_controller.dart';
 import 'package:otobucks/View/Estimation/Views/estimation_invoice_screen.dart';
@@ -16,9 +17,11 @@ import '../../../../../global/app_dimens.dart';
 import '../../../../../global/app_style.dart';
 import '../../../../../global/app_views.dart';
 import '../../../../global/constants.dart';
+import '../../../../global/enum.dart';
 import '../../../../global/global.dart';
 import '../../controller/mybookings_controller.dart';
 import '../view_booking_screen.dart';
+import 'open_dispute_screen.dart';
 
 class CompletedFragment extends GetView<MyBookingsController> {
   CompletedFragment({
@@ -48,7 +51,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                         itemCount: controller.isSearching == true ? controller.filteredBookingList!.length : snapshot.data?.result?.length,
                         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                         itemBuilder: (BuildContext contextM, index) {
-                          List inProcgressList = snapshot.data!.result!.reversed.toList();
+                          var inProcgressList = snapshot.data!.result!.reversed.toList();
                           var data = controller.isSearching == false ? inProcgressList[index] : controller.filteredBookingList![index];
                           if ((data.status == "completed" && data.deleted == false)&& data.provider!=null) {
                             log("data rated-------");
@@ -74,9 +77,6 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                           Column(
                                             children: [
                                               imageWidget(imagePath: data.source?.image?.first),
-                                              const SizedBox(
-                                                height: AppDimens.dimens_12,
-                                              ),
 
                                               /// onclick of view booking
                                               InkWell(
@@ -94,9 +94,25 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                     Get.to(ViewBookingEstimation(status: "completed", mEstimatesModel: data, isPending: false));
                                                   } else {
                                                     Get.to(ViewBookingEstimation(mEstimatesModel: data));
+                                                    Logger().i("Boking ID is${data.id!}");
                                                   }
                                                 },
                                               ),
+                                              InkWell(
+                                                  child: Container(
+                                                      alignment: Alignment.center,
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.only(right: 8.0),
+                                                        child: Text(
+                                                          Constants.TXT_OPEN_DISPUTE.tr,
+                                                          style: AppStyle.textViewStyleSmall(
+                                                              context: context, color: AppColors.colorCancelledText, fontSizeDelta: 0, fontWeightDelta: 0),
+                                                        ),
+                                                      )),
+                                                  onTap: () {
+                                                    Logger().i("Boking ID is${data.id!}");
+                                                    Get.to(()=>OpenDisputeView(bookingID:data.id!));
+                                                  }),
                                             ],
                                           ),
                                           addHorizontalSpace(4),
@@ -109,8 +125,8 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                     //---------------UserName
                                                     Expanded(
                                                       child: userNameWidget(
-                                                          userName: "${data.customer?.firstName}"
-                                                              "${data.customer?.lastName} "),
+                                                          userName: "${data.provider?.firstName}"+" "+
+                                                              "${data.provider?.lastName} "),
                                                     ),
                                                   ],
                                                 ),
@@ -182,7 +198,8 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                     Expanded(
                                                       child: InkWell(
                                                         onTap: () {
-                                                          data.rated ? null : displayTextInputDialog(context, data.id);
+                                                          data.rated! ?                       Global.showToastAlert(context: context, strTitle: "Rated", strMsg: "you gave rating to provider", toastType: TOAST_TYPE.toastSuccess)
+                                                          : displayTextInputDialog(context, data.id!);
                                                         },
                                                         child: Container(
                                                             padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
@@ -191,7 +208,7 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                                             child: Center(
                                                               child: GetBuilder<MyBookingsController>(builder: (context) {
                                                                 return Text(
-                                                                  data.rated ? "RATED".tr : "Give rating".tr.toUpperCase(),
+                                                                  data.rated! ? "RATED".tr : "Give rating".tr.toUpperCase(),
                                                                   style:
                                                                       const TextStyle(color: Colors.black, fontSize: 10, fontWeight: FontWeight.w500),
                                                                 );

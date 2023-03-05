@@ -78,19 +78,7 @@ class _HomePageState extends State<HomePage> {
             return Scaffold(
                 key: scaffoldKey,
                 backgroundColor: AppColors.colorWhite,
-                //Get Date Function++++++++++++++++++++++++++++++++++++++++++++
-                // floatingActionButton: FloatingActionButton(
-                //   onPressed: () async {
-                //     log("Test");
-                //     var data = await getDate(
-                //         startDate: DateTime.now().toString(),
-                //         endDate: DateTime.now().toString());
-                //     log(DateTime.now().toString());
-                //     log("::::::::::::::::::::::::::::::: ${data}");
-                //     log(
-                //         "::::::::::::::::::::::::::::::: ${data['result'][0]}");
-                //   },
-                // ),
+
                 appBar: AppViews.initAppBar(
                   icon: constraints.maxWidth < 600 ? null : const Icon(Icons.keyboard_arrow_left),
                   mContext: context,
@@ -131,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                     //   icon: Icons.shopping_basket,
                     // ),
                     TabItem(
-                      icon: Icons.support_agent_outlined,
+                      icon: Icons.chat_bubble,
                     ),
                     TabItem(
                         icon: Icons.notifications,

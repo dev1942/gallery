@@ -339,7 +339,7 @@ class ProfileScreenController extends GetxController {
         backgroundColor: Colors.transparent,
         builder: (context) {
           return ImageSelection(
-            isCropImage: true,
+            isCropImage: false,
             mImagePath: (String strPath) {
               imgProfilePic = strPath;
               update();
