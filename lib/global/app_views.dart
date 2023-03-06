@@ -1,4 +1,7 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_text/circular_text.dart';
@@ -36,21 +39,30 @@ class AppViews {
     if (isShowSOS) {
       actionsList.add(GestureDetector(
         onTap: () async {
-          Logger().i("click");
-          // await LocationHelper.getCurrentLocation(mContext, (p0, p1){
-          //   log("${p0}  ${p1}");
-          // });
-          LatLng position = await Global.getCurrentLocation(context: Get.context!);
-          HashMap<String, Object> requestParams = HashMap();
-          requestParams[PARAMS.PARAM_LONGITUDE]=position.latitude;
-          requestParams[PARAMS.PARAM_LATITUDE]=position.longitude;
-          var signInEmail = await MyProfileRepository().sendEmergency(requestParams);
-          signInEmail.fold((failure) {
-            Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
-          }, (mResult) {
-            Logger().i("Success");
-            Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
-          });
+          try {
+            Logger().i("click");
+            // await LocationHelper.getCurrentLocation(mContext, (p0, p1){
+            //   log("${p0}  ${p1}");
+            // });
+            LatLng position = await Global.getCurrentLocation(context: Get.context!);
+            HashMap<String, Object> requestParams = HashMap();
+            requestParams[PARAMS.PARAM_LONGITUDE] = position.latitude;
+            requestParams[PARAMS.PARAM_LATITUDE] = position.longitude;
+            inspect(position);
+            if (position.latitude != 0.0 && position.longitude != 0.0) {
+              var signInEmail = await MyProfileRepository().sendEmergency(requestParams);
+              signInEmail.fold((failure) {
+                // Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+              }, (mResult) {
+                Logger().i("Success");
+                Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
+              });
+            } else {
+              Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: "location_denied".tr, toastType: TOAST_TYPE.toastError);
+            }
+          } catch (e) {
+            Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: "location_denied".tr, toastType: TOAST_TYPE.toastError);
+          }
           //Global.inProgressAlert(mContext);
         },
         child: Padding(
@@ -132,7 +144,7 @@ class AppViews {
                       style: AppStyle.textViewStyleLarge(context: mContext, color: AppColors.colorWhite, fontWeightDelta: 2)),
                   margin: const EdgeInsets.only(bottom: 1),
                 ),
-                Text("welcome to Otobucks".tr,
+                Text("welcome to outobucks".tr,
                     textScaleFactor: Global.getScalFactor(),
                     softWrap: true,
                     maxLines: 1,

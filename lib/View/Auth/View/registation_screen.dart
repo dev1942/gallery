@@ -179,7 +179,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           controller: model.controllerFirstName,
           keyboardType: TextInputType.text,
           hintText: Constants.STR_FIRST_NAME.tr,
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))],
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[a-z A-Z á-ú Á-Ú]')),
+          ],
           obscureText: false,
           onChanged: (String value) {},
           suffixIcon: Image.asset(
@@ -197,7 +199,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             controller: model.controllerLastName,
             keyboardType: TextInputType.text,
             hintText: 'Last Name'.tr,
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))],
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp('[a-z A-Z á-ú Á-Ú]')),
+            ],
             obscureText: false,
             onChanged: (String value) {},
             suffixIcon: Image.asset(

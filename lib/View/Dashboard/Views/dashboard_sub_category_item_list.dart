@@ -68,7 +68,7 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList> with
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(
                   "Categories".tr,
                   style: AppStyle.textViewStyleLarge(fontWeightDelta: 1, fontSizeDelta: 2, context: context, color: AppColors.colorYellowShade),
@@ -114,7 +114,7 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList> with
                 thickness: 1,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(
                   "Sub Categories".tr,
                   style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorYellowShade, fontWeightDelta: 1, fontSizeDelta: 2),

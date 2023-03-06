@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:otobucks/View/MyBookings/controller/mybookings_controller.dart';
 import 'package:otobucks/global/app_colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../widgets/custom_button.dart';
 
@@ -15,23 +16,28 @@ class CustomerSupportView extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Image.asset("assets/images/c-support.png",width: Get.width,),
-             Padding(
+            Image.asset(
+              "assets/images/c-support.png",
+              width: Get.width,
+            ),
+            Padding(
               padding: EdgeInsets.all(12.0),
               child: Text(
-                  "Our customer support team is always available to help you with any questions, Let us assist you with anything you need".tr,textAlign: TextAlign.center,),
+                "Our customer support team is always available to help you with any questions, Let us assist you with anything you need".tr,
+                textAlign: TextAlign.center,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(12.0),
-              child: CustomButton(isRoundBorder: true,
+              child: CustomButton(
+                  isRoundBorder: true,
                   color: AppColors.colorBlueStart,
-                  textStyle: TextStyle(
-                    color: Colors.white,fontSize: 17
-                  ),
-                  onPressed: () {
-                    Get.put(MyBookingsController()).launchWhatsappSendMessage("+971542457866",
-                        "Hi! How Are You?");
-                  } , strTitle: 'Talk Now'.tr),
+                  textStyle: TextStyle(color: Colors.white, fontSize: 17),
+                  onPressed: () async {
+                    await launchUrl(Uri.parse('https://wa.me/+971542457866'), mode: LaunchMode.externalApplication);
+                    // Get.put(MyBookingsController()).launchWhatsappSendMessage("+971542457866", "Hi! How Are You?");
+                  },
+                  strTitle: 'Talk Now'.tr),
             ),
           ],
         ),
