@@ -200,12 +200,15 @@ class ServiceScreenState extends State<ServiceScreen> {
                     padding: const EdgeInsets.all(0),
                     itemBuilder: (BuildContext contextM, index) {
                       ServiceModel mServiceModel = value.alServicesfiltered[index];
-                      return ServiceProviderRated(
-                        mServiceModel: mServiceModel,
-                        isShowRating: true,
-                        onTap: () {
-                          value.gotoServiceDetail(mServiceModel, context);
-                        },
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ServiceProviderRated(
+                          mServiceModel: mServiceModel,
+                          isShowRating: true,
+                          onTap: () {
+                            value.gotoServiceDetail(mServiceModel, context);
+                          },
+                        ),
                       );
                     },
                     itemCount: value.alServicesfiltered.length)));
