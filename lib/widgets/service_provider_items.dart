@@ -25,7 +25,7 @@ class ServiceProviderRated extends StatelessWidget {
     log(mServiceModel.rating.toString());
     if (isShowRating) {
       return Container(
-        height: AppDimens.dimens_90,
+       // height: AppDimens.dimens_100,
         width: AppDimens.dimens_190,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
@@ -74,16 +74,29 @@ class ServiceProviderRated extends StatelessWidget {
                             style: AppStyle.textViewStyleNormalBodyText2(
                                 context: context, color: AppColors.colorBlack, fontSizeDelta: -2, fontWeightDelta: 1),
                           )),
-                      RatingBarIndicator(
-                        rating: mServiceModel.rating.toDouble(),
-                        itemBuilder: (context, index) => Icon(
-                          Icons.star,
-                          color: AppColors.colorRating,
-                        ),
-                        itemCount: 5,
-                        itemSize: AppDimens.dimens_12,
-                        direction: Axis.horizontal,
-                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Icon(Icons.star,color: Colors.amber,size: 20,),
+                          addHorizontalSpace(5),
+                          Text("${
+                              mServiceModel.rating.toDouble()
+                          }",style: TextStyle(fontSize: 12),)
+                        ],
+
+
+                      )
+
+                      // RatingBarIndicator(
+                      //   rating: mServiceModel.rating.toDouble(),
+                      //   itemBuilder: (context, index) => Icon(
+                      //     Icons.star,
+                      //     color: AppColors.colorRating,
+                      //   ),
+                      //   itemCount: 5,
+                      //   itemSize: AppDimens.dimens_12,
+                      //   direction: Axis.horizontal,
+                      // ),
                     ],
                   ))
                 ],

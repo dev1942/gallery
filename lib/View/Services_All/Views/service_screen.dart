@@ -164,7 +164,7 @@ class ServiceScreenState extends State<ServiceScreen> {
       init: ServiceScreenController(),
       builder: (value) {
         return Container(
-            height: AppDimens.dimens_90,
+            height: AppDimens.dimens_100,
             margin: const EdgeInsets.only(top: AppDimens.dimens_10),
             child: AppViews.getSetData(
               context,
