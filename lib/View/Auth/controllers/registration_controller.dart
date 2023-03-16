@@ -150,15 +150,22 @@ class RegistrationScreenController extends GetxController {
     signInEmail.fold((failure) {
       Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
     }, (mResult) {
-      gotoMobileOTPScreen(context);
+      gotoMobileOTPScreen(context, true);
     });
   }
 
-  void gotoMobileOTPScreen(BuildContext context) async {
+  void gotoMobileOTPScreen(BuildContext context, bool isFromRegistration) async {
     ModelOTP mModelOTP = ModelOTP(password: controllerPassword.text.toString(), emailId: controllerEmail.text.toString());
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen(mModelOTP: mModelOTP)));
-    sendOTPTask(mModelOTP.emailId, context);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => OTPScreen(
+                  mModelOTP: mModelOTP,
+                  phoneNumber: controllerPhone.text,
+                  isFromRegistration: isFromRegistration,
+                )));
+    // sendOTPTask(mModelOTP.emailId, context);
   }
 
   sendOTPTask(String strEmailID, BuildContext context) async {

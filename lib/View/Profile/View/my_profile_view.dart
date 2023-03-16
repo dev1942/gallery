@@ -919,7 +919,14 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
     // ModelPhoneOTP mModelOTP = ModelPhoneOTP(
     //     phoneNumber: controllerPassword.text.toString(),
     //     otp: controllerEmail.text.toString());
-    Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen(phoneNumber: phoneNumber)));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => OTPScreen(
+                  phoneNumber: phoneNumber,
+                  mModelOTP: null,
+                  isFromRegistration: false,
+                )));
     // sendOTPTask();
     otpcontroller.sendNumberOTPTask(phoneNumber, context);
     Logger().w(phoneNumber);

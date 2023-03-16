@@ -215,7 +215,14 @@ class MainViewModel extends BaseViewModel {
     String strPassword = controllerPassword.text.toString();
     ModelOTP mModelOTP = ModelOTP(password: strPassword, emailId: strEmail);
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen(mModelOTP: mModelOTP)));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => OTPScreen(
+                  mModelOTP: mModelOTP,
+                  isFromRegistration: true,
+                  phoneNumber: controllerPhone.text,
+                )));
   }
 
   void pushRegisterScreen1(BuildContext context) async {
@@ -346,5 +353,4 @@ class MainViewModel extends BaseViewModel {
 
 //###########################################################################Profile Screen #######################################################################################//
 /////////////////////////////////////////////////////////////////////////    End   /////////////////////////////////////////////////////////////////////////////////////
-
 }

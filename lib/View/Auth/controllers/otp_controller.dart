@@ -101,7 +101,7 @@ class OtpController extends GetxController {
   }
 
 //--------------------number otp verify ----------------------------
-  verifyNumberOTPTask(BuildContext context, String? phoneNumber) async {
+  verifyNumberOTPTask(BuildContext context, String? phoneNumber, bool isFromRegistration, ModelOTP? modelOTP) async {
     if (!isValid(context)) {
       return;
     }
@@ -120,8 +120,13 @@ class OtpController extends GetxController {
     }, (mResult) {
       Global.showToastAlert(context: context, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       log("Navigator pop context--- otp verify-------");
+      if (!isFromRegistration && modelOTP == null) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyProfileFragment()));
+      } else {
+        loginUserTask(context, modelOTP!);
+      }
       // Navigator.Pu
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyProfileFragment()));
+
       //Navigator.pushReplacementNamed(context, Constants.ACT_HOME);
       //  loginUserTask(context, modelOTP);
     });

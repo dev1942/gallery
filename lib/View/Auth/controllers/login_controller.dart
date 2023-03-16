@@ -194,7 +194,13 @@ class LoginController extends GetxController {
   void gotoMobileOTPScreen(BuildContext context) async {
     ModelOTP mModelOTP = ModelOTP(password: controllerPassword.text.toString(), emailId: controllerEmail.text.toString());
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen(mModelOTP: mModelOTP)));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => OTPScreen(
+                  mModelOTP: mModelOTP,
+                  isFromRegistration: true,
+                )));
     sendOTPTask();
   }
 
