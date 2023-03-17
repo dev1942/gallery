@@ -102,4 +102,12 @@ class ServiceProviderModel {
     }
     return buffer.toString();
   }
+  getProviderImage() {
+    // ignore: unnecessary_null_comparison
+    if (image != null) {
+      return image;
+    } else {
+      return "";
+    }
+  }
 }

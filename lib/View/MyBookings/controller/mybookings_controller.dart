@@ -306,23 +306,25 @@ class MyBookingsController extends GetxController {
      requestParams[PARAMS.PARAM_DISPUTE_DESC] =
          disputeDescriptionController.text;
      requestParams[PARAMS.PARAM_DISPUTE_IMAGE] = selectDisputeImage;
+     requestParams["booking"] = bookingID;
      var signInEmail = await BookingRepo().openDispute(requestParams);
      signInEmail.fold((failure) {
        Global.showToastAlert(context: Get.context!,
            strTitle: "",
            strMsg: failure.MESSAGE,
            toastType: TOAST_TYPE.toastError);
+       requestParams.clear();
      }, (mResult) {
        Logger().i("Success");
        Global.showToastAlert(context: Get.context!,
            strTitle: "",
            strMsg: mResult.responseMessage,
            toastType: TOAST_TYPE.toastSuccess);
+       requestParams.clear();
      });
    }
    else if(  bookingID==null){
      Global.showToastAlert(context: Get.context!, strTitle: "Error", strMsg: "Booking not found", toastType: TOAST_TYPE.toastError);
-
    }
    else{
      Global.showToastAlert(context: Get.context!, strTitle: "Error", strMsg: "Please fill all fields", toastType: TOAST_TYPE.toastError);

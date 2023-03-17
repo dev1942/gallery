@@ -164,7 +164,7 @@ class ServiceScreenState extends State<ServiceScreen> {
       init: ServiceScreenController(),
       builder: (value) {
         return Container(
-            height: AppDimens.dimens_90,
+            height: AppDimens.dimens_100,
             margin: const EdgeInsets.only(top: AppDimens.dimens_10),
             child: AppViews.getSetData(
               context,
@@ -200,12 +200,15 @@ class ServiceScreenState extends State<ServiceScreen> {
                     padding: const EdgeInsets.all(0),
                     itemBuilder: (BuildContext contextM, index) {
                       ServiceModel mServiceModel = value.alServicesfiltered[index];
-                      return ServiceProviderRated(
-                        mServiceModel: mServiceModel,
-                        isShowRating: true,
-                        onTap: () {
-                          value.gotoServiceDetail(mServiceModel, context);
-                        },
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ServiceProviderRated(
+                          mServiceModel: mServiceModel,
+                          isShowRating: true,
+                          onTap: () {
+                            value.gotoServiceDetail(mServiceModel, context);
+                          },
+                        ),
                       );
                     },
                     itemCount: value.alServicesfiltered.length)));

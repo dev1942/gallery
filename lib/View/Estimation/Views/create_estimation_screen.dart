@@ -34,7 +34,9 @@ class CreateEstimationScreen extends StatefulWidget {
   final ServiceModel mServiceModel;
   final String screenType;
 
-  const CreateEstimationScreen({Key? key, required this.mServiceModel, required this.screenType}) : super(key: key);
+  const CreateEstimationScreen(
+      {Key? key, required this.mServiceModel, required this.screenType})
+      : super(key: key);
 
   @override
   CreateEstimationScreenState createState() => CreateEstimationScreenState();
@@ -66,6 +68,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
   }
 
   String? selectedValue = "";
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -77,7 +80,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
       appBar: AppViews.initAppBar(
         mContext: context,
         centerTitle: false,
-        strTitle: widget.mServiceModel.title + " Detail",
+        strTitle: "${widget.mServiceModel.title} Detail",
         isShowNotification: false,
         isShowSOS: false,
       ),
@@ -111,7 +114,8 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     _dateTimeSection(),
-                    if (widget.screenType != 'promotion') _uploadImagesSection(),
+                    if (widget.screenType != 'promotion')
+                      _uploadImagesSection(),
                     //Upload Video or Shoot a video
                     if (widget.screenType != 'promotion') _videoSection(),
                     //Voice Note
@@ -123,7 +127,10 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                     Container(
                       alignment: Alignment.center,
                       margin: const EdgeInsets.only(
-                          top: AppDimens.dimens_20, bottom: AppDimens.dimens_20, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
+                          top: AppDimens.dimens_20,
+                          bottom: AppDimens.dimens_20,
+                          left: AppDimens.dimens_10,
+                          right: AppDimens.dimens_10),
                       child: CustomButton(
                           isGradient: true,
                           isRoundBorder: true,
@@ -136,29 +143,45 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => CheckoutScreen(
-                                              promotionID: widget.mServiceModel.id,
-                                              address: controller.addressNote.text.toString(),
+                                              promotionID:
+                                                  widget.mServiceModel.id,
+                                              address: controller
+                                                  .addressNote.text
+                                                  .toString(),
                                               date: controller.selectedDate,
-                                              time: controller.mTimeModel!.time_24hr,
-                                              amount: controller.mServiceModel.price,
-                                              note: controller.controllerNote.text,
-                                              previousAmount: controller.mServiceModel.beforePrice,
-                                              discount: controller.mServiceModel.discount,
+                                              time: controller
+                                                  .mTimeModel!.time_24hr,
+                                              amount: controller
+                                                  .mServiceModel.price,
+                                              note: controller
+                                                  .controllerNote.text,
+                                              previousAmount: controller
+                                                  .mServiceModel.beforePrice,
+                                              discount: controller
+                                                  .mServiceModel.discount,
                                             )));
                               } else {
-                                if (selectedValue != null && selectedValue!.isNotEmpty) {
-                                  int index = carNamesList!.indexOf(selectedValue!);
-                                  controller.createEstimation(context, carNameId![index]);
+                                if (selectedValue != null &&
+                                    selectedValue!.isNotEmpty) {
+                                  int index =
+                                      carNamesList!.indexOf(selectedValue!);
+                                  controller.createEstimation(
+                                      context, carNameId![index]);
                                 } else {
                                   Global.showToastAlert(
-                                      context: Get.overlayContext!, strTitle: "", strMsg: "Please Select a Car", toastType: TOAST_TYPE.toastInfo);
+                                      context: Get.overlayContext!,
+                                      strTitle: "",
+                                      strMsg: "Please Select a Car",
+                                      toastType: TOAST_TYPE.toastInfo);
                                 }
 
                                 //
                               }
                             }
                           },
-                          strTitle: widget.screenType == 'promotion' ? 'Process To Payment' : Constants.TXT_REQUEST_ESTIMATION.tr),
+                          strTitle: widget.screenType == 'promotion'
+                              ? 'Process To Payment'
+                              : Constants.TXT_REQUEST_ESTIMATION.tr),
                     ),
                   ],
                 ),
@@ -168,7 +191,8 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
             ],
           ),
           GetBuilder<CreateEstimationController>(
-            builder: (value) => AppViews.showLoadingWithStatus(value.isShowLoader),
+            builder: (value) =>
+                AppViews.showLoadingWithStatus(value.isShowLoader),
           )
         ],
       ),
@@ -177,7 +201,10 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
 
   _profileSection() => Container(
         margin: const EdgeInsetsDirectional.only(
-            start: AppDimens.dimens_20, top: AppDimens.dimens_20, bottom: AppDimens.dimens_30, end: AppDimens.dimens_20),
+            start: AppDimens.dimens_20,
+            top: AppDimens.dimens_20,
+            bottom: AppDimens.dimens_30,
+            end: AppDimens.dimens_20),
         alignment: Alignment.center,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -190,7 +217,10 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                 child: NetworkImageCustom(
-                    image: controller.mServiceModel.getProviderImage(), fit: BoxFit.fill, height: AppDimens.dimens_120, width: AppDimens.dimens_120),
+                    image: controller.mServiceModel.getProviderImage(),
+                    fit: BoxFit.fill,
+                    height: AppDimens.dimens_120,
+                    width: AppDimens.dimens_120),
               ),
             ),
             Expanded(
@@ -200,11 +230,17 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
               children: [
                 Text(
                   // ignore: unnecessary_null_comparison
-                  controller.mServiceModel.mServiceProviderModel != null ? controller.mServiceModel.mServiceProviderModel.getName() : "",
+                  controller.mServiceModel.mServiceProviderModel != null
+                      ? controller.mServiceModel.mServiceProviderModel.getName()
+                      : "",
                   softWrap: true,
                   overflow: TextOverflow.clip,
                   maxLines: 2,
-                  style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorWhite, fontSizeDelta: 3, fontWeightDelta: -2),
+                  style: AppStyle.textViewStyleLarge(
+                      context: context,
+                      color: AppColors.colorWhite,
+                      fontSizeDelta: 3,
+                      fontWeightDelta: -2),
                 ),
                 InkWell(
                   child: Container(
@@ -242,59 +278,92 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                 Expanded(
                   child: Text(
                     "Service".tr,
-                    style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorGray, fontSizeDelta: 1, fontWeightDelta: 1),
+                    style: AppStyle.textViewStyleNormalSubtitle2(
+                        context: context,
+                        color: AppColors.colorGray,
+                        fontSizeDelta: 1,
+                        fontWeightDelta: 1),
                   ),
                 ),
                 Text(
                   value.mServiceModel.mSubCategoryModel.title,
-                  style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: Colors.grey, fontSizeDelta: 1, fontWeightDelta: -1),
+                  style: AppStyle.textViewStyleNormalSubtitle2(
+                      context: context,
+                      color: Colors.grey,
+                      fontSizeDelta: 1,
+                      fontWeightDelta: -1),
                 ),
               ],
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: AppDimens.dimens_10, left: AppDimens.dimens_14, right: AppDimens.dimens_14),
+            margin: const EdgeInsets.only(
+                top: AppDimens.dimens_10,
+                left: AppDimens.dimens_14,
+                right: AppDimens.dimens_14),
             alignment: Alignment.center,
             child: Row(
               children: [
                 Expanded(
                   child: Text(
                     "Provider".tr,
-                    style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorGray, fontSizeDelta: 1, fontWeightDelta: 1),
+                    style: AppStyle.textViewStyleNormalSubtitle2(
+                        context: context,
+                        color: AppColors.colorGray,
+                        fontSizeDelta: 1,
+                        fontWeightDelta: 1),
                   ),
                 ),
                 Text(
                   value.mServiceModel.mServiceProviderModel.getName(),
-                  style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: Colors.grey, fontSizeDelta: 1, fontWeightDelta: -1),
+                  style: AppStyle.textViewStyleNormalSubtitle2(
+                      context: context,
+                      color: Colors.grey,
+                      fontSizeDelta: 1,
+                      fontWeightDelta: -1),
                 ),
               ],
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: AppDimens.dimens_10, left: AppDimens.dimens_14, right: AppDimens.dimens_14),
+            margin: const EdgeInsets.only(
+                top: AppDimens.dimens_10,
+                left: AppDimens.dimens_14,
+                right: AppDimens.dimens_14),
             alignment: Alignment.center,
             child: Row(
               children: [
                 Expanded(
                   child: Text(
                     "Service Price per hour".tr,
-                    style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorGray, fontSizeDelta: 1, fontWeightDelta: 1),
+                    style: AppStyle.textViewStyleNormalSubtitle2(
+                        context: context,
+                        color: AppColors.colorGray,
+                        fontSizeDelta: 1,
+                        fontWeightDelta: 1),
                   ),
                 ),
                 GradientText(
                   //  Global.replaceCurrencySign(value.mServiceModel.currency) +
                   "AED " + value.mServiceModel.price,
-                  style:
-                      AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorTextBlue, fontSizeDelta: 0, fontWeightDelta: 3),
+                  style: AppStyle.textViewStyleNormalSubtitle2(
+                      context: context,
+                      color: AppColors.colorTextBlue,
+                      fontSizeDelta: 0,
+                      fontWeightDelta: 3),
                 ),
               ],
             ),
           ),
           Container(
-              margin: const EdgeInsets.only(top: AppDimens.dimens_20, left: AppDimens.dimens_14, right: AppDimens.dimens_14),
+              margin: const EdgeInsets.only(
+                  top: AppDimens.dimens_20,
+                  left: AppDimens.dimens_14,
+                  right: AppDimens.dimens_14),
               alignment: Alignment.center,
               height: AppDimens.dimens_160,
-              child: GoogleMapView(onTap: (LatLng mLatLng_) => value.updateLatLang(mLatLng_))),
+              child: GoogleMapView(
+                  onTap: (LatLng mLatLng_) => value.updateLatLang(mLatLng_))),
           _addressTextFiledSection(),
           Container(
             margin: const EdgeInsets.only(
@@ -304,74 +373,88 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
             ),
             //...................cars text
 
-            child:
-            carNamesList!=[]?Text(
-              "Car".tr,
-              style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
-            ):Text("You have no added car details yet. Go to profile first and add one.",style: TextStyle(color: Colors.red),),
+            child: carNamesList!.isNotEmpty
+                ? Text(
+                    "Car".tr,
+                    style: AppStyle.textViewStyleNormalSubtitle2(
+                        context: context,
+                        color: AppColors.colorBlack2,
+                        fontWeightDelta: 1,
+                        fontSizeDelta: 0),
+                  )
+                : const Text(
+                    "You have not added car details yet. Go to profile and add a car.",
+                    style: TextStyle(color: Colors.red),
+                  ),
           ),
           //..................drop down car list..........................
           Container(
-            margin: const EdgeInsets.only(
-              top: AppDimens.dimens_8,
-              left: AppDimens.dimens_14,
-              right: AppDimens.dimens_14,
-            ),
-            child:
-carNamesList!=[]?
-                DropdownButtonFormField2(
-              buttonHeight: 45,
-              decoration: InputDecoration(
-                //Add isDense true and zero Padding.
-                //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                isDense: true,
-                hintStyle: AppStyle.textViewStyleNormalBodyText2(
-                    color: AppColors.colorTextFieldHint, fontSizeDelta: -5, fontWeightDelta: -1, context: Get.context!),
-                fillColor: Colors.white,
-                focusedBorder: AppViews.textFieldRoundBorder(),
-                border: AppViews.textFieldRoundBorder(),
-                disabledBorder: AppViews.textFieldRoundBorder(),
-                focusedErrorBorder: AppViews.textFieldRoundBorder(), contentPadding: EdgeInsets.zero,
-                filled: true,
-                //Add more decoration as you want here
-                //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
+              margin: const EdgeInsets.only(
+                top: AppDimens.dimens_8,
+                left: AppDimens.dimens_14,
+                right: AppDimens.dimens_14,
               ),
-              isExpanded: true,
-              hint: Text(
-                "Choose Your Car".tr,
-              ),
-              icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-              iconSize: 30,
-              buttonPadding: const EdgeInsets.only(left: 20, right: 10),
-              dropdownDecoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              items: carNamesList!
-                  .map((item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(
-                          item,
-                          style: AppStyle.textViewStyleSmall(context: Get.context!, color: Colors.black),
-                        ),
-                      ))
-                  .toList(),
-              // validator: (value) {
-              //   if (value == null) {
-              //     return 'Field can not empty';
-              //   }
-              // },
+              child: carNamesList!.isNotEmpty
+                  ? DropdownButtonFormField2(
+                      buttonHeight: 45,
+                      decoration: InputDecoration(
+                        //Add isDense true and zero Padding.
+                        //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
+                        isDense: true,
+                        hintStyle: AppStyle.textViewStyleNormalBodyText2(
+                            color: AppColors.colorTextFieldHint,
+                            fontSizeDelta: -5,
+                            fontWeightDelta: -1,
+                            context: Get.context!),
+                        fillColor: Colors.white,
+                        focusedBorder: AppViews.textFieldRoundBorder(),
+                        border: AppViews.textFieldRoundBorder(),
+                        disabledBorder: AppViews.textFieldRoundBorder(),
+                        focusedErrorBorder: AppViews.textFieldRoundBorder(),
+                        contentPadding: EdgeInsets.zero,
+                        filled: true,
+                        //Add more decoration as you want here
+                        //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
+                      ),
+                      isExpanded: true,
+                      hint: Text(
+                        "Choose Your Car".tr,
+                      ),
+                      icon: const Icon(Icons.arrow_drop_down,
+                          color: Colors.black),
+                      iconSize: 30,
+                      buttonPadding: const EdgeInsets.only(left: 20, right: 10),
+                      dropdownDecoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      items: carNamesList!
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: AppStyle.textViewStyleSmall(
+                                      context: Get.context!,
+                                      color: Colors.black),
+                                ),
+                              ))
+                          .toList(),
+                      // validator: (value) {
+                      //   if (value == null) {
+                      //     return 'Field can not empty';
+                      //   }
+                      // },
 
-              onChanged: (value) {
-                selectedValue = value.toString();
-                setState(() {});
-              },
-              onSaved: (value) {
-                selectedValue = value.toString();
-                setState(() {});
-              },
-            ):SizedBox()
-          ),
+                      onChanged: (value) {
+                        selectedValue = value.toString();
+                        setState(() {});
+                      },
+                      onSaved: (value) {
+                        selectedValue = value.toString();
+                        setState(() {});
+                      },
+                    )
+                  : const SizedBox()),
 
           Container(
             margin: const EdgeInsets.only(
@@ -381,7 +464,11 @@ carNamesList!=[]?
             ),
             child: Text(
               "Date & Time".tr,
-              style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
+              style: AppStyle.textViewStyleNormalSubtitle2(
+                  context: context,
+                  color: AppColors.colorBlack2,
+                  fontWeightDelta: 1,
+                  fontSizeDelta: 0),
             ),
           ),
 
@@ -391,7 +478,9 @@ carNamesList!=[]?
               left: AppDimens.dimens_14,
               right: AppDimens.dimens_14,
             ),
-            child: DateSelector(onSelection: (String _selectedDate) => value.onSelectDate(_selectedDate)),
+            child: DateSelector(
+                onSelection: (String _selectedDate) =>
+                    value.onSelectDate(_selectedDate)),
           ),
           Container(
             margin: const EdgeInsets.only(
@@ -401,7 +490,11 @@ carNamesList!=[]?
             ),
             child: Text(
               "Time".tr,
-              style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
+              style: AppStyle.textViewStyleNormalSubtitle2(
+                  context: context,
+                  color: AppColors.colorBlack2,
+                  fontWeightDelta: 1,
+                  fontSizeDelta: 0),
             ),
           ),
           Container(
@@ -415,7 +508,8 @@ carNamesList!=[]?
             child: TimeSelector(
                 selectedDate: value.selectedDate,
                 mTimeModel: value.mTimeModel,
-                onSelection: (TimeModel mtimeModel_) => value.onSelectTime(mtimeModel_)),
+                onSelection: (TimeModel mtimeModel_) =>
+                    value.onSelectTime(mtimeModel_)),
           ),
         ],
       );
@@ -452,14 +546,20 @@ carNamesList!=[]?
                       child: Text(
                         Constants.STR_IMAGE_MSG.tr,
                         style: AppStyle.textViewStyleNormalSubtitle2(
-                            context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
+                            context: context,
+                            color: AppColors.colorBlack2,
+                            fontWeightDelta: 1,
+                            fontSizeDelta: 0),
                       ),
                     ),
                     const SizedBox(width: AppDimens.dimens_5),
                     Text(
                       Constants.STR_MAX_SIZE.tr,
                       style: AppStyle.textViewStyleNormalSubtitle2(
-                          context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
+                          context: context,
+                          color: AppColors.colorBlack2,
+                          fontWeightDelta: -1,
+                          fontSizeDelta: -4),
                     ),
                   ],
                 ),
@@ -468,7 +568,10 @@ carNamesList!=[]?
                   ? Text(
                       "(it can take sometime opening camera for the first time)",
                       style: AppStyle.textViewStyleNormalSubtitle2(
-                          context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
+                          context: context,
+                          color: AppColors.colorBlack2,
+                          fontWeightDelta: -1,
+                          fontSizeDelta: -4),
                     )
                   : Container(),
 
@@ -484,7 +587,8 @@ carNamesList!=[]?
                     children: [
                       Visibility(
                         child: Container(
-                          margin: const EdgeInsets.only(right: AppDimens.dimens_15),
+                          margin:
+                              const EdgeInsets.only(right: AppDimens.dimens_15),
                           height: AppDimens.dimens_100,
                           width: AppDimens.dimens_100,
                           child: Stack(
@@ -492,7 +596,8 @@ carNamesList!=[]?
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+                                  borderRadius:
+                                      BorderRadius.circular(AppDimens.dimens_5),
                                 ),
                                 height: AppDimens.dimens_100,
                                 width: AppDimens.dimens_100,
@@ -522,11 +627,13 @@ carNamesList!=[]?
                                   },
                                 ),
                                 Container(
-                                  margin: const EdgeInsetsDirectional.only(start: AppDimens.dimens_15),
+                                  margin: const EdgeInsetsDirectional.only(
+                                      start: AppDimens.dimens_15),
                                   child: MediaButton(
                                     strImage: AppImages.ic_camera,
                                     onPressed: () {
-                                      value.showLoader().then((voi) => value.getImage(ImageSource.camera));
+                                      value.showLoader().then((voi) =>
+                                          value.getImage(ImageSource.camera));
                                     },
                                   ),
                                 ),
@@ -562,14 +669,20 @@ carNamesList!=[]?
                       child: Text(
                         Constants.STR_VIDEO_MSG.tr,
                         style: AppStyle.textViewStyleNormalSubtitle2(
-                            context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
+                            context: context,
+                            color: AppColors.colorBlack2,
+                            fontWeightDelta: 1,
+                            fontSizeDelta: 0),
                       ),
                     ),
                     const SizedBox(width: AppDimens.dimens_5),
                     Text(
                       Constants.STR_MAX_SIZE.tr,
                       style: AppStyle.textViewStyleNormalSubtitle2(
-                          context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
+                          context: context,
+                          color: AppColors.colorBlack2,
+                          fontWeightDelta: -1,
+                          fontSizeDelta: -4),
                     ),
                   ],
                 ),
@@ -578,7 +691,8 @@ carNamesList!=[]?
                 visible: value.isVideoCompressed,
                 child: StreamBuilder<double>(
                   stream: value.lightCompressor.onProgressUpdated,
-                  builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.data != null && snapshot.data > 0) {
                       return Container(
                         margin: const EdgeInsets.only(
@@ -595,10 +709,14 @@ carNamesList!=[]?
                             ),
                             Container(
                               child: Text(
-                                Constants.TXT_PLEASE_WAIT + ' ${snapshot.data.toStringAsFixed(0)}%',
-                                style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
+                                Constants.TXT_PLEASE_WAIT +
+                                    ' ${snapshot.data.toStringAsFixed(0)}%',
+                                style: AppStyle.textViewStyleSmall(
+                                    context: context,
+                                    color: AppColors.colorBlack),
                               ),
-                              margin: const EdgeInsets.only(top: AppDimens.dimens_8),
+                              margin: const EdgeInsets.only(
+                                  top: AppDimens.dimens_8),
                             )
                           ],
                         ),
@@ -622,7 +740,8 @@ carNamesList!=[]?
                         Visibility(
                             visible: Global.checkNull(value.pickedVideo),
                             child: Container(
-                              margin: const EdgeInsetsDirectional.only(end: AppDimens.dimens_15),
+                              margin: const EdgeInsetsDirectional.only(
+                                  end: AppDimens.dimens_15),
                               height: AppDimens.dimens_100,
                               width: AppDimens.dimens_100,
                               child: Stack(
@@ -630,25 +749,29 @@ carNamesList!=[]?
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+                                      borderRadius: BorderRadius.circular(
+                                          AppDimens.dimens_5),
                                     ),
                                     height: AppDimens.dimens_100,
                                     width: AppDimens.dimens_100,
                                     child: InkWell(
                                       child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+                                          borderRadius: BorderRadius.circular(
+                                              AppDimens.dimens_5),
                                           child: Container(
                                             color: AppColors.colorGray2,
                                             child: Icon(
                                               Icons.play_arrow,
                                               color: AppColors.curiousBlue,
                                             ),
-                                            padding: const EdgeInsets.all(AppDimens.dimens_35),
+                                            padding: const EdgeInsets.all(
+                                                AppDimens.dimens_35),
                                             // width: width != null ? width : AppDimens.dimens_100,
                                             // height: height != null ? height : AppDimens.dimens_100,
                                           )),
                                       onTap: () {
-                                        Global.gotoVideoView(context, value.pickedVideo);
+                                        Global.gotoVideoView(
+                                            context, value.pickedVideo);
                                       },
                                     ),
                                   ),
@@ -674,7 +797,8 @@ carNamesList!=[]?
                                 },
                               ),
                               Container(
-                                margin: const EdgeInsetsDirectional.only(start: AppDimens.dimens_15),
+                                margin: const EdgeInsetsDirectional.only(
+                                    start: AppDimens.dimens_15),
                                 child: MediaButton(
                                   strImage: AppImages.ic_video_cam,
                                   onPressed: () {
@@ -697,7 +821,8 @@ carNamesList!=[]?
         });
   }
 
-  _voiceNoteSection() => GetBuilder<CreateEstimationController>(builder: (value) {
+  _voiceNoteSection() =>
+      GetBuilder<CreateEstimationController>(builder: (value) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -713,15 +838,21 @@ carNamesList!=[]?
                   Flexible(
                     child: Text(
                       Constants.STR_LEAVE_VOICE_NOTE.tr,
-                      style:
-                          AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
+                      style: AppStyle.textViewStyleNormalSubtitle2(
+                          context: context,
+                          color: AppColors.colorBlack2,
+                          fontWeightDelta: 1,
+                          fontSizeDelta: 0),
                     ),
                   ),
                   const SizedBox(width: AppDimens.dimens_5),
                   Text(
                     Constants.STR_MAX_SIZE.tr,
-                    style:
-                        AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
+                    style: AppStyle.textViewStyleNormalSubtitle2(
+                        context: context,
+                        color: AppColors.colorBlack2,
+                        fontWeightDelta: -1,
+                        fontSizeDelta: -4),
                   ),
                 ],
               ),
@@ -737,7 +868,8 @@ carNamesList!=[]?
                 child: VoiceRecordingButton(
                   // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
                   strVoiceNotePath: value.voiceNoteFile,
-                  callback: (String filePath) => value.onSelectVoiceNote(filePath),
+                  callback: (String filePath) =>
+                      value.onSelectVoiceNote(filePath),
                 ),
               ),
             ),
@@ -758,7 +890,11 @@ carNamesList!=[]?
           ),
           child: Text(
             Constants.STR_ADDRESS.tr,
-            style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
+            style: AppStyle.textViewStyleNormalSubtitle2(
+                context: context,
+                color: AppColors.colorBlack2,
+                fontWeightDelta: 1,
+                fontSizeDelta: 0),
           ),
         ),
         Container(
@@ -775,18 +911,25 @@ carNamesList!=[]?
               },
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.text,
-              style: AppStyle.textViewStyleNormalBodyText2(color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
+              style: AppStyle.textViewStyleNormalBodyText2(
+                  color: AppColors.colorBlack,
+                  fontSizeDelta: 0,
+                  fontWeightDelta: 0,
+                  context: context),
               controller: controller.addressNote,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
-                prefixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
-                suffixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
+                prefixIconConstraints:
+                    const BoxConstraints(minWidth: AppDimens.dimens_33),
+                suffixIconConstraints:
+                    const BoxConstraints(minWidth: AppDimens.dimens_33),
                 suffixIcon: Container(
                   margin: const EdgeInsets.only(right: AppDimens.dimens_12),
                   alignment: Alignment.center,
                   width: 5,
                 ),
-                contentPadding: const EdgeInsets.only(top: AppDimens.dimens_7, left: AppDimens.dimens_15),
+                contentPadding: const EdgeInsets.only(
+                    top: AppDimens.dimens_7, left: AppDimens.dimens_15),
                 focusedBorder: AppViews.textFieldRoundBorder(),
                 border: AppViews.textFieldRoundBorder(),
                 disabledBorder: AppViews.textFieldRoundBorder(),
@@ -795,12 +938,16 @@ carNamesList!=[]?
                 filled: true,
                 fillColor: AppColors.colorGray2,
                 hintStyle: AppStyle.textViewStyleNormalBodyText2(
-                    color: AppColors.colorTextFieldHint, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
+                    color: AppColors.colorTextFieldHint,
+                    fontSizeDelta: 0,
+                    fontWeightDelta: 0,
+                    context: context),
               ),
             ),
             height: AppDimens.dimens_50,
           ),
-          decoration: AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
+          decoration:
+              AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
         )
       ],
     );
@@ -819,7 +966,11 @@ carNamesList!=[]?
           ),
           child: Text(
             Constants.STR_LEAVE_NOTE.tr,
-            style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
+            style: AppStyle.textViewStyleNormalSubtitle2(
+                context: context,
+                color: AppColors.colorBlack2,
+                fontWeightDelta: 1,
+                fontSizeDelta: 0),
           ),
         ),
         Container(
@@ -836,18 +987,25 @@ carNamesList!=[]?
               },
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.text,
-              style: AppStyle.textViewStyleNormalBodyText2(color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
+              style: AppStyle.textViewStyleNormalBodyText2(
+                  color: AppColors.colorBlack,
+                  fontSizeDelta: 0,
+                  fontWeightDelta: 0,
+                  context: context),
               controller: controller.controllerNote,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
-                prefixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
-                suffixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
+                prefixIconConstraints:
+                    const BoxConstraints(minWidth: AppDimens.dimens_33),
+                suffixIconConstraints:
+                    const BoxConstraints(minWidth: AppDimens.dimens_33),
                 suffixIcon: Container(
                   margin: const EdgeInsets.only(right: AppDimens.dimens_12),
                   alignment: Alignment.center,
                   width: AppDimens.dimens_50,
                 ),
-                contentPadding: const EdgeInsets.only(top: AppDimens.dimens_7, left: AppDimens.dimens_15),
+                contentPadding: const EdgeInsets.only(
+                    top: AppDimens.dimens_7, left: AppDimens.dimens_15),
                 focusedBorder: AppViews.textFieldRoundBorder(),
                 border: AppViews.textFieldRoundBorder(),
                 disabledBorder: AppViews.textFieldRoundBorder(),
@@ -856,7 +1014,10 @@ carNamesList!=[]?
                 filled: true,
                 fillColor: AppColors.colorGray2,
                 hintStyle: AppStyle.textViewStyleNormalBodyText2(
-                    color: AppColors.colorTextFieldHint, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
+                    color: AppColors.colorTextFieldHint,
+                    fontSizeDelta: 0,
+                    fontWeightDelta: 0,
+                    context: context),
               ),
             ),
             height: AppDimens.dimens_50,

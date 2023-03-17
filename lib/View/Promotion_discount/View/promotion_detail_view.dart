@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:otobucks/View/Estimation/Views/create_estimation_screen.dart';
 import 'package:otobucks/View/Promotion_discount/View/promotion_banner.dart';
 import 'package:otobucks/View/Promotion_discount/model/promotion_model.dart';
+import 'package:otobucks/View/Services_All/Controllers/services_detail_screen_controller.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_style.dart';
@@ -21,7 +23,7 @@ class PromotionDetailsScreenState extends State<PromotionDetailsScreen> {
   late ServiceModel serviceModel;
   @override
   void initState() {
-    if (widget.promotionsModel.sourceType == 'service') {
+   // if (widget.promotionsModel.sourceType == 'service') {
       serviceModel = ServiceModel(
           rating: 0,
           totalRatings: 0,
@@ -50,12 +52,13 @@ class PromotionDetailsScreenState extends State<PromotionDetailsScreen> {
       beforePrice:widget.promotionsModel.previousPrice,
       discount: widget.promotionsModel.discount,
       );
-    }
+   // }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    Get.put(ServicesDetailsScreenController());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.getMainBgColor(),
@@ -125,8 +128,8 @@ class PromotionDetailsScreenState extends State<PromotionDetailsScreen> {
             const SizedBox(
               height: 12,
             ),
-            rowText(widget.promotionsModel.sourceType.toString(),
-                widget.promotionsModel.source.title.toString()),
+            // rowText(widget.promotionsModel.sourceType.toString(),
+            //     widget.promotionsModel.source.title.toString()),
             const SizedBox(
               height: 12,
             ),
@@ -166,7 +169,7 @@ class PromotionDetailsScreenState extends State<PromotionDetailsScreen> {
               height: 12,
             ),
 
-            Text(widget.promotionsModel.description.toString().capitalize(),
+            Text(widget.promotionsModel.description.toString(),
                 style: AppStyle.textViewStyleSmall(
                   context: context,
                   color: AppColors.colorBlack,
@@ -190,7 +193,7 @@ class PromotionDetailsScreenState extends State<PromotionDetailsScreen> {
                       fontSize: height * 0.04,
                       color: AppColors.colorWhite),
                   onPressed: (){
-                    if (widget.promotionsModel.sourceType == 'service') {
+                 //   if (widget.promotionsModel.sourceType == 'service') {
 
 
                       Navigator.of(context).push(MaterialPageRoute(
@@ -199,7 +202,8 @@ class PromotionDetailsScreenState extends State<PromotionDetailsScreen> {
                             screenType: 'promotion',
                           )));
                     }
-                  },
+                  //}
+                  ,
                   strTitle: "Book Now");
             })
           ],

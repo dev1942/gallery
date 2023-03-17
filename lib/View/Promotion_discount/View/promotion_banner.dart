@@ -41,20 +41,21 @@ class PromotionBanner extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(AppDimens.dimens_5),
             child: Container(
+              color: AppColors.colorGray6,
               child: Stack(
                 children: [
                   Positioned(
+                    right: 0,
+                    bottom: 0,
+                    top: 0,
                     child: SizedBox(
+                        width: size.maxWidth / 1.5,
                         child: NetworkImageCustom(
                           image:strImage,
                           fit: BoxFit.cover,
                           height: double.infinity,
                           width: double.infinity,
-                        ),
-                        width: size.maxWidth / 1.5),
-                    right: 0,
-                    bottom: 0,
-                    top: 0,
+                        )),
                   ),
                   SizedBox(
                     height: Get.height,
@@ -62,6 +63,9 @@ class PromotionBanner extends StatelessWidget {
                         Image.asset(AppImages.ic_banner_bg, fit: BoxFit.cover),
                   ),
                   Positioned(
+                    left: 0,
+                    bottom: 0,
+                    top: 0,
                     child: Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.only(
@@ -99,10 +103,7 @@ class PromotionBanner extends StatelessWidget {
                                       top: AppDimens.dimens_6),
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    Global.replaceCurrencySign("USD") +
-                                        "" +
-                                        mPromotionsModel.previousPrice +
-                                        "/hr",
+                                    "${Global.replaceCurrencySign("USD")}${mPromotionsModel.previousPrice}/hr",
                                     style: AppStyle.textViewStyleSmall(
                                             context: context,
                                             fontWeightDelta: 0,
@@ -117,10 +118,7 @@ class PromotionBanner extends StatelessWidget {
                                   width: height / 2,
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                      Global.replaceCurrencySign("USD") +
-                                          "" +
-                                          mPromotionsModel.priceAfterDiscount +
-                                          "/hr",
+                                      "${Global.replaceCurrencySign("USD")}${mPromotionsModel.priceAfterDiscount}/hr",
                                       style: AppStyle.textViewStyleSmall(
                                               context: context,
                                               fontWeightDelta: 2,
@@ -159,17 +157,17 @@ class PromotionBanner extends StatelessWidget {
                                   child: SizedBox(
                                     width: Get.width / 3.3,
                                     child: ElevatedButton(
-                                        child: Text(
-                                          "View Details",
-                                          style: TextStyle(
-                                                     fontSize: height * 0.05,
-                                                  color: AppColors.colorBlack)
-                                        ),
                                         onPressed: () {onTap();},
                                         style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all(
                                                   AppColors.colorYellowShade),
+                                        ),
+                                        child: Text(
+                                          "View Details",
+                                          style: TextStyle(
+                                                     fontSize: height * 0.05,
+                                                  color: AppColors.colorBlack)
                                         )),
                                   ),
                                   // CustomButton(
@@ -189,9 +187,6 @@ class PromotionBanner extends StatelessWidget {
                         ],
                       ),
                     ),
-                    left: 0,
-                    bottom: 0,
-                    top: 0,
                   ),
                   Center(
                     child: Container(
@@ -206,21 +201,20 @@ class PromotionBanner extends StatelessWidget {
                         image: AssetImage(AppImages.ic_offer_bg),
                         fit: BoxFit.fill,
                       )),
+                      height: height * 0.2,
+                      width: height * 0.2,
                       child: Text(
-                        mPromotionsModel.discount + "%" "\n" + "OFF",
+                        "${mPromotionsModel.discount}%\nOFF",
                         style: AppStyle.textViewStyleSmall(
                                 context: context,
                                 fontWeightDelta: 1,
                                 color: AppColors.colorYellowShade)
                             .copyWith(fontSize: height * 0.04),
                       ),
-                      height: height * 0.2,
-                      width: height * 0.2,
                     ),
                   ),
                 ],
               ),
-              color: AppColors.colorGray6,
             ),
           ));
     });

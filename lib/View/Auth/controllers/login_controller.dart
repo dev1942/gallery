@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/connectivity_status.dart';
 import 'package:otobucks/global/constants.dart';
@@ -146,9 +147,9 @@ class LoginController extends GetxController {
     String strEmailID = controllerEmail.text.toString().trim();
     String strPassword = controllerPassword.text.toString();
     String firebaseToken = await FirebaseMessaging.instance.getToken() ?? '';
+    Logger().i(firebaseToken);
     log(firebaseToken);
     await Global.taskStoreToken(firebaseToken);
-
     HashMap<String, Object> requestParams = HashMap();
     requestParams[PARAMS.PARAM_EMAIL] = strEmailID;
     requestParams[PARAMS.PARAM_PASSWORD] = strPassword;

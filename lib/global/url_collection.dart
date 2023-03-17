@@ -3,7 +3,8 @@
 class RequestBuilder {
   static final String DEVELOPMENT_URL = "https://developmentapi-app.otobucks.com/v1/";
   static final String PRODUCTION_URL = "https://api-app.otobucks.com/v1/";
-  static final String LOCAL_URL = "http://192.168.18.36:4000/v1/";
+  static final String LOCAL_URL = "https://192.168.18.36:4000/v1/";
+  static final String LOCAL_USMAN_URL = "https://f09f-39-61-45-164.ngrok.io/v1/";
   /*-------------------------Change URl type here----------------------------*/
   static String API_BASE_URL = DEVELOPMENT_URL;
   static String API_DELETE_BOOKING = "${API_BASE_URL}bookings/bookService/63b5cec6870dcf1488b013bb";
@@ -24,7 +25,7 @@ class RequestBuilder {
   static final String API_GET_CATEGORIES = "categories/getCategories";
   static final String API_GET_SUB_CATEGORIES = "categories/getSubCategories/";
   static final String API_GET_STORES = "stores";
-//My Profile
+  //My Profile
   static final String API_GET_CAR_LIST = "auth/customers/cars";
   static final String API_ADD_CAR_LIST = "auth/customers/cars";
   static final String API_DELETE_CAR_ = "auth/customers/cars/";
@@ -49,6 +50,5 @@ class RequestBuilder {
   static final String API_CANCEL_BOOKING_REQUESTS = "bookings/cancelRequests";
   static final String API_GET_ALL_BOOKINGS = "${API_BASE_URL}bookings/bookService/";
   //Dispute
-
-  static final String API_OPEN_DISPUTE = "disputes";
+  static final String API_OPEN_DISPUTE = "disputes/";
 }
