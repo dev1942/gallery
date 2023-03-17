@@ -162,7 +162,7 @@ class LoginController extends GetxController {
 
     signInEmail.fold((failure) {
       Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
-      if ("Please verify your email address first" == failure.MESSAGE) {
+      if ("Please verify your otp first" == failure.MESSAGE) {
         gotoMobileOTPScreen(context);
       }
     }, (mResult) {
