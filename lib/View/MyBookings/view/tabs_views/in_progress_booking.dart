@@ -49,7 +49,7 @@ class InProgressFragment extends GetView<MyBookingsController> {
                           controller.pendingsbookinglist = snapshot.data!.result!.reversed.toList();
                           var data =
                               controller.isSearching == false ? controller.pendingsbookinglist![index] : controller.filteredBookingList![index];
-                          if (data.status == "inProgress" && data.provider!=null) {
+                          if (data.status == "inProgress" && data.provider!=null && data.disputeStatus!=true) {
                             return Padding(
                               padding: const EdgeInsets.symmetric(vertical: 6.0),
                               child: Container(

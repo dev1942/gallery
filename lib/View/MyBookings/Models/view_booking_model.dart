@@ -23,6 +23,7 @@ class BookingModel {
 
 class Result {
   final BookingDetails? bookingDetails;
+  final Dispute? dispute;
   final StatusInfo? statusInfo;
    dynamic  totalprice;
    dynamic paymentCompleted;
@@ -43,6 +44,7 @@ class Result {
 
   Result({
     this.bookingDetails,
+    this.dispute,
     this.statusInfo,
     this.totalprice,
     this.paymentCompleted,
@@ -64,6 +66,7 @@ class Result {
 
   Result.fromJson(Map<String, dynamic> json)
       : bookingDetails = (json['bookingDetails'] as Map<String,dynamic>?) != null ? BookingDetails.fromJson(json['bookingDetails'] as Map<String,dynamic>) : null,
+       dispute = (json['dispute'] as Map<String,dynamic>?) != null ? Dispute.fromJson(json['dispute'] as Map<String,dynamic>) : null,
         statusInfo = (json['statusInfo'] as Map<String,dynamic>?) != null ? StatusInfo.fromJson(json['statusInfo'] as Map<String,dynamic>) : null,
         totalprice = json['totalprice'] as dynamic,
         paymentCompleted = json['paymentCompleted']as dynamic,
@@ -699,4 +702,76 @@ class Items {
     'tax' : tax,
     'amount' : amount
   };
+}
+class Dispute {
+  String? ssn;
+  String? disputeStatus;
+  List<String>? country;
+  String? adminStatus;
+  bool? deleted;
+  String? sId;
+  String? booking;
+  String? description;
+  String? title;
+  String? disputeimage;
+  String? customer;
+  String? createdBy;
+  String? createdAt;
+  String? updatedAt;
+  int? iV;
+
+  Dispute(
+      {this.ssn,
+        this.disputeStatus,
+        this.country,
+        this.adminStatus,
+        this.deleted,
+        this.sId,
+        this.booking,
+        this.description,
+        this.title,
+        this.disputeimage,
+        this.customer,
+        this.createdBy,
+        this.createdAt,
+        this.updatedAt,
+        this.iV});
+
+  Dispute.fromJson(Map<String, dynamic> json) {
+    ssn = json['ssn'];
+    disputeStatus = json['disputeStatus'];
+    country = json['country'].cast<String>();
+    adminStatus = json['adminStatus'];
+    deleted = json['deleted'];
+    sId = json['_id'];
+    booking = json['booking'];
+    description = json['description'];
+    title = json['title'];
+    disputeimage = json['disputeimage'];
+    customer = json['customer'];
+    createdBy = json['createdBy'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    iV = json['__v'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ssn'] = this.ssn;
+    data['disputeStatus'] = this.disputeStatus;
+    data['country'] = this.country;
+    data['adminStatus'] = this.adminStatus;
+    data['deleted'] = this.deleted;
+    data['_id'] = this.sId;
+    data['booking'] = this.booking;
+    data['description'] = this.description;
+    data['title'] = this.title;
+    data['disputeimage'] = this.disputeimage;
+    data['customer'] = this.customer;
+    data['createdBy'] = this.createdBy;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['__v'] = this.iV;
+    return data;
+  }
 }

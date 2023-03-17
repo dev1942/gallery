@@ -555,4 +555,10 @@ class AppAlert {
   static const String ALERT_FILE_SIZE_ALL = "Please select file less than 10 MB.";
 
   static const String TEXT_EXIT = 'Are you sure?', STRING_CART_REMOVE_PRODUCT_MESSAGE = 'Do you want to remove this product from cart.';
+
+}
+class AppStatus{
+  static const String TEXT_STATUS_DISPUTE_PENDING="pending";
+  static const String TEXT_STATUS_DISPUTE_ACKNOWLEDGED="acknowledge";
+  static const String TEXT_STATUS_DISPUTE_RESOLVED="resolved";
 }

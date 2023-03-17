@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
@@ -9,7 +11,12 @@ import '../../../../global/app_colors.dart';
 import '../../../../widgets/custom_button.dart';
 
 class DisputeDetailsView extends StatelessWidget {
-  const DisputeDetailsView({Key? key}) : super(key: key);
+   DisputeDetailsView({Key? key,this.disputeCreatedAt,this.disputeDescription,this.disputeID,this.disputeImage,this.disputeTitle}) : super(key: key);
+  String ?disputeImage;
+  String ?disputeTitle;
+  String ?disputeDescription;
+  String ?disputeID;
+  String ?disputeCreatedAt;
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +51,8 @@ class DisputeDetailsView extends StatelessWidget {
               decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
               child: InstaImageViewer(
                 child: Image(
-                  image: Image.asset(
-                    "assets/images/bmw2.png",
+                  image: Image.file(
+                   File(disputeImage.toString()),
                     fit: BoxFit.cover,
                   ).image,
                 ),
@@ -54,16 +61,29 @@ class DisputeDetailsView extends StatelessWidget {
             addVerticleSpace(8),
 
             //ID
-            Text(
-              "ID#".tr,
-              style: AppStyle.textViewStyleNormalButton(
-                context: context,
-                color: AppColors.lightGrey,
-                fontSizeDelta: 2,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "ID#".tr,
+                  style: AppStyle.textViewStyleNormalButton(
+                    context: context,
+                    color: AppColors.lightGrey,
+                    fontSizeDelta: 2,
+                  ),
+                ),
+                Text(
+                  disputeCreatedAt.toString().tr,
+                  style: AppStyle.textViewStyleNormalButton(
+                    context: context,
+                    color: AppColors.lightGrey,
+                    fontSizeDelta: 2,
+                  ),
+                ),
+              ],
             ),
             addVerticleSpace(8),
-            Text("jnf877yghg87f8gh"),
+            Text(disputeID.toString()),
             addVerticleSpace(15),
             //  //Title
             Text(
@@ -75,7 +95,7 @@ class DisputeDetailsView extends StatelessWidget {
               ),
             ),
             addVerticleSpace(8),
-            Text("Half amount paid but Service not Delivered yet"),
+            Text(disputeTitle.toString()),
             addVerticleSpace(15),
             // Description
             Text(
@@ -87,8 +107,7 @@ class DisputeDetailsView extends StatelessWidget {
               ),
             ),
             addVerticleSpace(8),
-            Text(
-                "Half amount paid but Service not Delivered yet jbv hvuihiuf ud8hrbhbfv fjhf cbwlafhiu b f  jf vbhugvv "),
+            Text(disputeDescription.toString())
           ],
         ),
       ),

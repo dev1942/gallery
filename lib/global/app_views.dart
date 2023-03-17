@@ -40,7 +40,7 @@ class AppViews {
       actionsList.add(GestureDetector(
         onTap: () async {
           try {
-            Logger().i("click");
+
             // await LocationHelper.getCurrentLocation(mContext, (p0, p1){
             //   log("${p0}  ${p1}");
             // });
@@ -48,11 +48,14 @@ class AppViews {
             HashMap<String, Object> requestParams = HashMap();
             requestParams[PARAMS.PARAM_LONGITUDE] = position.latitude;
             requestParams[PARAMS.PARAM_LATITUDE] = position.longitude;
+            requestParams["location"]="Multan,Punjab Pakistan, ";
+            Logger().i("lat:${requestParams[PARAMS.PARAM_LATITUDE]}");
+            Logger().i("long:${requestParams[PARAMS.PARAM_LONGITUDE]}");
             inspect(position);
             if (position.latitude != 0.0 && position.longitude != 0.0) {
-              var signInEmail = await MyProfileRepository().sendEmergency(requestParams);
-              signInEmail.fold((failure) {
-                // Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+              var sendEmergency = await MyProfileRepository().sendEmergency(requestParams);
+              sendEmergency.fold((failure) {
+                Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
               }, (mResult) {
                 Logger().i("Success");
                 Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);

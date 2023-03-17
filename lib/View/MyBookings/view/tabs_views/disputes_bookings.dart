@@ -7,6 +7,8 @@ import 'package:logger/logger.dart';
 import 'package:otobucks/View/CheckOut/Views/checkout_screen.dart';
 import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart';
 import 'package:otobucks/View/MyBookings/view/tabs_views/dispute_details_view.dart';
+import 'package:otobucks/global/enum.dart';
+import 'package:otobucks/widgets/custom_ui/card/constants.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
 import '../../../../../global/app_colors.dart';
@@ -49,7 +51,7 @@ class DisputeBookings extends GetView<MyBookingsController> {
                           controller.pendingsbookinglist = snapshot.data!.result!.reversed.toList();
                           var data =
                           controller.isSearching == false ? controller.pendingsbookinglist![index] : controller.filteredBookingList![index];
-                          if (data.status == "completed" && data.provider!=null) {
+                          if ((data.status == "completed" || data.status == "inProgress") && data.deleted == false && data.disputeStatus==true && data.provider!=null) {
                             return Padding(
                               padding: const EdgeInsets.symmetric(vertical: 6.0),
                               child: Container(
@@ -80,18 +82,14 @@ class DisputeBookings extends GetView<MyBookingsController> {
                                                     padding: const EdgeInsets.only(right: 8.0),
                                                     child: Text(
                                                       Constants.TXT_VIEW_BOOKING.tr,
-                                                      style: AppStyle.textViewStyleSmall(
-                                                          context: context, color: AppColors.colorTextBlue2, fontSizeDelta: 0, fontWeightDelta: 0),
+                                                      style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorTextBlue2, fontSizeDelta: 0, fontWeightDelta: 0),
                                                     ),
                                                   )),
                                               onTap: () {
-                                                if (data.status == "inProgress") {
-                                                  //reschedule and decline
-                                                  Get.to(ViewBookingEstimation(status: "inProgress", mEstimatesModel: data, isPending: false));
-                                                } else {
                                                   Get.to(ViewBookingEstimation(mEstimatesModel: data));
-                                                }
-                                              }),
+                                              }
+                                              ),
+                                          ///Onlick of view dispute
                                           InkWell(
                                               child: Container(
                                                   alignment: Alignment.center,
@@ -104,7 +102,26 @@ class DisputeBookings extends GetView<MyBookingsController> {
                                                     ),
                                                   )),
                                               onTap: () {
-                                               Get.to(()=>DisputeDetailsView());
+                                                if(data.dispute!=null) {
+                                                  Get.to(() =>
+                                                      DisputeDetailsView(
+                                                        disputeID: data.dispute
+                                                            ?.sId,
+                                                        disputeImage: data
+                                                            .dispute
+                                                            ?.disputeimage,
+                                                        disputeCreatedAt: getDate(
+                                                            data.dispute!
+                                                                .createdAt!),
+                                                        disputeDescription: data
+                                                            .dispute
+                                                            ?.description,
+                                                        disputeTitle: data
+                                                            .dispute?.title,));
+                                                }
+                                                else{
+                                                  Global.showToastAlert(context: context, strTitle: "Not found", strMsg: "Dispute information temporarily not available", toastType: TOAST_TYPE.toastInfo);
+                                                }
                                               }),
                                         ],
                                       ),
@@ -162,7 +179,7 @@ class DisputeBookings extends GetView<MyBookingsController> {
                                               ],
                                             ),
 
-                                            ///........... estimation and status row button
+                                            ///........... status of the dispute
 
                                             const Divider(
                                               thickness: 1,
@@ -172,37 +189,42 @@ class DisputeBookings extends GetView<MyBookingsController> {
                                               mainAxisAlignment: MainAxisAlignment.start,
                                               //     : MainAxisAlignment.center,
                                               children: [
-
-                                                data.estimation?.isOfferCreated == false
-                                                    ? Expanded(
+                                                ///dispute status
+                                                Expanded(
                                                   child: InkWell(
                                                     child: Container(
                                                       padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 5.0),
                                                       decoration: BoxDecoration(
-                                                        color: data.estimation?.offerStatus == "accepted"
+                                                        color:data.dispute?.disputeStatus == AppStatus.TEXT_STATUS_DISPUTE_RESOLVED
                                                             ? AppColors.colorSuccessBackground
-                                                            : data.estimation?.offerStatus == "declined"
-                                                            ? AppColors.colorCancelledBackground
-                                                            : AppColors.colorPendingBackground,
+                                                            : data.dispute?.disputeStatus == AppStatus.TEXT_STATUS_DISPUTE_ACKNOWLEDGED
+                                                            ? AppColors.colorSuccessBackground
+                                                            :data.dispute?.disputeStatus == AppStatus.TEXT_STATUS_DISPUTE_PENDING?
+
+                                                        AppColors.colorPendingBackground:Colors.black,
                                                         borderRadius: BorderRadius.circular(2.0),
                                                         border: Border.all(
                                                           width: 1,
-                                                          color: data.estimation?.offerStatus == "accepted"
+                                                          color: data.dispute?.disputeStatus == AppStatus.TEXT_STATUS_DISPUTE_RESOLVED
                                                               ? AppColors.colorSuccessBorder
-                                                              : data.estimation?.offerStatus == "declined"
-                                                              ? AppColors.colorCancelledBorder
-                                                              : AppColors.colorPendingBorder,
+                                                              : data.dispute?.disputeStatus == AppStatus.TEXT_STATUS_DISPUTE_ACKNOWLEDGED
+                                                              ? AppColors.colorSuccessBorder
+                                                              :data.dispute?.disputeStatus == AppStatus.TEXT_STATUS_DISPUTE_PENDING?
+
+                                                          AppColors.colorPendingBorder:Colors.black,
                                                         ),
                                                       ),
                                                       child: Center(
                                                         child: Text(
-                                                          "${data.estimation?.offerStatus}".tr.toUpperCase(),
+                                                          "${data.dispute?.disputeStatus}".tr.toUpperCase(),
                                                           style: TextStyle(
-                                                            color: data.estimation?.offerStatus == "accepted"
+                                                            color: data.dispute?.disputeStatus == AppStatus.TEXT_STATUS_DISPUTE_RESOLVED
                                                                 ? AppColors.colorSuccessText
-                                                                : data.estimation?.offerStatus == "declined"
-                                                                ? AppColors.colorCancelledText
-                                                                : AppColors.colorPendingText,
+                                                                : data.dispute?.disputeStatus == AppStatus.TEXT_STATUS_DISPUTE_ACKNOWLEDGED
+                                                                ? AppColors.colorSuccessText
+                                                                :data.dispute?.disputeStatus == AppStatus.TEXT_STATUS_DISPUTE_PENDING?
+
+                                                            AppColors.colorPendingText:Colors.black,
                                                             fontSize: 10,
                                                             fontWeight: FontWeight.w500,
                                                           ),
@@ -210,80 +232,10 @@ class DisputeBookings extends GetView<MyBookingsController> {
                                                       ),
                                                     ),
                                                     onTap: () {
-                                                      showDialog<String>(
-                                                          context: Get.context!,
-                                                          builder: (BuildContext context) => AlertDialog(
-                                                            title: const Text(
-                                                              'Offering Amount',
-                                                              textAlign: TextAlign.center,
-                                                              style: TextStyle(fontWeight: FontWeight.bold),
-                                                            ),
-                                                            content: Column(
-                                                              mainAxisSize: MainAxisSize.min,
-                                                              children: [
-                                                                Text(
-                                                                  "${data.estimation?.offerAmount} AED".tr,
-                                                                  style: AppStyle.textViewStyleSmall(
-                                                                      context: context,
-                                                                      color: AppColors.colorBlack,
-                                                                      fontSizeDelta: 8,
-                                                                      fontWeightDelta: 2),
-                                                                ),
-                                                                SizedBox(
-                                                                  child: Text(
-                                                                    // " dsfjlasd ladjfl klfjl;asf l;sa lsjflks jlkdf lkdfkadjlfjal; fkdalkdf dlkfj;la sd",
-                                                                    "${data.estimation?.offerNote}",
-                                                                    textAlign: TextAlign.center,
-                                                                    style: AppStyle.textViewStyleSmall(
-                                                                        context: context,
-                                                                        color: AppColors.colorBlack,
-                                                                        fontSizeDelta: 3,
-                                                                        fontWeightDelta: -1),
-                                                                  ),
-                                                                ),
-                                                                InkWell(
-                                                                  onTap: () {
-                                                                    Navigator.pop(context);
-                                                                  },
-                                                                  child: Padding(
-                                                                    padding: const EdgeInsets.all(8.0),
-                                                                    child: Container(
-                                                                      decoration: BoxDecoration(
-                                                                        gradient: LinearGradient(
-                                                                          begin: Alignment.topCenter,
-                                                                          end: Alignment.bottomCenter,
-                                                                          colors: [
-                                                                            AppColors.colorBlueEnd,
-                                                                            AppColors.colorBlueStart,
-                                                                          ],
-                                                                        ),
-                                                                        borderRadius: BorderRadius.circular(5.0),
-                                                                      ),
-                                                                      child: Padding(
-                                                                        padding: const EdgeInsets.symmetric(
-                                                                            horizontal: 30.0, vertical: 5.0),
-                                                                        child: Text('Close'.tr,
-                                                                            textAlign: TextAlign.center,
-                                                                            style: AppStyle.textViewStyleNormalButton(
-                                                                                context: context,
-                                                                                color: Colors.white,
-                                                                                fontSizeDelta: 0,
-                                                                                fontWeightDelta: 2)),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ));
 
-                                                      // if (data.estimation?.offerStatus == 'submitted') {
-                                                      //   gotoViewEstimation(data, false);
-                                                      // }
                                                     },
                                                   ),
                                                 )
-                                                    : const SizedBox()
 
                                                 ///Dispute status
                                                 // InkWell(

@@ -80,7 +80,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
       appBar: AppViews.initAppBar(
         mContext: context,
         centerTitle: false,
-        strTitle: widget.mServiceModel.title + " Detail",
+        strTitle: "${widget.mServiceModel.title} Detail",
         isShowNotification: false,
         isShowSOS: false,
       ),
