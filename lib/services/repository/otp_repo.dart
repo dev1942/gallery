@@ -50,7 +50,7 @@ class OTPRepo {
     }
     try {
       String response = await ReqListener.fetchPost(
-          strUrl: RequestBuilder.API_VERIFY_EMAIL + otp, requestParams: requestParams, mReqType: ReqType.patch, mParamType: ParamType.json);
+          strUrl: RequestBuilder.API_VERIFY_PHONE + otp, requestParams: requestParams, mReqType: ReqType.patch, mParamType: ParamType.json);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);

@@ -292,7 +292,7 @@ class LocaleLanguages extends Translations {
           ' Hello ': ' Hello ',
           'One time password': 'ONE TIME PASSWORD',
           // ignore: prefer_adjacent_string_concatenation
-          'enter_code': "Please Enter The Verification Code We Sent" + "\n" + "to your email address",
+          'enter_code': "Please Enter The Verification Code We Sent" + "\n" + "to your phone number",
           'SUBMIT': 'SUBMIT',
           'Or': 'Or',
           'Enter Token': 'Enter Token',
