@@ -5,18 +5,16 @@ import 'package:get/get.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/app_views.dart';
+import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/global.dart';
 
 import '../../../../global/app_colors.dart';
 import '../../../../widgets/custom_button.dart';
+import '../../Models/view_booking_model.dart';
 
 class DisputeDetailsView extends StatelessWidget {
-   DisputeDetailsView({Key? key,this.disputeCreatedAt,this.disputeDescription,this.disputeID,this.disputeImage,this.disputeTitle}) : super(key: key);
-  String ?disputeImage;
-  String ?disputeTitle;
-  String ?disputeDescription;
-  String ?disputeID;
-  String ?disputeCreatedAt;
+  DisputeDetailsView({Key? key, this.dispute}) : super(key: key);
+  Dispute? dispute;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +50,7 @@ class DisputeDetailsView extends StatelessWidget {
               child: InstaImageViewer(
                 child: Image(
                   image: Image.file(
-                   File(disputeImage.toString()),
+                    File(dispute!.disputeimage.toString()),
                     fit: BoxFit.cover,
                   ).image,
                 ),
@@ -73,7 +71,7 @@ class DisputeDetailsView extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  disputeCreatedAt.toString().tr,
+                  dispute!.createdAt.toString().tr,
                   style: AppStyle.textViewStyleNormalButton(
                     context: context,
                     color: AppColors.lightGrey,
@@ -83,7 +81,7 @@ class DisputeDetailsView extends StatelessWidget {
               ],
             ),
             addVerticleSpace(8),
-            Text(disputeID.toString()),
+            Text(dispute!.sId.toString()),
             addVerticleSpace(15),
             //  //Title
             Text(
@@ -95,7 +93,7 @@ class DisputeDetailsView extends StatelessWidget {
               ),
             ),
             addVerticleSpace(8),
-            Text(disputeTitle.toString()),
+            Text(dispute!.title.toString()),
             addVerticleSpace(15),
             // Description
             Text(
@@ -107,17 +105,40 @@ class DisputeDetailsView extends StatelessWidget {
               ),
             ),
             addVerticleSpace(8),
-            Text(disputeDescription.toString())
+            Text(dispute!.description.toString()),
+            //Remarks by admin
+            addVerticleSpace(8),
+            Text(
+              "Admin Remarks".tr,
+              style: AppStyle.textViewStyleNormalButton(
+                context: context,
+                color: AppColors.lightGrey,
+                fontSizeDelta: 2,
+              ),
+            ),
+            addVerticleSpace(8),
+            dispute!.disputeStatus != AppStatus.TEXT_STATUS_DISPUTE_PENDING
+                ? Text(
+                    dispute!.adminRemarks.toString(),
+                    style: TextStyle(color: AppColors.colorSuccessText),
+                  )
+                : Text(
+              "Admin not responded yet, Please be patient".tr,
+            )
           ],
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
         child: CustomButton(
             isRoundBorder: true,
             color: AppColors.colorBlueStart,
-            textStyle: AppStyle.textViewStyleNormalButton(context: context, color: Colors.white,fontSizeDelta: 2,fontWeightDelta: 1),
-            onPressed:(){},
+            textStyle: AppStyle.textViewStyleNormalButton(
+                context: context,
+                color: Colors.white,
+                fontSizeDelta: 2,
+                fontWeightDelta: 1),
+            onPressed: () {},
             strTitle: 'Submitted'.tr.toUpperCase()),
       ),
     );

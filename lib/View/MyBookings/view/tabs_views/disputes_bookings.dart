@@ -105,19 +105,8 @@ class DisputeBookings extends GetView<MyBookingsController> {
                                                 if(data.dispute!=null) {
                                                   Get.to(() =>
                                                       DisputeDetailsView(
-                                                        disputeID: data.dispute
-                                                            ?.sId,
-                                                        disputeImage: data
-                                                            .dispute
-                                                            ?.disputeimage,
-                                                        disputeCreatedAt: getDate(
-                                                            data.dispute!
-                                                                .createdAt!),
-                                                        disputeDescription: data
-                                                            .dispute
-                                                            ?.description,
-                                                        disputeTitle: data
-                                                            .dispute?.title,));
+                                                       dispute:data.dispute
+                                                      ));
                                                 }
                                                 else{
                                                   Global.showToastAlert(context: context, strTitle: "Not found", strMsg: "Dispute information temporarily not available", toastType: TOAST_TYPE.toastInfo);

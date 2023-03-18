@@ -25,6 +25,7 @@ import '../../../../global/app_views.dart';
 import '../../../../global/constants.dart';
 import '../../../../global/enum.dart';
 import '../../../../global/global.dart';
+import '../../../global/Models/time_model.dart';
 import '../../../global/app_images.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/google_map_view.dart';
@@ -599,9 +600,9 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   isPending: widget.isPending,
                   selectedDate: value.selectedDate,
                   time: widget.mEstimatesModel.bookingDetails!.time ?? "",
-                  // mTimeModel: value.mTimeModel,
-                  //  onSelection: (TimeModel mtimeModel_) =>
-                  //      value.onSelectTime(mtimeModel_)
+                 // mTimeModel: value.mTimeModel,
+                   onSelection: (TimeModel mtimeModel_) =>
+                       value.onSelectTime(mtimeModel_)
                 ),
               ),
 
@@ -746,6 +747,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Visibility(
+                visible: !value.isVideoCompressed,
                 child: Row(
                   children: [
                     //----------------------video seleciton box------------
@@ -825,7 +827,6 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                     )
                   ],
                 ),
-                visible: !value.isVideoCompressed,
               ),
             ),
           ),

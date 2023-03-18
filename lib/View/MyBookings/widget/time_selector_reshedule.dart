@@ -9,7 +9,7 @@ import 'package:otobucks/global/app_views.dart';
 // ignore: must_be_immutable
 class TimeRescheduleSelector extends StatefulWidget {
   String selectedDate;
-  //Function onSelection;
+  Function onSelection;
   String? time;
   bool isPending;
 
@@ -18,7 +18,7 @@ class TimeRescheduleSelector extends StatefulWidget {
     this.time,
     this.isPending = false,
     required this.selectedDate,
-    // required this.onSelection
+     required this.onSelection
   }) : super(key: key);
 
   @override

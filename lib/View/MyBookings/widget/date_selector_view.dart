@@ -163,33 +163,6 @@ class DateViewSelectorState extends State<DateViewSelector> {
                         right: AppDimens.dimens_15),
                     decoration: mBoxDecoration,
                     child: InkWell(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            mTimeModel.date,
-                            textAlign: TextAlign.center,
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: textColor,
-                                fontWeightDelta: 1),
-                            maxLines: 1,
-                          ),
-                          const SizedBox(
-                            height: AppDimens.dimens_5,
-                          ),
-                          Text(
-                            mTimeModel.daysOfTheWeek,
-                            textAlign: TextAlign.center,
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: textColor,
-                                fontWeightDelta: -2),
-                            maxLines: 1,
-                          ),
-                        ],
-                      ),
                       onTap: widget.isPending?
                           () {
 
@@ -221,6 +194,33 @@ class DateViewSelectorState extends State<DateViewSelector> {
                             break;
                         }
                       } :(){},
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            mTimeModel.date,
+                            textAlign: TextAlign.center,
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: textColor,
+                                fontWeightDelta: 1),
+                            maxLines: 1,
+                          ),
+                          const SizedBox(
+                            height: AppDimens.dimens_5,
+                          ),
+                          Text(
+                            mTimeModel.daysOfTheWeek,
+                            textAlign: TextAlign.center,
+                            style: AppStyle.textViewStyleSmall(
+                                context: context,
+                                color: textColor,
+                                fontWeightDelta: -2),
+                            maxLines: 1,
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

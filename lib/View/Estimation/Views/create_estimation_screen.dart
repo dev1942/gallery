@@ -119,9 +119,9 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                     //Upload Video or Shoot a video
                     if (widget.screenType != 'promotion') _videoSection(),
                     //Voice Note
-                    // if (widget.screenType != 'promotion') _voiceNoteSection(),
-                    //Leave Note (if any)
-                    //if (widget.screenType != 'promotion')
+                    if (widget.screenType != 'promotion') _voiceNoteSection(),
+                   // Leave Note (if any)
+                    if (widget.screenType != 'promotion')
 
                     _anyNoteTextFiledSection(),
                     Container(
@@ -821,61 +821,63 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
         });
   }
 
-  _voiceNoteSection() =>
-      GetBuilder<CreateEstimationController>(builder: (value) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(
-                top: AppDimens.dimens_20,
-                left: AppDimens.dimens_14,
-                right: AppDimens.dimens_14,
-              ),
-              child: Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      Constants.STR_LEAVE_VOICE_NOTE.tr,
-                      style: AppStyle.textViewStyleNormalSubtitle2(
-                          context: context,
-                          color: AppColors.colorBlack2,
-                          fontWeightDelta: 1,
-                          fontSizeDelta: 0),
-                    ),
-                  ),
-                  const SizedBox(width: AppDimens.dimens_5),
-                  Text(
-                    Constants.STR_MAX_SIZE.tr,
+  _voiceNoteSection(){
+    return GetBuilder<CreateEstimationController>(builder: (value) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(
+              top: AppDimens.dimens_20,
+              left: AppDimens.dimens_14,
+              right: AppDimens.dimens_14,
+            ),
+            child: Row(
+              children: [
+                Flexible(
+                  child: Text(
+                    Constants.STR_LEAVE_VOICE_NOTE.tr,
                     style: AppStyle.textViewStyleNormalSubtitle2(
                         context: context,
                         color: AppColors.colorBlack2,
-                        fontWeightDelta: -1,
-                        fontSizeDelta: -4),
+                        fontWeightDelta: 1,
+                        fontSizeDelta: 0),
                   ),
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: AppDimens.dimens_10,
-                left: AppDimens.dimens_14,
-                right: AppDimens.dimens_14,
-              ),
-              child: InkWell(
-                onTap: () {},
-                child: VoiceRecordingButton(
-                  // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
-                  strVoiceNotePath: value.voiceNoteFile,
-                  callback: (String filePath) =>
-                      value.onSelectVoiceNote(filePath),
                 ),
+                const SizedBox(width: AppDimens.dimens_5),
+                Text(
+                  Constants.STR_MAX_SIZE.tr,
+                  style: AppStyle.textViewStyleNormalSubtitle2(
+                      context: context,
+                      color: AppColors.colorBlack2,
+                      fontWeightDelta: -1,
+                      fontSizeDelta: -4),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(
+              top: AppDimens.dimens_10,
+              left: AppDimens.dimens_14,
+              right: AppDimens.dimens_14,
+            ),
+            child: InkWell(
+              onTap: () {},
+              child: VoiceRecordingButton(
+                // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
+                strVoiceNotePath: value.voiceNoteFile,
+                callback: (String filePath) =>
+                    value.onSelectVoiceNote(filePath),
               ),
             ),
-          ],
-        );
-      });
+          ),
+        ],
+      );
+    });
+  }
+
 
   _addressTextFiledSection() {
     return Column(

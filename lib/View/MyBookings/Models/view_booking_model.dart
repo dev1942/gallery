@@ -719,7 +719,7 @@ class Dispute {
   String? createdAt;
   String? updatedAt;
   int? iV;
-
+String ?adminRemarks;
   Dispute(
       {this.ssn,
         this.disputeStatus,
@@ -735,7 +735,8 @@ class Dispute {
         this.createdBy,
         this.createdAt,
         this.updatedAt,
-        this.iV});
+        this.iV,
+      this.adminRemarks});
 
   Dispute.fromJson(Map<String, dynamic> json) {
     ssn = json['ssn'];
@@ -753,6 +754,7 @@ class Dispute {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
+    adminRemarks = json['adminRemarks'];
   }
 
   Map<String, dynamic> toJson() {
@@ -772,6 +774,7 @@ class Dispute {
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     data['__v'] = this.iV;
+    data['adminRemarks'] = this.adminRemarks;
     return data;
   }
 }

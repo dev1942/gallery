@@ -238,16 +238,18 @@ class MyBookingsController extends GetxController {
   }
 
 //-------------------------------------Delete booking API method-------------------
-  Future<void> deleteBooking({String? bookingID, m}) async {
+  Future<void> deleteBooking({String? bookingID,}) async {
     final prefManager = await SharedPreferences.getInstance();
     String? token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
     try {
       final body = json.encode({"bookingID": bookingID});
       log.i("$token");
       log.i(body);
+      log.i(bookingID);
       final headers = {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'};
-      var uriSaveCart = Uri.parse("${RequestBuilder.API_DELETE_BOOKING}/$bookingID");
-      http.Response response = await http.delete(uriSaveCart, headers: headers, body: body);
+      var uriSaveCart = Uri.parse("${RequestBuilder.API_DELETE_BOOKING}$bookingID");
+      log.i(uriSaveCart);
+      http.Response response = await http.delete(uriSaveCart, headers: headers,);
       log.i("BodyI sent when delete booking=======>$body");
       final message = json.decode(response.body.toString());
       //..............Response Ok Part...................................................
@@ -265,7 +267,7 @@ class MyBookingsController extends GetxController {
     } catch (e) {
       Global.showToastAlert(context: Get.context!, strTitle: "Deleted", strMsg: e.toString(), toastType: TOAST_TYPE.toastSuccess);
 
-      log.e("Exception is whileremover market shop  is=======>>${e.toString()}");
+      log.e("Exception in delete booking=======>>${e.toString()}");
     }
   }
 
