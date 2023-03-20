@@ -403,7 +403,7 @@ class Constants {
       STR_SELECT = 'Select',
       STR_UPDATE = 'Update';
 
-  static const String STR_FIRST_NAME = 'First Name',
+  static const String STR_FIRST_NAME = 'Name',
       STR_LAST_NAME = 'Last Name',
       STR_DISPUTE_TITLE = 'Enter Dispute Title',
       STR_DISPUTE_Desc = 'Enter Dispute Description',

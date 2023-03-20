@@ -6,7 +6,9 @@ class LocaleLanguages extends Translations {
         'ar_AE': {
           'Email': 'البريد الإلكتروني',
           'LOGIN': 'تسجيل الدخول',
-          'Login': 'تسجيل الدخول',
+          'Yes': 'نعم',
+          'No': 'لا',
+          'We found 5 more service providers near you that match your requirements, would you like to request for an estimation from them?': 'وجدنا 5 مزودي خدمة آخرين بالقرب منك يتوافقون مع متطلباتك ، هل ترغب في طلب تقدير منهم؟',
           'Submit': 'يُقدِّم',
           'To track your booking, please visit My Bookings section': 'لتتبع حجزك ، يرجى زيارة قسم حجوزاتي',
           'Admin Remarks': 'يُقدِّم',

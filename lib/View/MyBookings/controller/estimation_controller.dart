@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as i;
@@ -12,11 +13,17 @@ import 'package:otobucks/View/ThankYou/Views/thankyou_fragment.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
+import 'package:http/http.dart' as http;
 import 'package:otobucks/View/Services_All/Models/service_model.dart';
 import 'package:otobucks/View/Services_All/Views/service_provider_profile_screen.dart';
+import 'package:otobucks/global/url_collection.dart';
 import 'package:otobucks/services/repository/estimates_repo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../global/Models/time_model.dart';
+import '../../../global/app_style.dart';
+import '../../../global/app_views.dart';
+import '../../Services_All/Controllers/service_screen_controller.dart';
 
 class CreateEstimationController extends GetxController {
   bool connectionStatus = false;
@@ -25,8 +32,10 @@ class CreateEstimationController extends GetxController {
   late ServiceModel mServiceModel;
   TextEditingController controllerNote = TextEditingController();
   TextEditingController addressNote = TextEditingController(text: "");
+
   // ignore: avoid_init_to_null
   late TimeModel? mTimeModel = null;
+  bool isMultiProvider = false;
   String selectedDate = "";
   String pickedImage = "";
   String pickedVideo = "";
@@ -35,6 +44,7 @@ class CreateEstimationController extends GetxController {
   Location location = Location();
   LightCompressor lightCompressor = LightCompressor();
   bool isVideoCompressed = false;
+
   Future<void> showLoader() async {
     isShowLoader = true;
     update();
@@ -52,19 +62,27 @@ class CreateEstimationController extends GetxController {
     voiceNoteFile = "";
     mTimeModel = null;
     PermissionStatus _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.granted || _permissionGranted == PermissionStatus.grantedLimited) {
+    if (_permissionGranted == PermissionStatus.granted ||
+        _permissionGranted == PermissionStatus.grantedLimited) {
       var currentLocation = await location.getLocation();
       log(currentLocation.latitude.toString());
-      LatLng _mLatLng = LatLng(currentLocation.latitude!, currentLocation.longitude!);
-      List<i.Placemark> placemarks = await i.placemarkFromCoordinates(_mLatLng.latitude, _mLatLng.longitude);
-      addressNote.text = '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
+      LatLng _mLatLng =
+          LatLng(currentLocation.latitude!, currentLocation.longitude!);
+      List<i.Placemark> placemarks = await i.placemarkFromCoordinates(
+          _mLatLng.latitude, _mLatLng.longitude);
+      addressNote.text =
+          '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
 
       log("addresssssis${addressNote.text}");
       isShowLoader = false;
       update();
       mLatLng = _mLatLng;
     } else {
-      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Enable Location From setting!', toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(
+          context: Get.overlayContext!,
+          strTitle: "",
+          strMsg: 'Enable Location From setting!',
+          toastType: TOAST_TYPE.toastError);
       mLatLng = Global.mLatLng;
     }
     update();
@@ -87,7 +105,8 @@ class CreateEstimationController extends GetxController {
 
   Future pickVideo(ImageSource imageSource) async {
     // ignore: invalid_use_of_visible_for_testing_member
-    var image = await _picker.pickVideo(source: imageSource, maxDuration: const Duration(seconds: 30));
+    var image = await _picker.pickVideo(
+        source: imageSource, maxDuration: const Duration(seconds: 30));
 
     if (image != null) {
       isVideoCompressed = true;
@@ -96,7 +115,9 @@ class CreateEstimationController extends GetxController {
       final dynamic response = await lightCompressor.compressVideo(
         destinationPath: _desFile,
         // ios: IOSConfig(saveInGallery: false),
-        path: image.path, videoQuality: VideoQuality.very_low, isMinBitrateCheckEnabled: false,
+        path: image.path,
+        videoQuality: VideoQuality.very_low,
+        isMinBitrateCheckEnabled: false,
       );
 
       if (response is OnSuccess) {
@@ -146,14 +167,26 @@ class CreateEstimationController extends GetxController {
 
   isValid() {
     if (!Global.checkNull(addressNote.text)) {
-      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Please Enter Address', toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(
+          context: Get.overlayContext!,
+          strTitle: "",
+          strMsg: 'Please Enter Address',
+          toastType: TOAST_TYPE.toastError);
       return false;
     }
     if (!Global.checkNull(selectedDate)) {
-      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_SELECT_DATE, toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(
+          context: Get.overlayContext!,
+          strTitle: "",
+          strMsg: AppAlert.ALERT_SELECT_DATE,
+          toastType: TOAST_TYPE.toastError);
       return false;
     } else if (mTimeModel == null) {
-      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_SELECT_TIME, toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(
+          context: Get.overlayContext!,
+          strTitle: "",
+          strMsg: AppAlert.ALERT_SELECT_TIME,
+          toastType: TOAST_TYPE.toastError);
       return false;
     }
 
@@ -172,15 +205,18 @@ class CreateEstimationController extends GetxController {
   //               )));
   // }
 //----------------------------Create Estimation--------------------
-  createEstimation(BuildContext context, String? carId) async {
+  Future <void>createEstimationSingle(BuildContext context, String? carId) async {
     log("create estimation--------------------------------ibrahim--------");
-
     log(pickedImage.toString());
     if (Global.checkNull(pickedVideo)) {
       double fileSize = await Global.getFileSize(pickedVideo);
       if (fileSize > 10) {
-        Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_FILE_SIZE, toastType: TOAST_TYPE.toastError);
-        return "";
+        Global.showToastAlert(
+            context: Get.overlayContext!,
+            strTitle: "",
+            strMsg: AppAlert.ALERT_FILE_SIZE,
+            toastType: TOAST_TYPE.toastError);
+        return ;
       }
     }
     isShowLoader = true;
@@ -189,20 +225,25 @@ class CreateEstimationController extends GetxController {
     HashMap<String, String> requestParams = HashMap();
     HashMap<String, String> requestParamsImage = HashMap();
     // requestParamsImage["sourceID"]="62d461692e64f55c5c0802f3";
-    requestParams["sourceID"] = mServiceModel.id;
+    requestParams["sourceID"] = [mServiceModel.id].toString();
     requestParams[PARAMS.PARAM_DATE] = selectedDate;
     // final gasGiants = {PARAMS.PARAM_SOURCE:  mServiceModel.id, PARAMS.PARAM_ADDRESS: addressNote.text};
 
-    requestParams[PARAMS.PARAM_TIME] = mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
+    requestParams[PARAMS.PARAM_TIME] =
+        mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
     requestParams[PARAMS.PARAM_CUTOMERNOTE] = strNote;
     requestParams[PARAMS.PARAM_ADDRESS] = addressNote.text;
     requestParams["car"] = carId ?? "63a2915f0fe25834cf690bbf";
     if (mLatLng != null) {
-      requestParams[PARAMS.PARAM_LATITUDE] = mLatLng!.latitude.toStringAsFixed(4);
-      requestParams[PARAMS.PARAM_LONGITUDE] = mLatLng!.longitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LATITUDE] =
+          mLatLng!.latitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LONGITUDE] =
+          mLatLng!.longitude.toStringAsFixed(4);
     } else {
-      requestParams[PARAMS.PARAM_LATITUDE] = Global.mLatLng.latitude.toStringAsFixed(4);
-      requestParams[PARAMS.PARAM_LONGITUDE] = Global.mLatLng.longitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LATITUDE] =
+          Global.mLatLng.latitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LONGITUDE] =
+          Global.mLatLng.longitude.toStringAsFixed(4);
     }
 
     if (Global.checkNull(pickedImage)) {
@@ -215,23 +256,90 @@ class CreateEstimationController extends GetxController {
     if (Global.checkNull(voiceNoteFile)) {
       requestParamsImage[PARAMS.PARAM_VOICE_NOTE] = voiceNoteFile;
     }
+    // Get.find();
+    List<String> singleProviderSourceList = [mServiceModel.id];
+    List<String> multiProviderSourceList = [mServiceModel.id];
     // requestParamsImage.addEntries(gasGiants.entries);
     //........Rrepo of create estimation...................
+    mCreateEstimation(
+        singleProviderSourceList,
+        addressNote.text,
+        mTimeModel != null ? mTimeModel!.time_24hr.toString() : "",
+        selectedDate,
+        carId,
+        strNote);
+  }
 
-    Logger().i(requestParamsImage);
-    var categories = await EstimatesRepo().createEstimates(requestParams, requestParamsImage, ReqType.post);
+  Future<void>createEstimationMulti(BuildContext context, String? carId) async {
 
-    categories.fold((failure) {
-      //.............Failure case............................
-      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+    log("create estimation multi--------------------------------ibrahim--------");
+    log(pickedImage.toString());
+    if (Global.checkNull(pickedVideo)) {
+      double fileSize = await Global.getFileSize(pickedVideo);
+      if (fileSize > 10) {
+        Global.showToastAlert(
+            context: Get.overlayContext!,
+            strTitle: "",
+            strMsg: AppAlert.ALERT_FILE_SIZE,
+            toastType: TOAST_TYPE.toastError);
+        return ;
+      }
+    }
+    isShowLoader = true;
+    update();
+    String strNote = controllerNote.text.toString();
+    HashMap<String, String> requestParams = HashMap();
+    HashMap<String, String> requestParamsImage = HashMap();
+    requestParams[PARAMS.PARAM_DATE] = selectedDate;
+    requestParams[PARAMS.PARAM_TIME] =
+        mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
+    requestParams[PARAMS.PARAM_CUTOMERNOTE] = strNote;
+    requestParams[PARAMS.PARAM_ADDRESS] = addressNote.text;
+    requestParams["car"] = carId ?? "63a2915f0fe25834cf690bbf";
+    if (mLatLng != null) {
+      requestParams[PARAMS.PARAM_LATITUDE] =
+          mLatLng!.latitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LONGITUDE] =
+          mLatLng!.longitude.toStringAsFixed(4);
+    } else {
+      requestParams[PARAMS.PARAM_LATITUDE] =
+          Global.mLatLng.latitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LONGITUDE] =
+          Global.mLatLng.longitude.toStringAsFixed(4);
+    }
 
-      isShowLoader = false;
-      update();
-    }, (mResult) {
-      isShowLoader = false;
-      //................ goto Thank you......................
-      Get.offAll(() => const ThankYouFragment());
-    });
+    if (Global.checkNull(pickedImage)) {
+      requestParamsImage[PARAMS.PARAM_IMAGE] = pickedImage;
+    }
+
+    if (Global.checkNull(pickedVideo)) {
+      requestParamsImage[PARAMS.PARAM_VIDEO] = pickedVideo;
+    }
+    if (Global.checkNull(voiceNoteFile)) {
+      requestParamsImage[PARAMS.PARAM_VOICE_NOTE] = voiceNoteFile;
+    }
+    List<String> multiProviderSourceList =List.filled(5,"");
+      if (Get.put(ServiceScreenController()).alServicesfiltered.isNotEmpty) {
+        multiProviderSourceList  = [];
+
+          multiProviderSourceList.add(
+            Get.put(ServiceScreenController()).alServicesfiltered.firstWhere((element) => element.mSubCategoryModel.title==mServiceModel.mSubCategoryModel.title).id,
+          );
+          multiProviderSourceList.removeWhere((element) => element==mServiceModel.id);
+
+      }
+
+
+
+    // requestParamsImage.addEntries(gasGiants.entries);
+    //........Rrepo of create estimation...................
+    mCreateEstimation(
+        multiProviderSourceList,
+        addressNote.text,
+        mTimeModel != null ? mTimeModel!.time_24hr.toString() : "",
+        selectedDate,
+        carId,
+        strNote);
   }
 
 //.............goto profile
@@ -249,5 +357,110 @@ class CreateEstimationController extends GetxController {
   updateLatLang(LatLng mLatLng_) async {
     mLatLng = mLatLng_;
     getLocationAdress();
+  }
+
+  //................add shop and update shop of seller....................................
+  Future<void> mCreateEstimation(
+    List<String> sourceIDs,
+    String? address,
+    String? time,
+    String? date,
+    String? car,
+    String? customerNote,
+  ) async {
+    final prefManager = await SharedPreferences.getInstance();
+    String? userToken = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
+
+    try {
+      final body = json.encode({
+        "sourceIDs": sourceIDs,
+        "address": address,
+        "time": time,
+        "date": date,
+        "car": car,
+        "customerNote": customerNote,
+      });
+      final headers = {
+        'Authorization': 'Bearer $userToken',
+        'Content-Type': 'application/json'
+      };
+      //-----Uri for update shop--------//
+      var uriUpdateShop = Uri.parse(
+          "${RequestBuilder.API_BASE_URL}${RequestBuilder.API_CREATE_ESTIMATES}");
+
+      http.Response response =
+          await http.post(uriUpdateShop, headers: headers, body: body);
+      Logger().i("BodyI sent =======>${body}");
+      final message = json.decode(response.body.toString());
+      //..............Response Ok Part...................................................
+      if (response.statusCode == 200) {
+        isShowLoader = false;
+        Logger().i(response.statusCode);
+        Logger().i("Server Response to me======>>${message["message"]}");
+        // //dialog for multiple
+        // Get.defaultDialog(
+        //     barrierDismissible: false,
+        //     title: "Estimation Requested".tr,
+        //     titleStyle: AppStyle.textViewStyleNormalButton(
+        //         context: Get.context!, color: Colors.black, fontSizeDelta: 3),
+        //     content: Column(
+        //       children: [
+        //         const CircleAvatar(
+        //           backgroundColor: Colors.green,
+        //           radius: 32,
+        //           child: Icon(
+        //             Icons.done,
+        //             color: Colors.white,
+        //             size: 34,
+        //           ),
+        //         ),
+        //         addVerticleSpace(5),
+        //         Padding(
+        //           padding: const EdgeInsets.all(8.0),
+        //           child: Text(
+        //             "We found 5 more service providers near you that match your requirements, would you like to request for an estimation from them?",
+        //             style: AppStyle.textViewStyleNormalButton(
+        //               context: Get.context!,
+        //               color: Colors.black,
+        //               fontSizeDelta: -2,
+        //             ),
+        //             textAlign: TextAlign.center,
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //     textConfirm: "Yes",
+        //     textCancel: "No",
+        //     confirmTextColor: Colors.white,
+        //     onConfirm: () {
+        //       // implemente the multi logic
+        //     },
+        //     onCancel: () {
+        //       //   //................ goto Thank you......................
+        //       Get.offAll(() => const ThankYouFragment());
+        //     });
+        // //end dialog
+      }
+      //.........................not ok ...................................................
+      else {
+        //   //.............Failure case............................
+        Global.showToastAlert(
+            context: Get.overlayContext!,
+            strTitle: "",
+            strMsg: message,
+            toastType: TOAST_TYPE.toastError);
+
+        isShowLoader = false;
+        update();
+      }
+    } catch (e) {
+      Global.showToastAlert(
+          context: Get.overlayContext!,
+          strTitle: "",
+          strMsg: "Something went wrong, please try after some time",
+          toastType: TOAST_TYPE.toastError);
+
+      Logger().e("Exception is=======>>${e.toString()}");
+    }
   }
 }

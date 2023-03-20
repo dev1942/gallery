@@ -203,7 +203,7 @@ class RegistrationScreenController extends GetxController {
     controllerCountry = TextEditingController();
     controllerEmail = TextEditingController();
     controllerPhone = TextEditingController();
-    controllerHowAboutUs = TextEditingController();
+    controllerHowAboutUs = TextEditingController(text: "Instagram");
     controllerInviteCode = TextEditingController();
     controllerPassword = TextEditingController();
   }
