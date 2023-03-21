@@ -84,24 +84,26 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           GetBuilder<RegistrationScreenController>(init: RegistrationScreenController(), builder: (model) => staticTextFileds(model)),
                           GetBuilder<RegistrationScreenController>(builder: (model) => getCountryTextFiled(model)),
                           GetBuilder<RegistrationScreenController>(builder: (model) => textFiledMobile(model)),
-                          GetBuilder<RegistrationScreenController>(builder: (model) => knowAboutUsDropDown(model)),
+                           GetBuilder<RegistrationScreenController>(builder: (model) => knowAboutUsDropDown(model)),
                           GetBuilder<RegistrationScreenController>(
                               builder: (model) => (Global.checkNull(model.controllerHowAboutUs.text.toString()) &&
                                       Global.equalsIgnoreCase(model.controllerHowAboutUs.text.toString(), "Other"))
-                                  ? Container(
-                                      margin: const EdgeInsets.only(top: AppDimens.dimens_18),
-                                      child: CustomTextFieldWithIcon(
-                                        textInputAction: TextInputAction.next,
-                                        enabled: true,
-                                        focusNode: model.mFocusNodeInviteCode,
-                                        controller: model.controllerInviteCode,
-                                        keyboardType: TextInputType.text,
-                                        hintText: 'Invitation Code'.tr,
-                                        inputFormatters: const [],
-                                        obscureText: false,
-                                        onChanged: (String value) {},
-                                      ),
-                                    )
+                                  ?
+                                  SizedBox()
+                              // Container(
+                              //         margin: const EdgeInsets.only(top: AppDimens.dimens_18),
+                              //         child: CustomTextFieldWithIcon(
+                              //           textInputAction: TextInputAction.next,
+                              //           enabled: true,
+                              //           focusNode: model.mFocusNodeInviteCode,
+                              //           controller: model.controllerInviteCode,
+                              //           keyboardType: TextInputType.text,
+                              //           hintText: 'Invitation Code'.tr,
+                              //           inputFormatters: const [],
+                              //           obscureText: false,
+                              //           onChanged: (String value) {},
+                              //         ),
+                              //       )
                                   : Container()),
                           GetBuilder<RegistrationScreenController>(builder: (model) {
                             return Column(
@@ -123,7 +125,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 2.h,
+                                  height: 12,
                                 ),
                                 CustomButton(
                                     isRoundBorder: true, onPressed: () => model.registerUserTask(context), strTitle: Constants.TXT_REGISTER.tr),

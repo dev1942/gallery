@@ -233,9 +233,11 @@ class CompletedFragment extends GetView<MyBookingsController> {
                                     top: 5,
                                     child: InkWell(
                                       onTap: () {
-                                        controller.deleteBooking(bookingID: data.id);
-                                        snapshot.data?.result?.removeWhere((element) => element.id == data.id);
-                                        controller.update();
+                                        controller.deleteBooking(bookingID: data.id).then((value) {
+                                          snapshot.data?.result?.removeWhere((element) => element.id == data.id);
+                                          controller.update();
+                                        });
+
                                       },
                                       child: Icon(
                                         Icons.delete_outline,

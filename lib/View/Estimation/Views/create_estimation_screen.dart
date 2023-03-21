@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:logger/logger.dart';
 import 'package:otobucks/View/CheckOut/Views/checkout_screen.dart';
 import 'package:otobucks/View/MyBookings/controller/estimation_controller.dart';
 import 'package:otobucks/View/Profile/Controller/profile_screen_controller.dart';
@@ -29,6 +30,8 @@ import 'package:otobucks/widgets/time_selector.dart';
 import 'package:otobucks/widgets/voice_note_buttons.dart';
 import 'dart:io' show Platform;
 import '../../../global/Models/time_model.dart';
+import '../../Services_All/Controllers/service_screen_controller.dart';
+import '../../ThankYou/Views/thankyou_fragment.dart';
 
 class CreateEstimationScreen extends StatefulWidget {
   final ServiceModel mServiceModel;
@@ -119,11 +122,10 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                     //Upload Video or Shoot a video
                     if (widget.screenType != 'promotion') _videoSection(),
                     //Voice Note
-                    // if (widget.screenType != 'promotion') _voiceNoteSection(),
-                    //Leave Note (if any)
-                    //if (widget.screenType != 'promotion')
-
-                    _anyNoteTextFiledSection(),
+                    if (widget.screenType != 'promotion') _voiceNoteSection(),
+                    // Leave Note (if any)
+                    if (widget.screenType != 'promotion')
+                      _anyNoteTextFiledSection(),
                     Container(
                       alignment: Alignment.center,
                       margin: const EdgeInsets.only(
@@ -137,6 +139,12 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                           fontColor: AppColors.colorWhite,
                           width: size.width,
                           onPressed: () {
+                            Logger().e(Get.put(ServiceScreenController())
+                                .alServicesfiltered
+                                .where((element) =>
+                            element.mSubCategoryModel.title ==
+                                widget.mServiceModel.mSubCategoryModel.title)
+                                .length);
                             if (controller.isValid()) {
                               if (widget.screenType == 'promotion') {
                                 Navigator.push(
@@ -165,8 +173,100 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                     selectedValue!.isNotEmpty) {
                                   int index =
                                       carNamesList!.indexOf(selectedValue!);
-                                  controller.createEstimation(
-                                      context, carNameId![index]);
+                                  controller
+                                      .createEstimationSingle(
+                                          context, carNameId![index])
+                                      .whenComplete(() {
+                                    if (Get.put(ServiceScreenController())
+                                            .alServicesfiltered
+                                            .where((element) =>
+                                                element.mSubCategoryModel.title ==
+                                                widget.mServiceModel.mSubCategoryModel.title)
+                                            .length>1
+                                        ) {
+                                      //dialog for multiple
+                                      Get.defaultDialog(
+                                          barrierDismissible: false,
+                                          title: "Estimation Requested".tr,
+                                          titleStyle: AppStyle
+                                              .textViewStyleNormalButton(
+                                                  context: Get.context!,
+                                                  color: Colors.black,
+                                                  fontSizeDelta: 3),
+                                          content: Column(
+                                            children: [
+                                              const CircleAvatar(
+                                                backgroundColor: Colors.green,
+                                                radius: 32,
+                                                child: Icon(
+                                                  Icons.done,
+                                                  color: Colors.white,
+                                                  size: 34,
+                                                ),
+                                              ),
+                                              addVerticleSpace(5),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Get.put(ServiceScreenController())
+                                                    .alServicesfiltered
+                                                    .where((element) =>
+                                                element.mSubCategoryModel.title ==
+                                                    widget.mServiceModel.mSubCategoryModel.title)
+                                                    .length >
+                                                        5
+                                                    ? Text(
+                                                        "We found 5 more service providers near you that match your requirements, would you like to request for an estimation from them?",
+                                                        style: AppStyle
+                                                            .textViewStyleNormalButton(
+                                                          context: Get.context!,
+                                                          color: Colors.black,
+                                                          fontSizeDelta: -2,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      )
+                                                    : Text(
+                                                        "We found ${Get.put(ServiceScreenController())
+                                                            .alServicesfiltered
+                                                            .where((element) =>
+                                                        element.mSubCategoryModel.title ==
+                                                            widget.mServiceModel.mSubCategoryModel.title)
+                                                            .length} more service providers near you that match your requirements, would you like to request for an estimation from them?",
+                                                        style: AppStyle
+                                                            .textViewStyleNormalButton(
+                                                          context: Get.context!,
+                                                          color: Colors.black,
+                                                          fontSizeDelta: -2,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                              ),
+                                            ],
+                                          ),
+                                          textConfirm: "Yes".tr,
+                                          textCancel: "No".tr,
+                                          confirmTextColor: Colors.white,
+                                          onConfirm: () {
+                                            controller
+                                                .createEstimationMulti(
+                                                    context, carNameId![index])
+                                                .whenComplete(() {
+                                              Get.off(() =>
+                                                  const ThankYouFragment());
+                                            });
+                                          },
+                                          onCancel: () {
+                                            //   //................ goto Thank you......................
+                                            Get.offAll(
+                                                () => const ThankYouFragment());
+                                          });
+                                      //end dialog
+                                    } else {
+                                      Get.off(() => const ThankYouFragment());
+                                    }
+                                  });
                                 } else {
                                   Global.showToastAlert(
                                       context: Get.overlayContext!,
@@ -821,61 +921,62 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
         });
   }
 
-  _voiceNoteSection() =>
-      GetBuilder<CreateEstimationController>(builder: (value) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(
-                top: AppDimens.dimens_20,
-                left: AppDimens.dimens_14,
-                right: AppDimens.dimens_14,
-              ),
-              child: Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      Constants.STR_LEAVE_VOICE_NOTE.tr,
-                      style: AppStyle.textViewStyleNormalSubtitle2(
-                          context: context,
-                          color: AppColors.colorBlack2,
-                          fontWeightDelta: 1,
-                          fontSizeDelta: 0),
-                    ),
-                  ),
-                  const SizedBox(width: AppDimens.dimens_5),
-                  Text(
-                    Constants.STR_MAX_SIZE.tr,
+  _voiceNoteSection() {
+    return GetBuilder<CreateEstimationController>(builder: (value) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(
+              top: AppDimens.dimens_20,
+              left: AppDimens.dimens_14,
+              right: AppDimens.dimens_14,
+            ),
+            child: Row(
+              children: [
+                Flexible(
+                  child: Text(
+                    Constants.STR_LEAVE_VOICE_NOTE.tr,
                     style: AppStyle.textViewStyleNormalSubtitle2(
                         context: context,
                         color: AppColors.colorBlack2,
-                        fontWeightDelta: -1,
-                        fontSizeDelta: -4),
+                        fontWeightDelta: 1,
+                        fontSizeDelta: 0),
                   ),
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: AppDimens.dimens_10,
-                left: AppDimens.dimens_14,
-                right: AppDimens.dimens_14,
-              ),
-              child: InkWell(
-                onTap: () {},
-                child: VoiceRecordingButton(
-                  // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
-                  strVoiceNotePath: value.voiceNoteFile,
-                  callback: (String filePath) =>
-                      value.onSelectVoiceNote(filePath),
                 ),
+                const SizedBox(width: AppDimens.dimens_5),
+                Text(
+                  Constants.STR_MAX_SIZE.tr,
+                  style: AppStyle.textViewStyleNormalSubtitle2(
+                      context: context,
+                      color: AppColors.colorBlack2,
+                      fontWeightDelta: -1,
+                      fontSizeDelta: -4),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(
+              top: AppDimens.dimens_10,
+              left: AppDimens.dimens_14,
+              right: AppDimens.dimens_14,
+            ),
+            child: InkWell(
+              onTap: () {},
+              child: VoiceRecordingButton(
+                // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
+                strVoiceNotePath: value.voiceNoteFile,
+                callback: (String filePath) =>
+                    value.onSelectVoiceNote(filePath),
               ),
             ),
-          ],
-        );
-      });
+          ),
+        ],
+      );
+    });
+  }
 
   _addressTextFiledSection() {
     return Column(

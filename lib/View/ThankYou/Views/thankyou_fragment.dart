@@ -5,6 +5,7 @@ import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_images.dart';
 import 'package:otobucks/global/app_style.dart';
+import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/widgets/custom_button.dart';
 
 import '../../../Utils/Navigation.dart';
@@ -86,6 +87,17 @@ class ThankYouFragmentState extends State<ThankYouFragment> {
               style: AppStyle.textViewStyleSmall(
                   context: context,
                   color: AppColors.colorYellowShade,
+                  fontSizeDelta: 1,
+                  fontWeightDelta: 0),
+            ),
+addVerticleSpace(20),
+            Text(
+              'To track your booking, please visit My Bookings section'
+                  .tr,
+              textAlign: TextAlign.center,
+              style: AppStyle.textViewStyleSmall(
+                  context: context,
+                  color: AppColors.colorBlack,
                   fontSizeDelta: 1,
                   fontWeightDelta: 0),
             ),
