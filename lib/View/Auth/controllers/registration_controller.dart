@@ -140,7 +140,7 @@ class RegistrationScreenController extends GetxController {
     requestParams[PARAMS.PARAM_PASSWORD_CONFIRM] = strPassword;
     requestParams[PARAMS.PARAM_HEAREDABOUTUS] = strHowHear;
     requestParams[PARAMS.PARAM_INVITE] = strInviteCode;
-    requestParams[PARAMS.PARAM_COUNTRY_CODE] = strCountyCode;
+    requestParams[PARAMS.PARAM_COUNTRY_CODE] = strCountyCode.isEmpty ? "971" : strCountyCode;
     requestParams[PARAMS.PARAM_COUNTRY_FLAG_CODE] = strCountyFlag;
     requestParams[PARAMS.PARAM_FIREBASE_TOKEN] = firebaseToken;
 

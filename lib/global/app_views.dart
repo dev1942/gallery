@@ -24,6 +24,7 @@ import 'global.dart';
 
 class AppViews {
   // App bar inti
+
   static initAppBar({
     required BuildContext mContext,
     required String strTitle,
@@ -40,7 +41,6 @@ class AppViews {
       actionsList.add(GestureDetector(
         onTap: () async {
           try {
-
             // await LocationHelper.getCurrentLocation(mContext, (p0, p1){
             //   log("${p0}  ${p1}");
             // });
@@ -48,7 +48,7 @@ class AppViews {
             HashMap<String, Object> requestParams = HashMap();
             requestParams[PARAMS.PARAM_LONGITUDE] = position.latitude;
             requestParams[PARAMS.PARAM_LATITUDE] = position.longitude;
-            requestParams["location"]="Multan,Punjab Pakistan, ";
+            requestParams["location"] = "Multan,Punjab Pakistan, ";
             Logger().i("lat:${requestParams[PARAMS.PARAM_LATITUDE]}");
             Logger().i("long:${requestParams[PARAMS.PARAM_LONGITUDE]}");
             inspect(position);
@@ -140,7 +140,7 @@ class AppViews {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  child: Text(strTitle,
+                  child: Text(strTitle.toUpperCase(),
                       textScaleFactor: Global.getScalFactor(),
                       softWrap: true,
                       maxLines: 1,
