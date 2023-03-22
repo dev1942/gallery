@@ -119,7 +119,7 @@ Widget mShowWidget(NotificationsController controller, BuildContext context) {
                     color: AppColors.grayDashboardItem,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: const EdgeInsets.only(top: 10, right: AppDimens.dimens_10, left: 10, bottom: 7),
+                  padding: const EdgeInsets.only(top: 5, right: AppDimens.dimens_10, left: 10, bottom: 7),
                   margin: const EdgeInsets.symmetric(horizontal: 5),
                   // margin: const EdgeInsets.only(bottom: AppDimens.dimens_14),
 
@@ -130,19 +130,19 @@ Widget mShowWidget(NotificationsController controller, BuildContext context) {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(
-                            top: 12,
-                            left: 10,
+                            top: 2,
+                            left: 5,
                             right: AppDimens.dimens_10,
                           ),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+                            borderRadius: BorderRadius.circular(AppDimens.dimens_100),
                             child: NetworkImageCustom(
                                 image: Global.checkNull(mNotificationModel.image)
                                     ? mNotificationModel.image
                                     : "https://qph.cf2.quoracdn.net/main-thumb-1278318002-200-ydzfegagslcexelzgsnplcklfkienzfr.jpeg",
                                 fit: BoxFit.fill,
-                                height: 90,
-                                width: 90),
+                                height: 70,
+                                width: 70),
                           ),
                         ),
                         Expanded(
@@ -152,7 +152,7 @@ Widget mShowWidget(NotificationsController controller, BuildContext context) {
                           children: [
                             Container(
                                 alignment: Alignment.centerLeft,
-                                margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
+                                margin: const EdgeInsets.only(top: AppDimens.dimens_14, bottom: AppDimens.dimens_5),
                                 child: Text(
                                   mNotificationModel.type.contains('estimate') ? 'Estimation Submitted ' : mNotificationModel.title,
                                   maxLines: 2,
@@ -169,10 +169,10 @@ Widget mShowWidget(NotificationsController controller, BuildContext context) {
                                 )),
                           ],
                         )),
-                        SizedBox(
-                          height: 90,
-                          child: Icon(Icons.arrow_forward_ios_rounded, size: AppDimens.dimens_13, color: AppColors.colorBlueStart),
-                        )
+                        // SizedBox(
+                        //   height: 90,
+                        //   child: Icon(Icons.arrow_forward_ios_rounded, size: AppDimens.dimens_13, color: AppColors.colorBlueStart),
+                        // )
                       ],
                     ),
                     onTap: () {

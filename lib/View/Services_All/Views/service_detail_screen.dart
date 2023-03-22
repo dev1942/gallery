@@ -46,7 +46,6 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
             Container(
               color: AppColors.colorBlueStart,
               height: AppDimens.dimens_120,
-
             ),
 
             Container(
@@ -244,6 +243,7 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
                     fontColor: AppColors.colorWhite,
                     width: Responsive.screenWidth,
                     onPressed: () {
+                   
                       controller.gotoCreateEstimation(context);
                     },
                     strTitle: Constants.TXT_BOOK_NOW.tr),

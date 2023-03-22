@@ -62,27 +62,19 @@ class CreateEstimationController extends GetxController {
     voiceNoteFile = "";
     mTimeModel = null;
     PermissionStatus _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.granted ||
-        _permissionGranted == PermissionStatus.grantedLimited) {
+    if (_permissionGranted == PermissionStatus.granted || _permissionGranted == PermissionStatus.grantedLimited) {
       var currentLocation = await location.getLocation();
       log(currentLocation.latitude.toString());
-      LatLng _mLatLng =
-          LatLng(currentLocation.latitude!, currentLocation.longitude!);
-      List<i.Placemark> placemarks = await i.placemarkFromCoordinates(
-          _mLatLng.latitude, _mLatLng.longitude);
-      addressNote.text =
-          '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
+      LatLng _mLatLng = LatLng(currentLocation.latitude!, currentLocation.longitude!);
+      List<i.Placemark> placemarks = await i.placemarkFromCoordinates(_mLatLng.latitude, _mLatLng.longitude);
+      addressNote.text = '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
 
       log("addresssssis${addressNote.text}");
       isShowLoader = false;
       update();
       mLatLng = _mLatLng;
     } else {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: 'Enable Location From setting!',
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Enable Location From setting!', toastType: TOAST_TYPE.toastError);
       mLatLng = Global.mLatLng;
     }
     update();
@@ -105,8 +97,7 @@ class CreateEstimationController extends GetxController {
 
   Future pickVideo(ImageSource imageSource) async {
     // ignore: invalid_use_of_visible_for_testing_member
-    var image = await _picker.pickVideo(
-        source: imageSource, maxDuration: const Duration(seconds: 30));
+    var image = await _picker.pickVideo(source: imageSource, maxDuration: const Duration(seconds: 30));
 
     if (image != null) {
       isVideoCompressed = true;
@@ -167,26 +158,14 @@ class CreateEstimationController extends GetxController {
 
   isValid() {
     if (!Global.checkNull(addressNote.text)) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: 'Please Enter Address',
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Please Enter Address', toastType: TOAST_TYPE.toastError);
       return false;
     }
     if (!Global.checkNull(selectedDate)) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_SELECT_DATE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_SELECT_DATE, toastType: TOAST_TYPE.toastError);
       return false;
     } else if (mTimeModel == null) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: AppAlert.ALERT_SELECT_TIME,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_SELECT_TIME, toastType: TOAST_TYPE.toastError);
       return false;
     }
 
@@ -205,18 +184,14 @@ class CreateEstimationController extends GetxController {
   //               )));
   // }
 //----------------------------Create Estimation--------------------
-  Future <void>createEstimationSingle(BuildContext context, String? carId) async {
+  Future<void> createEstimationSingle(BuildContext context, String? carId) async {
     log("create estimation--------------------------------ibrahim--------");
     log(pickedImage.toString());
     if (Global.checkNull(pickedVideo)) {
       double fileSize = await Global.getFileSize(pickedVideo);
       if (fileSize > 10) {
-        Global.showToastAlert(
-            context: Get.overlayContext!,
-            strTitle: "",
-            strMsg: AppAlert.ALERT_FILE_SIZE,
-            toastType: TOAST_TYPE.toastError);
-        return ;
+        Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_FILE_SIZE, toastType: TOAST_TYPE.toastError);
+        return;
       }
     }
     isShowLoader = true;
@@ -229,21 +204,16 @@ class CreateEstimationController extends GetxController {
     requestParams[PARAMS.PARAM_DATE] = selectedDate;
     // final gasGiants = {PARAMS.PARAM_SOURCE:  mServiceModel.id, PARAMS.PARAM_ADDRESS: addressNote.text};
 
-    requestParams[PARAMS.PARAM_TIME] =
-        mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
+    requestParams[PARAMS.PARAM_TIME] = mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
     requestParams[PARAMS.PARAM_CUTOMERNOTE] = strNote;
     requestParams[PARAMS.PARAM_ADDRESS] = addressNote.text;
     requestParams["car"] = carId ?? "63a2915f0fe25834cf690bbf";
     if (mLatLng != null) {
-      requestParams[PARAMS.PARAM_LATITUDE] =
-          mLatLng!.latitude.toStringAsFixed(4);
-      requestParams[PARAMS.PARAM_LONGITUDE] =
-          mLatLng!.longitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LATITUDE] = mLatLng!.latitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LONGITUDE] = mLatLng!.longitude.toStringAsFixed(4);
     } else {
-      requestParams[PARAMS.PARAM_LATITUDE] =
-          Global.mLatLng.latitude.toStringAsFixed(4);
-      requestParams[PARAMS.PARAM_LONGITUDE] =
-          Global.mLatLng.longitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LATITUDE] = Global.mLatLng.latitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LONGITUDE] = Global.mLatLng.longitude.toStringAsFixed(4);
     }
 
     if (Global.checkNull(pickedImage)) {
@@ -262,27 +232,17 @@ class CreateEstimationController extends GetxController {
     // requestParamsImage.addEntries(gasGiants.entries);
     //........Rrepo of create estimation...................
     mCreateEstimation(
-        singleProviderSourceList,
-        addressNote.text,
-        mTimeModel != null ? mTimeModel!.time_24hr.toString() : "",
-        selectedDate,
-        carId,
-        strNote);
+        singleProviderSourceList, addressNote.text, mTimeModel != null ? mTimeModel!.time_24hr.toString() : "", selectedDate, carId, strNote);
   }
 
-  Future<void>createEstimationMulti(BuildContext context, String? carId) async {
-
+  Future<void> createEstimationMulti(BuildContext context, String? carId) async {
     log("create estimation multi--------------------------------ibrahim--------");
     log(pickedImage.toString());
     if (Global.checkNull(pickedVideo)) {
       double fileSize = await Global.getFileSize(pickedVideo);
       if (fileSize > 10) {
-        Global.showToastAlert(
-            context: Get.overlayContext!,
-            strTitle: "",
-            strMsg: AppAlert.ALERT_FILE_SIZE,
-            toastType: TOAST_TYPE.toastError);
-        return ;
+        Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_FILE_SIZE, toastType: TOAST_TYPE.toastError);
+        return;
       }
     }
     isShowLoader = true;
@@ -291,21 +251,16 @@ class CreateEstimationController extends GetxController {
     HashMap<String, String> requestParams = HashMap();
     HashMap<String, String> requestParamsImage = HashMap();
     requestParams[PARAMS.PARAM_DATE] = selectedDate;
-    requestParams[PARAMS.PARAM_TIME] =
-        mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
+    requestParams[PARAMS.PARAM_TIME] = mTimeModel != null ? mTimeModel!.time_24hr.toString() : "";
     requestParams[PARAMS.PARAM_CUTOMERNOTE] = strNote;
     requestParams[PARAMS.PARAM_ADDRESS] = addressNote.text;
     requestParams["car"] = carId ?? "63a2915f0fe25834cf690bbf";
     if (mLatLng != null) {
-      requestParams[PARAMS.PARAM_LATITUDE] =
-          mLatLng!.latitude.toStringAsFixed(4);
-      requestParams[PARAMS.PARAM_LONGITUDE] =
-          mLatLng!.longitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LATITUDE] = mLatLng!.latitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LONGITUDE] = mLatLng!.longitude.toStringAsFixed(4);
     } else {
-      requestParams[PARAMS.PARAM_LATITUDE] =
-          Global.mLatLng.latitude.toStringAsFixed(4);
-      requestParams[PARAMS.PARAM_LONGITUDE] =
-          Global.mLatLng.longitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LATITUDE] = Global.mLatLng.latitude.toStringAsFixed(4);
+      requestParams[PARAMS.PARAM_LONGITUDE] = Global.mLatLng.longitude.toStringAsFixed(4);
     }
 
     if (Global.checkNull(pickedImage)) {
@@ -318,28 +273,23 @@ class CreateEstimationController extends GetxController {
     if (Global.checkNull(voiceNoteFile)) {
       requestParamsImage[PARAMS.PARAM_VOICE_NOTE] = voiceNoteFile;
     }
-    List<String> multiProviderSourceList =List.filled(5,"");
-      if (Get.put(ServiceScreenController()).alServicesfiltered.isNotEmpty) {
-        multiProviderSourceList  = [];
+    List<String> multiProviderSourceList = List.filled(5, "");
+    if (Get.put(ServiceScreenController()).alServicesfiltered.isNotEmpty) {
+      multiProviderSourceList = [];
 
-          multiProviderSourceList.add(
-            Get.put(ServiceScreenController()).alServicesfiltered.firstWhere((element) => element.mSubCategoryModel.title==mServiceModel.mSubCategoryModel.title).id,
-          );
-          multiProviderSourceList.removeWhere((element) => element==mServiceModel.id);
-
-      }
-
-
+      multiProviderSourceList.add(
+        Get.put(ServiceScreenController())
+            .alServicesfiltered
+            .firstWhere((element) => element.mSubCategoryModel.title == mServiceModel.mSubCategoryModel.title)
+            .id,
+      );
+      multiProviderSourceList.removeWhere((element) => element == mServiceModel.id);
+    }
 
     // requestParamsImage.addEntries(gasGiants.entries);
     //........Rrepo of create estimation...................
     mCreateEstimation(
-        multiProviderSourceList,
-        addressNote.text,
-        mTimeModel != null ? mTimeModel!.time_24hr.toString() : "",
-        selectedDate,
-        carId,
-        strNote);
+        multiProviderSourceList, addressNote.text, mTimeModel != null ? mTimeModel!.time_24hr.toString() : "", selectedDate, carId, strNote);
   }
 
 //.............goto profile
@@ -370,6 +320,7 @@ class CreateEstimationController extends GetxController {
   ) async {
     final prefManager = await SharedPreferences.getInstance();
     String? userToken = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
+    log(sourceIDs.toString());
 
     try {
       final body = json.encode({
@@ -380,16 +331,12 @@ class CreateEstimationController extends GetxController {
         "car": car,
         "customerNote": customerNote,
       });
-      final headers = {
-        'Authorization': 'Bearer $userToken',
-        'Content-Type': 'application/json'
-      };
+      final headers = {'Authorization': 'Bearer $userToken', 'Content-Type': 'application/json'};
       //-----Uri for update shop--------//
-      var uriUpdateShop = Uri.parse(
-          "${RequestBuilder.API_BASE_URL}${RequestBuilder.API_CREATE_ESTIMATES}");
+      var uriUpdateShop = Uri.parse("${RequestBuilder.API_BASE_URL}${RequestBuilder.API_CREATE_ESTIMATES}");
 
-      http.Response response =
-          await http.post(uriUpdateShop, headers: headers, body: body);
+      http.Response response = await http.post(uriUpdateShop, headers: headers, body: body);
+      inspect(response.body);
       Logger().i("BodyI sent =======>${body}");
       final message = json.decode(response.body.toString());
       //..............Response Ok Part...................................................
@@ -444,21 +391,15 @@ class CreateEstimationController extends GetxController {
       //.........................not ok ...................................................
       else {
         //   //.............Failure case............................
-        Global.showToastAlert(
-            context: Get.overlayContext!,
-            strTitle: "",
-            strMsg: message,
-            toastType: TOAST_TYPE.toastError);
+        Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: message, toastType: TOAST_TYPE.toastError);
 
         isShowLoader = false;
         update();
       }
     } catch (e) {
       Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: "Something went wrong, please try after some time",
-          toastType: TOAST_TYPE.toastError);
+          context: Get.overlayContext!, strTitle: "", strMsg: "Something went wrong, please try after some time", toastType: TOAST_TYPE.toastError);
+      log(e.toString());
 
       Logger().e("Exception is=======>>${e.toString()}");
     }

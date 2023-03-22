@@ -180,21 +180,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                       strCountyCode: value.strCountyCode.value,
                                       textInputAction: TextInputAction.done,
                                       readonly: false,
-                                      onchanged: (newvalue) {
-                                        log(value.isPhoneVerified.toString());
-                                        log(value.oldPhoneNumebr.toString());
-                                        log(value.controllerPhone.text.toString());
-                                      },
-                                      // enabled: false,
-                                      //  enabled: true,
-                                      height: 42,
-                                      controller: value.controllerPhone,
-                                      focusNode: value.mFocusNodePhone,
-                                    ),
-                                    Positioned(
-                                      top: 6,
-                                      right: 4,
-                                      child: InkWell(
+                                      suffixIcon: InkWell(
                                         onTap: () {
                                           showDialog<String>(
                                               context: context,
@@ -202,6 +188,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                     title: Text('Edit Number'.tr),
                                                     content: TextField(
                                                       controller: value.controllerPhone,
+                                                      decoration: InputDecoration(),
                                                     ),
                                                     actions: <Widget>[
                                                       TextButton(
@@ -239,7 +226,19 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                   )
                                                 : SizedBox(),
                                       ),
-                                    )
+
+                                      onchanged: (newvalue) {
+                                        log(value.isPhoneVerified.toString());
+                                        log(value.oldPhoneNumebr.toString());
+                                        log(value.controllerPhone.text.toString());
+                                      },
+                                      // enabled: false,
+                                      //  enabled: true,
+                                      height: 42,
+                                      controller: value.controllerPhone,
+                                      focusNode: value.mFocusNodePhone,
+                                    ),
+                                    Positioned(top: 6, right: 4, child: Container())
                                   ],
                                 ),
                                 addVerticleSpace(AppDimens.dimens_16),
@@ -492,6 +491,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                       );
                                                       setState(() {
                                                         isAddCarTap = false;
+                                                        isEditidTab = false;
                                                       });
                                                     } else {
                                                       Global.showToastAlert(

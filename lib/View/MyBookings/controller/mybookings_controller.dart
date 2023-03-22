@@ -33,8 +33,8 @@ class MyBookingsController extends GetxController {
   bool chatNowLoading = false;
   bool isShowLoader = false;
   String chatNowRoomId = '';
-  TextEditingController disputeTitleController=TextEditingController();
-  TextEditingController disputeDescriptionController=TextEditingController();
+  TextEditingController disputeTitleController = TextEditingController();
+  TextEditingController disputeDescriptionController = TextEditingController();
   bool isSearching = false;
   bool isSearchingTypePromotion = false;
   String selectDisputeImage = "";
@@ -58,6 +58,7 @@ class MyBookingsController extends GetxController {
           );
         });
   }
+
   @override
   void onInit() {
     super.onInit();
@@ -182,7 +183,6 @@ class MyBookingsController extends GetxController {
       launchUrl(Uri.parse(whatsappUrl));
     } catch (e) {
       //To handle error and display error message
-
     }
   }
 
@@ -238,7 +238,9 @@ class MyBookingsController extends GetxController {
   }
 
 //-------------------------------------Delete booking API method-------------------
-  Future<void> deleteBooking({String? bookingID,}) async {
+  Future<void> deleteBooking({
+    String? bookingID,
+  }) async {
     final prefManager = await SharedPreferences.getInstance();
     String? token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
     try {
@@ -249,7 +251,10 @@ class MyBookingsController extends GetxController {
       final headers = {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'};
       var uriSaveCart = Uri.parse("${RequestBuilder.API_DELETE_BOOKING}$bookingID");
       log.i(uriSaveCart);
-      http.Response response = await http.delete(uriSaveCart, headers: headers,);
+      http.Response response = await http.delete(
+        uriSaveCart,
+        headers: headers,
+      );
       log.i("BodyI sent when delete booking=======>$body");
       final message = json.decode(response.body.toString());
       //..............Response Ok Part...................................................
@@ -277,59 +282,47 @@ class MyBookingsController extends GetxController {
 
   Future<void> selectDate(BuildContext context) async {
     final DateTime? picked =
-    await showDatePicker(context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
+        await showDatePicker(context: context, initialDate: selectedDate, firstDate: DateTime(2015, 8), lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate) {
       selectedDate = picked;
 
       //----
 
       final DateFormat formatter = DateFormat('yyyy-MM-dd');
+
       final String formatted = formatter.format(selectedDate);
-      datePickerController.text = formatted;
+      final DateFormat forViewOnlyfomrater = DateFormat('dd MMM y');
+      final String forviewformatted = forViewOnlyfomrater.format(selectedDate);
+
+      datePickerController.text = forviewformatted;
       isSearching = true;
-      searchbyDate(datePickerController.text);
-      searchbyDatePromotion(datePickerController.text);
+      searchbyDate(formatted);
+      searchbyDatePromotion(formatted);
       update();
     }
-
-
   }
+
   //openDispute method
   openDispute(String bookingID) async {
-   if(disputeDescriptionController.text.isNotEmpty&&
-   disputeDescriptionController.text.isNotEmpty&&
-   selectDisputeImage.isNotEmpty
-   ){
-     HashMap<String, Object> requestParams = HashMap();
-     requestParams[PARAMS.PARAM_DISPUTE_TITLE] = disputeTitleController.text;
-     requestParams[PARAMS.PARAM_DISPUTE_DESC] =
-         disputeDescriptionController.text;
-     requestParams[PARAMS.PARAM_DISPUTE_IMAGE] = selectDisputeImage;
-     requestParams["booking"] = bookingID;
-     var signInEmail = await BookingRepo().openDispute(requestParams);
-     signInEmail.fold((failure) {
-       Global.showToastAlert(context: Get.context!,
-           strTitle: "",
-           strMsg: failure.MESSAGE,
-           toastType: TOAST_TYPE.toastError);
-       requestParams.clear();
-     }, (mResult) {
-       Logger().i("Success");
-       Global.showToastAlert(context: Get.context!,
-           strTitle: "",
-           strMsg: mResult.responseMessage,
-           toastType: TOAST_TYPE.toastSuccess);
-       requestParams.clear();
-     });
-   }
-   else if(  bookingID==null){
-     Global.showToastAlert(context: Get.context!, strTitle: "Error", strMsg: "Booking not found", toastType: TOAST_TYPE.toastError);
-   }
-   else{
-     Global.showToastAlert(context: Get.context!, strTitle: "Error", strMsg: "Please fill all fields", toastType: TOAST_TYPE.toastError);
-   }
+    if (disputeDescriptionController.text.isNotEmpty && disputeDescriptionController.text.isNotEmpty && selectDisputeImage.isNotEmpty) {
+      HashMap<String, Object> requestParams = HashMap();
+      requestParams[PARAMS.PARAM_DISPUTE_TITLE] = disputeTitleController.text;
+      requestParams[PARAMS.PARAM_DISPUTE_DESC] = disputeDescriptionController.text;
+      requestParams[PARAMS.PARAM_DISPUTE_IMAGE] = selectDisputeImage;
+      requestParams["booking"] = bookingID;
+      var signInEmail = await BookingRepo().openDispute(requestParams);
+      signInEmail.fold((failure) {
+        Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+        requestParams.clear();
+      }, (mResult) {
+        Logger().i("Success");
+        Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
+        requestParams.clear();
+      });
+    } else if (bookingID == null) {
+      Global.showToastAlert(context: Get.context!, strTitle: "Error", strMsg: "Booking not found", toastType: TOAST_TYPE.toastError);
+    } else {
+      Global.showToastAlert(context: Get.context!, strTitle: "Error", strMsg: "Please fill all fields", toastType: TOAST_TYPE.toastError);
+    }
   }
 }

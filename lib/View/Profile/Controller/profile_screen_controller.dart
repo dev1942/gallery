@@ -292,11 +292,13 @@ class ProfileScreenController extends GetxController {
       Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMG_NAME, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmgName);
       return false;
-    } else if (!Global.checkNull(strEmgPhone)) {
+    } 
+    else if (!Global.checkNull(strEmgPhone)) {
       Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMG_NUMBER, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmgPhone);
       return false;
-    } else if (!Global.checkNull(strEmgPhone)) {
+    }
+     else if (!Global.checkNull(strEmgPhone)) {
       Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmgPhone);
       return false;

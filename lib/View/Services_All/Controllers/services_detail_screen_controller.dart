@@ -4,7 +4,6 @@ import 'package:otobucks/View/Estimation/Views/create_estimation_screen.dart';
 import 'package:otobucks/View/Services_All/Models/service_model.dart';
 import 'package:otobucks/View/Services_All/Views/service_provider_profile_screen.dart';
 
-
 class ServicesDetailsScreenController extends GetxController {
   late ServiceModel mServiceModel;
 
@@ -20,7 +19,7 @@ class ServicesDetailsScreenController extends GetxController {
   }
 
   gotoCreateEstimation(BuildContext context) {
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => CreateEstimationScreen(
