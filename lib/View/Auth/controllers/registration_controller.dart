@@ -20,6 +20,7 @@ class RegistrationScreenController extends GetxController {
   bool connectionStatus = false;
   bool obscureTextM = true;
   String strVersionName = "";
+  bool agreetoterms = false;
 
   late TextEditingController controllerFirstName;
   late TextEditingController controllerLastName;
@@ -42,6 +43,11 @@ class RegistrationScreenController extends GetxController {
   String strCountyCode = "+971";
 
   String strCountyFlag = "ae";
+
+  void changetermsStatus(bool newtermsValue) {
+    agreetoterms = newtermsValue;
+    update();
+  }
 
   void changeLocale(String locale) {
     switch (locale) {
@@ -106,6 +112,10 @@ class RegistrationScreenController extends GetxController {
       return false;
     } else if (strPassword.length < 8) {
       Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_PASSWORD_LESS.tr, toastType: TOAST_TYPE.toastError);
+      FocusScope.of(context).requestFocus(mFocusNodePassword);
+      return false;
+    } else if (!agreetoterms) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: 'please agree to terms and conditions'.tr, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodePassword);
       return false;
     }

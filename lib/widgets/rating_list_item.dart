@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:otobucks/global/app_colors.dart';
@@ -23,10 +25,10 @@ class RatingListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(ratingComponentModel.rating.toString());
     return Container(
       decoration: ContainerProperties.shadowDecoration(),
-      margin: const EdgeInsets.only(
-          bottom: AppDimens.dimens_14, left: 10, right: 10),
+      margin: const EdgeInsets.only(bottom: AppDimens.dimens_14, left: 10, right: 10),
       child: Container(
         alignment: Alignment.center,
         // height: AppDimens.dimens_90,
@@ -44,10 +46,7 @@ class RatingListItem extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                     child: NetworkImageCustom(
-                        image: ratingComponentModel.image,
-                        fit: BoxFit.fill,
-                        height: AppDimens.dimens_60,
-                        width: AppDimens.dimens_60),
+                        image: ratingComponentModel.image, fit: BoxFit.fill, height: AppDimens.dimens_60, width: AppDimens.dimens_60),
                   ),
                 ),
                 Expanded(
@@ -56,17 +55,12 @@ class RatingListItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                        margin: const EdgeInsets.only(
-                            top: AppDimens.dimens_5,
-                            bottom: AppDimens.dimens_5),
+                        margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
                         alignment: Alignment.centerLeft,
                         child: Text(
                           ratingComponentModel.name.capitalize(),
                           style: AppStyle.textViewStyleNormalBodyText2(
-                              context: context,
-                              color: AppColors.grayDashboardText,
-                              fontSizeDelta: -1,
-                              fontWeightDelta: 1),
+                              context: context, color: AppColors.grayDashboardText, fontSizeDelta: -1, fontWeightDelta: 1),
                         )),
                     // Container(
                     //     margin:
@@ -82,8 +76,7 @@ class RatingListItem extends StatelessWidget {
                     //     )),
                     RatingBarIndicator(
                       rating: ratingComponentModel.rating,
-                      itemBuilder: (context, index) =>
-                          Icon(Icons.star, color: AppColors.colorRating2),
+                      itemBuilder: (context, index) => Icon(Icons.star, color: AppColors.colorRating2),
                       itemCount: 5,
                       itemSize: AppDimens.dimens_14,
                       direction: Axis.horizontal,
@@ -99,20 +92,15 @@ class RatingListItem extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 'Your Review',
-                style: regularText600(16),
+                style: regularText600(15),
               ),
             ),
             Container(
-                margin:
-                    const EdgeInsets.only(bottom: AppDimens.dimens_5, top: 10),
+                margin: const EdgeInsets.only(bottom: AppDimens.dimens_5, top: 10),
                 alignment: Alignment.centerLeft,
                 child: Text(
                   ratingComponentModel.review,
-                  style: AppStyle.textViewStyleSmall(
-                      context: context,
-                      color: AppColors.colorBlack,
-                      fontSizeDelta: -1,
-                      fontWeightDelta: -2),
+                  style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack, fontSizeDelta: -1, fontWeightDelta: -2),
                 )),
             // Visibility(
             //   child: Container(

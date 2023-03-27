@@ -323,10 +323,9 @@ class RescheduleBookingController extends GetxController {
       update();
       Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: "Rescheduled Successfully", toastType: TOAST_TYPE.toastSuccess);
       //................ goto Thank you......................
-      Get.offAll(() => const ThankYouFragment());
+      Get.offAll(() => ThankYouFragment());
     });
   }
 
 //--------------------------Rating Controller
-
 }

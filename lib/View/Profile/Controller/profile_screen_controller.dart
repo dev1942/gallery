@@ -1,5 +1,7 @@
 import 'dart:collection';
 import 'dart:developer';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:otobucks/services/repository/my_profile_repo.dart';
 
 import '../../../../../global/global.dart';
@@ -11,6 +13,7 @@ import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/View/Auth/Models/user_model.dart';
 import 'package:otobucks/services/repository/user_repo.dart';
 import 'package:otobucks/widgets/image_selection_bottom_sheet.dart';
+import 'package:geocoding/geocoding.dart' as i;
 
 class ProfileScreenController extends GetxController {
   ShowData mShowData = ShowData.showLoading;
@@ -18,6 +21,7 @@ class ProfileScreenController extends GetxController {
   List<GetCarModelResult> carList = [];
   bool connectionStatus = false;
   bool isShowLoader = false;
+
   TextEditingController controllerAddress = TextEditingController();
   TextEditingController controllerPhone = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();
@@ -139,6 +143,31 @@ class ProfileScreenController extends GetxController {
       mShowData = ShowData.showData;
       update();
     });
+  }
+
+  getLocationAdress() async {
+    Location location = Location();
+    log('method callled');
+    isShowLoader = true;
+    update();
+
+    PermissionStatus _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.granted || _permissionGranted == PermissionStatus.grantedLimited) {
+      var currentLocation = await location.getLocation();
+      log(currentLocation.latitude.toString());
+      LatLng _mLatLng = LatLng(currentLocation.latitude!, currentLocation.longitude!);
+      List<i.Placemark> placemarks = await i.placemarkFromCoordinates(_mLatLng.latitude, _mLatLng.longitude);
+      controllerAddress.text = '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
+
+      log("addresssss is${controllerAddress.text}");
+      isShowLoader = false;
+      update();
+      // mLatLng = _mLatLng;
+    } else {
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Enable Location From setting!', toastType: TOAST_TYPE.toastError);
+      // mLatLng = Global.mLatLng;
+    }
+    update();
   }
 
   updateProfile(BuildContext context) async {
@@ -292,13 +321,11 @@ class ProfileScreenController extends GetxController {
       Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMG_NAME, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmgName);
       return false;
-    } 
-    else if (!Global.checkNull(strEmgPhone)) {
+    } else if (!Global.checkNull(strEmgPhone)) {
       Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMG_NUMBER, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmgPhone);
       return false;
-    }
-     else if (!Global.checkNull(strEmgPhone)) {
+    } else if (!Global.checkNull(strEmgPhone)) {
       Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmgPhone);
       return false;
@@ -423,6 +450,7 @@ class ProfileScreenController extends GetxController {
 
 //-----------------------Update car----------------
   updateCar(String brand, String color, String year, String km, String city, String code, String number, String id) async {
+    log("update car api");
     mShowData = ShowData.showLoading;
 
     update(); // isShowLoader = true;

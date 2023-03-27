@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ import 'package:otobucks/widgets/custom_textfield_with_icon.dart';
 import 'package:otobucks/widgets/custom_ui/bottom_sheet.dart';
 import 'package:otobucks/widgets/language_dropdown.dart';
 import 'package:otobucks/widgets/media_type_bottomsheet.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/registration_controller.dart';
 
@@ -48,6 +50,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   void dispose() {
     controller.onDisposeScreen();
     super.dispose();
+  }
+
+  Future<void> _launchLink(String url) async {
+    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
 
   @override
@@ -84,26 +90,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           GetBuilder<RegistrationScreenController>(init: RegistrationScreenController(), builder: (model) => staticTextFileds(model)),
                           GetBuilder<RegistrationScreenController>(builder: (model) => getCountryTextFiled(model)),
                           GetBuilder<RegistrationScreenController>(builder: (model) => textFiledMobile(model)),
-                           GetBuilder<RegistrationScreenController>(builder: (model) => knowAboutUsDropDown(model)),
+                          GetBuilder<RegistrationScreenController>(builder: (model) => knowAboutUsDropDown(model)),
                           GetBuilder<RegistrationScreenController>(
                               builder: (model) => (Global.checkNull(model.controllerHowAboutUs.text.toString()) &&
                                       Global.equalsIgnoreCase(model.controllerHowAboutUs.text.toString(), "Other"))
-                                  ?
-                                  SizedBox()
-                              // Container(
-                              //         margin: const EdgeInsets.only(top: AppDimens.dimens_18),
-                              //         child: CustomTextFieldWithIcon(
-                              //           textInputAction: TextInputAction.next,
-                              //           enabled: true,
-                              //           focusNode: model.mFocusNodeInviteCode,
-                              //           controller: model.controllerInviteCode,
-                              //           keyboardType: TextInputType.text,
-                              //           hintText: 'Invitation Code'.tr,
-                              //           inputFormatters: const [],
-                              //           obscureText: false,
-                              //           onChanged: (String value) {},
-                              //         ),
-                              //       )
+                                  ? const SizedBox()
+                                  // Container(
+                                  //         margin: const EdgeInsets.only(top: AppDimens.dimens_18),
+                                  //         child: CustomTextFieldWithIcon(
+                                  //           textInputAction: TextInputAction.next,
+                                  //           enabled: true,
+                                  //           focusNode: model.mFocusNodeInviteCode,
+                                  //           controller: model.controllerInviteCode,
+                                  //           keyboardType: TextInputType.text,
+                                  //           hintText: 'Invitation Code'.tr,
+                                  //           inputFormatters: const [],
+                                  //           obscureText: false,
+                                  //           onChanged: (String value) {},
+                                  //         ),
+                                  //       )
                                   : Container()),
                           GetBuilder<RegistrationScreenController>(builder: (model) {
                             return Column(
@@ -124,7 +129,43 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     },
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
+                                  height: 12,
+                                ),
+
+                                // terms and conditions row
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                        activeColor: Colors.white,
+                                        fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+                                          if (states.contains(MaterialState.disabled)) {
+                                            return Colors.white.withOpacity(.32);
+                                          }
+                                          return Colors.white;
+                                        }),
+                                        checkColor: AppColors.colorBlue2,
+                                        value: model.agreetoterms,
+                                        onChanged: (value) {
+                                          model.changetermsStatus(value!);
+                                        }),
+                                    RichText(
+                                      text: TextSpan(
+                                          text: 'I have read and agree to'.tr,
+                                          style: const TextStyle(color: Colors.white, fontSize: 12),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text: " " + 'Terms & conditions'.tr,
+                                                style: const TextStyle(color: Colors.grey, fontSize: 13),
+                                                recognizer: TapGestureRecognizer()
+                                                  ..onTap = () {
+                                                    _launchLink('https://otobucks.com/terms-and-condition');
+                                                  })
+                                          ]),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
                                   height: 12,
                                 ),
                                 CustomButton(

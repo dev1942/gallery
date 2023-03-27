@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +8,6 @@ import 'package:otobucks/global/app_images.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/global/constants.dart';
-import 'package:otobucks/services/services.dart';
 import 'package:otobucks/widgets/custom_button.dart';
 import 'package:otobucks/widgets/custom_textfield_password.dart';
 import 'package:otobucks/widgets/custom_textfield_with_icon.dart';
@@ -89,6 +87,7 @@ class LogInScreen extends GetView<LoginController> {
                               ),
                               Container(
                                 margin: const EdgeInsets.only(top: AppDimens.dimens_5),
+                                alignment: Alignment.centerRight,
                                 child: TextButton(
                                   onPressed: () => model.forgoPasswordScreen(context),
                                   child: Text(
@@ -101,7 +100,6 @@ class LogInScreen extends GetView<LoginController> {
                                         fontWeightDelta: -1),
                                   ),
                                 ),
-                                alignment: Alignment.centerRight,
                               ),
                               CustomButton(isRoundBorder: true, onPressed: () => model.loginUserTask(context), strTitle: 'LOGIN'.tr),
                               Container(

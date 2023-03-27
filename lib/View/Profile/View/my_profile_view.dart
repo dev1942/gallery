@@ -157,21 +157,28 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                 ),
                                 addVerticleSpace(AppDimens.dimens_10),
                                 //..............................Text Field user name....................................
-                                CustomTextFieldWithIcon(
-                                    height: 42,
-                                    textInputAction: TextInputAction.next,
-                                    enabled: true,
-                                    focusNode: value.mFocusNodeAddress,
-                                    controller: value.controllerAddress,
-                                    keyboardType: TextInputType.text,
-                                    hintText: Constants.STR_ADDRESS.tr,
-                                    inputFormatters: const [],
-                                    obscureText: false,
-                                    onChanged: (String value) {},
-                                    suffixIcon: Icon(
-                                      Icons.location_on_outlined,
-                                      color: AppColors.lightGrey,
-                                    )),
+                                GestureDetector(
+                                  onTap: () {
+                                    value.getLocationAdress();
+                                  },
+                                  child: AbsorbPointer(
+                                    child: CustomTextFieldWithIcon(
+                                        height: 42,
+                                        textInputAction: TextInputAction.next,
+                                        enabled: true,
+                                        focusNode: value.mFocusNodeAddress,
+                                        controller: value.controllerAddress,
+                                        keyboardType: TextInputType.text,
+                                        hintText: Constants.STR_ADDRESS.tr,
+                                        inputFormatters: const [],
+                                        obscureText: false,
+                                        onChanged: (String value) {},
+                                        suffixIcon: Icon(
+                                          Icons.location_on_outlined,
+                                          color: AppColors.lightGrey,
+                                        )),
+                                  ),
+                                ),
                                 addVerticleSpace(16),
                                 //............................Text filedmobile number.............................
                                 Stack(
@@ -548,13 +555,14 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                         value.controllerCode.text.isNotEmpty &&
                                                         value.controllerNumber.text.isNotEmpty) {
                                                       controller.addNewCar(
-                                                          value.controllerCarBrand.text,
-                                                          value.controllerColour.text,
-                                                          value.controllerCarModelYear.text,
-                                                          value.controllerMileage.text,
-                                                          value.controllerCity.text,
-                                                          value.controllerCode.text,
-                                                          value.controllerNumber.text);
+                                                        value.controllerCarBrand.text,
+                                                        value.controllerColour.text,
+                                                        value.controllerCarModelYear.text,
+                                                        value.controllerMileage.text,
+                                                        value.controllerCity.text,
+                                                        value.controllerCode.text,
+                                                        value.controllerNumber.text,
+                                                      );
                                                       setState(() {
                                                         isAddCarTap = false;
                                                       });

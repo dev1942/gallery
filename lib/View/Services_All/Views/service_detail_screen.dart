@@ -243,7 +243,6 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
                     fontColor: AppColors.colorWhite,
                     width: Responsive.screenWidth,
                     onPressed: () {
-                   
                       controller.gotoCreateEstimation(context);
                     },
                     strTitle: Constants.TXT_BOOK_NOW.tr),
@@ -260,7 +259,7 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
       appBar: AppViews.initAppBar(
         mContext: context,
         centerTitle: false,
-        strTitle: widget.mServiceModel.title + " Detail",
+        strTitle: widget.mServiceModel.title + " Details",
         isShowNotification: false,
         isShowSOS: false,
       ),

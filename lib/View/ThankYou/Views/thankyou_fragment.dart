@@ -10,7 +10,8 @@ import 'package:otobucks/widgets/custom_button.dart';
 import '../../../Utils/Navigation.dart';
 
 class ThankYouFragment extends StatefulWidget {
-  const ThankYouFragment({Key? key}) : super(key: key);
+  bool isFromPromotion;
+  ThankYouFragment({Key? key, this.isFromPromotion = false}) : super(key: key);
 
   @override
   ThankYouFragmentState createState() => ThankYouFragmentState();
@@ -32,6 +33,7 @@ class ThankYouFragmentState extends State<ThankYouFragment> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(widget.isFromPromotion.toString());
     var size = MediaQuery.of(context).size;
     double marginBoth = AppDimens.dimens_20;
     double height = AppDimens.dimens_36;
@@ -75,7 +77,7 @@ class ThankYouFragmentState extends State<ThankYouFragment> {
             //   margin: const EdgeInsets.only(top: AppDimens.dimens_20, bottom: AppDimens.dimens_20),
             // ),
             Text(
-              'Thank you for booking.'.tr,
+              widget.isFromPromotion ? 'Thank you for service'.tr : 'Thank you for booking.'.tr,
               textAlign: TextAlign.center,
               style: AppStyle.textViewStyleLargeSubtitle1(
                 context: context,
@@ -84,12 +86,14 @@ class ThankYouFragmentState extends State<ThankYouFragment> {
                 fontWeightDelta: 0,
               ),
             ),
-            Text(
-              'The vendor will get back to you soon.'.tr,
-              textAlign: TextAlign.center,
-              style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack, fontSizeDelta: 1, fontWeightDelta: 0),
-            ),
-            addVerticleSpace(10),
+            widget.isFromPromotion
+                ? SizedBox()
+                : Text(
+                    'The vendor will get back to you soon.'.tr,
+                    textAlign: TextAlign.center,
+                    style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack, fontSizeDelta: 1, fontWeightDelta: 0),
+                  ),
+            addVerticleSpace(widget.isFromPromotion ? 0 : 10),
             Text(
               'To track your booking, please visit My Bookings section'.tr,
               textAlign: TextAlign.center,

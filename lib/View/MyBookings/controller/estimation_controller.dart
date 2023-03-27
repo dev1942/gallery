@@ -33,6 +33,11 @@ class CreateEstimationController extends GetxController {
   TextEditingController controllerNote = TextEditingController();
   TextEditingController addressNote = TextEditingController(text: "");
 
+  updateServiceModel(ServiceModel newserivemodel) {
+    mServiceModel = newserivemodel;
+    update();
+  }
+
   // ignore: avoid_init_to_null
   late TimeModel? mTimeModel = null;
   bool isMultiProvider = false;
@@ -283,12 +288,15 @@ class CreateEstimationController extends GetxController {
             .firstWhere((element) => element.mSubCategoryModel.title == mServiceModel.mSubCategoryModel.title)
             .id,
       );
-      multiProviderSourceList.removeWhere((element) => element == mServiceModel.id);
+      if (multiProviderSourceList.length > 1) {
+        multiProviderSourceList.removeWhere((element) => element == mServiceModel.id);
+      }
     }
+    log("ids" + multiProviderSourceList.toString());
 
     // requestParamsImage.addEntries(gasGiants.entries);
     //........Rrepo of create estimation...................
-    mCreateEstimation(
+    await mCreateEstimation(
         multiProviderSourceList, addressNote.text, mTimeModel != null ? mTimeModel!.time_24hr.toString() : "", selectedDate, carId, strNote);
   }
 

@@ -21,11 +21,10 @@ class ServiceProviderRated extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     log(mServiceModel.rating.toString());
     if (isShowRating) {
       return Container(
-       // height: AppDimens.dimens_100,
+        // height: AppDimens.dimens_100,
         width: AppDimens.dimens_190,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
@@ -44,14 +43,13 @@ class ServiceProviderRated extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-
                     margin: const EdgeInsetsDirectional.only(
                       end: AppDimens.dimens_10,
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                       child: NetworkImageCustom(
-                          image:   mServiceModel.alImages.first, fit: BoxFit.fill, height: AppDimens.dimens_40, width: AppDimens.dimens_40),
+                          image: mServiceModel.alImages.first, fit: BoxFit.fill, height: AppDimens.dimens_40, width: AppDimens.dimens_40),
                     ),
                   ),
                   Expanded(
@@ -77,14 +75,17 @@ class ServiceProviderRated extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Icon(Icons.star,color: Colors.amber,size: 20,),
+                          const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 20,
+                          ),
                           addHorizontalSpace(5),
-                          Text("${
-                              mServiceModel.rating.toDouble()
-                          }",style: TextStyle(fontSize: 12),)
+                          Text(
+                            "${mServiceModel.rating.toDouble()}",
+                            style: TextStyle(fontSize: 12),
+                          )
                         ],
-
-
                       )
 
                       // RatingBarIndicator(

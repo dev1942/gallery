@@ -241,7 +241,7 @@ class ViewEstimationController extends GetxController {
       update();
       Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
 
-      Get.offAll(() => const ThankYouFragment());
+      Get.offAll(() => ThankYouFragment());
     });
   }
 

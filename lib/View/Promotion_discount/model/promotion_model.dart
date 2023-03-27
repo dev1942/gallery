@@ -5,8 +5,6 @@ import 'package:otobucks/View/Services_All/Models/service_provider_model.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/global.dart';
 
-
-
 class PromotionsModel {
   String id;
   List<String> promoImg;
@@ -28,22 +26,22 @@ class PromotionsModel {
 
   PromotionsModel(
       {required this.id,
-        required this.promoImg,
-        required this.active,
-        required this.deleted,
-        required this.paymentStatus,
-        required this.source,
-        required this.title,
-        required this.location,
-        required this.description,
-        required this.previousPrice,
-        required this.discount,
-        required this.priceAfterDiscount,
-        required this.startDate,
-        required this.endDate,
-        required this.country,
-        required this.sourceType,
-        required this.provider});
+      required this.promoImg,
+      required this.active,
+      required this.deleted,
+      required this.paymentStatus,
+      required this.source,
+      required this.title,
+      required this.location,
+      required this.description,
+      required this.previousPrice,
+      required this.discount,
+      required this.priceAfterDiscount,
+      required this.startDate,
+      required this.endDate,
+      required this.country,
+      required this.sourceType,
+      required this.provider});
 
   factory PromotionsModel.fromJson(Map<String, dynamic> json) {
     List<String> promoImg = [];
@@ -104,8 +102,7 @@ class PromotionsModel {
 
   getEndDate() {
     if (Global.checkNull(endDate)) {
-      DateTime parseDate =
-      DateFormat(Constants.STRING_DB_DATE_FORMATE).parse(endDate);
+      DateTime parseDate = DateFormat(Constants.STRING_DB_DATE_FORMATE).parse(endDate);
       var inputDate = DateTime.parse(parseDate.toString());
       var outputFormat = DateFormat(Constants.STRING_DD_MMM_YYYY);
       var outputDate = outputFormat.format(inputDate);
@@ -115,10 +112,21 @@ class PromotionsModel {
     }
   }
 
+  getDaysLeft() {
+    if (Global.checkNull(endDate)) {
+      DateTime parseDate = DateFormat(Constants.STRING_DB_DATE_FORMATE).parse(endDate);
+      var inputDate = DateTime.parse(parseDate.toString());
+      final date2 = DateTime.now();
+
+      return inputDate.difference(date2).inDays.toString();
+    } else {
+      return "";
+    }
+  }
+
   getStartDate() {
     if (Global.checkNull(startDate)) {
-      DateTime parseDate =
-      DateFormat(Constants.STRING_DB_DATE_FORMATE).parse(startDate);
+      DateTime parseDate = DateFormat(Constants.STRING_DB_DATE_FORMATE).parse(startDate);
       var inputDate = DateTime.parse(parseDate.toString());
       var outputFormat = DateFormat(Constants.STRING_DD_MMM_YYYY);
       var outputDate = outputFormat.format(inputDate);

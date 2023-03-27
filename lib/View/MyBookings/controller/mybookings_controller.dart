@@ -82,6 +82,7 @@ class MyBookingsController extends GetxController {
 
   //...............Get All Bookings...........................
   Future<BookingModel> getAllBookings() async {
+    debugPrint("geting all bookings");
     final prefManager = await SharedPreferences.getInstance();
     token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
     log.e("token at start is");
@@ -89,6 +90,7 @@ class MyBookingsController extends GetxController {
     final headers = {'Authorization': "Bearer $token", "Content-Type": "application/json"};
     final response = await http.get(Uri.parse(RequestBuilder.API_GET_ALL_BOOKINGS), headers: headers);
     var data = jsonDecode(response.body);
+    debugPrint(data.toString());
     if (response.statusCode == 200) {
       log.i("Get booking API success");
       // log.i(data);
@@ -106,6 +108,7 @@ class MyBookingsController extends GetxController {
 
   //...............Get All Promotion  Bookings...........................
   Future<PromotionBookingHistory> getAllPromotionBookings() async {
+    debugPrint("in getAllPromotionBookings");
     final prefManager = await SharedPreferences.getInstance();
     token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
     final headers = {'Authorization': "Bearer $token", "Content-Type": "application/json"};

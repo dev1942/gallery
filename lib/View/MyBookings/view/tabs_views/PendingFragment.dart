@@ -44,6 +44,7 @@ class PendingFragment extends GetView<MyBookingsController> {
                   log("----------------snapshot has data----------");
 
                   if (snapshot.hasData) {
+                    inspect(controller.filteredBookingList);
                     return GetBuilder<MyBookingsController>(
                         init: MyBookingsController(),
                         builder: (context) {
@@ -56,7 +57,8 @@ class PendingFragment extends GetView<MyBookingsController> {
                                 controller.pendingsbookinglist = snapshot.data!.result!.reversed.toList();
                                 var data =
                                     controller.isSearching == false ? controller.pendingsbookinglist![index] : controller.filteredBookingList![index];
-                                if ((data.status == "submitted"|| data.status == "pending" || data.status == "reSubmitted")&& data.provider!=null) {
+                                if ((data.status == "submitted" || data.status == "pending" || data.status == "reSubmitted") &&
+                                    data.provider != null) {
                                   return Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 6.0),
                                     child: Container(
@@ -76,7 +78,10 @@ class PendingFragment extends GetView<MyBookingsController> {
                                             Column(
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
-                                               imageWidget(imagePath:data.source!.image!.isNotEmpty? data.source?.image?.first:"https://i.tribune.com.pk/media/images/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0.jpg"),
+                                                imageWidget(
+                                                    imagePath: data.source!.image!.isNotEmpty
+                                                        ? data.source?.image?.first
+                                                        : "https://i.tribune.com.pk/media/images/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0.jpg"),
                                                 const SizedBox(
                                                   height: AppDimens.dimens_12,
                                                 ),

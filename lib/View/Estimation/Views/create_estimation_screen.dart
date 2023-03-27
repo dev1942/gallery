@@ -49,10 +49,15 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
 
   @override
   void initState() {
-    controller.mServiceModel = widget.mServiceModel;
+    // controller.mServiceModel = widget.mServiceModel;
+    controller.updateServiceModel(widget.mServiceModel);
     controller.controllerNote.clear();
-    getcardata();
+
     controller.getLocationAdress();
+    profileController.getCarList().then((value) {
+      getcardata();
+    });
+
     super.initState();
   }
 
@@ -70,18 +75,47 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
 
   String? selectedValue = "";
 
+  bool foundMorethanFive = false;
+  List<ServiceModel> allservicesWithSameName = [];
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     log("---------car list----------------");
     log(carNamesList.toString());
     log(carNameId.toString());
+    var allservicesFiltered = Get.put(ServiceScreenController()).alServicesfiltered;
+    log(widget.mServiceModel.mSubCategoryModel.title);
+    allservicesWithSameName.clear();
+
+    for (var i = 0; i < allservicesFiltered.length; i++) {
+      log(allservicesFiltered[i].mSubCategoryModel.title);
+      if ("Auto Service".toLowerCase() == allservicesFiltered[i].mSubCategoryModel.title.toLowerCase()) {
+        allservicesWithSameName.add(allservicesFiltered[i]);
+        log("in the if " + allservicesFiltered[i].mSubCategoryModel.title);
+
+        // log("Serivce found:" + allservicesFiltered[i].mSubCategoryModel.title);
+        // log(allservicesFiltered
+        //     .where((element) => element.mSubCategoryModel.title.toLowerCase() == widget.mServiceModel.mSubCategoryModel.title.toLowerCase())
+        //     .length
+        //     .toString());
+        // log(allservicesFiltered.length.toString());
+      }
+    }
+    // if (allservicesFiltered
+    //         .where((element) => element.mSubCategoryModel.title.toLowerCase() == widget.mServiceModel.mSubCategoryModel.title.toLowerCase())
+    //         .length >
+    //     5) {
+    //   foundMorethanFive = true;
+    log("found  five" + allservicesWithSameName.length.toString());
+    inspect(allservicesWithSameName);
+    // }
 
     return Scaffold(
       appBar: AppViews.initAppBar(
         mContext: context,
         centerTitle: false,
-        strTitle: "${widget.mServiceModel.title} Detail",
+        strTitle: "${widget.mServiceModel.mSubCategoryModel.title} Details",
         isShowNotification: false,
         isShowSOS: false,
       ),
@@ -155,12 +189,8 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                 if (selectedValue != null && selectedValue!.isNotEmpty) {
                                   int index = carNamesList!.indexOf(selectedValue!);
                                   controller.createEstimationSingle(context, carNameId![index]).whenComplete(() {
-                                    if (Get.put(ServiceScreenController())
-                                            .alServicesfiltered
-                                            .where((element) => element.mSubCategoryModel.title == widget.mServiceModel.mSubCategoryModel.title)
-                                            .length >
-                                        1) {
-                                      //dialog for multiple
+                                    if (allservicesWithSameName.length > 1) {
+                                      log("${allservicesWithSameName.length}");
                                       Get.defaultDialog(
                                           barrierDismissible: false,
                                           title: "Estimation Requested".tr,
@@ -180,12 +210,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                               addVerticleSpace(5),
                                               Padding(
                                                 padding: const EdgeInsets.all(8.0),
-                                                child: Get.put(ServiceScreenController())
-                                                            .alServicesfiltered
-                                                            .where((element) =>
-                                                                element.mSubCategoryModel.title == widget.mServiceModel.mSubCategoryModel.title)
-                                                            .length >
-                                                        5
+                                                child: foundMorethanFive
                                                     ? Text(
                                                         "We found 5 more service providers near you that match your requirements, would you like to request for an estimation from them?",
                                                         style: AppStyle.textViewStyleNormalButton(
@@ -196,7 +221,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                                         textAlign: TextAlign.center,
                                                       )
                                                     : Text(
-                                                        "We found ${Get.put(ServiceScreenController()).alServicesfiltered.where((element) => element.mSubCategoryModel.title == widget.mServiceModel.mSubCategoryModel.title).length} more service providers near you that match your requirements, would you like to request for an estimation from them?",
+                                                        "We found ${allservicesWithSameName.length} more service providers nears you that match your requirements, would you like to request for an estimation from them?",
                                                         style: AppStyle.textViewStyleNormalButton(
                                                           context: Get.context!,
                                                           color: Colors.black,
@@ -212,16 +237,16 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                           confirmTextColor: Colors.white,
                                           onConfirm: () {
                                             controller.createEstimationMulti(context, carNameId![index]).whenComplete(() {
-                                              Get.off(() => const ThankYouFragment());
+                                              Get.off(() => ThankYouFragment(isFromPromotion: widget.screenType == "promotion" ? true : false));
                                             });
                                           },
                                           onCancel: () {
                                             //   //................ goto Thank you......................
-                                            Get.offAll(() => const ThankYouFragment());
+                                            Get.offAll(() => ThankYouFragment(isFromPromotion: widget.screenType == "promotion" ? true : false));
                                           });
                                       //end dialog
                                     } else {
-                                      Get.off(() => const ThankYouFragment());
+                                      Get.off(() => ThankYouFragment(isFromPromotion: widget.screenType == "promotion" ? true : false));
                                     }
                                   });
                                 } else {

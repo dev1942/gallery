@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_circular_text/circular_text.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:geocoding/geocoding.dart' as i;
+
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logger/logger.dart';
@@ -45,16 +47,20 @@ class AppViews {
             //   log("${p0}  ${p1}");
             // });
             LatLng position = await Global.getCurrentLocation(context: Get.context!);
+            LatLng _mLatLng = LatLng(position.latitude!, position.longitude!);
+            List<i.Placemark> placemarks = await i.placemarkFromCoordinates(_mLatLng.latitude, _mLatLng.longitude);
+            String? currentlocation = '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
             HashMap<String, Object> requestParams = HashMap();
             requestParams[PARAMS.PARAM_LONGITUDE] = position.latitude;
             requestParams[PARAMS.PARAM_LATITUDE] = position.longitude;
-            requestParams["location"] = "Multan,Punjab Pakistan, ";
+            requestParams["location"] = currentlocation ?? "Unknown";
             Logger().i("lat:${requestParams[PARAMS.PARAM_LATITUDE]}");
             Logger().i("long:${requestParams[PARAMS.PARAM_LONGITUDE]}");
             inspect(position);
             if (position.latitude != 0.0 && position.longitude != 0.0) {
               var sendEmergency = await MyProfileRepository().sendEmergency(requestParams);
               sendEmergency.fold((failure) {
+                log(failure.MESSAGE);
                 Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
               }, (mResult) {
                 Logger().i("Success");

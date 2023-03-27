@@ -34,9 +34,7 @@ class EstCheckOutController extends GetxController {
     cardNumber.text = alCardModel[current].last4.toString();
     cardHolderName.text = alCardModel[current].name.toString();
     cvvCode.text = alCardModel[current].cvcCheck.toString();
-    expiryDate.text = alCardModel[current].expMonth.toString() +
-        "/" +
-        alCardModel[current].expYear.toString();
+    expiryDate.text = alCardModel[current].expMonth.toString() + "/" + alCardModel[current].expYear.toString();
     update();
   }
 
@@ -61,11 +59,7 @@ class EstCheckOutController extends GetxController {
     var categories = await CardRepo().getCards(requestParams);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
@@ -78,8 +72,7 @@ class EstCheckOutController extends GetxController {
     });
   }
 
-  addNewCard(
-      String number, int month, int year, String cvc, String name) async {
+  addNewCard(String number, int month, int year, String cvc, String name) async {
     mShowData = ShowData.showLoading;
 
     update(); // isShowLoader = true;
@@ -94,19 +87,11 @@ class EstCheckOutController extends GetxController {
     var categories = await CardRepo().addCard(requestParams);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       getCardsMine();
     });
   }
@@ -124,37 +109,25 @@ class EstCheckOutController extends GetxController {
     var categories = await CardRepo().deletecard(requestParams);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       getCardsMine();
     });
   }
 
   bool isValid() {
     if (!Global.checkNull(cardId)) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: "Invalid Card Details",
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: "Invalid Card Details", toastType: TOAST_TYPE.toastError);
 
       return false;
     }
     return true;
   }
 
-  bookEstimation({String? promotionId, String? time, String? date,String? address,String? cardId,String? note} ) async {
+  bookEstimation({String? promotionId, String? time, String? date, String? address, String? cardId, String? note}) async {
     if (!isValid()) return;
     mShowData = ShowData.showLoading;
     update();
@@ -162,95 +135,70 @@ class EstCheckOutController extends GetxController {
     HashMap<String, Object> requestParams = HashMap();
     requestParams['promotionID'] = promotionId!;
     requestParams['paymentType'] = "card";
-    requestParams['cardID'] = cardId??"0";
-    requestParams['address'] = address??"";
-    requestParams['date'] = date??"";
+    requestParams['cardID'] = cardId ?? "0";
+    requestParams['address'] = address ?? "";
+    requestParams['date'] = date ?? "";
     requestParams['time'] = time!;
-    requestParams['note'] =note??"";
+    requestParams['note'] = note ?? "";
     var categories = await EstimatesRepo().bookingEstimation(requestParams);
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
 
       mShowData = ShowData.showNoDataFound;
       update();
-      Get.offAll(() => const ThankYouFragment());
+      Get.offAll(() => ThankYouFragment(isFromPromotion: true));
     });
   }
 
 //----------------------------Partial Payment
-  bookEstimationPartial({String? bookingID,String? cardId} ) async {
+  bookEstimationPartial({String? bookingID, String? cardId}) async {
     if (!isValid()) return;
     mShowData = ShowData.showLoading;
     update();
     // isShowLoader = true;
     HashMap<String, Object> requestParams = HashMap();
     requestParams['bookingID'] = bookingID!;
-    requestParams['cardID'] = cardId??"0";
+    requestParams['cardID'] = cardId ?? "0";
     requestParams['paymentType'] = "card";
     var categories = await EstimatesRepo().bookingPartialEstimation(requestParams);
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
 
       mShowData = ShowData.showNoDataFound;
       update();
-      Get.offAll(() => const ThankYouFragment());
+      Get.offAll(() => ThankYouFragment(isFromPromotion: true));
     });
   }
 
   //----------------------------Fully Amount Pay
-  bookEstimationFullPay({String? bookingID,String? cardId} ) async {
+  bookEstimationFullPay({String? bookingID, String? cardId}) async {
     if (!isValid()) return;
     mShowData = ShowData.showLoading;
     update();
     // isShowLoader = true;
     HashMap<String, Object> requestParams = HashMap();
     requestParams['bookingID'] = bookingID!;
-    requestParams['cardID'] = cardId??"0";
+    requestParams['cardID'] = cardId ?? "0";
     requestParams['paymentType'] = "card";
     var categories = await EstimatesRepo().bookingFullyPayedEstimation(requestParams);
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: mResult.responseMessage,
-          toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
 
       mShowData = ShowData.showNoDataFound;
       update();
-      Get.offAll(() => const ThankYouFragment());
+      Get.offAll(() => ThankYouFragment(isFromPromotion: true));
     });
   }
-
 }

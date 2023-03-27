@@ -114,7 +114,11 @@ class ServiceModel {
 
     try {
       var provider = json['provider'];
-      mServiceProviderModel = ServiceProviderModel.fromJson(provider);
+      if (provider != null) {
+        mServiceProviderModel = ServiceProviderModel.fromJson(provider);
+      }else {
+        
+      }
     } catch (e) {
       log("logging" + e.toString());
     }
