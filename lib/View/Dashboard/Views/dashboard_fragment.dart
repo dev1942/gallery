@@ -51,7 +51,7 @@ class DashboardFragmentState extends State<DashboardFragment> {
                     Container(
                       alignment: Alignment.center,
                       margin: const EdgeInsets.only(
-                          bottom: AppDimens.dimens_14, top: AppDimens.dimens_14, left: AppDimens.dimens_20, right: AppDimens.dimens_20),
+                          bottom: AppDimens.dimens_14, top: AppDimens.dimens_14, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
                       // height: AppDimens.dimens_190,
                       child: BannerPageView(
                         alPromotions: controller.alPromotions,

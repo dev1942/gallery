@@ -40,7 +40,9 @@ class GivenRatingTabState extends State<GivenRatingTab> {
 
   @override
   Widget build(BuildContext context) {
-    Widget widgetM = Container();
+    Widget widgetM = Center(
+      child: Text("No Record found"),
+    );
 
     // Widget mShowWidget = );
 

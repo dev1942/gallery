@@ -47,6 +47,7 @@ class ServiceProviderModel {
     List<String> cities = [];
 
     try {
+      
       var mCountry = json['country'];
       for (var countryItem in mCountry) {
         country.add(countryItem.toString());

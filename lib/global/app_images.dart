@@ -56,7 +56,7 @@ class AppImages {
   static const String ic_cloud = "assets/images/ic_cloud.png";
   static const String ic_video_cam = "assets/images/ic_video_cam.png";
   static const String ic_mic = "assets/images/ic_mic.png";
-  static const String ic_thank_you_service = "assets/images/book_done.png";
+  static const String ic_thank_you_service = "assets/images/book_done.gif";
   static const String ic_thank_you = "assets/images/ic_thank_you.png";
   static const String ic_edit_profile_icon = "assets/images/ic_edit_profile_icon.png";
   static const String ic_car = "assets/images/ic_car.png";

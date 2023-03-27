@@ -46,7 +46,6 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
             Container(
               color: AppColors.colorBlueStart,
               height: AppDimens.dimens_120,
-
             ),
 
             Container(
@@ -260,7 +259,7 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
       appBar: AppViews.initAppBar(
         mContext: context,
         centerTitle: false,
-        strTitle: widget.mServiceModel.title + " Detail",
+        strTitle: widget.mServiceModel.title + " Details",
         isShowNotification: false,
         isShowSOS: false,
       ),

@@ -27,6 +27,7 @@ class ServicesRepo {
           requestParams: requestParams,
           mReqType: ReqType.get,
           mParamType: ParamType.simple);
+      log(RequestBuilder.API_GET_SERVICES_SIMPLE + "?category=$catId&subcategory=$subCatId");
       Result? mResponse;
       if (response.isNotEmpty) {
         log(response);

@@ -27,7 +27,7 @@ class DashboardFragmentPageTwoState extends State<DashboardFragmentPageTwo> {
         body: Obx(() => AppViews.getSetData(context, controller.mShowData.value, mShowWidget(controller))));
   }
 
-  Widget mShowWidget(controller) => ListView(
+  Widget mShowWidget(DashboardController controller) => ListView(
         children: [
           Stack(
             children: [
@@ -43,8 +43,7 @@ class DashboardFragmentPageTwoState extends State<DashboardFragmentPageTwo> {
                   Container(
                     alignment: Alignment.center,
                     margin: const EdgeInsets.only(
-                        bottom: AppDimens.dimens_14, top: AppDimens.dimens_14, left: AppDimens.dimens_20, right: AppDimens.dimens_20),
-                    // height: AppDimens.dimens_190,
+                        bottom: AppDimens.dimens_14, top: AppDimens.dimens_14, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
                     child: BannerPageView(
                       alPromotions: controller.alPromotions,
                     ),

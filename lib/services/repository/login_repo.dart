@@ -24,6 +24,8 @@ class LoginRepo {
     try {
       String response = await ReqListener.fetchPost(
           strUrl: RequestBuilder.API_LOGIN, requestParams: requestParams, mReqType: ReqType.post, mParamType: ParamType.json);
+
+      log(response);
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);

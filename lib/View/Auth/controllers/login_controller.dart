@@ -19,6 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../View/forgot_password_screen.dart';
 import '../View/otp_screen.dart';
 import '../View/registation_screen.dart';
+import 'otp_controller.dart';
 
 class LoginController extends GetxController {
   bool connectionStatus = false;
@@ -137,6 +138,8 @@ class LoginController extends GetxController {
     }
   }
 
+  String? mobileNumberForVerifcation;
+
   loginUserTask(BuildContext context) async {
     if (!isValid(context) || !(await initConnectivity(context))) {
       return;
@@ -162,8 +165,15 @@ class LoginController extends GetxController {
     update();
 
     signInEmail.fold((failure) {
+      inspect(failure);
       Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
-      if ("Please verify your email address first" == failure.MESSAGE) {
+      if ("Please verify your otp first" == failure.MESSAGE) {
+        var data = failure.DATA as Map;
+
+        mobileNumberForVerifcation = data["mobileNumber"];
+        log("faliure data" + mobileNumberForVerifcation!);
+
+        // TODO:
         gotoMobileOTPScreen(context);
       }
     }, (mResult) {
@@ -201,8 +211,8 @@ class LoginController extends GetxController {
             builder: (context) => OTPScreen(
                   mModelOTP: mModelOTP,
                   isFromRegistration: true,
+                  phoneNumber: mobileNumberForVerifcation ?? "",
                 )));
-    sendOTPTask();
   }
 
   void navigateToHomePage(BuildContext context) async {

@@ -5,12 +5,14 @@ import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/View/Dashboard/Models/category_model.dart';
 import 'package:otobucks/services/repository/categories_repo.dart';
+import 'dart:developer';
 
 class ServicesSubCatScreenController extends GetxController {
   ShowData mShowData = ShowData.showLoading;
   List<CategoryModel> alSubCategory = [];
   List<CategoryModel> alSubCategoryFiltered = [];
   getSubCategory(String categoryId) async {
+    log("geting sub categories");
     alSubCategory.clear();
     alSubCategoryFiltered.clear();
     mShowData = ShowData.showLoading;
@@ -18,15 +20,10 @@ class ServicesSubCatScreenController extends GetxController {
 
     HashMap<String, Object> requestParams = HashMap();
 
-    var categories =
-        await CategoriesRepo().getSubCategories(requestParams, categoryId);
+    var categories = await CategoriesRepo().getSubCategories(requestParams, categoryId);
 
     categories.fold((failure) {
-      Global.showToastAlert(
-          context: Get.overlayContext!,
-          strTitle: "",
-          strMsg: failure.MESSAGE,
-          toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
@@ -42,10 +39,7 @@ class ServicesSubCatScreenController extends GetxController {
       // if the search field is empty or only contains white-space, we'll display all users
       alSubCategoryFiltered = alSubCategory;
     } else {
-      alSubCategoryFiltered = alSubCategory
-          .where((user) =>
-              user.title.toLowerCase().contains(enteredKeyword.toLowerCase()))
-          .toList();
+      alSubCategoryFiltered = alSubCategory.where((user) => user.title.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
       // we use the toLowerCase() method to make it case-insensitive
     }
     // Refresh the UI

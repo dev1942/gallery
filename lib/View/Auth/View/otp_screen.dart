@@ -174,12 +174,12 @@ class _OTPScreenState extends State<OTPScreen> {
                                   ? Text("$_start")
                                   : TextButton(
                                       onPressed: () {
-                                        if (widget.mModelOTP != null) {
-                                          controller.sendOTPTask(widget.mModelOTP!.emailId, context);
-                                        } else {
-                                          //phone number verification
-                                          controller.sendNumberOTPTask(widget.phoneNumber!, context);
-                                        }
+                                        // if (widget.mModelOTP != null) {
+                                        //   controller.sendOTPTask(widget.mModelOTP!.emailId, context);
+                                        // } else {
+                                        //phone number verification
+                                        controller.sendNumberOTPTask(widget.phoneNumber!, context);
+                                        // }
                                       },
                                       child: Text('Resend'.tr))
                             ],

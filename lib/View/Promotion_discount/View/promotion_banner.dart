@@ -12,6 +12,7 @@ import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/global.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
+
 class PromotionBanner extends StatelessWidget {
   final String buttonText;
   final String strImage;
@@ -19,27 +20,21 @@ class PromotionBanner extends StatelessWidget {
   final Function onTap;
   bool isVisible;
   PromotionBanner(
-      {Key? key,
-      required this.mPromotionsModel,
-      required this.strImage,
-      required this.onTap,
-      required this.buttonText,
-      this.isVisible = true})
+      {Key? key, required this.mPromotionsModel, required this.strImage, required this.onTap, required this.buttonText, this.isVisible = true})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, size) {
-      double height = MediaQuery.of(context).size.width > 600
-          ? size.maxWidth / 1.7
-          : size.maxWidth / 1.3;
+      double height = MediaQuery.of(context).size.width > 600 ? size.maxWidth / 1.7 : size.maxWidth / 1.3;
       log(height.toString());
       log(MediaQuery.of(context).size.width.toString());
       return Container(
           height: height,
-          margin: const EdgeInsets.only(left: AppDimens.dimens_2),
+          width: size.maxWidth,
+          // margin: const EdgeInsets.only(left: AppDimens.dimens_2),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+            borderRadius: BorderRadius.circular(AppDimens.dimens_20),
             child: Container(
               color: AppColors.colorGray6,
               child: Stack(
@@ -51,7 +46,7 @@ class PromotionBanner extends StatelessWidget {
                     child: SizedBox(
                         width: size.maxWidth / 1.5,
                         child: NetworkImageCustom(
-                          image:strImage,
+                          image: strImage,
                           fit: BoxFit.cover,
                           height: double.infinity,
                           width: double.infinity,
@@ -59,8 +54,7 @@ class PromotionBanner extends StatelessWidget {
                   ),
                   SizedBox(
                     height: Get.height,
-                    child:
-                        Image.asset(AppImages.ic_banner_bg, fit: BoxFit.cover),
+                    child: Image.asset(AppImages.ic_banner_bg, fit: BoxFit.cover),
                   ),
                   Positioned(
                     left: 0,
@@ -68,27 +62,20 @@ class PromotionBanner extends StatelessWidget {
                     top: 0,
                     child: Container(
                       alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.only(
-                          left: AppDimens.dimens_15,
-                          top: AppDimens.dimens_5,
-                          bottom: AppDimens.dimens_5),
+                      padding: const EdgeInsets.only(left: AppDimens.dimens_15, top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
                             width: height / 2,
-                            height: height / 2.8,
+                            height: height / 4.8,
                             child: GradientText(
                               mPromotionsModel.title,
                               textAlign: TextAlign.left,
                               maxLines: 3,
-                              style: AppStyle.textViewStyleXLarge(
-                                      context: context,
-                                      fontWeightDelta: 3,
-                                      color: AppColors.colorBlueEnd)
-                                  .copyWith(
-                                      fontSize: height * 0.09, height: 1.2),
+                              style: AppStyle.textViewStyleXLarge(context: context, fontWeightDelta: 3, color: AppColors.colorBlueEnd)
+                                  .copyWith(fontSize: height * 0.09, height: 1.2),
                             ),
                           ),
                           Expanded(
@@ -96,57 +83,56 @@ class PromotionBanner extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                // Text("Price Before",style: AppStyle.textViewStyleXSmall(context: context, color: Colors.black),),
+                                Text(
+                                  "Before",
+                                  style: AppStyle.textViewStyleXSmall(context: context, color: Colors.black),
+                                ),
                                 Container(
                                   width: height / 2,
-                                  margin: const EdgeInsets.only(
-                                      top: AppDimens.dimens_6),
+                                  // margin: const EdgeInsets.only(top: AppDimens.dimens_6),
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    "${Global.replaceCurrencySign("USD")}${mPromotionsModel.previousPrice}/hr",
+                                    "${Global.replaceCurrencySign("AED")}${mPromotionsModel.previousPrice}/hr",
                                     style: AppStyle.textViewStyleSmall(
                                             context: context,
                                             fontWeightDelta: 0,
                                             fontSizeDelta: -1,
-                                            mDecoration:
-                                                TextDecoration.lineThrough,
+                                            mDecoration: TextDecoration.lineThrough,
                                             color: AppColors.colorBlueEnd)
                                         .copyWith(fontSize: height * 0.05),
                                   ),
                                 ),
+                                Text(
+                                  "After",
+                                  style: AppStyle.textViewStyleXSmall(context: context, color: Colors.black),
+                                ),
                                 Container(
                                   width: height / 2,
                                   alignment: Alignment.centerLeft,
-                                  child: Text(
-                                      "${Global.replaceCurrencySign("USD")}${mPromotionsModel.priceAfterDiscount}/hr",
+                                  child: Text("${Global.replaceCurrencySign("AED")}${mPromotionsModel.priceAfterDiscount}/hr",
                                       style: AppStyle.textViewStyleSmall(
-                                              context: context,
-                                              fontWeightDelta: 2,
-                                              fontSizeDelta: 3,
-                                              color: AppColors.colorBlueEnd)
-                                          .copyWith(fontSize: height * 0.06)),
+                                              context: context, fontWeightDelta: 2, fontSizeDelta: 3, color: AppColors.colorBlueEnd)
+                                          .copyWith(fontSize: height * 0.051)),
                                 ),
+
                                 Container(
-                                  margin: const EdgeInsets.only(
-                                      top: AppDimens.dimens_6),
+                                  margin: const EdgeInsets.only(top: AppDimens.dimens_6),
                                   alignment: Alignment.centerLeft,
                                   child: Text("Validity Date",
                                       style: AppStyle.textViewStyleSmall(
-                                              context: context,
-                                              fontWeightDelta: -1,
-                                              fontSizeDelta: -2,
-                                              color: AppColors.colorBlueEnd)
+                                              context: context, fontWeightDelta: -1, fontSizeDelta: -2, color: AppColors.colorBlueEnd)
                                           .copyWith(fontSize: height * 0.05)),
                                 ),
                                 Container(
                                   alignment: Alignment.centerLeft,
                                   child: Text(mPromotionsModel.getEndDate(),
                                       style: AppStyle.textViewStyleSmall(
-                                              context: context,
-                                              fontWeightDelta: 2,
-                                              fontSizeDelta: -1,
-                                              color: AppColors.colorBlueEnd)
+                                              context: context, fontWeightDelta: 2, fontSizeDelta: -1, color: AppColors.colorBlueEnd)
                                           .copyWith(fontSize: height * 0.06)),
+                                ),
+                                Text(
+                                  mPromotionsModel.getDaysLeft() + " days Left",
+                                  style: AppStyle.textViewStyleXSmall(context: context, color: Colors.black),
                                 ),
                                 SizedBox(
                                   height: height * 0.03,
@@ -157,18 +143,13 @@ class PromotionBanner extends StatelessWidget {
                                   child: SizedBox(
                                     width: Get.width / 3.3,
                                     child: ElevatedButton(
-                                        onPressed: () {onTap();},
+                                        onPressed: () {
+                                          onTap();
+                                        },
                                         style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  AppColors.colorYellowShade),
+                                          backgroundColor: MaterialStateProperty.all(AppColors.colorYellowShade),
                                         ),
-                                        child: Text(
-                                          "View Details",
-                                          style: TextStyle(
-                                                     fontSize: height * 0.05,
-                                                  color: AppColors.colorBlack)
-                                        )),
+                                        child: Text("View Details".tr, style: TextStyle(fontSize: height * 0.045, color: AppColors.colorBlack))),
                                   ),
                                   // CustomButton(
                                   //     width: size.maxWidth / 3.3,
@@ -191,9 +172,7 @@ class PromotionBanner extends StatelessWidget {
                   Center(
                     child: Container(
                       margin: EdgeInsets.only(
-                        right: MediaQuery.of(context).size.width > 600
-                            ? height / 1.9
-                            : height / 2.7,
+                        right: MediaQuery.of(context).size.width > 600 ? height / 1.9 : height / 2.7,
                       ),
                       alignment: Alignment.center,
                       decoration: const BoxDecoration(
@@ -205,10 +184,7 @@ class PromotionBanner extends StatelessWidget {
                       width: height * 0.2,
                       child: Text(
                         "${mPromotionsModel.discount}%\nOFF",
-                        style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                fontWeightDelta: 1,
-                                color: AppColors.colorYellowShade)
+                        style: AppStyle.textViewStyleSmall(context: context, fontWeightDelta: 1, color: AppColors.colorYellowShade)
                             .copyWith(fontSize: height * 0.04),
                       ),
                     ),

@@ -72,7 +72,7 @@ class HomeScreenController extends GetxController {
       promotionsModel: promotionsModel,
     );
     indexM = 0;
-    strTitle = Constants.TAG_PURCHASE_PRODUCT_HISTORY;
+    strTitle = "Details".tr;
     update();
   }
 
@@ -170,7 +170,7 @@ class HomeScreenController extends GetxController {
         break;
 
       case PageType.thankYou:
-        navigationPage = const ThankYouFragment();
+        navigationPage = ThankYouFragment();
         strTitle = Constants.STR_INBOX;
         break;
       case PageType.logout:

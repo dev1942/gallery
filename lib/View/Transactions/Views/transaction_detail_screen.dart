@@ -193,7 +193,7 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
                                         widget.transactionModel.createdAt.toString().split('T')[0],
                                         style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
                                       ),
-                                      Text("ID#${widget.transactionModel.transactionId}",
+                                      Text("ID#${widget.transactionModel.transactionId ?? ""}",
                                           style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
                                     ],
                                   ),
@@ -203,11 +203,11 @@ class TransactionDetailScreenState extends State<TransactionDetailScreen> {
                                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
                                   ),
                                   Text(
-                                    "Title : ${widget.transactionModel.metadata.service?.title}",
+                                    "Title : ${widget.transactionModel.metadata.service?.title ?? ""}",
                                     style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
                                   ),
                                   Text(
-                                    "Provider : ${widget.transactionModel.metadata.provider?.firstName + " " + widget.transactionModel.metadata.provider?.lastName}",
+                                    "Provider : ${widget.transactionModel.metadata.provider?.firstName ?? ""}",
                                     style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
                                   ),
                                   addVerticleSpace(17),

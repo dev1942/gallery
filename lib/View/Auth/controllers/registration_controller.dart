@@ -20,6 +20,7 @@ class RegistrationScreenController extends GetxController {
   bool connectionStatus = false;
   bool obscureTextM = true;
   String strVersionName = "";
+  bool agreetoterms = false;
 
   late TextEditingController controllerFirstName;
   late TextEditingController controllerLastName;
@@ -42,6 +43,11 @@ class RegistrationScreenController extends GetxController {
   String strCountyCode = "+971";
 
   String strCountyFlag = "ae";
+
+  void changetermsStatus(bool newtermsValue) {
+    agreetoterms = newtermsValue;
+    update();
+  }
 
   void changeLocale(String locale) {
     switch (locale) {
@@ -108,6 +114,10 @@ class RegistrationScreenController extends GetxController {
       Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_PASSWORD_LESS.tr, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodePassword);
       return false;
+    } else if (!agreetoterms) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: 'please agree to terms and conditions'.tr, toastType: TOAST_TYPE.toastError);
+      FocusScope.of(context).requestFocus(mFocusNodePassword);
+      return false;
     }
     return true;
   }
@@ -140,7 +150,7 @@ class RegistrationScreenController extends GetxController {
     requestParams[PARAMS.PARAM_PASSWORD_CONFIRM] = strPassword;
     requestParams[PARAMS.PARAM_HEAREDABOUTUS] = strHowHear;
     requestParams[PARAMS.PARAM_INVITE] = strInviteCode;
-    requestParams[PARAMS.PARAM_COUNTRY_CODE] = strCountyCode;
+    requestParams[PARAMS.PARAM_COUNTRY_CODE] = strCountyCode.isEmpty ? "971" : strCountyCode;
     requestParams[PARAMS.PARAM_COUNTRY_FLAG_CODE] = strCountyFlag;
     requestParams[PARAMS.PARAM_FIREBASE_TOKEN] = firebaseToken;
 

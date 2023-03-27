@@ -186,7 +186,8 @@ class ServiceScreenState extends State<ServiceScreen> {
                   itemCount: value.alServicesfiltered.length),
             ));
       });
-///--------------------------
+
+  ///--------------------------
   _providerPopular() => GetBuilder<ServiceScreenController>(builder: (value) {
         return Container(
             margin: const EdgeInsets.only(top: AppDimens.dimens_10, left: AppDimens.dimens_5, right: AppDimens.dimens_10),

@@ -17,8 +17,7 @@ class MyRatingFragment extends StatefulWidget {
   MyRatingFragmentState createState() => MyRatingFragmentState();
 }
 
-class MyRatingFragmentState extends State<MyRatingFragment>
-    with SingleTickerProviderStateMixin {
+class MyRatingFragmentState extends State<MyRatingFragment> with SingleTickerProviderStateMixin {
   ShowData mShowData = ShowData.showLoading;
 
   bool connectionStatus = false;
@@ -47,7 +46,6 @@ class MyRatingFragmentState extends State<MyRatingFragment>
     double height = AppDimens.dimens_38;
     double width = size.width / 5;
 
-
     Widget mShowWidget = Column(
       children: [
         Stack(
@@ -57,27 +55,21 @@ class MyRatingFragmentState extends State<MyRatingFragment>
               height: AppDimens.dimens_85,
             ),
             Container(
+              margin: const EdgeInsets.only(top: AppDimens.dimens_10, left: AppDimens.dimens_3),
               child: TabBar(
-                labelStyle: AppStyle.textViewStyleNormalSubtitle2(
-                    context: context, color: AppColors.colorBlack),
+                labelStyle: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack),
                 indicatorColor: AppColors.colorBlueEnd,
                 isScrollable: true,
-                indicatorPadding: const EdgeInsets.only(
-                    left: AppDimens.dimens_5, right: AppDimens.dimens_5),
+                indicatorPadding: const EdgeInsets.only(left: AppDimens.dimens_5, right: AppDimens.dimens_5),
                 padding: EdgeInsets.zero,
-                labelPadding: const EdgeInsets.only(
-                    left: AppDimens.dimens_5, right: AppDimens.dimens_5),
+                labelPadding: const EdgeInsets.only(left: AppDimens.dimens_5, right: AppDimens.dimens_5),
                 labelColor: AppColors.colorWhite,
                 unselectedLabelColor: AppColors.colorBlack2,
-                indicator: AppViews.getRoundBorderDecor(
-                    mColor: Colors.white, mBorderRadius: 5),
+                indicator: AppViews.getRoundBorderDecor(mColor: Colors.white, mBorderRadius: 5),
                 indicatorSize: TabBarIndicatorSize.tab,
                 tabs: [
                   Container(
-                    decoration: activeTabIndex != 0
-                        ? AppViews.getColorDecor(
-                            mColor: Colors.white, mBorderRadius: 5)
-                        : null,
+                    decoration: activeTabIndex != 0 ? AppViews.getColorDecor(mColor: Colors.white, mBorderRadius: 5) : null,
                     alignment: Alignment.center,
                     width: width,
                     height: height,
@@ -87,10 +79,7 @@ class MyRatingFragmentState extends State<MyRatingFragment>
                     ),
                   ),
                   Container(
-                    decoration: activeTabIndex != 1
-                        ? AppViews.getColorDecor(
-                            mColor: Colors.white, mBorderRadius: 5)
-                        : null,
+                    decoration: activeTabIndex != 1 ? AppViews.getColorDecor(mColor: Colors.white, mBorderRadius: 5) : null,
                     alignment: Alignment.center,
                     width: width,
                     height: height,
@@ -102,8 +91,6 @@ class MyRatingFragmentState extends State<MyRatingFragment>
                 ],
                 controller: controller,
               ),
-              margin: const EdgeInsets.only(
-                  top: AppDimens.dimens_10, left: AppDimens.dimens_3),
             ),
           ],
         ),
@@ -129,10 +116,7 @@ class MyRatingFragmentState extends State<MyRatingFragment>
         return SafeArea(
             top: false,
             bottom: false,
-            child: Scaffold(
-                resizeToAvoidBottomInset: true,
-                backgroundColor: AppColors.getMainBgColor(),
-                body: mShowWidget));
+            child: Scaffold(resizeToAvoidBottomInset: true, backgroundColor: AppColors.getMainBgColor(), body: mShowWidget));
       },
     );
   }

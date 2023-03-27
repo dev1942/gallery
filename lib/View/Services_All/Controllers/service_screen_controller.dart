@@ -18,7 +18,7 @@ class ServiceScreenController extends GetxController {
   TextEditingController controllerSearch = TextEditingController();
   int indexM = 0;
   getServiceProvider(catId, subCatId) async {
-    log("=================================");
+    log("==================Getting service providers===============+");
     mShowData = ShowData.showLoading;
     // isShowLoader = true;
     update();

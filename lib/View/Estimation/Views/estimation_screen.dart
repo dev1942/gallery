@@ -23,8 +23,7 @@ class EstimationFragment extends StatefulWidget {
   EstimationFragmentState createState() => EstimationFragmentState();
 }
 
-class EstimationFragmentState extends State<EstimationFragment>
-    with SingleTickerProviderStateMixin {
+class EstimationFragmentState extends State<EstimationFragment> with SingleTickerProviderStateMixin {
   var controller = Get.put(EstimationFragmentController());
   final f = DateFormat('dd');
 
@@ -34,6 +33,8 @@ class EstimationFragmentState extends State<EstimationFragment>
     controller.activeTabIndex = 0;
     super.initState();
   }
+
+  final txtTitleController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -55,125 +56,77 @@ class EstimationFragmentState extends State<EstimationFragment>
                       ),
                       Container(
                         alignment: Alignment.center,
-                        margin: const EdgeInsets.only(
-                            top: AppDimens.dimens_10, left: AppDimens.dimens_3),
+                        margin: const EdgeInsets.only(top: AppDimens.dimens_10, left: AppDimens.dimens_3),
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
                               TabBar(
                                 onTap: (index) => value.changeIndex(index),
-                                labelStyle:
-                                    AppStyle.textViewStyleNormalSubtitle2(
-                                        context: context,
-                                        color: AppColors.colorBlack),
+                                labelStyle: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack),
                                 indicatorColor: AppColors.colorBlueEnd,
                                 isScrollable: true,
-                                indicatorPadding: const EdgeInsets.only(
-                                    left: AppDimens.dimens_5,
-                                    right: AppDimens.dimens_5),
+                                indicatorPadding: const EdgeInsets.only(left: AppDimens.dimens_5, right: AppDimens.dimens_5),
                                 padding: EdgeInsets.zero,
-                                labelPadding: const EdgeInsets.only(
-                                    left: AppDimens.dimens_5,
-                                    right: AppDimens.dimens_5),
+                                labelPadding: const EdgeInsets.only(left: AppDimens.dimens_5, right: AppDimens.dimens_5),
                                 labelColor: AppColors.colorWhite,
                                 unselectedLabelColor: AppColors.colorBlack2,
-                                indicator: AppViews.getRoundBorderDecor(
-                                    mColor: Colors.white, mBorderRadius: 5),
+                                indicator: AppViews.getRoundBorderDecor(mColor: Colors.white, mBorderRadius: 5),
                                 indicatorSize: TabBarIndicatorSize.tab,
                                 tabs: [
-                                  tabButtons(
-                                      title: "Pending",
-                                      activeindex: value.activeTabIndex,
-                                      id: 0),
-                                  tabButtons(
-                                      title: "In Progress",
-                                      activeindex: value.activeTabIndex,
-                                      id: 1),
-                                  tabButtons(
-                                      title: "Completed",
-                                      activeindex: value.activeTabIndex,
-                                      id: 2),
-                                  tabButtons(
-                                      title: "Promotions",
-                                      activeindex: value.activeTabIndex,
-                                      id: 3),
-                                  tabButtons(
-                                      title: "Cancelled",
-                                      activeindex: value.activeTabIndex,
-                                      id: 4),
-                                  tabButtons(
-                                      title: "Dispute",
-                                      activeindex: value.activeTabIndex,
-                                      id: 5),
+                                  tabButtons(title: "Pending", activeindex: value.activeTabIndex, id: 0),
+                                  tabButtons(title: "In Progress", activeindex: value.activeTabIndex, id: 1),
+                                  tabButtons(title: "Completed", activeindex: value.activeTabIndex, id: 2),
+                                  tabButtons(title: "Promotions", activeindex: value.activeTabIndex, id: 3),
+                                  tabButtons(title: "Cancelled", activeindex: value.activeTabIndex, id: 4),
+                                  tabButtons(title: "Dispute", activeindex: value.activeTabIndex, id: 5),
                                 ],
                                 controller: value.tabController,
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    top: AppDimens.dimens_30,
-                                    left: AppDimens.dimens_7,
-                                    right: AppDimens.dimens_7),
+                                padding: const EdgeInsets.only(top: AppDimens.dimens_30, left: AppDimens.dimens_7, right: AppDimens.dimens_7),
                                 child: Row(
                                   children: [
                                     Expanded(
                                       child: SizedBox(
                                           height: 30,
-                                          child: TextFormField(
-                                            keyboardType:
-                                                TextInputType.datetime,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                            controller:
-                                                Get.put(MyBookingsController())
-                                                    .datePickerController,
-                                            onChanged: (val) {
-                                              Get.put(MyBookingsController())
-                                                  .isSearching = true;
-                                              //===================
-                                              Get.put(MyBookingsController())
-                                                  .isSearchingTypePromotion== false?
-                                              Get.put(MyBookingsController())
-                                                  .searchbyDate(val):Get.put(MyBookingsController())
-                                                  .searchbyDatePromotion(val);
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Get.put(MyBookingsController()).selectDate(Get.context!);
                                             },
-                                            decoration: InputDecoration(
-                                                suffixIcon: InkWell(
-                                                  onTap: () {
-                                                    Get.put(MyBookingsController())
-                                                        .selectDate(
-                                                            Get.context!);
-                                                  },
-                                                  child: Icon(
-                                                    Icons.calendar_month,
-                                                    size: AppDimens.dimens_18,
-                                                    color:
-                                                        Colors.yellow.shade700,
-                                                  ),
+                                            child: AbsorbPointer(
+                                              child: TextFormField(
+                                                keyboardType: TextInputType.datetime,
+                                                style: const TextStyle(
+                                                  fontSize: 12,
                                                 ),
-                                                contentPadding:
-                                                    const EdgeInsets.all(8),
-                                                hintText: "2023-01-13".tr,
-                                                hintStyle:
-                                                    AppStyle.textViewStyleSmall(
-                                                        context: Get.context!,
-                                                        color: AppColors
-                                                            .lightGrey),
-                                                enabledBorder:
-                                                    const OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color:
-                                                                Colors.grey)),
-                                                focusColor: Colors.yellow,
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
-                                                                color: Colors
-                                                                    .grey),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(3))),
+                                                controller: Get.put(MyBookingsController()).datePickerController,
+                                                onChanged: (val) {
+                                                  Get.put(MyBookingsController()).isSearching = true;
+                                                  //===================
+                                                  Get.put(MyBookingsController()).isSearchingTypePromotion == false
+                                                      ? Get.put(MyBookingsController()).searchbyDate(val)
+                                                      : Get.put(MyBookingsController()).searchbyDatePromotion(val);
+                                                },
+                                                decoration: InputDecoration(
+                                                    suffixIcon: InkWell(
+                                                      onTap: () {
+                                                        Get.put(MyBookingsController()).selectDate(Get.context!);
+                                                      },
+                                                      child: Icon(
+                                                        Icons.calendar_month,
+                                                        size: AppDimens.dimens_18,
+                                                        color: Colors.yellow.shade700,
+                                                      ),
+                                                    ),
+                                                    contentPadding: const EdgeInsets.all(8),
+                                                    hintText: "31 Mar 2000".tr,
+                                                    hintStyle: AppStyle.textViewStyleSmall(context: Get.context!, color: AppColors.lightGrey),
+                                                    enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                                                    focusColor: Colors.yellow,
+                                                    focusedBorder: OutlineInputBorder(
+                                                        borderSide: const BorderSide(color: Colors.grey), borderRadius: BorderRadius.circular(3))),
+                                              ),
+                                            ),
                                           )),
                                     ),
                                     addHorizontalSpace(AppDimens.dimens_8),
@@ -185,45 +138,40 @@ class EstimationFragmentState extends State<EstimationFragment>
                                               fontSize: 12,
                                             ),
                                             onChanged: (val) {
-                                              Get.put(MyBookingsController())
-                                                  .isSearching = true;
+                                              Get.put(MyBookingsController()).isSearching = true;
                                               //=================================
-                                              Get.put(MyBookingsController())
-                                                  .isSearchingTypePromotion== false?
-                                              Get.put(MyBookingsController())
-                                                  .searchInShop(val):Get.put(MyBookingsController())
-                                                  .searchInShopPromotion(val);
+                                              Get.put(MyBookingsController()).isSearchingTypePromotion == false
+                                                  ? Get.put(MyBookingsController()).searchInShop(val)
+                                                  : Get.put(MyBookingsController()).searchInShopPromotion(val);
                                             },
+                                            controller: txtTitleController,
                                             decoration: InputDecoration(
                                                 suffixIcon: Icon(
                                                   Icons.title_outlined,
                                                   size: AppDimens.dimens_18,
                                                   color: Colors.yellow.shade700,
                                                 ),
-                                                contentPadding:
-                                                    const EdgeInsets.all(8),
+                                                contentPadding: const EdgeInsets.all(8),
                                                 hintText: "Search by title".tr,
-                                                hintStyle:
-                                                    AppStyle.textViewStyleSmall(
-                                                        context: context,
-                                                        color: AppColors
-                                                            .lightGrey),
-                                                enabledBorder:
-                                                    const OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color:
-                                                                Colors.grey)),
+                                                hintStyle: AppStyle.textViewStyleSmall(context: context, color: AppColors.lightGrey),
+                                                enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
                                                 focusColor: Colors.yellow,
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
-                                                                color: Colors
-                                                                    .grey),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(3))),
+                                                focusedBorder: OutlineInputBorder(
+                                                    borderSide: const BorderSide(color: Colors.grey), borderRadius: BorderRadius.circular(3))),
                                           )),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        Get.put(MyBookingsController()).isSearching = true;
+                                        //=================================
+                                        Get.put(MyBookingsController()).isSearchingTypePromotion == false
+                                            ? Get.put(MyBookingsController()).searchInShop("")
+                                            : Get.put(MyBookingsController()).searchInShopPromotion("");
+                                        Get.put(MyBookingsController()).datePickerController.clear();
+                                        Get.put(MyBookingsController()).disputeTitleController;
+                                        txtTitleController.clear();
+                                      },
+                                      icon: Icon(Icons.clear),
                                     )
                                   ],
                                 ),
@@ -255,9 +203,7 @@ class EstimationFragmentState extends State<EstimationFragment>
 
   Widget tabButtons({int? activeindex, int? id, String? title}) {
     return Container(
-      decoration: activeindex != id
-          ? AppViews.getColorDecor(mColor: Colors.white, mBorderRadius: 5)
-          : null,
+      decoration: activeindex != id ? AppViews.getColorDecor(mColor: Colors.white, mBorderRadius: 5) : null,
       alignment: Alignment.center,
       width: MediaQuery.of(context).size.width / 5,
       height: AppDimens.dimens_38,

@@ -157,21 +157,28 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                 ),
                                 addVerticleSpace(AppDimens.dimens_10),
                                 //..............................Text Field user name....................................
-                                CustomTextFieldWithIcon(
-                                    height: 42,
-                                    textInputAction: TextInputAction.next,
-                                    enabled: true,
-                                    focusNode: value.mFocusNodeAddress,
-                                    controller: value.controllerAddress,
-                                    keyboardType: TextInputType.text,
-                                    hintText: Constants.STR_ADDRESS.tr,
-                                    inputFormatters: const [],
-                                    obscureText: false,
-                                    onChanged: (String value) {},
-                                    suffixIcon: Icon(
-                                      Icons.location_on_outlined,
-                                      color: AppColors.lightGrey,
-                                    )),
+                                GestureDetector(
+                                  onTap: () {
+                                    value.getLocationAdress();
+                                  },
+                                  child: AbsorbPointer(
+                                    child: CustomTextFieldWithIcon(
+                                        height: 42,
+                                        textInputAction: TextInputAction.next,
+                                        enabled: true,
+                                        focusNode: value.mFocusNodeAddress,
+                                        controller: value.controllerAddress,
+                                        keyboardType: TextInputType.text,
+                                        hintText: Constants.STR_ADDRESS.tr,
+                                        inputFormatters: const [],
+                                        obscureText: false,
+                                        onChanged: (String value) {},
+                                        suffixIcon: Icon(
+                                          Icons.location_on_outlined,
+                                          color: AppColors.lightGrey,
+                                        )),
+                                  ),
+                                ),
                                 addVerticleSpace(16),
                                 //............................Text filedmobile number.............................
                                 Stack(
@@ -180,21 +187,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                       strCountyCode: value.strCountyCode.value,
                                       textInputAction: TextInputAction.done,
                                       readonly: false,
-                                      onchanged: (newvalue) {
-                                        log(value.isPhoneVerified.toString());
-                                        log(value.oldPhoneNumebr.toString());
-                                        log(value.controllerPhone.text.toString());
-                                      },
-                                      // enabled: false,
-                                      //  enabled: true,
-                                      height: 42,
-                                      controller: value.controllerPhone,
-                                      focusNode: value.mFocusNodePhone,
-                                    ),
-                                    Positioned(
-                                      top: 6,
-                                      right: 4,
-                                      child: InkWell(
+                                      suffixIcon: InkWell(
                                         onTap: () {
                                           showDialog<String>(
                                               context: context,
@@ -202,6 +195,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                     title: Text('Edit Number'.tr),
                                                     content: TextField(
                                                       controller: value.controllerPhone,
+                                                      decoration: InputDecoration(),
                                                     ),
                                                     actions: <Widget>[
                                                       TextButton(
@@ -239,7 +233,19 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                   )
                                                 : SizedBox(),
                                       ),
-                                    )
+
+                                      onchanged: (newvalue) {
+                                        log(value.isPhoneVerified.toString());
+                                        log(value.oldPhoneNumebr.toString());
+                                        log(value.controllerPhone.text.toString());
+                                      },
+                                      // enabled: false,
+                                      //  enabled: true,
+                                      height: 42,
+                                      controller: value.controllerPhone,
+                                      focusNode: value.mFocusNodePhone,
+                                    ),
+                                    Positioned(top: 6, right: 4, child: Container())
                                   ],
                                 ),
                                 addVerticleSpace(AppDimens.dimens_16),
@@ -492,6 +498,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                       );
                                                       setState(() {
                                                         isAddCarTap = false;
+                                                        isEditidTab = false;
                                                       });
                                                     } else {
                                                       Global.showToastAlert(
@@ -548,13 +555,14 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                         value.controllerCode.text.isNotEmpty &&
                                                         value.controllerNumber.text.isNotEmpty) {
                                                       controller.addNewCar(
-                                                          value.controllerCarBrand.text,
-                                                          value.controllerColour.text,
-                                                          value.controllerCarModelYear.text,
-                                                          value.controllerMileage.text,
-                                                          value.controllerCity.text,
-                                                          value.controllerCode.text,
-                                                          value.controllerNumber.text);
+                                                        value.controllerCarBrand.text,
+                                                        value.controllerColour.text,
+                                                        value.controllerCarModelYear.text,
+                                                        value.controllerMileage.text,
+                                                        value.controllerCity.text,
+                                                        value.controllerCode.text,
+                                                        value.controllerNumber.text,
+                                                      );
                                                       setState(() {
                                                         isAddCarTap = false;
                                                       });

@@ -13,6 +13,8 @@ import '../../../widgets/custom_ui/carousel_slider/carousel_slider.dart';
 import '../../Wallet/Widgets/add_card_dialog.dart';
 import '../Models/card_model.dart';
 import '../../../../widgets/custom_button.dart';
+import 'dart:developer';
+
 /*
 {
     "promotionID":"637e7240c0f2f554eca81c8f",
@@ -32,26 +34,25 @@ class CheckoutScreen extends StatefulWidget {
   final String? time;
   final String? amount;
   final String? note;
- final String? previousAmount;
+  final String? previousAmount;
   final String? discount;
   final bool isPartialPay;
   final bool isFullyPay;
 
-   const CheckoutScreen(
-      {Key? key,
-        this.isPartialPay=false,
-        this.isFullyPay=false,
-        this.bookingID,
-       this.promotionID,
-       this.address,
-       this.date,
-       this.time,
-        this.amount,
-        this.note,
-        this.previousAmount,
-        this.discount,
-      })
-      : super(key: key);
+  const CheckoutScreen({
+    Key? key,
+    this.isPartialPay = false,
+    this.isFullyPay = false,
+    this.bookingID,
+    this.promotionID,
+    this.address,
+    this.date,
+    this.time,
+    this.amount,
+    this.note,
+    this.previousAmount,
+    this.discount,
+  }) : super(key: key);
 
   @override
   CheckoutScreenState createState() => CheckoutScreenState();
@@ -98,25 +99,18 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                         children: [
                           // profile pic and name
                           Container(
-                              margin: const EdgeInsets.only(
-                                  right: AppDimens.dimens_40,
-                                  top: AppDimens.dimens_20),
+                              margin: const EdgeInsets.only(right: AppDimens.dimens_40, top: AppDimens.dimens_20),
                               alignment: Alignment.centerRight,
                               child: InkWell(
                                 child: Text("+" + Constants.TXT_ADD_NEW_CARD.tr,
                                     style: AppStyle.textViewStyleSmall(
-                                        context: context,
-                                        color: AppColors.colorWhite,
-                                        fontWeightDelta: 0,
-                                        fontSizeDelta: -2)),
+                                        context: context, color: AppColors.colorWhite, fontWeightDelta: 0, fontSizeDelta: -2)),
                                 onTap: () {
                                   _displayAddCard();
                                 },
                               )),
                           Container(
-                              margin: const EdgeInsets.only(
-                                  left: AppDimens.dimens_10,
-                                  top: AppDimens.dimens_10),
+                              margin: const EdgeInsets.only(left: AppDimens.dimens_10, top: AppDimens.dimens_10),
                               child: Column(children: [
                                 CarouselSlider(
                                   options: CarouselOptions(
@@ -124,12 +118,9 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                       enlargeCenterPage: true,
                                       enableInfiniteScroll: false,
                                       height: 200,
-                                      onPageChanged: (index, reason) =>
-                                          value.onPageChange(index)),
-                                  items: List.generate(value.alCardModel.length,
-                                      (index) {
-                                    CardModel mCardModel =
-                                        value.alCardModel[index];
+                                      onPageChanged: (index, reason) => value.onPageChange(index)),
+                                  items: List.generate(value.alCardModel.length, (index) {
+                                    CardModel mCardModel = value.alCardModel[index];
                                     return SimpleCard(
                                       onTap: () {
                                         value.deletecard(mCardModel.id);
@@ -149,11 +140,9 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                               margin: const EdgeInsets.all(AppDimens.dimens_20),
                               child: Card(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 25, vertical: 20),
+                                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'Credit Card Number'.tr,
@@ -180,8 +169,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                       Row(
                                         children: [
                                           Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 'Expiry Date'.tr,
@@ -198,8 +186,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                           ),
                                           const Spacer(),
                                           Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Text(
                                                 'CVV Check'.tr,
@@ -216,150 +203,172 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                           )
                                         ],
                                       ),
-
                                     ],
                                   ),
                                 ),
                               )),
                           const SizedBox(height: 20.0),
                           Text("Payment Detail".tr),
-                         widget.isPartialPay? Card(
-                             margin: const EdgeInsets.all(AppDimens.dimens_20),
-                             child:Padding(
-                               padding: const EdgeInsets.all(8.0),
-                               child: Column(children: [
-
-
-                                 Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                   children: [
-                                     Text("Total Amount ".tr,style: const TextStyle(fontSize: 16),),
-                                     Text("AED ${widget.amount??"0"}",  style: AppStyle.textViewStyleNormalSubtitle2(
-                                         context: context,
-                                         color: AppColors.colorBlueStart,
-                                         fontSizeDelta: 1,
-                                         fontWeightDelta: 1),),
-
-                                   ],),
-                                 Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                   children: [
-                                     Text("Pay 50%".tr,style: const TextStyle(fontSize: 16),),
-                                     Text("${(num.parse(widget.amount!)/2)}",  style: AppStyle.textViewStyleNormalSubtitle2(
-                                         context: context,
-                                         color: AppColors.colorBlueStart,
-                                         fontSizeDelta: 1,
-                                         fontWeightDelta: 1),),
-
-                                   ],),
-                                 Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                   children: [
-                                     Text("Sub Total Amount ".tr,style: const TextStyle(fontSize: 16),),
-                                     Text("AED ${(num.parse(widget.amount!)/2)}",  style: AppStyle.textViewStyleNormalSubtitle2(
-                                         context: context,
-                                         color: AppColors.colorBlueStart,
-                                         fontSizeDelta: 1,
-                                         fontWeightDelta: 1),),
-
-                                   ],),
-                               ],),
-                             )
-                         ):widget.isFullyPay?
-                         Card(
-                             margin: const EdgeInsets.all(AppDimens.dimens_20),
-                             child:Padding(
-                               padding: const EdgeInsets.all(8.0),
-                               child: Column(children: [
-
-
-                                 Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                   children: [
-                                     Text("Total Amount ".tr,style: const TextStyle(fontSize: 16),),
-                                     Text("AED ${widget.previousAmount??"0"}",  style: AppStyle.textViewStyleNormalSubtitle2(
-                                         context: context,
-                                         color: AppColors.colorBlueStart,
-                                         fontSizeDelta: 1,
-                                         fontWeightDelta: 1),),
-
-                                   ],),
-                                 Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                   children: [
-                                     Text("50 % Payed Amount".tr,style: const TextStyle(fontSize: 16),),
-                                     Text("${(num.parse(widget.amount!))}",  style: AppStyle.textViewStyleNormalSubtitle2(
-                                         context: context,
-                                         color: AppColors.colorBlueStart,
-                                         fontSizeDelta: 1,
-                                         fontWeightDelta: 1),),
-
-                                   ],),
-                                 Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                   children: [
-                                     Text("Balance Amount ".tr,style: const TextStyle(fontSize: 16),),
-                                     Text("AED ${(num.parse(widget.amount!))}",  style: AppStyle.textViewStyleNormalSubtitle2(
-                                         context: context,
-                                         color: AppColors.colorBlueStart,
-                                         fontSizeDelta: 1,
-                                         fontWeightDelta: 1),),
-
-                                   ],),
-                               ],),
-                             )
-                         )
-                             :  Card(
-                            margin: const EdgeInsets.all(AppDimens.dimens_20),
-                            child:Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(children: [
-
-
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("Total Amount ".tr,style: const TextStyle(fontSize: 16),),
-                                    Text("AED ${widget.previousAmount??"0"}",  style: AppStyle.textViewStyleNormalSubtitle2(
-                                        context: context,
-                                        color: AppColors.colorBlueStart,
-                                        fontSizeDelta: 1,
-                                        fontWeightDelta: 1),),
-
-                                  ],),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Discount ".tr,style: const TextStyle(fontSize: 16),),
-                                  Text("${widget.discount??"0"} %",  style: AppStyle.textViewStyleNormalSubtitle2(
-                                      context: context,
-                                      color: AppColors.colorBlueStart,
-                                      fontSizeDelta: 1,
-                                      fontWeightDelta: 1),),
-
-                                ],),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Sub Total Amount ".tr,style: const TextStyle(fontSize: 16),),
-                                  Text("AED ${widget.amount??"0"}",  style: AppStyle.textViewStyleNormalSubtitle2(
-                                      context: context,
-                                      color: AppColors.colorBlueStart,
-                                      fontSizeDelta: 1,
-                                      fontWeightDelta: 1),),
-
-                                ],),
-                              ],),
-                            )
-                          ),
+                          widget.isPartialPay
+                              ? Card(
+                                  margin: const EdgeInsets.all(AppDimens.dimens_20),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Total Amount ".tr,
+                                              style: const TextStyle(fontSize: 16),
+                                            ),
+                                            Text(
+                                              "AED ${widget.amount ?? "0"}",
+                                              style: AppStyle.textViewStyleNormalSubtitle2(
+                                                  context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Pay 50%".tr,
+                                              style: const TextStyle(fontSize: 16),
+                                            ),
+                                            Text(
+                                              "${(num.parse(widget.amount!) / 2)}",
+                                              style: AppStyle.textViewStyleNormalSubtitle2(
+                                                  context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Sub Total Amount ".tr,
+                                              style: const TextStyle(fontSize: 16),
+                                            ),
+                                            Text(
+                                              "AED ${(num.parse(widget.amount!) / 2)}",
+                                              style: AppStyle.textViewStyleNormalSubtitle2(
+                                                  context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ))
+                              : widget.isFullyPay
+                                  ? Card(
+                                      margin: const EdgeInsets.all(AppDimens.dimens_20),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Total Amount ".tr,
+                                                  style: const TextStyle(fontSize: 16),
+                                                ),
+                                                Text(
+                                                  "AED ${widget.previousAmount ?? "0"}",
+                                                  style: AppStyle.textViewStyleNormalSubtitle2(
+                                                      context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "50 % Payed Amount".tr,
+                                                  style: const TextStyle(fontSize: 16),
+                                                ),
+                                                Text(
+                                                  "${(num.parse(widget.amount!))}",
+                                                  style: AppStyle.textViewStyleNormalSubtitle2(
+                                                      context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Balance Amount ".tr,
+                                                  style: const TextStyle(fontSize: 16),
+                                                ),
+                                                Text(
+                                                  "AED ${(num.parse(widget.amount!))}",
+                                                  style: AppStyle.textViewStyleNormalSubtitle2(
+                                                      context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ))
+                                  : Card(
+                                      margin: const EdgeInsets.all(AppDimens.dimens_20),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Total Amount ".tr,
+                                                  style: const TextStyle(fontSize: 16),
+                                                ),
+                                                Text(
+                                                  "AED ${widget.previousAmount ?? "0"}",
+                                                  style: AppStyle.textViewStyleNormalSubtitle2(
+                                                      context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Discount ".tr,
+                                                  style: const TextStyle(fontSize: 16),
+                                                ),
+                                                Text(
+                                                  "${widget.discount ?? "0"} %",
+                                                  style: AppStyle.textViewStyleNormalSubtitle2(
+                                                      context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Sub Total Amount ".tr,
+                                                  style: const TextStyle(fontSize: 16),
+                                                ),
+                                                Text(
+                                                  "AED ${widget.amount ?? "0"}",
+                                                  style: AppStyle.textViewStyleNormalSubtitle2(
+                                                      context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      )),
 
                           Container(
                             alignment: Alignment.center,
                             margin: const EdgeInsets.only(
-                                top: AppDimens.dimens_20,
-                                bottom: AppDimens.dimens_20,
-                                left: AppDimens.dimens_10,
-                                right: AppDimens.dimens_10),
+                                top: AppDimens.dimens_20, bottom: AppDimens.dimens_20, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
                             child: CustomButton(
                                 isGradient: true,
                                 isRoundBorder: true,
@@ -367,20 +376,19 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                 fontSize: 0,
                                 width: size.width / 1.5,
                                 onPressed: () {
-                                  if(widget.isPartialPay){
+                                  if (widget.isPartialPay) {
+                                    log("partail pay");
 
                                     value.bookEstimationPartial(
                                       bookingID: widget.bookingID,
                                       cardId: controller.cardId!,
                                     );
-                                  }else if(widget.isFullyPay)
-                                  {
+                                  } else if (widget.isFullyPay) {
                                     value.bookEstimationFullPay(
                                       bookingID: widget.bookingID,
                                       cardId: controller.cardId!,
                                     );
-                                  }
-                                  else{
+                                  } else {
                                     value.bookEstimation(
                                       promotionId: widget.promotionID,
                                       address: widget.address,
@@ -390,7 +398,6 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                       cardId: controller.cardId!,
                                     );
                                   }
-
                                 },
                                 strTitle: Constants.TXT_PROCEES_TO_PAY.tr),
                           ),
@@ -411,11 +418,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
         builder: (context) {
           return AddEditCardDialogBox(
             onTap: (CardModel mCardModelInserted) {
-              controller.addNewCard(
-                  mCardModelInserted.last4,
-                  mCardModelInserted.expMonth,
-                  mCardModelInserted.expYear,
-                  mCardModelInserted.cvcCheck,
+              controller.addNewCard(mCardModelInserted.last4, mCardModelInserted.expMonth, mCardModelInserted.expYear, mCardModelInserted.cvcCheck,
                   mCardModelInserted.name);
             },
           );
