@@ -67,8 +67,10 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
   getcardata() {
     if (profileController.carList.isNotEmpty) {
       for (int i = 0; i < profileController.carList.length; i++) {
-        carNamesList?.add(profileController.carList[i].brand!);
-        carNameId?.add(profileController.carList[i].id!);
+        setState(() {
+          carNamesList?.add(profileController.carList[i].brand!);
+          carNameId?.add(profileController.carList[i].id!);
+        });
       }
     }
   }
@@ -153,7 +155,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                     //Upload Video or Shoot a video
                     if (widget.screenType != 'promotion') _videoSection(),
                     //Voice Note
-                    if (widget.screenType != 'promotion') _voiceNoteSection(),
+                    // if (widget.screenType != 'promotion') _voiceNoteSection(),
                     // Leave Note (if any)
                     if (widget.screenType != 'promotion') _anyNoteTextFiledSection(),
                     Container(

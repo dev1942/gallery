@@ -32,9 +32,7 @@ class ViewEstimation extends StatefulWidget {
   final EstimatesModel mEstimatesModel;
   final String screen;
 
-  const ViewEstimation(
-      {Key? key, required this.mEstimatesModel, required this.screen})
-      : super(key: key);
+  const ViewEstimation({Key? key, required this.mEstimatesModel, required this.screen}) : super(key: key);
 
   @override
   ViewEstimationState createState() => ViewEstimationState();
@@ -95,7 +93,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                       //Upload Video or Shoot a video
                       _videoSection(),
                       //Voice Note
-                      _voiceNoteSection(),
+                      // _voiceNoteSection(),
                       //Leave Note (if any)
 
                       _anyNoteTextFiledSection(),
@@ -103,27 +101,20 @@ class ViewEstimationState extends State<ViewEstimation> {
                         Container(
                           alignment: Alignment.center,
                           margin: const EdgeInsets.only(
-                              top: AppDimens.dimens_20,
-                              bottom: AppDimens.dimens_20,
-                              left: AppDimens.dimens_10,
-                              right: AppDimens.dimens_10),
+                              top: AppDimens.dimens_20, bottom: AppDimens.dimens_20, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
                           child: CustomButton(
                               isGradient: true,
                               isRoundBorder: true,
                               fontColor: AppColors.colorWhite,
                               width: size.width,
-                              onPressed: () => controller.rebook(
-                                  context, widget.mEstimatesModel),
+                              onPressed: () => controller.rebook(context, widget.mEstimatesModel),
                               strTitle: Constants.TXT_REBOOK),
                         ),
                       if (widget.screen == 'partial')
                         Container(
                           alignment: Alignment.center,
                           margin: const EdgeInsets.only(
-                              top: AppDimens.dimens_20,
-                              bottom: AppDimens.dimens_20,
-                              left: AppDimens.dimens_10,
-                              right: AppDimens.dimens_10),
+                              top: AppDimens.dimens_20, bottom: AppDimens.dimens_20, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
                           child: CustomButton(
                               isGradient: true,
                               isRoundBorder: true,
@@ -134,26 +125,23 @@ class ViewEstimationState extends State<ViewEstimation> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => CheckoutScreen(
-                                              // estimateId:
-                                              //     widget.mEstimatesModel.id,
-                                              // sourceId: widget
-                                              //     .mEstimatesModel.source!.id,
-                                              // paymentStatus: 'completePayment',
+                                            // estimateId:
+                                            //     widget.mEstimatesModel.id,
+                                            // sourceId: widget
+                                            //     .mEstimatesModel.source!.id,
+                                            // paymentStatus: 'completePayment',
                                             )));
                               },
                               strTitle: "Make The Balance Payment"
 
                               //Constants.TXT_COMPLETED_ESTIMATION
-                          ),
+                              ),
                         )
                       else if (widget.screen == 'pending')
                         Container(
                           alignment: Alignment.center,
                           margin: const EdgeInsets.only(
-                              top: AppDimens.dimens_20,
-                              bottom: AppDimens.dimens_20,
-                              left: AppDimens.dimens_10,
-                              right: AppDimens.dimens_10),
+                              top: AppDimens.dimens_20, bottom: AppDimens.dimens_20, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -164,8 +152,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                                     isRoundBorder: true,
                                     fontColor: AppColors.colorWhite,
                                     width: size.width,
-                                    onPressed: () =>
-                                        controller.checkDateTime(context),
+                                    onPressed: () => controller.checkDateTime(context),
                                     strTitle: Constants.TXT_RESCHEDULE),
                                 width: size.width / 2.5,
                               ),
@@ -191,8 +178,7 @@ class ViewEstimationState extends State<ViewEstimation> {
             ],
           ),
           GetBuilder<ViewEstimationController>(
-            builder: (value) =>
-                AppViews.showLoadingWithStatus(value.isShowLoader),
+            builder: (value) => AppViews.showLoadingWithStatus(value.isShowLoader),
           )
         ],
       ),
@@ -209,11 +195,7 @@ class ViewEstimationState extends State<ViewEstimation> {
               if (Global.checkNull(strReason)) {
                 controller.cancelEstimation(strReason);
               } else {
-                Global.showToastAlert(
-                    context: context,
-                    strTitle: "",
-                    strMsg: AppAlert.ALERT_ENTER_FN,
-                    toastType: TOAST_TYPE.toastError);
+                Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_FN, toastType: TOAST_TYPE.toastError);
               }
             },
           );
@@ -221,11 +203,7 @@ class ViewEstimationState extends State<ViewEstimation> {
   }
 
   _profileSection() => Container(
-        margin: const EdgeInsets.only(
-            left: AppDimens.dimens_30,
-            top: AppDimens.dimens_20,
-            bottom: AppDimens.dimens_30,
-            right: AppDimens.dimens_20),
+        margin: const EdgeInsets.only(left: AppDimens.dimens_30, top: AppDimens.dimens_20, bottom: AppDimens.dimens_30, right: AppDimens.dimens_20),
         alignment: Alignment.center,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -250,18 +228,11 @@ class ViewEstimationState extends State<ViewEstimation> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  controller.estimatesModel!.mServiceProviderModel != null
-                      ? controller.estimatesModel!.mServiceProviderModel!
-                          .getName()
-                      : "",
+                  controller.estimatesModel!.mServiceProviderModel != null ? controller.estimatesModel!.mServiceProviderModel!.getName() : "",
                   softWrap: true,
                   overflow: TextOverflow.clip,
                   maxLines: 2,
-                  style: AppStyle.textViewStyleLarge(
-                      context: context,
-                      color: AppColors.colorWhite,
-                      fontSizeDelta: 3,
-                      fontWeightDelta: -2),
+                  style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorWhite, fontSizeDelta: 3, fontWeightDelta: -2),
                 ),
                 InkWell(
                   child: Container(
@@ -301,94 +272,61 @@ class ViewEstimationState extends State<ViewEstimation> {
                     Expanded(
                       child: Text(
                         "Service",
-                        style: AppStyle.textViewStyleNormalSubtitle2(
-                            context: context,
-                            color: AppColors.colorGray,
-                            fontSizeDelta: 1,
-                            fontWeightDelta: 1),
+                        style:
+                            AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorGray, fontSizeDelta: 1, fontWeightDelta: 1),
                       ),
                     ),
                     Text(
                       value.estimatesModel!.source!.title,
-                      style: AppStyle.textViewStyleNormalSubtitle2(
-                          context: context,
-                          color: Colors.grey,
-                          fontSizeDelta: 1,
-                          fontWeightDelta: -1),
+                      style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: Colors.grey, fontSizeDelta: 1, fontWeightDelta: -1),
                     ),
                   ],
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(
-                    top: AppDimens.dimens_10,
-                    left: AppDimens.dimens_14,
-                    right: AppDimens.dimens_14),
+                margin: const EdgeInsets.only(top: AppDimens.dimens_10, left: AppDimens.dimens_14, right: AppDimens.dimens_14),
                 alignment: Alignment.center,
                 child: Row(
                   children: [
                     Expanded(
                       child: Text(
                         "Provider",
-                        style: AppStyle.textViewStyleNormalSubtitle2(
-                            context: context,
-                            color: AppColors.colorGray,
-                            fontSizeDelta: 1,
-                            fontWeightDelta: 1),
+                        style:
+                            AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorGray, fontSizeDelta: 1, fontWeightDelta: 1),
                       ),
                     ),
                     Text(
                       value.estimatesModel!.mServiceProviderModel!.getName(),
-                      style: AppStyle.textViewStyleNormalSubtitle2(
-                          context: context,
-                          color: Colors.grey,
-                          fontSizeDelta: 1,
-                          fontWeightDelta: -1),
+                      style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: Colors.grey, fontSizeDelta: 1, fontWeightDelta: -1),
                     ),
                   ],
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(
-                    top: AppDimens.dimens_10,
-                    left: AppDimens.dimens_14,
-                    right: AppDimens.dimens_14),
+                margin: const EdgeInsets.only(top: AppDimens.dimens_10, left: AppDimens.dimens_14, right: AppDimens.dimens_14),
                 alignment: Alignment.center,
                 child: Row(
                   children: [
                     Expanded(
                       child: Text(
                         "Service Price per hour",
-                        style: AppStyle.textViewStyleNormalSubtitle2(
-                            context: context,
-                            color: AppColors.colorGray,
-                            fontSizeDelta: 1,
-                            fontWeightDelta: 1),
+                        style:
+                            AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorGray, fontSizeDelta: 1, fontWeightDelta: 1),
                       ),
                     ),
                     GradientText(
-                      Global.replaceCurrencySign(
-                              value.estimatesModel!.source!.currency) +
-                          value.estimatesModel!.source!.price,
+                      Global.replaceCurrencySign(value.estimatesModel!.source!.currency) + value.estimatesModel!.source!.price,
                       style: AppStyle.textViewStyleNormalSubtitle2(
-                          context: context,
-                          color: AppColors.colorTextBlue,
-                          fontSizeDelta: 0,
-                          fontWeightDelta: 3),
+                          context: context, color: AppColors.colorTextBlue, fontSizeDelta: 0, fontWeightDelta: 3),
                     ),
                   ],
                 ),
               ),
               Container(
-                  margin: const EdgeInsets.only(
-                      top: AppDimens.dimens_20,
-                      left: AppDimens.dimens_14,
-                      right: AppDimens.dimens_14),
+                  margin: const EdgeInsets.only(top: AppDimens.dimens_20, left: AppDimens.dimens_14, right: AppDimens.dimens_14),
                   alignment: Alignment.center,
                   height: AppDimens.dimens_160,
-                  child: GoogleMapView(
-                      onTap: (LatLng mLatLng_) =>
-                          value.updateLatLang(mLatLng_))),
+                  child: GoogleMapView(onTap: (LatLng mLatLng_) => value.updateLatLang(mLatLng_))),
               _addressTextFiledSection(),
               Container(
                 margin: const EdgeInsets.only(
@@ -398,11 +336,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                 ),
                 child: Text(
                   "Date & Time",
-                  style: AppStyle.textViewStyleNormalSubtitle2(
-                      context: context,
-                      color: AppColors.colorBlack2,
-                      fontWeightDelta: 1,
-                      fontSizeDelta: 0),
+                  style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
                 ),
               ),
 
@@ -413,9 +347,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                   right: AppDimens.dimens_14,
                 ),
                 child: DateSelector(
-                    selectedDate: value.estimatesModel!.getDateInFormate(),
-                    onSelection: (String _selectedDate) =>
-                        value.onSelectDate(_selectedDate)),
+                    selectedDate: value.estimatesModel!.getDateInFormate(), onSelection: (String _selectedDate) => value.onSelectDate(_selectedDate)),
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -425,11 +357,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                 ),
                 child: Text(
                   "Time",
-                  style: AppStyle.textViewStyleNormalSubtitle2(
-                      context: context,
-                      color: AppColors.colorBlack2,
-                      fontWeightDelta: 1,
-                      fontSizeDelta: 0),
+                  style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
                 ),
               ),
               Container(
@@ -443,8 +371,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                 child: TimeSelector(
                     selectedDate: value.selectedDate,
                     mTimeModel: value.mTimeModel,
-                    onSelection: (TimeModel mtimeModel_) =>
-                        value.onSelectTime(mtimeModel_)),
+                    onSelection: (TimeModel mtimeModel_) => value.onSelectTime(mtimeModel_)),
               ),
               //Upload image or Take a photo
               Container(
@@ -459,10 +386,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                       child: Text(
                         Constants.STR_IMAGE_MSG,
                         style: AppStyle.textViewStyleNormalSubtitle2(
-                            context: context,
-                            color: AppColors.colorBlack2,
-                            fontWeightDelta: 1,
-                            fontSizeDelta: 0),
+                            context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
                       ),
                     ),
                     const SizedBox(width: AppDimens.dimens_5),
@@ -470,10 +394,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                       child: Text(
                         Constants.STR_MAX_SIZE,
                         style: AppStyle.textViewStyleNormalSubtitle2(
-                            context: context,
-                            color: AppColors.colorBlack2,
-                            fontWeightDelta: -1,
-                            fontSizeDelta: -4),
+                            context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
                       ),
                     ),
                   ],
@@ -491,8 +412,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                     children: [
                       Visibility(
                         child: Container(
-                          margin:
-                              const EdgeInsets.only(right: AppDimens.dimens_15),
+                          margin: const EdgeInsets.only(right: AppDimens.dimens_15),
                           height: AppDimens.dimens_100,
                           width: AppDimens.dimens_100,
                           child: Stack(
@@ -500,8 +420,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(AppDimens.dimens_5),
+                                  borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                                 ),
                                 height: AppDimens.dimens_100,
                                 width: AppDimens.dimens_100,
@@ -530,8 +449,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                                 },
                               ),
                               Container(
-                                margin: const EdgeInsets.only(
-                                    left: AppDimens.dimens_15),
+                                margin: const EdgeInsets.only(left: AppDimens.dimens_15),
                                 child: MediaButton(
                                   strImage: AppImages.ic_camera,
                                   onPressed: () {
@@ -567,21 +485,15 @@ class ViewEstimationState extends State<ViewEstimation> {
                 Flexible(
                   child: Text(
                     Constants.STR_VIDEO_MSG,
-                    style: AppStyle.textViewStyleNormalSubtitle2(
-                        context: context,
-                        color: AppColors.colorBlack2,
-                        fontWeightDelta: 1,
-                        fontSizeDelta: 0),
+                    style:
+                        AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
                   ),
                 ),
                 const SizedBox(width: AppDimens.dimens_5),
                 Text(
                   Constants.STR_MAX_SIZE,
-                  style: AppStyle.textViewStyleNormalSubtitle2(
-                      context: context,
-                      color: AppColors.colorBlack2,
-                      fontWeightDelta: -1,
-                      fontSizeDelta: -4),
+                  style:
+                      AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
                 ),
               ],
             ),
@@ -607,13 +519,10 @@ class ViewEstimationState extends State<ViewEstimation> {
                         ),
                         Container(
                           child: Text(
-                            Constants.TXT_PLEASE_WAIT +
-                                ' ${snapshot.data.toStringAsFixed(0)}%',
-                            style: AppStyle.textViewStyleSmall(
-                                context: context, color: AppColors.colorBlack),
+                            Constants.TXT_PLEASE_WAIT + ' ${snapshot.data.toStringAsFixed(0)}%',
+                            style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
                           ),
-                          margin:
-                              const EdgeInsets.only(top: AppDimens.dimens_8),
+                          margin: const EdgeInsets.only(top: AppDimens.dimens_8),
                         )
                       ],
                     ),
@@ -637,8 +546,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                     Visibility(
                         visible: Global.checkNull(value.pickedVideo),
                         child: Container(
-                          margin:
-                              const EdgeInsets.only(right: AppDimens.dimens_15),
+                          margin: const EdgeInsets.only(right: AppDimens.dimens_15),
                           height: AppDimens.dimens_100,
                           width: AppDimens.dimens_100,
                           child: Stack(
@@ -646,29 +554,25 @@ class ViewEstimationState extends State<ViewEstimation> {
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(AppDimens.dimens_5),
+                                  borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                                 ),
                                 height: AppDimens.dimens_100,
                                 width: AppDimens.dimens_100,
                                 child: InkWell(
                                   child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                          AppDimens.dimens_5),
+                                      borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                                       child: Container(
                                         color: AppColors.colorGray2,
                                         child: Icon(
                                           Icons.play_arrow,
                                           color: AppColors.curiousBlue,
                                         ),
-                                        padding: const EdgeInsets.all(
-                                            AppDimens.dimens_35),
+                                        padding: const EdgeInsets.all(AppDimens.dimens_35),
                                         // width: width != null ? width : AppDimens.dimens_100,
                                         // height: height != null ? height : AppDimens.dimens_100,
                                       )),
                                   onTap: () {
-                                    Global.gotoVideoView(
-                                        context, value.pickedVideo);
+                                    Global.gotoVideoView(context, value.pickedVideo);
                                   },
                                 ),
                               ),
@@ -693,8 +597,7 @@ class ViewEstimationState extends State<ViewEstimation> {
                             },
                           ),
                           Container(
-                            margin: const EdgeInsets.only(
-                                left: AppDimens.dimens_15),
+                            margin: const EdgeInsets.only(left: AppDimens.dimens_15),
                             child: MediaButton(
                               strImage: AppImages.ic_video_cam,
                               onPressed: () {
@@ -732,21 +635,15 @@ class ViewEstimationState extends State<ViewEstimation> {
                   Flexible(
                     child: Text(
                       Constants.STR_LEAVE_VOICE_NOTE,
-                      style: AppStyle.textViewStyleNormalSubtitle2(
-                          context: context,
-                          color: AppColors.colorBlack2,
-                          fontWeightDelta: 1,
-                          fontSizeDelta: 0),
+                      style:
+                          AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
                     ),
                   ),
                   const SizedBox(width: AppDimens.dimens_5),
                   Text(
                     Constants.STR_MAX_SIZE,
-                    style: AppStyle.textViewStyleNormalSubtitle2(
-                        context: context,
-                        color: AppColors.colorBlack2,
-                        fontWeightDelta: -1,
-                        fontSizeDelta: -4),
+                    style:
+                        AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: -1, fontSizeDelta: -4),
                   ),
                 ],
               ),
@@ -760,8 +657,7 @@ class ViewEstimationState extends State<ViewEstimation> {
               child: VoiceRecordingButton(
                 // strVoiceNotePath: 'https://flutter-sound.canardoux.xyz/web_example/assets/extract/01.aac',
                 strVoiceNotePath: value.voiceNoteFile,
-                callback: (String filePath) =>
-                    value.onSelectVoiceNote(filePath),
+                callback: (String filePath) => value.onSelectVoiceNote(filePath),
               ),
             ),
           ],
@@ -781,11 +677,7 @@ class ViewEstimationState extends State<ViewEstimation> {
           ),
           child: Text(
             Constants.STR_ADDRESS,
-            style: AppStyle.textViewStyleNormalSubtitle2(
-                context: context,
-                color: AppColors.colorBlack2,
-                fontWeightDelta: 1,
-                fontSizeDelta: 0),
+            style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
           ),
         ),
         Container(
@@ -802,25 +694,18 @@ class ViewEstimationState extends State<ViewEstimation> {
               },
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.text,
-              style: AppStyle.textViewStyleNormalBodyText2(
-                  color: AppColors.colorBlack,
-                  fontSizeDelta: 0,
-                  fontWeightDelta: 0,
-                  context: context),
+              style: AppStyle.textViewStyleNormalBodyText2(color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
               controller: controller.addressNote,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
-                prefixIconConstraints:
-                    const BoxConstraints(minWidth: AppDimens.dimens_33),
-                suffixIconConstraints:
-                    const BoxConstraints(minWidth: AppDimens.dimens_33),
+                prefixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
+                suffixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
                 suffixIcon: Container(
                   margin: const EdgeInsets.only(right: AppDimens.dimens_12),
                   alignment: Alignment.center,
                   width: 5,
                 ),
-                contentPadding: const EdgeInsets.only(
-                    top: AppDimens.dimens_7, left: AppDimens.dimens_15),
+                contentPadding: const EdgeInsets.only(top: AppDimens.dimens_7, left: AppDimens.dimens_15),
                 focusedBorder: AppViews.textFieldRoundBorder(),
                 border: AppViews.textFieldRoundBorder(),
                 disabledBorder: AppViews.textFieldRoundBorder(),
@@ -829,16 +714,12 @@ class ViewEstimationState extends State<ViewEstimation> {
                 filled: true,
                 fillColor: AppColors.colorGray2,
                 hintStyle: AppStyle.textViewStyleNormalBodyText2(
-                    color: AppColors.colorTextFieldHint,
-                    fontSizeDelta: 0,
-                    fontWeightDelta: 0,
-                    context: context),
+                    color: AppColors.colorTextFieldHint, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
               ),
             ),
             height: AppDimens.dimens_50,
           ),
-          decoration:
-              AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
+          decoration: AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
         )
       ],
     );
@@ -857,11 +738,7 @@ class ViewEstimationState extends State<ViewEstimation> {
           ),
           child: Text(
             Constants.STR_LEAVE_NOTE,
-            style: AppStyle.textViewStyleNormalSubtitle2(
-                context: context,
-                color: AppColors.colorBlack2,
-                fontWeightDelta: 1,
-                fontSizeDelta: 0),
+            style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: AppColors.colorBlack2, fontWeightDelta: 1, fontSizeDelta: 0),
           ),
         ),
         Container(
@@ -878,25 +755,18 @@ class ViewEstimationState extends State<ViewEstimation> {
               },
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.text,
-              style: AppStyle.textViewStyleNormalBodyText2(
-                  color: AppColors.colorBlack,
-                  fontSizeDelta: 0,
-                  fontWeightDelta: 0,
-                  context: context),
+              style: AppStyle.textViewStyleNormalBodyText2(color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
               controller: controller.controllerNote,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
-                prefixIconConstraints:
-                    const BoxConstraints(minWidth: AppDimens.dimens_33),
-                suffixIconConstraints:
-                    const BoxConstraints(minWidth: AppDimens.dimens_33),
+                prefixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
+                suffixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
                 suffixIcon: Container(
                   margin: const EdgeInsets.only(right: AppDimens.dimens_12),
                   alignment: Alignment.center,
                   width: AppDimens.dimens_50,
                 ),
-                contentPadding: const EdgeInsets.only(
-                    top: AppDimens.dimens_7, left: AppDimens.dimens_15),
+                contentPadding: const EdgeInsets.only(top: AppDimens.dimens_7, left: AppDimens.dimens_15),
                 focusedBorder: AppViews.textFieldRoundBorder(),
                 border: AppViews.textFieldRoundBorder(),
                 disabledBorder: AppViews.textFieldRoundBorder(),
@@ -905,16 +775,12 @@ class ViewEstimationState extends State<ViewEstimation> {
                 filled: true,
                 fillColor: AppColors.colorGray2,
                 hintStyle: AppStyle.textViewStyleNormalBodyText2(
-                    color: AppColors.colorTextFieldHint,
-                    fontSizeDelta: 0,
-                    fontWeightDelta: 0,
-                    context: context),
+                    color: AppColors.colorTextFieldHint, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
               ),
             ),
             height: AppDimens.dimens_50,
           ),
-          decoration:
-              AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
+          decoration: AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
         )
       ],
     );

@@ -68,13 +68,16 @@ Widget drawer(BuildContext context) {
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Image.asset(
-                  AppImages.icAppIconWhite,
-                  height: AppDimens.dimens_40,
-                ),
+              SizedBox(
+                width: 60,
               ),
+              // Container(
+              //   alignment: Alignment.centerLeft,
+              //   child: Image.asset(
+              //     AppImages.icAppIconWhite,
+              //     height: AppDimens.dimens_40,
+              //   ),
+              // ),
               GestureDetector(
                 onTap: () {
                   _launchLink('https://www.linkedin.com/company/otobucks/');

@@ -52,6 +52,7 @@ class StaticesAnalyticsController extends GetxController {
       var data = jsonDecode(response.body);
       if (response.statusCode == 200) {
         log.i("Get analytics api success");
+        log.i(data);
         return AnalyticsDataModel.fromJson(data);
       } else {
         log.e("Get Analytics  API Failed");

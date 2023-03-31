@@ -150,8 +150,10 @@ class ProfileScreenController extends GetxController {
     log('method callled');
     isShowLoader = true;
     update();
-
+    await location.requestService();
+    await location.requestPermission();
     PermissionStatus _permissionGranted = await location.hasPermission();
+
     if (_permissionGranted == PermissionStatus.granted || _permissionGranted == PermissionStatus.grantedLimited) {
       var currentLocation = await location.getLocation();
       log(currentLocation.latitude.toString());
@@ -164,6 +166,8 @@ class ProfileScreenController extends GetxController {
       update();
       // mLatLng = _mLatLng;
     } else {
+      isShowLoader = false;
+      update();
       Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Enable Location From setting!', toastType: TOAST_TYPE.toastError);
       // mLatLng = Global.mLatLng;
     }
@@ -317,19 +321,22 @@ class ProfileScreenController extends GetxController {
       Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_EMAIL, toastType: TOAST_TYPE.toastError);
       FocusScope.of(context).requestFocus(mFocusNodeEmail);
       return false;
-    } else if (!Global.checkNull(strEmgName)) {
-      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMG_NAME, toastType: TOAST_TYPE.toastError);
-      FocusScope.of(context).requestFocus(mFocusNodeEmgName);
-      return false;
-    } else if (!Global.checkNull(strEmgPhone)) {
-      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMG_NUMBER, toastType: TOAST_TYPE.toastError);
-      FocusScope.of(context).requestFocus(mFocusNodeEmgPhone);
-      return false;
-    } else if (!Global.checkNull(strEmgPhone)) {
-      Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER, toastType: TOAST_TYPE.toastError);
-      FocusScope.of(context).requestFocus(mFocusNodeEmgPhone);
-      return false;
     }
+    // else if (!Global.checkNull(strEmgName)) {
+    //   Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMG_NAME, toastType: TOAST_TYPE.toastError);
+    //   FocusScope.of(context).requestFocus(mFocusNodeEmgName);
+    //   return false;
+    // }
+    // else if (!Global.checkNull(strEmgPhone)) {
+    //   Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_EMG_NUMBER, toastType: TOAST_TYPE.toastError);
+    //   FocusScope.of(context).requestFocus(mFocusNodeEmgPhone);
+    //   return false;
+    // }
+    //  else if (!Global.checkNull(strEmgPhone)) {
+    //   Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_VALID_NUMBER, toastType: TOAST_TYPE.toastError);
+    //   FocusScope.of(context).requestFocus(mFocusNodeEmgPhone);
+    //   return false;
+    // }
     //else if (!Global.checkNull(strCarBrand)) {
     //   Global.showToastAlert(
     //       context: context,

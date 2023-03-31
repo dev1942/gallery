@@ -59,7 +59,8 @@ class ServiceScreenController extends GetxController {
     } else {
       log("key is not emty");
       log(alServices.length.toString());
-      alServicesfiltered = alServices.where((user) => user.title.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
+      alServicesfiltered =
+          alServices.where((user) => user.mServiceProviderModel.firstName.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
       if (alServicesfiltered.isEmpty) {
         mShowData = ShowData.showNoDataFound;
       } else {

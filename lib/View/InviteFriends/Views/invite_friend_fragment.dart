@@ -240,6 +240,7 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
                                   children: [
                                     //title
                                     Container(
+                                      margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -247,7 +248,7 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
                                           Container(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
-                                                value.inviteJoiners[index].joiner[0].firstName + ' ' + value.inviteJoiners[index].joiner[0].lastName,
+                                                '${value.inviteJoiners[index].joiner[0].firstName} ${value.inviteJoiners[index].joiner[0].lastName}',
                                                 style: AppStyle.textViewStyleNormalBodyText2(
                                                     context: context, color: AppColors.grayDashboardText, fontSizeDelta: 1, fontWeightDelta: 1),
                                               )),
@@ -260,7 +261,6 @@ class InviteFriendFragmentState extends State<InviteFriendFragment> {
                                               )),
                                         ],
                                       ),
-                                      margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_5),
                                     ),
                                     Container(
                                         alignment: Alignment.centerLeft,

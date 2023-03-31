@@ -210,7 +210,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
 
                       _videoSection(),
                       // //Voice Note
-                      _voiceNoteSection(),
+                      // _voiceNoteSection(),
                       //Leave Note (if any)
                       _anyNoteTextFiledSection(reScheduleController.controllerNote),
                       widget.isPending && widget.isRebooked
@@ -423,10 +423,12 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                 child: NetworkImageCustom(
-                    image:
-                    widget.mEstimatesModel.source!.image!.isNotEmpty?
-
-                    widget.mEstimatesModel.source!.image!.first:"https://i.tribune.com.pk/media/images/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0.jpg", fit: BoxFit.fill, height: AppDimens.dimens_120, width: AppDimens.dimens_120),
+                    image: widget.mEstimatesModel.source!.image!.isNotEmpty
+                        ? widget.mEstimatesModel.source!.image!.first
+                        : "https://i.tribune.com.pk/media/images/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0.jpg",
+                    fit: BoxFit.fill,
+                    height: AppDimens.dimens_120,
+                    width: AppDimens.dimens_120),
               ),
             ),
             Expanded(
@@ -597,13 +599,11 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   right: AppDimens.dimens_14,
                 ),
                 child: TimeRescheduleSelector(
-                  isPending: widget.isPending,
-                  selectedDate: value.selectedDate,
-                  time: widget.mEstimatesModel.bookingDetails!.time ?? "",
-                 // mTimeModel: value.mTimeModel,
-                   onSelection: (TimeModel mtimeModel_) =>
-                       value.onSelectTime(mtimeModel_)
-                ),
+                    isPending: widget.isPending,
+                    selectedDate: value.selectedDate,
+                    time: widget.mEstimatesModel.bookingDetails!.time ?? "",
+                    // mTimeModel: value.mTimeModel,
+                    onSelection: (TimeModel mtimeModel_) => value.onSelectTime(mtimeModel_)),
               ),
 
               ///-------------------------------------carList
