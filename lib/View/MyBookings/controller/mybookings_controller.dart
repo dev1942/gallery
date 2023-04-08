@@ -22,6 +22,7 @@ import '../../../global/url_collection.dart';
 import '../../Chat/Models/my_rooms_model.dart';
 import '../../../services/repository/chat_repo.dart';
 import '../Models/PromotionBookingModel.dart';
+import 'dart:developer' as yellowLog;
 
 class MyBookingsController extends GetxController {
   //..................variabls..............................
@@ -82,6 +83,7 @@ class MyBookingsController extends GetxController {
 
   //...............Get All Bookings...........................
   Future<BookingModel> getAllBookings() async {
+    yellowLog.log("Refreshing");
     debugPrint("geting all bookings");
     final prefManager = await SharedPreferences.getInstance();
     token = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
@@ -90,7 +92,7 @@ class MyBookingsController extends GetxController {
     final headers = {'Authorization': "Bearer $token", "Content-Type": "application/json"};
     final response = await http.get(Uri.parse(RequestBuilder.API_GET_ALL_BOOKINGS), headers: headers);
     var data = jsonDecode(response.body);
-    debugPrint(data.toString());
+    yellowLog.log(data.toString());
     if (response.statusCode == 200) {
       log.i("Get booking API success");
       // log.i(data);

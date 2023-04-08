@@ -16,6 +16,8 @@ import 'package:otobucks/widgets/custom_textfield_with_icon.dart';
 import 'package:otobucks/widgets/google_map_view.dart';
 import 'package:otobucks/widgets/service_provider_items.dart';
 
+import '../../../global/global.dart';
+
 class ServiceScreen extends StatefulWidget {
   final CategoryModel mSubCategoryModel;
   final CategoryModel mCategoryModel;
@@ -31,7 +33,13 @@ class ServiceScreenState extends State<ServiceScreen> {
 
   @override
   void initState() {
-    controller.getServiceProvider(widget.mCategoryModel.id, widget.mSubCategoryModel.id);
+    log("above services");
+
+    controller.getServiceProvider(
+      widget.mCategoryModel.id,
+      widget.mSubCategoryModel.id,
+      context,
+    );
     Get.find<ServiceScreenController>().controllerSearch.addListener(() {
       controller.runFilter(Get.find<ServiceScreenController>().controllerSearch.text.toString());
     });

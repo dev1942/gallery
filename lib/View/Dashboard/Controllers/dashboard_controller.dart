@@ -59,6 +59,7 @@ class DashboardController extends GetxController {
 
     categories.fold((failure) {}, (mResult) {
       alPromotions = mResult.responseData as List<PromotionsModel>;
+      inspect(alPromotions);
       update();
     });
     getCategory();

@@ -190,6 +190,8 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                               note: controller.controllerNote.text,
                                               previousAmount: controller.mServiceModel.beforePrice,
                                               discount: controller.mServiceModel.discount,
+                                              vat: controller.mServiceModel.vat,
+                                              serviceTax: controller.mServiceModel.serviceTax,
                                             )));
                               } else {
                                 if (selectedValue != null && selectedValue!.isNotEmpty) {
@@ -264,7 +266,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                               }
                             }
                           },
-                          strTitle: widget.screenType == 'promotion' ? 'Process To Payment' : Constants.TXT_REQUEST_ESTIMATION.tr),
+                          strTitle: widget.screenType == 'promotion' ? 'Proceed to pay'.tr : Constants.TXT_REQUEST_ESTIMATION.tr),
                     ),
                   ],
                 ),

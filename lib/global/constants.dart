@@ -124,7 +124,7 @@ class Constants {
       TAG_ABOUT_US = 'About Us',
       TAG_ENTER_YOUR_CAR_DETAILS = 'Enter your car details',
       //it was Estimations then text is replaced by My Bookings in drawerremaininh navigationis with same name of estimation just text changed
-      TAG_ESTIMATION = 'My Booking'.tr,
+      TAG_ESTIMATION = 'My Booking',
       TAG_LOG_OUT = 'Log Out',
       TAG_DELETE_ACCOUNT = 'Delete Account';
 
@@ -309,7 +309,7 @@ class Constants {
       TXT_TAX_INVOICE = "Tax Invoice",
       TXT_DOWNLOAD_INVOICE = "Download Invoice",
       TXT_CUSTOMER_NAME = "Customer name:  ",
-      TXT_DISCRIPTION = "Description".tr,
+      TXT_DISCRIPTION = "Description",
       TXT_INVOICE_ID = "Invoice ID:  ",
       TXT_INVOICE_DATE = "Invoice Date:  ",
       TXT_TITLE = "Title".tr,
