@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:otobucks/View/CatBuyCar/Views/filter_car_page.dart';
 import 'package:otobucks/View/CatBuyCar/widgets/car_container_widget.dart';
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/global/text_styles.dart';
+
 class BuyCarScreen extends StatefulWidget {
   const BuyCarScreen({
     Key? key,
@@ -55,7 +57,9 @@ class _BuyCarScreenState extends State<BuyCarScreen> {
           ),
           const Spacer(),
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FilterAcarScreen()));
+              },
               child: const Text(
                 'Filters',
               ))

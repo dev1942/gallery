@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/View/CatBuyCar/Views/buy_car_page.dart';
 import 'package:otobucks/View/Dashboard/Controllers/dashboard_controller.dart';
 import 'package:otobucks/View/Dashboard/Views/dashboard_item_list.dart';
 import 'package:otobucks/View/Promotion_discount/View/banner_page_view.dart';
@@ -37,6 +38,12 @@ class DashboardFragmentState extends State<DashboardFragment> {
         onRefresh: controller.refreshCategories,
         child: ListView(
           children: [
+            MaterialButton(
+                child: Text("data"),
+                onPressed: () {
+                  debugPrint("buy car screen");
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyCarScreen()));
+                }),
             Stack(
               children: [
                 Container(

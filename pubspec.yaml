@@ -102,6 +102,7 @@ dependencies:
   image_gallery_saver: ^1.7.1
   # flutter_background_service:
   webview_flutter: ^4.0.2
+  syncfusion_flutter_datepicker: ^20.4.52
 
 
 
