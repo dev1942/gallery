@@ -12,8 +12,12 @@ import 'package:otobucks/global/text_styles.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/round_dot.dart';
 import 'package:otobucks/widgets/small_button.dart';
+
+import '../models/carsListModel.dart';
+
 class CarBuyDetailScreen extends StatefulWidget {
-  const CarBuyDetailScreen({Key? key}) : super(key: key);
+  final CarsForSell carsForSell;
+  const CarBuyDetailScreen({Key? key, required this.carsForSell}) : super(key: key);
 
   @override
   CarBuyDetailScreenState createState() => CarBuyDetailScreenState();
@@ -21,13 +25,7 @@ class CarBuyDetailScreen extends StatefulWidget {
 
 class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
   List<String> cars = ['bmw1', 'bmw2'];
-  List<String> carSpecification = [
-    'Manual',
-    'Automatic',
-    '4 seater',
-    'Sedan',
-    '1000cc'
-  ];
+  List<String> carSpecification = ['Manual', 'Automatic', '4 seater', 'Sedan', '1000cc'];
 
   int selectedPage = 0;
   late PageController pageController;
@@ -50,24 +48,16 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
             backgroundColor: AppColors.getMainBgColor(),
             body: ListView(
               children: [
+                // ListView(
+                //   physics: const NeverScrollableScrollPhysics(),
+                //   shrinkWrap: true,
+                //   children: [_topProfileContent()],
+                // ),
                 ListView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [_topProfileContent()],
-                ),
-                ListView(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    _pageView(),
-                    _pageViewDots(),
-                    _carDetails(),
-                    _specifications(),
-                    _overview(),
-                    _enquiryButton()
-                  ],
+                  children: [_pageView(), _pageViewDots(), _carDetails(), _specifications(), _overview(), _enquiryButton()],
                 )
               ],
             )));
@@ -76,20 +66,17 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
   _selectedRoundWidget() => Container(
         height: 13,
         width: 13,
-        decoration: ContainerProperties.simpleDecoration(radius: 100.0)
-            .copyWith(color: AppColors.colorBlueStart),
+        decoration: ContainerProperties.simpleDecoration(radius: 100.0).copyWith(color: AppColors.colorBlueStart),
         child: Container(
           margin: const EdgeInsets.all(2),
           height: 13,
           width: 13,
-          decoration: ContainerProperties.simpleDecoration(radius: 100.0)
-              .copyWith(color: AppColors.colorWhite),
+          decoration: ContainerProperties.simpleDecoration(radius: 100.0).copyWith(color: AppColors.colorWhite),
           child: Container(
             margin: const EdgeInsets.all(1),
             height: 13,
             width: 13,
-            decoration: ContainerProperties.simpleDecoration(radius: 100.0)
-                .copyWith(color: AppColors.colorBlueStart),
+            decoration: ContainerProperties.simpleDecoration(radius: 100.0).copyWith(color: AppColors.colorBlueStart),
           ),
         ),
       );
@@ -103,10 +90,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
       );
 
   _topProfileContent() => Container(
-        padding: const EdgeInsets.only(
-            left: AppDimens.dimens_50,
-            top: AppDimens.dimens_25,
-            bottom: AppDimens.dimens_32),
+        padding: const EdgeInsets.only(left: AppDimens.dimens_50, top: AppDimens.dimens_25, bottom: AppDimens.dimens_32),
         alignment: Alignment.center,
         color: AppColors.colorBlueStart,
         child: Row(
@@ -115,10 +99,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppDimens.dimens_50),
                 child: NetworkImageCustom(
-                    image: Get.find<HomeScreenController>().image,
-                    fit: BoxFit.fill,
-                    height: AppDimens.dimens_60,
-                    width: AppDimens.dimens_60),
+                    image: Get.find<HomeScreenController>().image, fit: BoxFit.fill, height: AppDimens.dimens_60, width: AppDimens.dimens_60),
               ),
               margin: const EdgeInsets.only(right: AppDimens.dimens_10),
             ),
@@ -129,25 +110,18 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
               children: [
                 Container(
                     alignment: Alignment.centerLeft,
-                    margin: const EdgeInsets.only(
-                        top: AppDimens.dimens_5, bottom: AppDimens.dimens_2),
+                    margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_2),
                     child: Text(
                       Get.find<HomeScreenController>().fullName,
-                      style: AppStyle.textViewStyleNormalBodyText2(
-                          context: context,
-                          color: AppColors.colorWhite,
-                          fontSizeDelta: 0,
-                          fontWeightDelta: 0),
+                      style:
+                          AppStyle.textViewStyleNormalBodyText2(context: context, color: AppColors.colorWhite, fontSizeDelta: 0, fontWeightDelta: 0),
                     )),
                 Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Car Owner",
                       style: AppStyle.textViewStyleSmall(
-                          context: context,
-                          color: AppColors.colorWhite.withOpacity(0.7),
-                          fontSizeDelta: -2,
-                          fontWeightDelta: 0),
+                          context: context, color: AppColors.colorWhite.withOpacity(0.7), fontSizeDelta: -2, fontWeightDelta: 0),
                     )),
               ],
             )),
@@ -164,13 +138,17 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
               });
             },
             controller: pageController,
-            itemCount: cars.length,
+            itemCount: widget.carsForSell.image!.isEmpty ? 0 : widget.carsForSell.image!.length,
             itemBuilder: (context, index) {
               return SizedBox(
                 height: 200,
                 width: double.infinity,
-                child: Image.asset(
-                  'assets/images/${cars[index]}.png',
+                child: Image.network(
+                  widget.carsForSell.image![index],
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Center(
+                    child: Text("Invalid Image"),
+                  ),
                 ),
               );
             }),
@@ -179,14 +157,10 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
   _pageViewDots() => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
-            cars.length,
+            widget.carsForSell.image!.isEmpty ? 0 : widget.carsForSell.image!.length,
             (index) => Container(
                   margin: const EdgeInsets.only(right: 5),
-                  child: index == selectedPage
-                      ? _selectedRoundWidget()
-                      : RoundDot(
-                          size: 8,
-                          mColor: AppColors.colorBlueStart.withOpacity(0.3)),
+                  child: index == selectedPage ? _selectedRoundWidget() : RoundDot(size: 8, mColor: AppColors.colorBlueStart.withOpacity(0.3)),
                 )),
       );
 
@@ -198,17 +172,16 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
               children: [
                 Expanded(
                   child: Text(
-                    'BMW 8 series',
+                    widget.carsForSell.details?.model ?? "",
                     style: regularText(14).copyWith(color: HexColor('#4E5F76')),
                   ),
                 ),
                 Text(
-                  '130',
-                  style:
-                      regularText(14).copyWith(color: AppColors.colorBlueStart),
+                  'Seats: ',
+                  style: regularText(14).copyWith(color: AppColors.colorBlueStart),
                 ),
                 Text(
-                  '/hour',
+                  widget.carsForSell.details?.numberOfSeats ?? "",
                   style: regularText(14).copyWith(color: AppColors.lightGrey),
                 ),
               ],
@@ -226,9 +199,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
                 ),
                 Text(
                   '(58 Reviews)',
-                  style: regularText(12).copyWith(
-                      color: AppColors.lightGrey,
-                      decoration: TextDecoration.underline),
+                  style: regularText(12).copyWith(color: AppColors.lightGrey, decoration: TextDecoration.underline),
                 ),
                 Expanded(
                   child: Container(
@@ -259,25 +230,108 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
           const SizedBox(
             height: 8,
           ),
-          Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: List.generate(carSpecification.length, (index) {
-              return Container(
-                margin: const EdgeInsets.only(right: 7),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.gas_meter_outlined),
-                    const SizedBox(
-                      width: 6,
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 7),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.gas_meter_outlined),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        Text(widget.carsForSell.details!.transmissionType ?? "")
+                      ],
                     ),
-                    Text(carSpecification[index])
-                  ],
-                ),
-              );
-            }),
-          )
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(right: 7),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.speed),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        Text(widget.carsForSell.details!.topSpeed ?? "")
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(right: 7),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.backpack_outlined),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        Text(widget.carsForSell.details!.airBags == true ? "Yes" : "No")
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 7),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.engineering_outlined),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        Text(widget.carsForSell.details!.engine ?? "")
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(right: 7),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.local_gas_station_outlined),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        Text(widget.carsForSell.details!.fuelType ?? "")
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(right: 7),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.color_lens),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        Text(widget.carsForSell.details!.color ?? "")
+                      ],
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+          // Wrap(
+          //   spacing: 10,
+          //   runSpacing: 10,
+          //   children: List.generate(carSpecification.length, (index) {
+          //     return ;
+          //   }),
+          // )
         ],
       );
   _overview() => Column(
@@ -293,8 +347,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
           const SizedBox(
             height: 8,
           ),
-          const ExpandableText(
-              "The 2021 Range Rover Sport comes standard with a 355-horsepower turbocharged six-cylinder engine, an eight-speed automatic  Read more")
+          ExpandableText(widget.carsForSell.description ?? "")
         ],
       );
   _enquiryButton() => Container(

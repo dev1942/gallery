@@ -10,31 +10,22 @@ class NetworkImageCustom extends StatelessWidget {
   final double width;
   final BoxFit? fit;
 
-  const NetworkImageCustom(
-      {Key? key,
-      required this.height,
-      required this.width,
-      required this.image,
-      this.fit})
-      : super(key: key);
+  const NetworkImageCustom({Key? key, required this.height, required this.width, required this.image, this.fit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(AppDimens.dimens_5,),
+      borderRadius: BorderRadius.circular(
+        AppDimens.dimens_5,
+      ),
       child: CachedNetworkImage(
           // placeholder: ((context, url) => Image.asset(AppImages.ic_place_holder)),
-          progressIndicatorBuilder: (context, url, downloadProgress) =>
-              AppViews.getProgressImage(height, width),
+          progressIndicatorBuilder: (context, url, downloadProgress) => AppViews.getProgressImage(height, width),
           height: height,
           width: width,
-          imageUrl: image == ''
-              ? 'https://d23jwszswncmo3.cloudfront.net/otobuckslogo.jpg'
-              : image,
-          errorWidget: ((context, url, error) =>
-              AppViews.getErrorImage(height, width)),
-           fit: fit != null ? fit! : BoxFit.cover
-      ),
+          imageUrl: image.isEmpty ? 'https://d23jwszswncmo3.cloudfront.net/otobuckslogo.jpg' : image,
+          errorWidget: ((context, url, error) => AppViews.getErrorImage(height, width)),
+          fit: fit != null ? fit! : BoxFit.cover),
     );
   }
 }

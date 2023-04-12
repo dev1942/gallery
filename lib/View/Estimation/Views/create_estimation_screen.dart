@@ -196,7 +196,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                               } else {
                                 if (selectedValue != null && selectedValue!.isNotEmpty) {
                                   int index = carNamesList!.indexOf(selectedValue!);
-                                  controller.createEstimationSingle(context, carNameId![index]).whenComplete(() {
+                                  controller.createEstimationSingle(context, carNameId![index]).then((value) {
                                     if (allservicesWithSameName.length > 1) {
                                       log("${allservicesWithSameName.length}");
                                       Get.defaultDialog(
@@ -244,8 +244,10 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                           textCancel: "No".tr,
                                           confirmTextColor: Colors.white,
                                           onConfirm: () {
-                                            controller.createEstimationMulti(context, carNameId![index]).whenComplete(() {
-                                              Get.off(() => ThankYouFragment(isFromPromotion: widget.screenType == "promotion" ? true : false));
+                                            controller.createEstimationMulti(context, carNameId![index]).then((value) {
+                                              if (value) {
+                                                Get.off(() => ThankYouFragment(isFromPromotion: widget.screenType == "promotion" ? true : false));
+                                              }
                                             });
                                           },
                                           onCancel: () {
@@ -253,7 +255,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                             Get.offAll(() => ThankYouFragment(isFromPromotion: widget.screenType == "promotion" ? true : false));
                                           });
                                       //end dialog
-                                    } else {
+                                    } else if (value) {
                                       Get.off(() => ThankYouFragment(isFromPromotion: widget.screenType == "promotion" ? true : false));
                                     }
                                   });

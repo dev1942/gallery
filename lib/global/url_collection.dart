@@ -51,4 +51,8 @@ class RequestBuilder {
   static final String API_GET_ALL_BOOKINGS = "${API_BASE_URL}bookings/bookService/";
   //Dispute
   static final String API_OPEN_DISPUTE = "disputes/";
+  // Cars List for buying
+  static final String API_CARS_BUY_LIST = "products/cars";
+  // Cars inquiry
+  static final String API_CARS_INQUIRY = "inquiry";
 }

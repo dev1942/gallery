@@ -5,23 +5,27 @@ import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/container_properties.dart';
 import 'package:otobucks/global/text_styles.dart';
 
+import '../../../widgets/fade_in_image.dart';
+import '../models/carsListModel.dart';
+
 class CarItem extends StatelessWidget {
-  const CarItem({Key? key}) : super(key: key);
+  final CarsForSell carsForSell;
+  const CarItem({Key? key, required this.carsForSell}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(() => const CarBuyDetailScreen());
+        Get.to(() => CarBuyDetailScreen(
+              carsForSell: carsForSell,
+            ));
       },
       child: Material(
         child: Container(
           width: double.infinity,
           padding: const EdgeInsets.only(bottom: 15),
           margin: const EdgeInsets.only(bottom: 20),
-          decoration: ContainerProperties.shadowDecoration(
-                  radius: 5.0, blurRadius: 10.0)
-              .copyWith(color: AppColors.colorWhite),
+          decoration: ContainerProperties.shadowDecoration(radius: 5.0, blurRadius: 10.0).copyWith(color: AppColors.colorWhite),
           child: Column(
             children: [
               SizedBox(
@@ -29,23 +33,24 @@ class CarItem extends StatelessWidget {
                 width: double.infinity,
                 child: Stack(
                   children: [
-                    SizedBox(
+                    Padding(
+                      padding: EdgeInsets.only(top: 45),
+                      child: NetworkImageCustom(
+                        image: carsForSell.image!.isEmpty ? "" : carsForSell.image!.first,
+                        height: 200,
                         width: double.infinity,
-                        child: Image.asset(
-                          'assets/images/bmw1.png',
-                          fit: BoxFit.contain,
-                        )),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                     Positioned(
                       top: 12,
                       child: Container(
                         decoration: BoxDecoration(
                             color: AppColors.selectButton,
-                            borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(5),
-                                bottomRight: Radius.circular(5))),
+                            borderRadius: const BorderRadius.only(topRight: Radius.circular(5), bottomRight: Radius.circular(5))),
                         padding: const EdgeInsets.all(6),
                         child: Text(
-                          'near 2km',
+                          carsForSell.details?.newOrUsed!.toUpperCase() ?? "",
                           style: regularText(12),
                         ),
                       ),
@@ -61,46 +66,35 @@ class CarItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            'BMW 8 series',
-                            style: regularText(14)
-                                .copyWith(color: HexColor('#4E5F76')),
+                            carsForSell.title ?? "",
+                            style: regularText(14).copyWith(color: HexColor('#4E5F76')),
                           ),
                         ),
                         Text(
-                          '130',
-                          style: regularText(14)
-                              .copyWith(color: AppColors.colorBlueStart),
+                          carsForSell.details?.topSpeed ?? "",
+                          style: regularText(14).copyWith(color: AppColors.colorBlueStart),
                         ),
                         Text(
-                          '/hour',
-                          style: regularText(14)
-                              .copyWith(color: AppColors.lightGrey),
+                          "/hour",
+                          style: regularText(14).copyWith(color: AppColors.lightGrey),
                         ),
                       ],
                     ),
                     Row(
                       children: [
-                        Icon(
-                          Icons.star,
-                          size: 14,
-                          color: AppColors.colorOrange,
-                        ),
+                        // Text(
+                        //   'Color ',
+                        //   style: regularText(12).copyWith(color: AppColors.lightGrey),
+                        // ),
                         Text(
-                          ' 4.0 ',
-                          style: regularText(12)
-                              .copyWith(color: AppColors.lightGrey),
-                        ),
-                        Text(
-                          '(58 Reviews)',
-                          style: regularText(12).copyWith(
-                              color: AppColors.lightGrey,
-                              decoration: TextDecoration.underline),
+                          carsForSell.details?.color!.toUpperCase() ?? "",
+                          style: regularText(12).copyWith(color: AppColors.lightGrey, decoration: TextDecoration.underline),
                         ),
                         Expanded(
                           child: Container(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              'Lahore, Pakistan',
+                              carsForSell.details?.model ?? "",
                               style: regularText(12).copyWith(
                                 color: AppColors.lightGrey,
                               ),

@@ -189,14 +189,14 @@ class CreateEstimationController extends GetxController {
   //               )));
   // }
 //----------------------------Create Estimation--------------------
-  Future<void> createEstimationSingle(BuildContext context, String? carId) async {
+  Future<bool> createEstimationSingle(BuildContext context, String? carId) async {
     log("create estimation--------------------------------ibrahim--------");
     log(pickedImage.toString());
     if (Global.checkNull(pickedVideo)) {
       double fileSize = await Global.getFileSize(pickedVideo);
       if (fileSize > 10) {
         Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_FILE_SIZE, toastType: TOAST_TYPE.toastError);
-        return;
+        return false;
       }
     }
     isShowLoader = true;
@@ -236,18 +236,20 @@ class CreateEstimationController extends GetxController {
     List<String> multiProviderSourceList = [mServiceModel.id];
     // requestParamsImage.addEntries(gasGiants.entries);
     //........Rrepo of create estimation...................
-    mCreateEstimation(
-        singleProviderSourceList, addressNote.text, mTimeModel != null ? mTimeModel!.time_24hr.toString() : "", selectedDate, carId, strNote);
+    var res = await mCreateEstimation(singleProviderSourceList, addressNote.text, mTimeModel != null ? mTimeModel!.time_24hr.toString() : "",
+        selectedDate, carId, strNote, pickedVideo, pickedImage, voiceNoteFile);
+
+    return res;
   }
 
-  Future<void> createEstimationMulti(BuildContext context, String? carId) async {
+  Future<bool> createEstimationMulti(BuildContext context, String? carId) async {
     log("create estimation multi--------------------------------ibrahim--------");
     log(pickedImage.toString());
     if (Global.checkNull(pickedVideo)) {
       double fileSize = await Global.getFileSize(pickedVideo);
       if (fileSize > 10) {
         Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: AppAlert.ALERT_FILE_SIZE, toastType: TOAST_TYPE.toastError);
-        return;
+        return false;
       }
     }
     isShowLoader = true;
@@ -268,16 +270,6 @@ class CreateEstimationController extends GetxController {
       requestParams[PARAMS.PARAM_LONGITUDE] = Global.mLatLng.longitude.toStringAsFixed(4);
     }
 
-    if (Global.checkNull(pickedImage)) {
-      requestParamsImage[PARAMS.PARAM_IMAGE] = pickedImage;
-    }
-
-    if (Global.checkNull(pickedVideo)) {
-      requestParamsImage[PARAMS.PARAM_VIDEO] = pickedVideo;
-    }
-    if (Global.checkNull(voiceNoteFile)) {
-      requestParamsImage[PARAMS.PARAM_VOICE_NOTE] = voiceNoteFile;
-    }
     List<String> multiProviderSourceList = List.filled(5, "");
     if (Get.put(ServiceScreenController()).alServicesfiltered.isNotEmpty) {
       multiProviderSourceList = [];
@@ -296,8 +288,10 @@ class CreateEstimationController extends GetxController {
 
     // requestParamsImage.addEntries(gasGiants.entries);
     //........Rrepo of create estimation...................
-    await mCreateEstimation(
-        multiProviderSourceList, addressNote.text, mTimeModel != null ? mTimeModel!.time_24hr.toString() : "", selectedDate, carId, strNote);
+    var res = await mCreateEstimation(multiProviderSourceList, addressNote.text, mTimeModel != null ? mTimeModel!.time_24hr.toString() : "",
+        selectedDate, carId, strNote, pickedVideo, pickedImage, voiceNoteFile);
+
+    return res;
   }
 
 //.............goto profile
@@ -317,41 +311,72 @@ class CreateEstimationController extends GetxController {
     getLocationAdress();
   }
 
+  jsonToFormData(http.MultipartRequest request, Map<String, dynamic> data) {
+    for (var key in data.keys) {
+      request.fields[key] = data[key].toString();
+    }
+    return request;
+  }
+
   //................add shop and update shop of seller....................................
-  Future<void> mCreateEstimation(
+  Future<bool> mCreateEstimation(
     List<String> sourceIDs,
     String? address,
     String? time,
     String? date,
     String? car,
     String? customerNote,
+    String? pickedVideo,
+    String? pickedPhoto,
+    String? pickedVoiceNote,
   ) async {
     final prefManager = await SharedPreferences.getInstance();
     String? userToken = prefManager.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
     log(sourceIDs.toString());
 
     try {
-      final body = json.encode({
-        "sourceIDs": sourceIDs,
+      final body = {
         "address": address,
         "time": time,
         "date": date,
         "car": car,
         "customerNote": customerNote,
-      });
-      final headers = {'Authorization': 'Bearer $userToken', 'Content-Type': 'application/json'};
+      };
+      for (var i = 0; i < sourceIDs.length; i++) {
+        body['sourceIDs[$i]'] = sourceIDs[i];
+      }
+      log(body.toString());
+      var uri = Uri.parse("${RequestBuilder.API_BASE_URL}${RequestBuilder.API_CREATE_ESTIMATES}");
+      var request = http.MultipartRequest('POST', uri);
+      // log(sourceIDs.toString());
+      // log(car!);
+      // log(userToken!);
+      request = jsonToFormData(request, body);
+      request.headers['Content-Type'] = "'application/json'";
+      request.headers['Authorization'] = "Bearer $userToken";
+      if (Global.checkNull(pickedPhoto)) {
+        request.files.add(await http.MultipartFile.fromPath(PARAMS.PARAM_IMAGE, pickedPhoto!));
+      }
+
+      if (Global.checkNull(pickedVideo)) {
+        request.files.add(await http.MultipartFile.fromPath(PARAMS.PARAM_VIDEO, pickedVideo!));
+      }
+      if (Global.checkNull(pickedVoiceNote)) {
+        request.files.add(await http.MultipartFile.fromPath(PARAMS.PARAM_VOICE_NOTE, pickedVoiceNote!));
+      }
+
       //-----Uri for update shop--------//
       var uriUpdateShop = Uri.parse("${RequestBuilder.API_BASE_URL}${RequestBuilder.API_CREATE_ESTIMATES}");
+      var res = await request.send();
 
-      http.Response response = await http.post(uriUpdateShop, headers: headers, body: body);
+      http.Response response = await http.Response.fromStream(res);
       inspect(response.body);
-      Logger().i("BodyI sent =======>${body}");
+
       final message = json.decode(response.body.toString());
       //..............Response Ok Part...................................................
       if (response.statusCode == 200) {
         isShowLoader = false;
-        Logger().i(response.statusCode);
-        Logger().i("Server Response to me======>>${message["message"]}");
+        return true;
         // //dialog for multiple
         // Get.defaultDialog(
         //     barrierDismissible: false,
@@ -403,6 +428,7 @@ class CreateEstimationController extends GetxController {
 
         isShowLoader = false;
         update();
+        return false;
       }
     } catch (e) {
       Global.showToastAlert(
@@ -410,6 +436,7 @@ class CreateEstimationController extends GetxController {
       log(e.toString());
 
       Logger().e("Exception is=======>>${e.toString()}");
+      return false;
     }
   }
 }

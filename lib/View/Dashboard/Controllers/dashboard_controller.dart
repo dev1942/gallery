@@ -71,6 +71,8 @@ class DashboardController extends GetxController {
   }
 
   onTapCategory(CategoryModel mCategoryModel_) {
+    
+    log(mCategoryModel_.title);
     Get.find<HomeScreenController>().callback(PageType.home2);
     for (var i = 0; i < alCategory.length; i++) {
       CategoryModel mmCategoryModel = alCategory[i];

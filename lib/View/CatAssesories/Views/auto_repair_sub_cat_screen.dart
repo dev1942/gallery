@@ -41,68 +41,80 @@ class AutoRepairSubCatScreenState extends State<AutoRepairSubCatScreen> {
     final double itemWidth = size.width / 3;
 
     Widget mShowWidget(value) => LayoutBuilder(builder: (context, size) {
-          return GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: ((itemWidth / itemHeight) * 0.95),
-            crossAxisSpacing: size.maxWidth / 50,
-            crossAxisCount: size.maxWidth > 600
-                ? 5
-                : size.maxWidth > 400
-                    ? 4
-                    : 3,
-            children: List<Widget>.generate(value.alSubCategoryFiltered.length, (index) {
-              CategoryModel mSubCategoryModel = value.alSubCategoryFiltered[index];
-
-              return InkWell(
-                child: Card(
-                  child: Container(
-                    // margin: const EdgeInsets.only(
-                    //   left: AppDimens.dimens_20,
-                    //   right: AppDimens.dimens_20,
-                    //   bottom: AppDimens.dimens_5,
-                    //   top: AppDimens.dimens_5,
-                    // ),
-                    margin: const EdgeInsets.symmetric(horizontal: AppDimens.dimens_5, vertical: AppDimens.dimens_5),
-                    child: Column(
-                      children: [
-                        Container(
-                          // width: 20,
-                          decoration: BoxDecoration(
-                              // color: Colors.grey.withOpacity(.4),
-                              borderRadius: BorderRadius.circular(AppDimens.dimens_10)),
-                          // height: 70,
-                          child: AspectRatio(
-                            aspectRatio: 1.9 - (itemWidth / itemHeight),
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(AppDimens.dimens_10), topRight: Radius.circular(AppDimens.dimens_10)),
-                              child: NetworkImageCustom(image: mSubCategoryModel.image, height: 0, width: 0),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 3,
-                        ),
-                        Text(
-                          mSubCategoryModel.title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: true,
-                          textAlign: TextAlign.center,
-                          style: AppStyle.textViewStyleXSmall(context: context, color: AppColors.colorTextBlue, fontWeightDelta: 2)
-                              .copyWith(fontSize: 12),
-                        )
-                      ],
-                    ),
-                  ),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  "Sub Categories".tr,
+                  style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorYellowShade, fontWeightDelta: 1, fontSizeDelta: 2),
                 ),
-                onTap: () {
-                  inspect(mSubCategoryModel);
-                  Get.find<DashboardController>().onTapSubCategory(mSubCategoryModel, context);
-                },
-              );
-            }),
+              ),
+              GridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                childAspectRatio: ((itemWidth / itemHeight) * 0.95),
+                crossAxisSpacing: size.maxWidth / 50,
+                crossAxisCount: size.maxWidth > 600
+                    ? 5
+                    : size.maxWidth > 400
+                        ? 4
+                        : 3,
+                children: List<Widget>.generate(value.alSubCategoryFiltered.length, (index) {
+                  CategoryModel mSubCategoryModel = value.alSubCategoryFiltered[index];
+
+                  return InkWell(
+                    child: Card(
+                      child: Container(
+                        // margin: const EdgeInsets.only(
+                        //   left: AppDimens.dimens_20,
+                        //   right: AppDimens.dimens_20,
+                        //   bottom: AppDimens.dimens_5,
+                        //   top: AppDimens.dimens_5,
+                        // ),
+                        margin: const EdgeInsets.symmetric(horizontal: AppDimens.dimens_5, vertical: AppDimens.dimens_5),
+                        child: Column(
+                          children: [
+                            Container(
+                              // width: 20,
+                              decoration: BoxDecoration(
+                                  // color: Colors.grey.withOpacity(.4),
+                                  borderRadius: BorderRadius.circular(AppDimens.dimens_10)),
+                              // height: 70,
+                              child: AspectRatio(
+                                aspectRatio: 1.9 - (itemWidth / itemHeight),
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(AppDimens.dimens_10), topRight: Radius.circular(AppDimens.dimens_10)),
+                                  child: NetworkImageCustom(image: mSubCategoryModel.image, height: 0, width: 0),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 3,
+                            ),
+                            Text(
+                              mSubCategoryModel.title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: true,
+                              textAlign: TextAlign.center,
+                              style: AppStyle.textViewStyleXSmall(context: context, color: AppColors.colorTextBlue, fontWeightDelta: 2)
+                                  .copyWith(fontSize: 12),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      inspect(mSubCategoryModel);
+                      Get.find<DashboardController>().onTapSubCategory(mSubCategoryModel, context);
+                    },
+                  );
+                }),
+              ),
+            ],
           );
         });
     return GetBuilder<ServicesSubCatScreenController>(builder: (value) => AppViews.getSetDataGridView(context, value.mShowData, mShowWidget(value)));

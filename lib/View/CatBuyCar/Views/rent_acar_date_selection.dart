@@ -1,5 +1,3 @@
-// ignore_for_file: sort_child_properties_last
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/widgets/small_button.dart';
@@ -274,6 +272,7 @@ class RentCarDateSelectionFragmentState extends State<RentCarDateSelectionFragme
             left: AppDimens.dimens_14,
             right: AppDimens.dimens_14,
           ),
+          decoration: AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
           child: TextField(
             onChanged: (String? strvalue) {
               // log("-------------------");
@@ -310,7 +309,6 @@ class RentCarDateSelectionFragmentState extends State<RentCarDateSelectionFragme
                   AppStyle.textViewStyleNormalBodyText2(color: AppColors.colorTextFieldHint, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
             ),
           ),
-          decoration: AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
         )
       ],
     );

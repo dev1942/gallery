@@ -38,12 +38,6 @@ class DashboardFragmentState extends State<DashboardFragment> {
         onRefresh: controller.refreshCategories,
         child: ListView(
           children: [
-            MaterialButton(
-                child: Text("data"),
-                onPressed: () {
-                  debugPrint("buy car screen");
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyCarScreen()));
-                }),
             Stack(
               children: [
                 Container(
