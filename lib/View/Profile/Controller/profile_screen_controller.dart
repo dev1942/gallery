@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:developer';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:otobucks/services/repository/my_profile_repo.dart';
 
@@ -34,6 +35,22 @@ class ProfileScreenController extends GetxController {
   TextEditingController controllerCode = TextEditingController();
   TextEditingController controllerCity = TextEditingController();
   TextEditingController controllerNumber = TextEditingController();
+  TextEditingController controllerRegistrationDate = TextEditingController();
+  DateTime selectedDateTIme = DateTime.now();
+
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? picked =
+        await showDatePicker(context: context, initialDate: selectedDateTIme, firstDate: DateTime(2015, 8), lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      selectedDateTIme = picked;
+      //----
+      final DateFormat formatter = DateFormat('yyyy-MM-dd');
+      final String formatted = formatter.format(selectedDateTIme);
+      controllerRegistrationDate.text = formatted;
+
+      update();
+    }
+  }
 
   FocusNode mFocusNodeAddress = FocusNode();
   FocusNode mFocusNodePhone = FocusNode();
@@ -407,7 +424,7 @@ class ProfileScreenController extends GetxController {
   }
 
 //---------------------------add new car---------
-  addNewCar(String brand, String color, String year, String km, String city, String code, String number) async {
+  addNewCar(String brand, String color, String year, String km, String city, String code, String number, String registrationDate) async {
     mShowData = ShowData.showLoading;
 
     update(); // isShowLoader = true;
@@ -420,6 +437,7 @@ class ProfileScreenController extends GetxController {
     requestParams['carCity'] = city;
     requestParams['carCode'] = code;
     requestParams['carNumber'] = number;
+    requestParams['registrationDate'] = registrationDate;
 
     var categories = await MyProfileRepository().addCar(requestParams);
     categories.fold((failure) {

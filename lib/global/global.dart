@@ -598,7 +598,7 @@ class Global {
   }
 
   static showDeleteAccountDialog(BuildContext mContext) {
-    AppViews.showCustomAlert(
+    AppViews.showCustomAlert( 
         context: mContext,
         strTitle: Constants.STRING_DELETE_Account,
         strMessage: Constants.STRING_DELETE_Account_msg,

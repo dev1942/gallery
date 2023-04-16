@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/CatBuyCar/Views/inquiry_screen.dart';
@@ -10,9 +11,8 @@ import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/global/container_properties.dart';
 import 'package:otobucks/global/text_styles.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
-import 'package:otobucks/widgets/round_dot.dart';
 import 'package:otobucks/widgets/small_button.dart';
-
+import 'dart:developer';
 import '../models/carsListModel.dart';
 
 class CarBuyDetailScreen extends StatefulWidget {
@@ -33,9 +33,17 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
   @override
   void initState() {
     pageController = PageController();
+    String dummyImage = "https://www.beelights.gr/assets/images/empty-image.png";
+    if (!widget.carsForSell.image!.contains(dummyImage)) {
+      widget.carsForSell.image!.add(dummyImage);
+    }
+
+    mainImage = widget.carsForSell.image!.first;
 
     super.initState();
   }
+
+  String mainImage = "";
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +92,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
   _appBar() => AppViews.initAppBar(
         mContext: context,
         centerTitle: false,
-        strTitle: 'Car Detail Page',
+        strTitle: 'Car Detail Page'.tr,
         isShowNotification: true,
         isShowSOS: true,
       );
@@ -129,38 +137,55 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
         ),
       );
 
-  _pageView() => SizedBox(
-        height: 200,
-        child: PageView.builder(
-            onPageChanged: (index) {
-              setState(() {
-                selectedPage = index;
-              });
-            },
-            controller: pageController,
-            itemCount: widget.carsForSell.image!.isEmpty ? 0 : widget.carsForSell.image!.length,
-            itemBuilder: (context, index) {
-              return SizedBox(
-                height: 200,
-                width: double.infinity,
-                child: Image.network(
-                  widget.carsForSell.image![index],
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => Center(
-                    child: Text("Invalid Image"),
+  _pageView() => GestureDetector(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return ImagePreviewScreen(mainImage);
+          }));
+        },
+        child: Hero(
+          tag: "imageHero",
+          child: SizedBox(
+            height: 200,
+            width: double.infinity,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                mainImage,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Center(
+                  child: Image.network(
+                    "https://www.beelights.gr/assets/images/empty-image.png",
+                    fit: BoxFit.cover,
                   ),
                 ),
-              );
-            }),
+              ),
+            ),
+          ),
+        ),
       );
 
   _pageViewDots() => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
             widget.carsForSell.image!.isEmpty ? 0 : widget.carsForSell.image!.length,
-            (index) => Container(
-                  margin: const EdgeInsets.only(right: 5),
-                  child: index == selectedPage ? _selectedRoundWidget() : RoundDot(size: 8, mColor: AppColors.colorBlueStart.withOpacity(0.3)),
+            (index) => GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      mainImage = widget.carsForSell.image![index];
+                    });
+                  },
+                  child: Container(
+                    height: 40, width: 40,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(widget.carsForSell.image![index]),
+                          fit: BoxFit.fill,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                    margin: const EdgeInsets.only(right: 5, top: 10),
+                    // child: index == selectedPage ? _selectedRoundWidget() : RoundDot(size: 8, mColor: AppColors.colorBlueStart.withOpacity(0.3)),
+                  ),
                 )),
       );
 
@@ -177,7 +202,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
                   ),
                 ),
                 Text(
-                  'Seats: ',
+                  'Seats:'.tr,
                   style: regularText(14).copyWith(color: AppColors.colorBlueStart),
                 ),
                 Text(
@@ -186,34 +211,34 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
                 ),
               ],
             ),
-            Row(
-              children: [
-                Icon(
-                  Icons.star,
-                  size: 14,
-                  color: AppColors.colorOrange,
-                ),
-                Text(
-                  ' 4.0 ',
-                  style: regularText(12).copyWith(color: AppColors.lightGrey),
-                ),
-                Text(
-                  '(58 Reviews)',
-                  style: regularText(12).copyWith(color: AppColors.lightGrey, decoration: TextDecoration.underline),
-                ),
-                Expanded(
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      'Lahore, Pakistan',
-                      style: regularText(12).copyWith(
-                        color: AppColors.lightGrey,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Icon(
+            //       Icons.star,
+            //       size: 14,
+            //       color: AppColors.colorOrange,
+            //     ),
+            //     Text(
+            //       ' 4.0 ',
+            //       style: regularText(12).copyWith(color: AppColors.lightGrey),
+            //     ),
+            //     Text(
+            //       '(58 Reviews)',
+            //       style: regularText(12).copyWith(color: AppColors.lightGrey, decoration: TextDecoration.underline),
+            //     ),
+            //     Expanded(
+            //       child: Container(
+            //         alignment: Alignment.centerRight,
+            //         child: Text(
+            //           'Lahore, Pakistan',
+            //           style: regularText(12).copyWith(
+            //             color: AppColors.lightGrey,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       );
@@ -224,7 +249,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
             height: 20,
           ),
           Text(
-            'Car Specifications',
+            'Car Specifications'.tr,
             style: subHeadingText(15),
           ),
           const SizedBox(
@@ -244,7 +269,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
                         const SizedBox(
                           width: 6,
                         ),
-                        Text(widget.carsForSell.details!.transmissionType ?? "")
+                        Text(widget.carsForSell.details?.transmissionType ?? "")
                       ],
                     ),
                   ),
@@ -257,7 +282,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
                         const SizedBox(
                           width: 6,
                         ),
-                        Text(widget.carsForSell.details!.topSpeed ?? "")
+                        Text(widget.carsForSell.details?.topSpeed ?? "")
                       ],
                     ),
                   ),
@@ -270,7 +295,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
                         const SizedBox(
                           width: 6,
                         ),
-                        Text(widget.carsForSell.details!.airBags == true ? "Yes" : "No")
+                        Text(widget.carsForSell.details?.airBags == true ? "Yes" : "No")
                       ],
                     ),
                   )
@@ -291,7 +316,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
                         const SizedBox(
                           width: 6,
                         ),
-                        Text(widget.carsForSell.details!.engine ?? "")
+                        Text(widget.carsForSell.details?.engine ?? "")
                       ],
                     ),
                   ),
@@ -304,7 +329,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
                         const SizedBox(
                           width: 6,
                         ),
-                        Text(widget.carsForSell.details!.fuelType ?? "")
+                        Text(widget.carsForSell.details?.fuelType ?? "")
                       ],
                     ),
                   ),
@@ -317,7 +342,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
                         const SizedBox(
                           width: 6,
                         ),
-                        Text(widget.carsForSell.details!.color ?? "")
+                        Text(widget.carsForSell.details?.color ?? "")
                       ],
                     ),
                   )
@@ -341,7 +366,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
             height: 20,
           ),
           Text(
-            'Overview',
+            'Overview'.tr,
             style: subHeadingText(15),
           ),
           const SizedBox(
@@ -354,9 +379,55 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
         margin: const EdgeInsets.symmetric(vertical: 15),
         height: 45,
         child: PrimaryButton(
-          label: const Text('Send Enquiry'),
-          onPress: () => Get.to(() => const InquiryFormScreenCarBuy()),
+          label: Text('Send inquiry'.tr),
+          onPress: () {
+            log(widget.carsForSell.id.toString());
+            Get.to(() => InquiryFormScreenCarBuy(carId: widget.carsForSell.id ?? ""));
+          },
           color: null,
         ),
       );
+}
+
+class ImagePreviewScreen extends StatelessWidget {
+  final String imagePath;
+  const ImagePreviewScreen(this.imagePath, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: Container(),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.close,
+                color: AppColors.colorBlack,
+              ))
+        ],
+      ),
+      body: InteractiveViewer(
+        panEnabled: false, // Set it to false
+        boundaryMargin: EdgeInsets.all(100),
+        minScale: 1,
+        maxScale: 3,
+        child: Center(
+          child: Hero(
+            tag: 'imageHero',
+            child: CachedNetworkImage(
+              fit: BoxFit.fill,
+              imageUrl: imagePath,
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

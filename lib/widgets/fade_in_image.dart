@@ -23,7 +23,7 @@ class NetworkImageCustom extends StatelessWidget {
           progressIndicatorBuilder: (context, url, downloadProgress) => AppViews.getProgressImage(height, width),
           height: height,
           width: width,
-          imageUrl: image.isEmpty ? 'https://d23jwszswncmo3.cloudfront.net/otobuckslogo.jpg' : image,
+          imageUrl: image.isEmpty ? 'https://www.beelights.gr/assets/images/empty-image.png' : image,
           errorWidget: ((context, url, error) => AppViews.getErrorImage(height, width)),
           fit: fit != null ? fit! : BoxFit.cover),
     );

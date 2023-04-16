@@ -46,28 +46,31 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList> with
             controller: value.scrollController,
             shrinkWrap: true,
             children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(left: AppDimens.dimens_15, bottom: AppDimens.dimens_10, right: AppDimens.dimens_15),
-                child: CustomTextFieldWithIcon(
-                  textInputAction: TextInputAction.next,
-                  enabled: true,
-                  controller: value.controllerSearch,
-                  keyboardType: TextInputType.emailAddress,
-                  hintText: Constants.STR_SEARCH_SUB_CAT.tr,
-                  inputFormatters: const [],
-                  obscureText: false,
-                  onChanged: (String value) {
-                    log("12345");
-                  },
-                  suffixIcon: InkWell(
-                    child: Image.asset(
-                      AppImages.ic_search,
-                      width: AppDimens.dimens_18,
-                    ),
-                    onTap: () {},
-                  ),
-                ),
-              ),
+              value.mCategoryModel.title == "Auto Repair"
+                  ? Container(
+                      margin: const EdgeInsets.only(left: AppDimens.dimens_15, bottom: AppDimens.dimens_10, right: AppDimens.dimens_15),
+                      child: CustomTextFieldWithIcon(
+                        textInputAction: TextInputAction.next,
+                        enabled: true,
+                        controller: value.controllerSearch,
+                        keyboardType: TextInputType.emailAddress,
+                        hintText: Constants.STR_SEARCH_SUB_CAT.tr,
+                        inputFormatters: const [],
+                        obscureText: false,
+                        onChanged: (String value) {
+                          log("12345");
+                        },
+                        suffixIcon: InkWell(
+                          child: Image.asset(
+                            AppImages.ic_search,
+                            width: AppDimens.dimens_18,
+                            color: AppColors.colorPrimary,
+                          ),
+                          onTap: () {},
+                        ),
+                      ),
+                    )
+                  : SizedBox(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(

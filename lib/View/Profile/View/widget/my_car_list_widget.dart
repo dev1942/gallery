@@ -16,6 +16,8 @@ class MyCarListItem extends StatelessWidget {
   final String city;
   final String number;
   final bool isViewed;
+
+  final String registrationDate;
   final Function() onEditTap;
   final Function() onDeleteTap;
 
@@ -30,6 +32,7 @@ class MyCarListItem extends StatelessWidget {
       required this.code,
       required this.city,
       required this.number,
+      required this.registrationDate,
       required this.onEditTap,
       required this.onDeleteTap})
       : super(key: key);

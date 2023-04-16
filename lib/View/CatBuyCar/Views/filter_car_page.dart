@@ -20,7 +20,7 @@ class _FilterAcarScreenState extends State<FilterAcarScreen> {
       appBar: AppViews.initAppBar(
         mContext: context,
         centerTitle: false,
-        strTitle: 'Rent a car',
+        strTitle: 'Filter cars',
         isShowNotification: true,
         isShowSOS: true,
       ),

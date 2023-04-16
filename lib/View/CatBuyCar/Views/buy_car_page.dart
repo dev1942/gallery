@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/CatBuyCar/Views/filter_car_page.dart';
 import 'package:otobucks/View/CatBuyCar/widgets/car_container_widget.dart';
-import 'package:otobucks/global/app_colors.dart';
-import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_views.dart';
-import 'package:otobucks/global/text_styles.dart';
 
 import '../controllers/buy_car_controller.dart';
 
@@ -52,7 +49,8 @@ class _BuyCarScreenState extends State<BuyCarScreen> {
                 ))
           ],
         ),
-        ListView.builder(
+        ListView.separated(
+            separatorBuilder: (context, index) => const Divider(),
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: controller.carsListModel == null || controller.carsListModel?.result == null ? 0 : controller.carsListModel!.result!.length,

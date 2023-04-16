@@ -9,7 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:light_compressor/light_compressor.dart';
 import 'package:location/location.dart';
 import 'package:logger/logger.dart';
-import 'package:otobucks/View/ThankYou/Views/thankyou_fragment.dart';
 import 'package:otobucks/global/constants.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/global/global.dart';
@@ -17,7 +16,6 @@ import 'package:http/http.dart' as http;
 import 'package:otobucks/View/Services_All/Models/service_model.dart';
 import 'package:otobucks/View/Services_All/Views/service_provider_profile_screen.dart';
 import 'package:otobucks/global/url_collection.dart';
-import 'package:otobucks/services/repository/estimates_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../global/Models/time_model.dart';

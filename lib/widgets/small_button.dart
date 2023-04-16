@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:otobucks/global/app_colors.dart';
 
+import '../global/app_dimens.dart';
+
 // All rights reserved by Healer
 
 class PrimaryButton extends StatelessWidget {
@@ -30,7 +32,7 @@ class PrimaryButton extends StatelessWidget {
               backgroundColor: MaterialStateProperty.all(color ?? AppColors.colorPrimary),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                 ),
               )),
         ),

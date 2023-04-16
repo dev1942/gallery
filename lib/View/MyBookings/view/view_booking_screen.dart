@@ -628,6 +628,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   code: widget.mEstimatesModel.bookingDetails!.car!.carCode ?? "",
                   city: widget.mEstimatesModel.bookingDetails!.car!.carCity ?? "",
                   number: widget.mEstimatesModel.bookingDetails!.car!.carNumber ?? "",
+                  registrationDate: "",
                   image: "https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
                   onEditTap: () {},
                   onDeleteTap: () {}),

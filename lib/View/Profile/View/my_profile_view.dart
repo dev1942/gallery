@@ -20,7 +20,6 @@ import 'package:otobucks/widgets/custom_textfield_with_icon.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/image_view.dart';
 import 'package:otobucks/widgets/small_button.dart';
-import '../../Auth/controllers/registration_controller.dart';
 import '../../Auth/View/otp_screen.dart';
 import '../../Auth/controllers/otp_controller.dart';
 import '../Model/car_list_model.dart';
@@ -123,6 +122,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                       right: 0,
                                       child: InkWell(
                                         child: CircleAvatar(
+                                          backgroundColor: AppColors.colorBlueStart,
                                           radius: 17,
                                           child: Image.asset(AppImages.ic_edit_profile_icon,
                                               width: AppDimens.dimens_15, color: AppColors.colorWhite, height: AppDimens.dimens_20),
@@ -346,7 +346,12 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         inputFormatters: const [],
                                         obscureText: false,
                                         onChanged: (String value) {},
-                                        suffixIcon: Image.asset(AppImages.ic_car, width: iconSize, height: iconSize),
+                                        suffixIcon: Image.asset(
+                                          AppImages.ic_car,
+                                          width: iconSize,
+                                          height: iconSize,
+                                          color: AppColors.colorPrimary,
+                                        ),
                                       ),
                                       addVerticleSpace(AppDimens.dimens_16),
                                       CustomTextFieldWithIcon(
@@ -359,7 +364,34 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         inputFormatters: const [],
                                         obscureText: false,
                                         onChanged: (String value) {},
-                                        suffixIcon: Image.asset(AppImages.ic_car, width: iconSize, height: iconSize),
+                                        suffixIcon: Image.asset(
+                                          AppImages.ic_car,
+                                          width: iconSize,
+                                          height: iconSize,
+                                          color: AppColors.colorPrimary,
+                                        ),
+                                      ),
+                                      addVerticleSpace(AppDimens.dimens_16),
+                                      GestureDetector(
+                                        onTap: () {
+                                          value.selectDate(context);
+                                        },
+                                        child: AbsorbPointer(
+                                          child: CustomTextFieldWithIcon(
+                                              height: 42,
+                                              textInputAction: TextInputAction.next,
+                                              enabled: true,
+                                              controller: value.controllerRegistrationDate,
+                                              keyboardType: TextInputType.text,
+                                              hintText: 'Registration date'.tr,
+                                              inputFormatters: const [],
+                                              obscureText: false,
+                                              onChanged: (String value) {},
+                                              suffixIcon: Icon(
+                                                Icons.calendar_month,
+                                                color: AppColors.colorPrimary,
+                                              )),
+                                        ),
                                       ),
                                       addVerticleSpace(AppDimens.dimens_16),
                                       CustomTextFieldWithIcon(
@@ -372,7 +404,12 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         inputFormatters: const [],
                                         obscureText: false,
                                         onChanged: (String value) {},
-                                        suffixIcon: Image.asset(AppImages.ic_petrol, width: iconSize, height: iconSize),
+                                        suffixIcon: Image.asset(
+                                          AppImages.ic_petrol,
+                                          width: iconSize,
+                                          height: iconSize,
+                                          color: AppColors.colorPrimary,
+                                        ),
                                       ),
                                       addVerticleSpace(AppDimens.dimens_16),
 
@@ -386,7 +423,12 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         inputFormatters: const [],
                                         obscureText: false,
                                         onChanged: (String value) {},
-                                        suffixIcon: Image.asset(AppImages.ic_color, width: iconSize, height: iconSize),
+                                        suffixIcon: Image.asset(
+                                          AppImages.ic_color,
+                                          width: iconSize,
+                                          height: iconSize,
+                                          color: AppColors.colorPrimary,
+                                        ),
                                       ),
                                       addVerticleSpace(AppDimens.dimens_10),
                                       Align(
@@ -562,6 +604,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                         value.controllerCity.text,
                                                         value.controllerCode.text,
                                                         value.controllerNumber.text,
+                                                        value.controllerRegistrationDate.text,
                                                       );
                                                       setState(() {
                                                         isAddCarTap = false;
@@ -605,6 +648,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                               code: mcarlistmodel.carCode ?? "",
                                               city: mcarlistmodel.carCity ?? "",
                                               number: mcarlistmodel.carNumber ?? "",
+                                              registrationDate: mcarlistmodel.registrationDate ?? "",
                                               image: "https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
                                               onEditTap: () {
                                                 value.controllerCarBrand.text = mcarlistmodel.brand ?? "";
@@ -614,6 +658,7 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                 value.controllerCity.text = mcarlistmodel.carCity ?? "";
                                                 value.controllerCode.text = mcarlistmodel.carCode ?? "";
                                                 value.controllerNumber.text = mcarlistmodel.carNumber ?? "";
+                                                value.controllerRegistrationDate.text = mcarlistmodel.registrationDate ?? "";
                                                 setState(() {
                                                   isEditidTab = true;
                                                   editId = mcarlistmodel.id ?? "0";

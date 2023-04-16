@@ -140,9 +140,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         activeColor: Colors.white,
                                         fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
                                           if (states.contains(MaterialState.disabled)) {
-                                            return Colors.white.withOpacity(.32);
+                                            return AppColors.colorYellowShade;
                                           }
-                                          return Colors.white;
+                                          return AppColors.colorYellowShade;
                                         }),
                                         checkColor: AppColors.colorBlue2,
                                         value: model.agreetoterms,
@@ -152,11 +152,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     RichText(
                                       text: TextSpan(
                                           text: 'I have read and agree to'.tr,
-                                          style: const TextStyle(color: Colors.white, fontSize: 12),
+                                          style: TextStyle(color: AppColors.colorYellowShade, fontSize: 12),
                                           children: <TextSpan>[
                                             TextSpan(
                                                 text: " " + 'Terms & conditions'.tr,
-                                                style: const TextStyle(color: Colors.grey, fontSize: 13),
+                                                style: const TextStyle(color: Colors.white, fontSize: 13),
                                                 recognizer: TapGestureRecognizer()
                                                   ..onTap = () {
                                                     _launchLink('https://otobucks.com/terms-and-condition');
@@ -181,7 +181,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         child: Text(
                                           Constants.TXT_ALREADY_HAVE_AN_AC.tr,
                                           style: AppStyle.textViewStyleSmall(
-                                              context: context, color: AppColors.colorWhite, fontSizeDelta: 0, fontWeightDelta: -10),
+                                              context: context, color: AppColors.colorYellowShade, fontSizeDelta: 0, fontWeightDelta: -10),
                                         ),
                                       ),
                                       InkWell(
@@ -189,7 +189,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           'Login'.tr,
                                           style: AppStyle.textViewStyleSmall(
                                               context: context,
-                                              color: AppColors.colorWhite,
+                                              color: AppColors.colorYellowShade,
                                               mDecoration: TextDecoration.underline,
                                               fontSizeDelta: 0,
                                               fontWeightDelta: -10),

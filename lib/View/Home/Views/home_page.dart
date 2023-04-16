@@ -39,7 +39,6 @@ class _HomePageState extends State<HomePage> {
           log(message.notification!.body.toString());
           log("message.data11 ${message.data}");
           // LocalNotificationService.display(message);
-
         }
       },
     );
@@ -78,7 +77,6 @@ class _HomePageState extends State<HomePage> {
             return Scaffold(
                 key: scaffoldKey,
                 backgroundColor: AppColors.colorWhite,
-
                 appBar: AppViews.initAppBar(
                   icon: constraints.maxWidth < 600 ? null : const Icon(Icons.keyboard_arrow_left),
                   mContext: context,
@@ -119,7 +117,10 @@ class _HomePageState extends State<HomePage> {
                     //   icon: Icons.shopping_basket,
                     // ),
                     TabItem(
-                      icon: Icons.chat_bubble,
+                      icon: Icons.psychology_alt,
+                    ),
+                    TabItem(
+                      icon: Icons.space_dashboard,
                     ),
                     TabItem(
                         icon: Icons.notifications,

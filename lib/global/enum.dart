@@ -21,6 +21,7 @@ enum PageType {
   promotions,
   thankYou,
   customerSupport,
+  addcar
 }
 
 // Req Type

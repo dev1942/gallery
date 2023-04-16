@@ -752,7 +752,7 @@ class AppViews {
                                         style: TextButton.styleFrom(
                                             foregroundColor: AppColors.colorAccent,
                                             disabledForegroundColor: AppColors.colorAccent,
-                                            backgroundColor: AppColors.colorAccent),
+                                            backgroundColor: AppColors.colorPrimary),
                                         onPressed: () {
                                           if (onTapLeftBtn != null) {
                                             onTapLeftBtn();
@@ -779,7 +779,7 @@ class AppViews {
                                         style: TextButton.styleFrom(
                                             foregroundColor: AppColors.colorAccent,
                                             disabledForegroundColor: AppColors.colorAccent.withOpacity(0.38),
-                                            backgroundColor: AppColors.colorAccent),
+                                            backgroundColor: AppColors.colorPrimary),
                                         onPressed: () {
                                           if (onTapRightBtn != null) {
                                             onTapRightBtn();
@@ -817,7 +817,7 @@ class AppViews {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            AppColors.colorBlueEnd,
+            AppColors.colorBlueStart,
             AppColors.colorBlueStart,
           ],
         ),
@@ -862,10 +862,10 @@ class AppViews {
 
   static textFieldRoundBorder() {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(AppDimens.dimens_5),
       borderSide: BorderSide(
         width: 1,
-        color: AppColors.colorAccent,
+        color: AppColors.colorBlueStart,
         style: BorderStyle.solid,
       ),
     );
