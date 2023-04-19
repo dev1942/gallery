@@ -45,6 +45,7 @@ Widget drawer(BuildContext context) {
                   alignment: Alignment.center,
                   child: Image.asset(
                     AppImages.appLogo,
+                    color: AppColors.colorPrimary,
                     fit: BoxFit.fitWidth,
                   )),
             ],

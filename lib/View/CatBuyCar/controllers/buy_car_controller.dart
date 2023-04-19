@@ -18,14 +18,13 @@ class BuyCarController extends GetxController {
   bool connectionStatus = false;
   bool isShowLoader = false;
   CarsListModel? carsListModel;
-// inquiry 
+// inquiry
   String name = '';
   String email = '';
   String phoneNumber = '';
   String note = '';
   String userId = '';
   String productId = '';
-
 
   updateName(String newName) {
     name = newName;
@@ -118,5 +117,53 @@ class BuyCarController extends GetxController {
       Get.to(() => const RatingScreenCarBuy());
       inspect(mResult);
     });
+  }
+
+  filterCarsTask(BuildContext context,
+      {required String condition,
+      required String brand,
+      required String modelYear,
+      required String minPrice,
+      required String maxPrice,
+      required String transmissiontype}) async {
+    isShowLoader = true;
+    update();
+
+    HashMap<String, Object> requestParams = HashMap();
+    final prefs = await SharedPreferences.getInstance();
+    var userId = await prefs.getString(SharedPrefKey.KEY_USER_ID);
+    ;
+    requestParams['brand'] = brand;
+    requestParams['modelYear'] = email;
+    requestParams['minPrice'] = phoneNumber;
+    requestParams['maxPrice'] = phoneNumber;
+    requestParams['transmisionType'] = transmissiontype;
+
+    inspect(requestParams);
+
+    var carFilerTask = await BuyCarRepo().filterCars(requestParams);
+
+    isShowLoader = false;
+    update();
+
+    carFilerTask.fold((failure) {
+      inspect(failure);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+    }, (mResult) {
+      carsListModel!.result!.clear();
+      carsListModel = mResult.responseData as CarsListModel;
+
+      update();
+      if (carsListModel != null && carsListModel!.result!.isNotEmpty) {
+        mShowData.value = ShowData.showData;
+
+        Get.back();
+      } else {
+        Global.showToastAlert(context: context, strTitle: "", strMsg: "No Cars found please change filters", toastType: TOAST_TYPE.toastError);
+      }
+
+      // inspect(mResult);
+    });
+    update();
   }
 }

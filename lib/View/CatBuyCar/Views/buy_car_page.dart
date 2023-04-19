@@ -44,8 +44,8 @@ class _BuyCarScreenState extends State<BuyCarScreen> {
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FilterAcarScreen()));
                 },
-                child: const Text(
-                  'Filters',
+                child: Text(
+                  'Filters'.tr,
                 ))
           ],
         ),

@@ -6,7 +6,7 @@ class AppImages {
   static const String icAppIconWhite = "assets/images/ic_app_icon_white.png";
   static const String icSplashScreenIcon = "assets/images/side_drawer_logo.png";
   static const String ic_place_holder = "assets/images/ic_place_holder.png";
-  static const String appLogo = "assets/images/autofix.png";
+  static const String appLogo = "assets/images/ic_app_icon_white.png";
   static const String ic_alert_circle = "assets/images/ic_alert_circle.png";
   static const String ic_alert_octagon = "assets/images/ic_alert_octagon.png";
   static const String ic_alert_triangle = "assets/images/ic_alert_triangle.png";

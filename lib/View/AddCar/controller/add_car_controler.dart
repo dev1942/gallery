@@ -163,8 +163,8 @@ class AddCarController extends GetxController {
         "brand": brand,
         "title": title,
         "description": description,
-        "features": keyfeatureList,
-        "details": {
+        "features": jsonEncode(keyfeatureList),
+        "details": jsonEncode({
           "newOrUsed": newOrUsed,
           "model": model,
           "modelYear": carModelYear,
@@ -181,7 +181,7 @@ class AddCarController extends GetxController {
           "usage": "",
           "badges": badgesList,
           "topSpeed": ""
-        },
+        }),
         "warranty": warranty,
         "provider": userId,
       };

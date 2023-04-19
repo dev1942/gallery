@@ -94,4 +94,43 @@ class BuyCarRepo {
       return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
+
+  Future<Either<Failure, Success>> filterCars(HashMap<String, Object> requestParams) async {
+    bool connectionStatus = await ConnectivityStatus.isConnected();
+    if (!connectionStatus) {
+      return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
+    }
+
+    try {
+      String response = await ReqListener.fetchPost(
+          strUrl: RequestBuilder.API_FILTER_CARS, requestParams: requestParams, mReqType: ReqType.post, mParamType: ParamType.json);
+
+      log(response);
+      Result? mResponse;
+      if (response.isNotEmpty) {
+        mResponse = Global.getData(response);
+      } else {
+        return Left(Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
+      }
+
+      if (mResponse?.responseStatus == true) {
+        CarsListModel carsListModel = carsListModelFromMap(response);
+
+        Success mSuccess =
+            Success(responseStatus: mResponse!.responseStatus, responseData: carsListModel, responseMessage: mResponse.responseMessage);
+
+        return Right(mSuccess);
+      }
+
+      if (!Global.checkNull(mResponse!.responseMessage)) {
+        mResponse.responseMessage = AppAlert.ALERT_SERVER_NOT_RESPONDING;
+      }
+
+      return Left(
+          Failure(MESSAGE: mResponse.responseMessage, STATUS: false, DATA: mResponse.responseData != null ? mResponse.responseData as Object : ""));
+    } catch (e) {
+      log(e.toString());
+      return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
+    }
+  }
 }

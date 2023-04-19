@@ -250,7 +250,7 @@ class AppViews {
   // Show Center Loading
   static showLoading() {
     return Center(
-      child: SpinKitThreeBounce(color: AppColors.colorAccent, size: AppDimens.dimens_34),
+      child: SpinKitThreeBounce(color: AppColors.colorPrimary, size: AppDimens.dimens_34),
     );
   } // Show Footer Loading Icon
 

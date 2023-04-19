@@ -48,507 +48,514 @@ class _AddCarToSellState extends State<AddCarToSell> {
             init: AddCarController(),
             builder: (value) => Container(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: ListView(
+                  child: Stack(
                     children: [
-                      addVerticleSpace(AppDimens.dimens_16),
-
-                      CustomTextFieldWithIcon(
-                        height: 42,
-                        textInputAction: TextInputAction.next,
-                        enabled: true,
-                        controller: value.controllerCarBrand,
-                        keyboardType: TextInputType.text,
-                        hintText: Constants.STR_CAR_BRAND.tr,
-                        inputFormatters: const [],
-                        obscureText: false,
-                        onChanged: (String value) {},
-                        // suffixIcon: Image.asset(
-                        //   AppImages.ic_car,
-                        //   width: iconSize,
-                        //   height: iconSize,
-                        //   color: AppColors.colorPrimary,
-                        // ),
+                      GetBuilder<AddCarController>(
+                        builder: (value) => AppViews.showLoadingWithStatus(value.isShowLoader),
                       ),
-                      addVerticleSpace(AppDimens.dimens_16),
-                      CustomTextFieldWithIcon(
-                        height: 42,
-                        textInputAction: TextInputAction.next,
-                        enabled: true,
-                        controller: value.controllerCarTitle,
-                        keyboardType: TextInputType.text,
-                        hintText: "Title".tr,
-                        inputFormatters: const [],
-                        obscureText: false,
-                        onChanged: (String value) {},
-                      ),
-                      addVerticleSpace(AppDimens.dimens_16),
-                      CustomTextFieldWithIcon(
-                        height: 42,
-                        textInputAction: TextInputAction.next,
-                        enabled: true,
-                        controller: value.controllerCarDescription,
-                        keyboardType: TextInputType.text,
-                        hintText: "Description".tr,
-                        inputFormatters: const [],
-                        obscureText: false,
-                        onChanged: (String value) {},
-                      ),
-                      addVerticleSpace(AppDimens.dimens_16),
-                      CustomTextFieldWithIcon(
-                        height: 42,
-                        textInputAction: TextInputAction.next,
-                        enabled: true,
-                        controller: value.controllerCarModelYear,
-                        keyboardType: TextInputType.text,
-                        hintText: Constants.STR_CAR_MODEL_YEAR.tr,
-                        inputFormatters: const [],
-                        obscureText: false,
-                        onChanged: (String value) {},
-                        // suffixIcon: Image.asset(
-                        //   AppImages.ic_car,
-                        //   width: iconSize,
-                        //   height: iconSize,
-                        //   color: AppColors.colorPrimary,
-                        // ),
-                      ),
-                      addVerticleSpace(AppDimens.dimens_16),
-                      CustomTextFieldWithIcon(
-                        height: 42,
-                        textInputAction: TextInputAction.next,
-                        enabled: true,
-                        controller: value.controllerMileage,
-                        keyboardType: TextInputType.text,
-                        hintText: Constants.STR_MILEAGE.tr,
-                        inputFormatters: const [],
-                        obscureText: false,
-                        onChanged: (String value) {},
-                        // suffixIcon: Image.asset(
-                        //   AppImages.ic_petrol,
-                        //   width: iconSize,
-                        //   height: iconSize,
-                        //   color: AppColors.colorPrimary,
-                        // ),
-                      ),
-                      addVerticleSpace(AppDimens.dimens_16),
-
-                      CustomTextFieldWithIcon(
-                        height: 42,
-                        textInputAction: TextInputAction.next,
-                        enabled: true,
-                        controller: value.controllerColour,
-                        keyboardType: TextInputType.text,
-                        hintText: Constants.STR_CAR_COLOUR.tr,
-                        inputFormatters: const [],
-                        obscureText: false,
-                        onChanged: (String value) {},
-                        // suffixIcon: Image.asset(
-                        //   AppImages.ic_color,
-                        //   width: iconSize,
-                        //   height: iconSize,
-                        //   color: AppColors.colorPrimary,
-                        // ),
-                      ),
-                      addVerticleSpace(AppDimens.dimens_16),
-                      CustomTextFieldWithIcon(
-                        height: 42,
-                        textInputAction: TextInputAction.next,
-                        enabled: true,
-                        controller: value.controllerCarModel,
-                        keyboardType: TextInputType.text,
-                        hintText: "Model".tr,
-                        inputFormatters: const [],
-                        obscureText: false,
-                        onChanged: (String value) {},
-                        // suffixIcon: Image.asset(
-                        //   AppImages.ic_color,
-                        //   width: iconSize,
-                        //   height: iconSize,
-                        //   color: AppColors.colorPrimary,
-                        // ),
-                      ),
-                      addVerticleSpace(AppDimens.dimens_16),
-                      CustomTextFieldWithIcon(
-                        height: 42,
-                        textInputAction: TextInputAction.next,
-                        enabled: true,
-                        controller: value.controllerCarSeats,
-                        keyboardType: TextInputType.text,
-                        hintText: "Number od seats".tr,
-                        inputFormatters: const [],
-                        obscureText: false,
-                        onChanged: (String value) {},
-                        // suffixIcon: Image.asset(
-                        //   AppImages.ic_color,
-                        //   width: iconSize,
-                        //   height: iconSize,
-                        //   color: AppColors.colorPrimary,
-                        // ),
-                      ),
-                      addVerticleSpace(AppDimens.dimens_16),
-                      CustomTextFieldWithIcon(
-                        height: 42,
-                        textInputAction: TextInputAction.next,
-                        enabled: true,
-                        controller: value.controllerCarPrice,
-                        keyboardType: TextInputType.text,
-                        hintText: "Price".tr,
-                        inputFormatters: const [],
-                        obscureText: false,
-                        onChanged: (String value) {},
-                      ),
-                      addVerticleSpace(AppDimens.dimens_16),
-                      CustomTextFieldWithIcon(
-                        height: 42,
-                        textInputAction: TextInputAction.next,
-                        enabled: true,
-                        controller: value.controllerCarEngine,
-                        keyboardType: TextInputType.text,
-                        hintText: "Engine cc".tr,
-                        inputFormatters: const [],
-                        obscureText: false,
-                        onChanged: (String value) {},
-                      ),
-                      addVerticleSpace(AppDimens.dimens_16),
-                      CustomTextFieldWithIcon(
-                        height: 42,
-                        textInputAction: TextInputAction.next,
-                        enabled: true,
-                        controller: value.controllerCarFuelType,
-                        keyboardType: TextInputType.text,
-                        hintText: "Fuel Type".tr,
-                        inputFormatters: const [],
-                        obscureText: false,
-                        onChanged: (String value) {},
-                      ),
-                      addVerticleSpace(AppDimens.dimens_16),
-                      CustomTextFieldWithIcon(
-                        height: 42,
-                        textInputAction: TextInputAction.next,
-                        enabled: true,
-                        controller: value.controllerCarWarranty,
-                        keyboardType: TextInputType.text,
-                        hintText: "Warranty".tr,
-                        inputFormatters: const [],
-                        obscureText: false,
-                        onChanged: (String value) {},
-                      ),
-                      addVerticleSpace(AppDimens.dimens_16),
-                      Row(
+                      ListView(
                         children: [
-                          Expanded(
-                            child: CustomTextFieldWithIcon(
-                              height: 42,
-                              textInputAction: TextInputAction.next,
-                              enabled: true,
-                              controller: value.controllerCarKeyfeautre,
-                              keyboardType: TextInputType.text,
-                              hintText: "4 Key Features".tr,
-                              inputFormatters: const [],
-                              obscureText: false,
-                              onChanged: (String value) {},
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: 80,
-                            height: 43,
-                            child: CustomButton(
-                                isGradient: true,
-                                isRoundBorder: true,
-                                height: height,
-                                fontSize: -2,
-                                fontColor: AppColors.colorWhite,
-                                width: size.width / 2.2,
-                                onPressed: () {
-                                  if (value.controllerCarKeyfeautre.text.isNotEmpty && value.keyfeatureList.length < 4) {
-                                    value.keyfeatureList.add(value.controllerCarKeyfeautre.text);
-                                    setState(() {});
-                                  } else if (value.keyfeatureList.length >= 4) {
-                                    Global.showToastAlert(
-                                        context: Get.overlayContext!,
-                                        strTitle: "",
-                                        strMsg: "Only 4 key feature can be added",
-                                        toastType: TOAST_TYPE.toastError);
-                                  }
-                                },
-                                strTitle: "Add".tr),
-                          ),
-                        ],
-                      ),
-                      GetBuilder<AddCarController>(builder: (value) {
-                        return Visibility(
-                            visible: value.keyfeatureList.isNotEmpty,
-                            child: SizedBox(
-                              height: 100,
-                              child: ListView(
-                                padding: const EdgeInsets.all(10),
-                                children: [
-                                  Wrap(
-                                    runAlignment: WrapAlignment.start,
-                                    alignment: WrapAlignment.start,
-                                    children: List.generate(
-                                        value.keyfeatureList.length,
-                                        (index) => InkWell(
-                                              onTap: () {
-                                                value.keyfeatureList.remove(value.keyfeatureList[index]);
-                                                setState(() {});
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.all(5),
-                                                margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                                                decoration: BoxDecoration(color: AppColors.colorPrimary),
-                                                child: Text(
-                                                  value.keyfeatureList[index],
-                                                  style: TextStyle(fontSize: 14, color: AppColors.colorWhite),
-                                                ),
-                                              ),
-                                            )),
-                                  )
-                                ],
-                              ),
-                            ));
-                      }),
-                      addVerticleSpace(AppDimens.dimens_16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CustomTextFieldWithIcon(
-                              height: 42,
-                              textInputAction: TextInputAction.next,
-                              enabled: true,
-                              controller: value.controllerCarBadges,
-                              keyboardType: TextInputType.text,
-                              hintText: "4 badges".tr,
-                              inputFormatters: const [],
-                              obscureText: false,
-                              onChanged: (String value) {},
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: 80,
-                            height: 43,
-                            child: CustomButton(
-                                isGradient: true,
-                                isRoundBorder: true,
-                                height: height,
-                                fontSize: -2,
-                                fontColor: AppColors.colorWhite,
-                                width: size.width / 2.2,
-                                onPressed: () {
-                                  if (value.controllerCarBadges.text.isNotEmpty && value.badgesList.length < 4) {
-                                    value.badgesList.add(value.controllerCarBadges.text);
-                                    setState(() {});
-                                  } else if (value.badgesList.length >= 4) {
-                                    Global.showToastAlert(
-                                        context: Get.overlayContext!,
-                                        strTitle: "",
-                                        strMsg: "Only 4 badges can be added",
-                                        toastType: TOAST_TYPE.toastError);
-                                  }
-                                },
-                                strTitle: "Add".tr),
-                          ),
-                        ],
-                      ),
-                      GetBuilder<AddCarController>(builder: (value) {
-                        return Visibility(
-                            visible: value.badgesList.isNotEmpty,
-                            child: SizedBox(
-                              height: 100,
-                              child: ListView(
-                                padding: const EdgeInsets.all(10),
-                                children: [
-                                  Wrap(
-                                    runAlignment: WrapAlignment.start,
-                                    alignment: WrapAlignment.start,
-                                    children: List.generate(
-                                        value.badgesList.length,
-                                        (index) => InkWell(
-                                              onTap: () {
-                                                value.badgesList.remove(value.badgesList[index]);
-                                                setState(() {});
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.all(5),
-                                                margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                                                decoration: BoxDecoration(color: AppColors.colorPrimary),
-                                                child: Text(
-                                                  value.badgesList[index],
-                                                  style: TextStyle(fontSize: 14, color: AppColors.colorWhite),
-                                                ),
-                                              ),
-                                            )),
-                                  )
-                                ],
-                              ),
-                            ));
-                      }),
+                          addVerticleSpace(AppDimens.dimens_16),
 
-                      addVerticleSpace(AppDimens.dimens_16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Checkbox(
-                              checkColor: AppColors.colorBlueStart,
-                              activeColor: Colors.white,
-                              fillColor: MaterialStateProperty.all(AppColors.colorYellowShade),
-                              value: value.isNew,
-                              onChanged: (newval) {
-                                value.isNew = newval!;
-                                setState(() {});
-                              }),
-                          const SizedBox(
-                            width: 15,
+                          CustomTextFieldWithIcon(
+                            height: 42,
+                            textInputAction: TextInputAction.next,
+                            enabled: true,
+                            controller: value.controllerCarBrand,
+                            keyboardType: TextInputType.text,
+                            hintText: Constants.STR_CAR_BRAND.tr,
+                            inputFormatters: const [],
+                            obscureText: false,
+                            onChanged: (String value) {},
+                            // suffixIcon: Image.asset(
+                            //   AppImages.ic_car,
+                            //   width: iconSize,
+                            //   height: iconSize,
+                            //   color: AppColors.colorPrimary,
+                            // ),
                           ),
-                          Text(
-                            'Is New'.tr,
-                            style: TextStyle(color: AppColors.colorYellowShade, fontSize: size.width * 0.043),
+                          addVerticleSpace(AppDimens.dimens_16),
+                          CustomTextFieldWithIcon(
+                            height: 42,
+                            textInputAction: TextInputAction.next,
+                            enabled: true,
+                            controller: value.controllerCarTitle,
+                            keyboardType: TextInputType.text,
+                            hintText: "Title".tr,
+                            inputFormatters: const [],
+                            obscureText: false,
+                            onChanged: (String value) {},
                           ),
-                          SizedBox(
-                            width: size.width * 0.14,
+                          addVerticleSpace(AppDimens.dimens_16),
+                          CustomTextFieldWithIcon(
+                            height: 42,
+                            textInputAction: TextInputAction.next,
+                            enabled: true,
+                            controller: value.controllerCarDescription,
+                            keyboardType: TextInputType.text,
+                            hintText: "Description".tr,
+                            inputFormatters: const [],
+                            obscureText: false,
+                            onChanged: (String value) {},
                           ),
-                          Checkbox(
-                              checkColor: AppColors.colorBlueStart,
-                              activeColor: Colors.white,
-                              fillColor: MaterialStateProperty.all(AppColors.colorYellowShade),
-                              value: value.hasAirBags,
-                              onChanged: (newval) {
-                                value.hasAirBags = newval!;
-                                setState(() {});
-                              }),
-                          const SizedBox(
-                            width: 15,
+                          addVerticleSpace(AppDimens.dimens_16),
+                          CustomTextFieldWithIcon(
+                            height: 42,
+                            textInputAction: TextInputAction.next,
+                            enabled: true,
+                            controller: value.controllerCarModelYear,
+                            keyboardType: TextInputType.text,
+                            hintText: Constants.STR_CAR_MODEL_YEAR.tr,
+                            inputFormatters: const [],
+                            obscureText: false,
+                            onChanged: (String value) {},
+                            // suffixIcon: Image.asset(
+                            //   AppImages.ic_car,
+                            //   width: iconSize,
+                            //   height: iconSize,
+                            //   color: AppColors.colorPrimary,
+                            // ),
                           ),
-                          Text(
-                            'Airbags'.tr,
-                            style: TextStyle(color: AppColors.colorYellowShade),
-                          )
-                        ],
-                      ),
-                      Container(
-                        height: 50,
-                        width: size.width * 0.9,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: ListTile(
-                                contentPadding: EdgeInsets.zero,
-                                title: Text(
-                                  'Automatic',
-                                  style: TextStyle(color: AppColors.colorYellowShade),
+                          addVerticleSpace(AppDimens.dimens_16),
+                          CustomTextFieldWithIcon(
+                            height: 42,
+                            textInputAction: TextInputAction.next,
+                            enabled: true,
+                            controller: value.controllerMileage,
+                            keyboardType: TextInputType.text,
+                            hintText: Constants.STR_MILEAGE.tr,
+                            inputFormatters: const [],
+                            obscureText: false,
+                            onChanged: (String value) {},
+                            // suffixIcon: Image.asset(
+                            //   AppImages.ic_petrol,
+                            //   width: iconSize,
+                            //   height: iconSize,
+                            //   color: AppColors.colorPrimary,
+                            // ),
+                          ),
+                          addVerticleSpace(AppDimens.dimens_16),
+
+                          CustomTextFieldWithIcon(
+                            height: 42,
+                            textInputAction: TextInputAction.next,
+                            enabled: true,
+                            controller: value.controllerColour,
+                            keyboardType: TextInputType.text,
+                            hintText: Constants.STR_CAR_COLOUR.tr,
+                            inputFormatters: const [],
+                            obscureText: false,
+                            onChanged: (String value) {},
+                            // suffixIcon: Image.asset(
+                            //   AppImages.ic_color,
+                            //   width: iconSize,
+                            //   height: iconSize,
+                            //   color: AppColors.colorPrimary,
+                            // ),
+                          ),
+                          addVerticleSpace(AppDimens.dimens_16),
+                          CustomTextFieldWithIcon(
+                            height: 42,
+                            textInputAction: TextInputAction.next,
+                            enabled: true,
+                            controller: value.controllerCarModel,
+                            keyboardType: TextInputType.text,
+                            hintText: "Model".tr,
+                            inputFormatters: const [],
+                            obscureText: false,
+                            onChanged: (String value) {},
+                            // suffixIcon: Image.asset(
+                            //   AppImages.ic_color,
+                            //   width: iconSize,
+                            //   height: iconSize,
+                            //   color: AppColors.colorPrimary,
+                            // ),
+                          ),
+                          addVerticleSpace(AppDimens.dimens_16),
+                          CustomTextFieldWithIcon(
+                            height: 42,
+                            textInputAction: TextInputAction.next,
+                            enabled: true,
+                            controller: value.controllerCarSeats,
+                            keyboardType: TextInputType.text,
+                            hintText: "Number od seats".tr,
+                            inputFormatters: const [],
+                            obscureText: false,
+                            onChanged: (String value) {},
+                            // suffixIcon: Image.asset(
+                            //   AppImages.ic_color,
+                            //   width: iconSize,
+                            //   height: iconSize,
+                            //   color: AppColors.colorPrimary,
+                            // ),
+                          ),
+                          addVerticleSpace(AppDimens.dimens_16),
+                          CustomTextFieldWithIcon(
+                            height: 42,
+                            textInputAction: TextInputAction.next,
+                            enabled: true,
+                            controller: value.controllerCarPrice,
+                            keyboardType: TextInputType.text,
+                            hintText: "Price".tr,
+                            inputFormatters: const [],
+                            obscureText: false,
+                            onChanged: (String value) {},
+                          ),
+                          addVerticleSpace(AppDimens.dimens_16),
+                          CustomTextFieldWithIcon(
+                            height: 42,
+                            textInputAction: TextInputAction.next,
+                            enabled: true,
+                            controller: value.controllerCarEngine,
+                            keyboardType: TextInputType.text,
+                            hintText: "Engine cc".tr,
+                            inputFormatters: const [],
+                            obscureText: false,
+                            onChanged: (String value) {},
+                          ),
+                          addVerticleSpace(AppDimens.dimens_16),
+                          CustomTextFieldWithIcon(
+                            height: 42,
+                            textInputAction: TextInputAction.next,
+                            enabled: true,
+                            controller: value.controllerCarFuelType,
+                            keyboardType: TextInputType.text,
+                            hintText: "Fuel Type".tr,
+                            inputFormatters: const [],
+                            obscureText: false,
+                            onChanged: (String value) {},
+                          ),
+                          addVerticleSpace(AppDimens.dimens_16),
+                          CustomTextFieldWithIcon(
+                            height: 42,
+                            textInputAction: TextInputAction.next,
+                            enabled: true,
+                            controller: value.controllerCarWarranty,
+                            keyboardType: TextInputType.text,
+                            hintText: "Warranty".tr,
+                            inputFormatters: const [],
+                            obscureText: false,
+                            onChanged: (String value) {},
+                          ),
+                          addVerticleSpace(AppDimens.dimens_16),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CustomTextFieldWithIcon(
+                                  height: 42,
+                                  textInputAction: TextInputAction.next,
+                                  enabled: true,
+                                  controller: value.controllerCarKeyfeautre,
+                                  keyboardType: TextInputType.text,
+                                  hintText: "4 Key Features".tr,
+                                  inputFormatters: const [],
+                                  obscureText: false,
+                                  onChanged: (String value) {},
                                 ),
-                                leading: Radio(
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              SizedBox(
+                                width: 80,
+                                height: 43,
+                                child: CustomButton(
+                                    isGradient: true,
+                                    isRoundBorder: true,
+                                    height: height,
+                                    fontSize: -2,
+                                    fontColor: AppColors.colorWhite,
+                                    width: size.width / 2.2,
+                                    onPressed: () {
+                                      if (value.controllerCarKeyfeautre.text.isNotEmpty && value.keyfeatureList.length < 4) {
+                                        value.keyfeatureList.add(value.controllerCarKeyfeautre.text);
+                                        setState(() {});
+                                      } else if (value.keyfeatureList.length >= 4) {
+                                        Global.showToastAlert(
+                                            context: Get.overlayContext!,
+                                            strTitle: "",
+                                            strMsg: "Only 4 key feature can be added",
+                                            toastType: TOAST_TYPE.toastError);
+                                      }
+                                    },
+                                    strTitle: "Add".tr),
+                              ),
+                            ],
+                          ),
+                          GetBuilder<AddCarController>(builder: (value) {
+                            return Visibility(
+                                visible: value.keyfeatureList.isNotEmpty,
+                                child: SizedBox(
+                                  height: 100,
+                                  child: ListView(
+                                    padding: const EdgeInsets.all(10),
+                                    children: [
+                                      Wrap(
+                                        runAlignment: WrapAlignment.start,
+                                        alignment: WrapAlignment.start,
+                                        children: List.generate(
+                                            value.keyfeatureList.length,
+                                            (index) => InkWell(
+                                                  onTap: () {
+                                                    value.keyfeatureList.remove(value.keyfeatureList[index]);
+                                                    setState(() {});
+                                                  },
+                                                  child: Container(
+                                                    padding: EdgeInsets.all(5),
+                                                    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                                                    decoration: BoxDecoration(color: AppColors.colorPrimary),
+                                                    child: Text(
+                                                      value.keyfeatureList[index],
+                                                      style: TextStyle(fontSize: 14, color: AppColors.colorWhite),
+                                                    ),
+                                                  ),
+                                                )),
+                                      )
+                                    ],
+                                  ),
+                                ));
+                          }),
+                          addVerticleSpace(AppDimens.dimens_16),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CustomTextFieldWithIcon(
+                                  height: 42,
+                                  textInputAction: TextInputAction.next,
+                                  enabled: true,
+                                  controller: value.controllerCarBadges,
+                                  keyboardType: TextInputType.text,
+                                  hintText: "4 badges".tr,
+                                  inputFormatters: const [],
+                                  obscureText: false,
+                                  onChanged: (String value) {},
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              SizedBox(
+                                width: 80,
+                                height: 43,
+                                child: CustomButton(
+                                    isGradient: true,
+                                    isRoundBorder: true,
+                                    height: height,
+                                    fontSize: -2,
+                                    fontColor: AppColors.colorWhite,
+                                    width: size.width / 2.2,
+                                    onPressed: () {
+                                      if (value.controllerCarBadges.text.isNotEmpty && value.badgesList.length < 4) {
+                                        value.badgesList.add(value.controllerCarBadges.text);
+                                        setState(() {});
+                                      } else if (value.badgesList.length >= 4) {
+                                        Global.showToastAlert(
+                                            context: Get.overlayContext!,
+                                            strTitle: "",
+                                            strMsg: "Only 4 badges can be added",
+                                            toastType: TOAST_TYPE.toastError);
+                                      }
+                                    },
+                                    strTitle: "Add".tr),
+                              ),
+                            ],
+                          ),
+                          GetBuilder<AddCarController>(builder: (value) {
+                            return Visibility(
+                                visible: value.badgesList.isNotEmpty,
+                                child: SizedBox(
+                                  height: 100,
+                                  child: ListView(
+                                    padding: const EdgeInsets.all(10),
+                                    children: [
+                                      Wrap(
+                                        runAlignment: WrapAlignment.start,
+                                        alignment: WrapAlignment.start,
+                                        children: List.generate(
+                                            value.badgesList.length,
+                                            (index) => InkWell(
+                                                  onTap: () {
+                                                    value.badgesList.remove(value.badgesList[index]);
+                                                    setState(() {});
+                                                  },
+                                                  child: Container(
+                                                    padding: EdgeInsets.all(5),
+                                                    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                                                    decoration: BoxDecoration(color: AppColors.colorPrimary),
+                                                    child: Text(
+                                                      value.badgesList[index],
+                                                      style: TextStyle(fontSize: 14, color: AppColors.colorWhite),
+                                                    ),
+                                                  ),
+                                                )),
+                                      )
+                                    ],
+                                  ),
+                                ));
+                          }),
+
+                          addVerticleSpace(AppDimens.dimens_16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Checkbox(
+                                  checkColor: AppColors.colorBlueStart,
+                                  activeColor: Colors.white,
                                   fillColor: MaterialStateProperty.all(AppColors.colorYellowShade),
-                                  value: TransmitionType.autommatic,
-                                  groupValue: value.transType,
-                                  onChanged: (TransmitionType? newvalue) {
-                                    setState(() {
-                                      value.transType = newvalue!;
-                                    });
-                                  },
-                                ),
+                                  value: value.isNew,
+                                  onChanged: (newval) {
+                                    value.isNew = newval!;
+                                    setState(() {});
+                                  }),
+                              const SizedBox(
+                                width: 15,
                               ),
-                            ),
-                            Expanded(
-                              child: ListTile(
-                                contentPadding: EdgeInsets.zero,
-                                title: Text(
-                                  'Manual',
-                                  style: TextStyle(color: AppColors.colorYellowShade),
-                                ),
-                                leading: Radio(
+                              Text(
+                                'Is New'.tr,
+                                style: TextStyle(color: AppColors.colorYellowShade, fontSize: size.width * 0.043),
+                              ),
+                              SizedBox(
+                                width: size.width * 0.14,
+                              ),
+                              Checkbox(
+                                  checkColor: AppColors.colorBlueStart,
+                                  activeColor: Colors.white,
                                   fillColor: MaterialStateProperty.all(AppColors.colorYellowShade),
-                                  value: TransmitionType.manaual,
-                                  groupValue: value.transType,
-                                  onChanged: (TransmitionType? newvalue) {
-                                    setState(() {
-                                      value.transType = newvalue!;
-                                    });
-                                  },
-                                ),
+                                  value: value.hasAirBags,
+                                  onChanged: (newval) {
+                                    value.hasAirBags = newval!;
+                                    setState(() {});
+                                  }),
+                              const SizedBox(
+                                width: 15,
                               ),
+                              Text(
+                                'Airbags'.tr,
+                                style: TextStyle(color: AppColors.colorYellowShade),
+                              )
+                            ],
+                          ),
+                          Container(
+                            height: 50,
+                            width: size.width * 0.9,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: ListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    title: Text(
+                                      'Automatic',
+                                      style: TextStyle(color: AppColors.colorYellowShade),
+                                    ),
+                                    leading: Radio(
+                                      fillColor: MaterialStateProperty.all(AppColors.colorYellowShade),
+                                      value: TransmitionType.autommatic,
+                                      groupValue: value.transType,
+                                      onChanged: (TransmitionType? newvalue) {
+                                        setState(() {
+                                          value.transType = newvalue!;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: ListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    title: Text(
+                                      'Manual',
+                                      style: TextStyle(color: AppColors.colorYellowShade),
+                                    ),
+                                    leading: Radio(
+                                      fillColor: MaterialStateProperty.all(AppColors.colorYellowShade),
+                                      value: TransmitionType.manaual,
+                                      groupValue: value.transType,
+                                      onChanged: (TransmitionType? newvalue) {
+                                        setState(() {
+                                          value.transType = newvalue!;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
 
-                      _uploadImagesSection(),
-                      addVerticleSpace(AppDimens.dimens_10),
-                      _videoSection(),
-                      // Align(
-                      //   alignment: Alignment.centerLeft,
-                      //   child: Text(
-                      //     'Car Plate Number'.tr,
-                      //     style: regularText600(15),
-                      //   ),
-                      // ),
-                      // addVerticleSpace(AppDimens.dimens_12),
-                      // //..........Car plete info row..................//
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //   children: [
-                      //     Expanded(
-                      //       child: CustomTextFieldWithIcon(
-                      //         height: 42,
-                      //         textInputAction: TextInputAction.next,
-                      //         enabled: true,
-                      //         controller: value.controllerCode,
-                      //         keyboardType: TextInputType.text,
-                      //         hintText: 'Code'.tr,
-                      //         inputFormatters: const [],
-                      //         obscureText: false,
-                      //         onChanged: (String value) {},
-                      //       ),
-                      //     ),
-                      //     addHorizontalSpace(5),
-                      //     Expanded(
-                      //       child: CustomTextFieldWithIcon(
-                      //         height: 42,
-                      //         textInputAction: TextInputAction.next,
-                      //         enabled: true,
-                      //         controller: value.controllerCity,
-                      //         keyboardType: TextInputType.text,
-                      //         hintText: 'City'.tr,
-                      //         inputFormatters: const [],
-                      //         obscureText: false,
-                      //         onChanged: (String value) {},
-                      //       ),
-                      //     ),
-                      //     addHorizontalSpace(5),
-                      //     Expanded(
-                      //       child: CustomTextFieldWithIcon(
-                      //         height: 42,
-                      //         textInputAction: TextInputAction.next,
-                      //         enabled: true,
-                      //         controller: value.controllerNumber,
-                      //         keyboardType: TextInputType.text,
-                      //         hintText: 'Number'.tr,
-                      //         inputFormatters: const [],
-                      //         obscureText: false,
-                      //         onChanged: (String value) {},
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      addVerticleSpace(16),
-                      // edit butons................
-                      CustomButton(
-                          isGradient: true,
-                          isRoundBorder: true,
-                          height: height,
-                          fontSize: -2,
-                          fontColor: AppColors.colorWhite,
-                          width: size.width / 2.2,
-                          onPressed: () {
-                            value.isValid();
-                          },
-                          strTitle: "Update".tr),
-                      addVerticleSpace(12),
+                          _uploadImagesSection(),
+                          addVerticleSpace(AppDimens.dimens_10),
+                          _videoSection(),
+                          // Align(
+                          //   alignment: Alignment.centerLeft,
+                          //   child: Text(
+                          //     'Car Plate Number'.tr,
+                          //     style: regularText600(15),
+                          //   ),
+                          // ),
+                          // addVerticleSpace(AppDimens.dimens_12),
+                          // //..........Car plete info row..................//
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          //   children: [
+                          //     Expanded(
+                          //       child: CustomTextFieldWithIcon(
+                          //         height: 42,
+                          //         textInputAction: TextInputAction.next,
+                          //         enabled: true,
+                          //         controller: value.controllerCode,
+                          //         keyboardType: TextInputType.text,
+                          //         hintText: 'Code'.tr,
+                          //         inputFormatters: const [],
+                          //         obscureText: false,
+                          //         onChanged: (String value) {},
+                          //       ),
+                          //     ),
+                          //     addHorizontalSpace(5),
+                          //     Expanded(
+                          //       child: CustomTextFieldWithIcon(
+                          //         height: 42,
+                          //         textInputAction: TextInputAction.next,
+                          //         enabled: true,
+                          //         controller: value.controllerCity,
+                          //         keyboardType: TextInputType.text,
+                          //         hintText: 'City'.tr,
+                          //         inputFormatters: const [],
+                          //         obscureText: false,
+                          //         onChanged: (String value) {},
+                          //       ),
+                          //     ),
+                          //     addHorizontalSpace(5),
+                          //     Expanded(
+                          //       child: CustomTextFieldWithIcon(
+                          //         height: 42,
+                          //         textInputAction: TextInputAction.next,
+                          //         enabled: true,
+                          //         controller: value.controllerNumber,
+                          //         keyboardType: TextInputType.text,
+                          //         hintText: 'Number'.tr,
+                          //         inputFormatters: const [],
+                          //         obscureText: false,
+                          //         onChanged: (String value) {},
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          addVerticleSpace(16),
+                          // edit butons................
+                          CustomButton(
+                              isGradient: true,
+                              isRoundBorder: true,
+                              height: 60,
+                              fontSize: -2,
+                              fontColor: AppColors.colorWhite,
+                              width: size.width / 2.2,
+                              onPressed: () {
+                                value.isValid();
+                              },
+                              strTitle: "Save".tr),
+                          addVerticleSpace(12),
+                        ],
+                      ),
                     ],
                   ),
                 )));

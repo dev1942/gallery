@@ -57,4 +57,7 @@ class RequestBuilder {
   static final String API_CARS_INQUIRY = "inquiry";
   // Cars inquiry
   static final String API_CARS_ADD = "products";
+
+  // Filter cars List
+  static final String API_FILTER_CARS = "products/filters";
 }
