@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -12,6 +13,8 @@ import '../../../global/constants.dart';
 import '../../../global/enum.dart';
 import '../../../global/global.dart';
 import '../../../global/url_collection.dart';
+import '../../../services/repository/buy_car_repo.dart';
+import '../../CatBuyCar/models/CarBrandsModel.dart';
 import '../addCar_toSell.dart';
 
 class AddCarController extends GetxController {
@@ -44,6 +47,8 @@ class AddCarController extends GetxController {
   LightCompressor lightCompressor = LightCompressor();
   bool isVideoCompressed = false;
   bool isShowLoader = false;
+
+  List<CarBrandDetails> listOfCarBrand = [];
   Future<void> showLoader() async {
     isShowLoader = true;
     update();
@@ -235,6 +240,34 @@ class AddCarController extends GetxController {
       Logger().e("Exception is=======>>${e.toString()}");
       return false;
     }
+  }
+
+  Future<void> getBrandsList() async {
+    isShowLoader = true;
+    update();
+
+    // isShowLoader = true;
+
+    HashMap<String, Object> requestParams = HashMap();
+
+    var carBrands = await BuyCarRepo().getBrandsList(requestParams);
+
+    carBrands.fold((failure) {
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+
+      isShowLoader = false;
+      update();
+    }, (mResult) {
+      var carBrandsModel = mResult.responseData as CarBrandsModel;
+
+      if (carBrandsModel != null) {
+        listOfCarBrand = carBrandsModel.data;
+      }
+      log(listOfCarBrand.length.toString());
+      update();
+    });
+    isShowLoader = false;
+    update();
   }
 }
 

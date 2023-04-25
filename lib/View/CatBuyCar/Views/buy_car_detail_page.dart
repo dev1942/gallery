@@ -65,7 +65,21 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  children: [_pageView(), _pageViewDots(), _carDetails(), _specifications(), _overview(), _enquiryButton()],
+                  children: [
+                    _pageView(),
+                    _pageViewDots(),
+                    _carDetails(),
+                    _specifications(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Price'.tr + " " + (widget.carsForSell.details?.price ?? "Nill") + " AED",
+                      style: subHeadingText(15),
+                    ),
+                    _overview(),
+                    _enquiryButton()
+                  ],
                 )
               ],
             )));
@@ -190,14 +204,14 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
       );
 
   _carDetails() => Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+        padding: const EdgeInsets.only(left: 0, right: 10, top: 20),
         child: Column(
           children: [
             Row(
               children: [
                 Expanded(
-                  child: Text(
-                    widget.carsForSell.details?.model ?? "",
+                  child: Text(  
+                    "Model: ${widget.carsForSell.details?.model}" ?? "",
                     style: regularText(14).copyWith(color: HexColor('#4E5F76')),
                   ),
                 ),
@@ -206,7 +220,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
                   style: regularText(14).copyWith(color: AppColors.colorBlueStart),
                 ),
                 Text(
-                  widget.carsForSell.details?.numberOfSeats ?? "",
+                  widget.carsForSell.details?.numberOfSeats ?? "Not Mentioned",
                   style: regularText(14).copyWith(color: AppColors.lightGrey),
                 ),
               ],

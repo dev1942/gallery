@@ -60,4 +60,6 @@ class RequestBuilder {
 
   // Filter cars List
   static final String API_FILTER_CARS = "products/filters";
+  // Filter cars List
+  static final String API_CARS_BRANDS = "cars/brand";
 }

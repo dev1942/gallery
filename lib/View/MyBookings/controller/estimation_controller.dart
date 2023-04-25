@@ -422,7 +422,7 @@ class CreateEstimationController extends GetxController {
       //.........................not ok ...................................................
       else {
         //   //.............Failure case............................
-        Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: message, toastType: TOAST_TYPE.toastError);
+        Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: message.toString(), toastType: TOAST_TYPE.toastError);
 
         isShowLoader = false;
         update();

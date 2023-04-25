@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:otobucks/View/MyBookings/Models/view_booking_model.dart';
+
 import 'package:otobucks/View/MyBookings/Repo/decline_booking_Repo.dart';
 import 'package:otobucks/View/MyBookings/controller/reschedule_booking_controller.dart';
 import 'package:otobucks/View/MyBookings/widget/date_selector_view.dart';
@@ -31,14 +31,16 @@ import '../../../widgets/custom_button.dart';
 import '../../../widgets/google_map_view.dart';
 import '../../../widgets/media_button.dart';
 import '../../Estimation/Controllers/estimation_sidebar_controllers/view_estimation_controller.dart';
+import '../Models/PromotionBookingModel.dart';
+import '../controller/mybookings_controller.dart';
 
 // ignore: must_be_immutable
-class ViewBookingEstimation extends StatefulWidget {
-  final Result mEstimatesModel;
+class ViewPromotionDetailsScreen extends StatefulWidget {
+  final ProotionResult mEstimatesModel;
   final bool isPending;
   final String? status;
   bool isRebooked;
-  ViewBookingEstimation({
+  ViewPromotionDetailsScreen({
     Key? key,
     this.status,
     required this.mEstimatesModel,
@@ -46,10 +48,10 @@ class ViewBookingEstimation extends StatefulWidget {
     this.isRebooked = false,
   }) : super(key: key);
   @override
-  ViewBookingEstimationState createState() => ViewBookingEstimationState();
+  ViewPromotionDetailsScreenState createState() => ViewPromotionDetailsScreenState();
 }
 
-class ViewBookingEstimationState extends State<ViewBookingEstimation> {
+class ViewPromotionDetailsScreenState extends State<ViewPromotionDetailsScreen> {
   final ImagePicker _imagePicker = ImagePicker();
   dynamic imagePickerPath = "";
   List<String> imagePaths = [];
@@ -63,34 +65,36 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
 
   var controller = Get.put(ViewEstimationController());
   var reScheduleController = Get.put(RescheduleBookingController());
+  String promotiondate = "";
   @override
   void initState() {
-    controllerNotes = TextEditingController(text: widget.mEstimatesModel.bookingDetails!.customerNote.toString());
+    controllerNotes = TextEditingController(text: widget.mEstimatesModel.bookingDetails!.note.toString());
+    promotiondate = widget.mEstimatesModel.bookingDetails!.date!;
 //-----------videos
-    if (widget.mEstimatesModel.bookingDetails!.video!.isNotEmpty) {
-      reScheduleController.pickedVideo = widget.mEstimatesModel.bookingDetails!.video!.first;
-    }
+//     if (widget.mEstimatesModel.bookingDetails!.video!.isNotEmpty) {
+//       reScheduleController.pickedVideo = widget.mEstimatesModel.bookingDetails!.!.first;
+//     }
 
-//-------------images--------
-    if (widget.mEstimatesModel.bookingDetails!.image!.isNotEmpty) {
-      imageLoader = true;
-      getimageUrl(widget.mEstimatesModel.bookingDetails!.image!.first);
-      ImageDownloader.callback(onProgressUpdate: (String? imageId, int progress) {
-        setState(() {
-          _progress = progress;
-        });
-      });
-    }
-    //-------voice notes
-    if (widget.mEstimatesModel.bookingDetails!.voiceNote!.isNotEmpty) {
-      reScheduleController.voiceNoteFile = widget.mEstimatesModel.bookingDetails!.voiceNote!.first;
-    }
-    if (widget.mEstimatesModel.bookingDetails!.customerNote != null) {
-      reScheduleController.controllerNote.text = widget.mEstimatesModel.bookingDetails!.customerNote.toString();
-    }
-    // log(widget.mEstimatesModel.bookingDetails!.voiceNote);
+// //-------------images--------
+//     if (widget.mEstimatesModel.bookingDetails!.im!.isNotEmpty) {
+//       imageLoader = true;
+//       getimageUrl(widget.mEstimatesModel.bookingDetails!.image!.first);
+//       ImageDownloader.callback(onProgressUpdate: (String? imageId, int progress) {
+//         setState(() {
+//           _progress = progress;
+//         });
+//       });
+//     }
+//     //-------voice notes
+//     if (widget.mEstimatesModel.bookingDetails!.voiceNote!.isNotEmpty) {
+//       reScheduleController.voiceNoteFile = widget.mEstimatesModel.bookingDetails!.voiceNote!.first;
+//     }
+//     if (widget.mEstimatesModel.bookingDetails!.customerNote != null) {
+//       reScheduleController.controllerNote.text = widget.mEstimatesModel.bookingDetails!.customerNote.toString();
+//     }
+//     // log(widget.mEstimatesModel.bookingDetails!.voiceNote);
 
-    reScheduleController.onInitScreen(widget.mEstimatesModel);
+//     reScheduleController.onInitScreen(widget.mEstimatesModel);
     super.initState();
   }
 
@@ -127,7 +131,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
       appBar: AppViews.initAppBar(
         mContext: context,
         centerTitle: false,
-        strTitle: widget.mEstimatesModel.source!.title.toString() + " Detail",
+        strTitle: widget.mEstimatesModel.promotion!.title.toString() + " Detail",
         isShowNotification: false,
         isShowSOS: false,
       ),
@@ -232,7 +236,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                             strMsg: "Please Select Another date",
                                             toastType: TOAST_TYPE.toastInfo);
                                       } else {
-                                        reScheduleController.reScheduleBooking(context, widget.mEstimatesModel.id.toString(),
+                                        reScheduleController.reScheduleBooking(context, widget.mEstimatesModel.promotion!.id.toString(),
                                             imagePath: imagePaths.first);
                                       }
                                     } else {
@@ -245,7 +249,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                       } else {
                                         reScheduleController.reScheduleBooking(
                                           context,
-                                          widget.mEstimatesModel.id.toString(),
+                                          widget.mEstimatesModel.promotion!.id.toString(),
                                         );
                                       }
                                     }
@@ -281,7 +285,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                                       strMsg: "Please Select Another date".tr,
                                                       toastType: TOAST_TYPE.toastInfo);
                                                 } else {
-                                                  reScheduleController.reScheduleBooking(context, widget.mEstimatesModel.id.toString(),
+                                                  reScheduleController.reScheduleBooking(context, widget.mEstimatesModel.promotion!.id.toString(),
                                                       imagePath: imagePaths.first);
                                                 }
                                               } else {
@@ -295,7 +299,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                                 } else {
                                                   reScheduleController.reScheduleBooking(
                                                     context,
-                                                    widget.mEstimatesModel.id.toString(),
+                                                    widget.mEstimatesModel.promotion!.id.toString(),
                                                   );
                                                 }
                                               }
@@ -334,21 +338,18 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                   margin: const EdgeInsets.only(
                                       top: AppDimens.dimens_20, bottom: AppDimens.dimens_20, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
                                   child: CustomButton(
-                                      isGradient: true,
-                                      isRoundBorder: true,
-                                      fontColor: AppColors.colorWhite,
-                                      width: size.width,
-                                      onPressed: () {},
-                                      // =>
-                                      //     controller.rebook(
-                                      //     context, widget.mEstimatesModel),
-                                      strTitle: widget.status == "completed"
-                                          ? "Completed".tr
-                                          : widget.status == "inProgress"
-                                              ? "In Progress".tr
-                                              : widget.status == "cancelled"
-                                                  ? "Cancelled".tr
-                                                  : "Booked".tr),
+                                    isGradient: true,
+                                    isRoundBorder: true,
+                                    fontColor: AppColors.colorWhite,
+                                    width: size.width,
+                                    onPressed: () {
+                                      Get.put(MyBookingsController()).reseduleBooking(context, widget.mEstimatesModel.promotion!.id!, promotiondate);
+                                    },
+                                    // =>
+                                    //     controller.rebook(
+                                    //     context, widget.mEstimatesModel),
+                                    strTitle: "Reschedule",
+                                  ),
                                 ),
                     ],
                   ))
@@ -356,6 +357,9 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               // Expanded(child: Container()),
             ],
           ),
+          GetBuilder<MyBookingsController>(
+            builder: (value) => AppViews.showLoadingWithStatus(value.isShowLoader),
+          )
         ],
       ),
     );
@@ -369,7 +373,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
             isDecline: false,
             onTap: (String strReason) {
               if (Global.checkNull(strReason)) {
-                declineEstimation(id: widget.mEstimatesModel.id.toString(), reason: strReason);
+                declineEstimation(id: widget.mEstimatesModel.promotion!.id.toString(), reason: strReason);
               } else {
                 Global.showToastAlert(context: context, strTitle: "", strMsg: AppAlert.ALERT_ENTER_FN, toastType: TOAST_TYPE.toastError);
               }
@@ -423,8 +427,8 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                 child: NetworkImageCustom(
-                    image: widget.mEstimatesModel.source!.image!.isNotEmpty
-                        ? widget.mEstimatesModel.source!.image!.first
+                    image: widget.mEstimatesModel.promotion!.promoImg!.isNotEmpty
+                        ? widget.mEstimatesModel.promotion!.promoImg!.first
                         : "https://i.tribune.com.pk/media/images/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0.jpg",
                     fit: BoxFit.fill,
                     height: AppDimens.dimens_120,
@@ -487,7 +491,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                       ),
                     ),
                     Text(
-                      widget.mEstimatesModel.source!.title.toString(),
+                      widget.mEstimatesModel.promotion!.title.toString(),
                       style: AppStyle.textViewStyleNormalSubtitle2(context: context, color: Colors.grey, fontSizeDelta: 1, fontWeightDelta: -1),
                     ),
                   ],
@@ -527,7 +531,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                       ),
                     ),
                     GradientText(
-                      Global.replaceCurrencySign(widget.mEstimatesModel.source!.currency!) + widget.mEstimatesModel.source!.price!.toString(),
+                      Global.replaceCurrencySign("AED") + widget.mEstimatesModel.promotion!.priceAfterDiscount!.toString(),
                       style: AppStyle.textViewStyleNormalSubtitle2(
                           context: context, color: AppColors.colorTextBlue, fontSizeDelta: 0, fontWeightDelta: 3),
                     ),
@@ -567,6 +571,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                     selectedDate: DateTime.parse(widget.mEstimatesModel.bookingDetails!.date!),
                     //selectedDate:DateTime.parse(value.selectedDate),
                     onSelection: (String _selectedDate) {
+                      promotiondate = _selectedDate;
                       value.onSelectDate(_selectedDate);
                     }
 
@@ -619,19 +624,19 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                 ),
               ),
 
-              MyCarListItem(
-                  isViewed: true,
-                  carBrand: widget.mEstimatesModel.bookingDetails!.car!.brand ?? "",
-                  modeYear: widget.mEstimatesModel.bookingDetails!.car!.modelYear ?? "",
-                  km: widget.mEstimatesModel.bookingDetails!.car!.mileage ?? "",
-                  color: widget.mEstimatesModel.bookingDetails!.car!.color ?? "",
-                  code: widget.mEstimatesModel.bookingDetails!.car!.carCode ?? "",
-                  city: widget.mEstimatesModel.bookingDetails!.car!.carCity ?? "",
-                  number: widget.mEstimatesModel.bookingDetails!.car!.carNumber ?? "",
-                  registrationDate: "",
-                  image: "https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
-                  onEditTap: () {},
-                  onDeleteTap: () {}),
+              // MyCarListItem(
+              //     isViewed: true,
+              //     carBrand: widget.mEstimatesModel. ?? "",
+              //     modeYear: widget.mEstimatesModel.bookingDetails!.car!.modelYear ?? "",
+              //     km: widget.mEstimatesModel.bookingDetails!.car!.mileage ?? "",
+              //     color: widget.mEstimatesModel.bookingDetails!.car!.color ?? "",
+              //     code: widget.mEstimatesModel.bookingDetails!.car!.carCode ?? "",
+              //     city: widget.mEstimatesModel.bookingDetails!.car!.carCity ?? "",
+              //     number: widget.mEstimatesModel.bookingDetails!.car!.carNumber ?? "",
+              //     registrationDate: "",
+              //     image: "https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
+              //     onEditTap: () {},
+              //     onDeleteTap: () {}),
 
               //---------------------------------------------------Upload image or Take a photo
               Container(

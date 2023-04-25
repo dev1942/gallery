@@ -76,7 +76,19 @@ class CarItem extends StatelessWidget {
                           margin: EdgeInsets.only(right: 10),
                           alignment: Alignment.centerRight,
                           child: Text(
-                            carsForSell.details?.model ?? "",
+                            "Model: ${carsForSell.details?.model}" ?? "",
+                            style: regularText(12).copyWith(
+                              color: AppColors.lightGrey,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(right: 10),
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            "Price: ${carsForSell.details?.price} AED",
                             style: regularText(12).copyWith(
                               color: AppColors.lightGrey,
                             ),

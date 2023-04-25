@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../global/constants.dart';
 import '../../../services/repository/buy_car_repo.dart';
 import '../Views/rating_screen.dart';
+import '../models/CarBrandsModel.dart';
 
 class BuyCarController extends GetxController {
   Rx<ShowData> mShowData = ShowData.showData.obs;
@@ -18,6 +19,7 @@ class BuyCarController extends GetxController {
   bool connectionStatus = false;
   bool isShowLoader = false;
   CarsListModel? carsListModel;
+  List<CarBrandDetails> listOfCarBrand = [];
 // inquiry
   String name = '';
   String email = '';
@@ -65,7 +67,7 @@ class BuyCarController extends GetxController {
 
 //----------------------------get Car List From api available for purchasing------------------
 
-  Future<void> getCarsList() async {
+  Future<void> getCarsListavailable() async {
     mShowData.value = ShowData.showLoading;
     update();
 
@@ -87,6 +89,35 @@ class BuyCarController extends GetxController {
       update();
     });
   }
+
+  // get brands list
+
+  Future<void> getBrandsList() async {
+    mShowData.value = ShowData.showLoading;
+    update();
+
+    // isShowLoader = true;
+
+    HashMap<String, Object> requestParams = HashMap();
+
+    var categories = await BuyCarRepo().getBrandsList(requestParams);
+
+    categories.fold((failure) {
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+
+      mShowData.value = ShowData.showNoDataFound;
+      update();
+    }, (mResult) {
+      var carBrandsModel = mResult.responseData as CarBrandsModel;
+
+      listOfCarBrand = carBrandsModel.data;
+
+      mShowData.value = ShowData.showData;
+      update();
+    });
+  }
+
+  // send inquiry to purchase a car
 
   inquiryTask(BuildContext context) async {
     isShowLoader = true;

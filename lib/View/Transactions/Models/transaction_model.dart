@@ -7,6 +7,7 @@ import 'dart:convert';
 class TransactionModel {
   TransactionModel({
     required this.metadata,
+    required this.serviceTitle,
     required this.id,
     required this.source,
     required this.destination,
@@ -19,6 +20,7 @@ class TransactionModel {
   });
 
   Metadata metadata;
+  String serviceTitle;
   dynamic id;
   dynamic source;
   dynamic destination;
@@ -29,14 +31,13 @@ class TransactionModel {
   dynamic createdAt;
   dynamic updatedAt;
 
-  factory TransactionModel.fromJson(dynamic str) =>
-      TransactionModel.fromMap(json.decode(str));
+  factory TransactionModel.fromJson(dynamic str) => TransactionModel.fromMap(json.decode(str));
 
   dynamic toJson() => json.encode(toMap());
 
-  factory TransactionModel.fromMap(Map<dynamic, dynamic> json) =>
-      TransactionModel(
+  factory TransactionModel.fromMap(Map<dynamic, dynamic> json) => TransactionModel(
         metadata: Metadata.fromMap(json["metadata"]),
+        serviceTitle: json["serviceTitle"],
         id: json["_id"],
         source: json["source"],
         destination: json["destination"],
@@ -82,11 +83,8 @@ class Metadata {
   factory Metadata.fromMap(Map<dynamic, dynamic> json) => Metadata(
         type: json["type"],
         user: User.fromMap(json["user"]),
-        service:
-            json["service"] == null ? null : Service.fromMap(json["service"]),
-        provider: json["provider"] == null
-            ? null
-            : Provider.fromMap(json["provider"]),
+        service: json["service"] == null ? null : Service.fromMap(json["service"]),
+        provider: json["provider"] == null ? null : Provider.fromMap(json["provider"]),
       );
 
   Map<dynamic, dynamic> toMap() => {

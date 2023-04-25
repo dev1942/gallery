@@ -1,12 +1,19 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otobucks/View/CatBuyCar/Views/rent_acar_date_selection.dart';
 import 'package:otobucks/View/CatBuyCar/controllers/buy_car_controller.dart';
 import 'package:otobucks/global/app_colors.dart';
 
+import '../../../global/app_dimens.dart';
+import '../../../global/app_style.dart';
 import '../../../global/app_views.dart';
+import '../../../global/constants.dart';
 import '../../../widgets/custom_textfield_with_icon.dart';
+import '../../../widgets/custom_ui/drop_down/dropdown_button2.dart';
 import '../../../widgets/small_button.dart';
+import '../models/CarBrandsModel.dart';
 
 class FilterAcarScreen extends StatefulWidget {
   const FilterAcarScreen({Key? key}) : super(key: key);
@@ -26,6 +33,16 @@ bool isManual = false;
 bool isAuto = false;
 
 class _FilterAcarScreenState extends State<FilterAcarScreen> {
+  var buycarController = Get.put(BuyCarController());
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      buycarController.getBrandsList();
+    });
+  }
+
   RangeValues values = RangeValues(10000, 10000000);
   @override
   Widget build(BuildContext context) {
@@ -97,17 +114,79 @@ class _FilterAcarScreenState extends State<FilterAcarScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          CustomTextFieldWithIcon(
-                            height: 42,
-                            textInputAction: TextInputAction.next,
-                            enabled: true,
-                            controller: txtBrand,
-                            keyboardType: TextInputType.text,
-                            hintText: "Brand".tr,
-                            inputFormatters: const [],
-                            obscureText: false,
-                            onChanged: (String value) {},
-                          ),
+                          Container(
+                              margin: const EdgeInsets.only(
+                                top: AppDimens.dimens_8,
+                              ),
+                              child: value.listOfCarBrand.isNotEmpty
+                                  ? DropdownButtonFormField2(
+                                      buttonHeight: 45,
+                                      decoration: InputDecoration(
+                                        //Add isDense true and zero Padding.
+                                        //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
+                                        isDense: true,
+                                        hintStyle: AppStyle.textViewStyleNormalBodyText2(
+                                            color: AppColors.colorTextFieldHint, fontSizeDelta: -5, fontWeightDelta: -1, context: Get.context!),
+                                        fillColor: Colors.white,
+                                        focusedBorder: AppViews.textFieldRoundBorder(),
+                                        border: AppViews.textFieldRoundBorder(),
+                                        disabledBorder: AppViews.textFieldRoundBorder(),
+                                        focusedErrorBorder: AppViews.textFieldRoundBorder(),
+                                        contentPadding: EdgeInsets.zero,
+                                        filled: true,
+                                        //Add more decoration as you want here
+                                        //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
+                                      ),
+                                      isExpanded: true,
+                                      hint: Text(
+                                        Constants.STR_CAR_BRAND.tr,
+                                      ),
+                                      icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                                      iconSize: 30,
+                                      buttonPadding: const EdgeInsets.only(left: 20, right: 10),
+                                      dropdownDecoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      items: value.listOfCarBrand!
+                                          .map((item) => DropdownMenuItem<CarBrandDetails>(
+                                                value: item,
+                                                child: Text(
+                                                  item.name,
+                                                  style: AppStyle.textViewStyleSmall(context: Get.context!, color: Colors.black),
+                                                ),
+                                              ))
+                                          .toList(),
+                                      // validator: (value) {
+                                      //   if (value == null) {
+                                      //     return 'Field can not empty';
+                                      //   }
+                                      // },
+
+                                      onChanged: (CarBrandDetails? newvalue) {
+                                        log(newvalue!.name.toString());
+                                        txtBrand.text = newvalue!.name.toString();
+
+                                        // selectedValue = value.toString();
+                                        setState(() {});
+                                      },
+                                      onSaved: (newvalue) {
+                                        // selectedValue = value.toString();
+                                        setState(() {});
+                                      },
+                                    )
+                                  : const SizedBox()),
+                          // CustomTextFieldWithIcon(
+                          //   height: 42,
+                          //   textInputAction: TextInputAction.next,
+                          //   enabled: true,
+                          //   controller: txtBrand,
+                          //   keyboardType: TextInputType.text,
+                          //   hintText: "Brand".tr,
+                          //   inputFormatters: const [],
+                          //   obscureText: false,
+                          //   onChanged: (String value) {},
+                          // ),
                           const SizedBox(
                             height: 20,
                           ),

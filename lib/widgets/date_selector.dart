@@ -6,7 +6,7 @@ import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/enum.dart';
-
+import 'dart:developer';
 import '../global/app_views.dart';
 import '../global/constants.dart';
 import '../global/global.dart';
@@ -18,12 +18,7 @@ class DateSelector extends StatefulWidget {
   Function? clearTimeSelection;
   DateTime? selectedDate;
 
-  DateSelector(
-      {Key? key,
-      required this.onSelection,
-      this.clearTimeSelection,
-      this.selectedDate})
-      : super(key: key);
+  DateSelector({Key? key, required this.onSelection, this.clearTimeSelection, this.selectedDate}) : super(key: key);
 
   @override
   DateSelectorState createState() => DateSelectorState();
@@ -43,12 +38,10 @@ class DateSelectorState extends State<DateSelector> {
     alDatesOfMonth = Global.getDayOfMonth(alDateModel.first);
 
     if (widget.selectedDate != null) {
-      String mMonth =
-          DateFormat(Constants.STRING_MMMM_yyyy).format(widget.selectedDate!);
+      String mMonth = DateFormat(Constants.STRING_MMMM_yyyy).format(widget.selectedDate!);
       if (alDateModel.contains(mMonth)) {
         dropdownValue = mMonth;
-        alDatesOfMonth =
-            Global.getDayOfMonth(mMonth, selectedDate: widget.selectedDate);
+        alDatesOfMonth = Global.getDayOfMonth(mMonth, selectedDate: widget.selectedDate);
 
         timer();
       }
@@ -94,29 +87,21 @@ class DateSelectorState extends State<DateSelector> {
             value: dropdownValue,
             icon: const Icon(Icons.keyboard_arrow_down_outlined),
             elevation: 16,
-            style: AppStyle.textViewStyleNormalBodyText2(
-                context: context, color: AppColors.colorBlack),
+            style: AppStyle.textViewStyleNormalBodyText2(context: context, color: AppColors.colorBlack),
             underline: Container(
               height: 0,
             ),
             onChanged: (String? newValue) {
-              DateTime parseDate =
-                  DateFormat(Constants.STRING_MMMM_yyyy).parse(newValue!);
-              DateTime currentDate =
-                  DateTime(DateTime.now().year, DateTime.now().month);
+              DateTime parseDate = DateFormat(Constants.STRING_MMMM_yyyy).parse(newValue!);
+              DateTime currentDate = DateTime(DateTime.now().year, DateTime.now().month);
               int diff = parseDate.difference(currentDate).inDays;
               if (diff >= 0) {
                 setState(() {
                   dropdownValue = newValue.toString();
-                  alDatesOfMonth = Global.getDayOfMonth(newValue.toString(),
-                      selectedDate: DateTime.now());
+                  alDatesOfMonth = Global.getDayOfMonth(newValue.toString(), selectedDate: DateTime.now());
                 });
               } else {
-                Global.showToastAlert(
-                    context: context,
-                    strTitle: "",
-                    strMsg: "Please select a future month.",
-                    toastType: TOAST_TYPE.toastWarning);
+                Global.showToastAlert(context: context, strTitle: "", strMsg: "Please select a future month.", toastType: TOAST_TYPE.toastWarning);
               }
             },
             items: alDateModel.map<DropdownMenuItem<String>>((String value) {
@@ -124,8 +109,7 @@ class DateSelectorState extends State<DateSelector> {
                 value: value,
                 child: Text(
                   value,
-                  style: AppStyle.textViewStyleNormalBodyText2(
-                      context: context, color: AppColors.colorBlack),
+                  style: AppStyle.textViewStyleNormalBodyText2(context: context, color: AppColors.colorBlack),
                 ),
               );
             }).toList(),
@@ -139,23 +123,17 @@ class DateSelectorState extends State<DateSelector> {
                 itemBuilder: (BuildContext contextM, index) {
                   DateModel mTimeModel = alDatesOfMonth[index];
                   Color textColor = AppColors.colorBlack;
-                  var mBoxDecoration = AppViews.getColorDecor(
-                      mColor: AppColors.greyDateBG,
-                      mBorderRadius: AppDimens.dimens_5);
+                  var mBoxDecoration = AppViews.getColorDecor(mColor: AppColors.greyDateBG, mBorderRadius: AppDimens.dimens_5);
 
                   if (mTimeModel.isSelected) {
                     textColor = AppColors.colorWhite;
-                    mBoxDecoration = AppViews.getGradientBoxDecoration(
-                        mBorderRadius: AppDimens.dimens_5);
+                    mBoxDecoration = AppViews.getGradientBoxDecoration(mBorderRadius: AppDimens.dimens_5);
                   }
                   return Container(
                     width: AppDimens.dimens_50,
                     alignment: Alignment.center,
-                    padding: const EdgeInsets.only(
-                        left: AppDimens.dimens_10, right: AppDimens.dimens_10),
-                    margin: const EdgeInsets.only(
-                        bottom: AppDimens.dimens_15,
-                        right: AppDimens.dimens_15),
+                    padding: const EdgeInsets.only(left: AppDimens.dimens_10, right: AppDimens.dimens_10),
+                    margin: const EdgeInsets.only(bottom: AppDimens.dimens_15, right: AppDimens.dimens_15),
                     decoration: mBoxDecoration,
                     child: InkWell(
                       child: Column(
@@ -165,10 +143,7 @@ class DateSelectorState extends State<DateSelector> {
                           Text(
                             mTimeModel.date,
                             textAlign: TextAlign.center,
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: textColor,
-                                fontWeightDelta: 1),
+                            style: AppStyle.textViewStyleSmall(context: context, color: textColor, fontWeightDelta: 1),
                             maxLines: 1,
                           ),
                           const SizedBox(
@@ -177,19 +152,13 @@ class DateSelectorState extends State<DateSelector> {
                           Text(
                             mTimeModel.daysOfTheWeek,
                             textAlign: TextAlign.center,
-                            style: AppStyle.textViewStyleSmall(
-                                context: context,
-                                color: textColor,
-                                fontWeightDelta: -2),
+                            style: AppStyle.textViewStyleSmall(context: context, color: textColor, fontWeightDelta: -2),
                             maxLines: 1,
                           ),
                         ],
                       ),
                       onTap: () {
-
-
-                        DateType mDateType =
-                            Global.checkIsToday(mTimeModel.getDateString());
+                        DateType mDateType = Global.checkIsToday(mTimeModel.getDateString());
 
                         switch (mDateType) {
                           case DateType.past:
@@ -197,21 +166,36 @@ class DateSelectorState extends State<DateSelector> {
                               widget.clearTimeSelection!();
                             }
                             Global.showToastAlert(
-                                context: context,
-                                strTitle: "",
-                                strMsg: "Please select a future month & date.",
-                                toastType: TOAST_TYPE.toastWarning);
+                                context: context, strTitle: "", strMsg: "Please select a future month & date.", toastType: TOAST_TYPE.toastWarning);
                             break;
                           case DateType.today:
+                            Global.showToastAlert(
+                                context: context,
+                                strTitle: "",
+                                strMsg: "service provider is not available on selected date please select another date and time ",
+                                toastType: TOAST_TYPE.toastWarning);
+                            break;
                           case DateType.none:
-                            setState(() {
-                              for (var element in alDatesOfMonth) {
-                                element.isSelected = false;
-                              }
-                              mTimeModel.isSelected = true;
+                            final now = DateTime.now();
+                            final tomorrow = DateTime(now.year, now.month, now.day + 1);
+                            if (mTimeModel.getDateTime() == now || mTimeModel.getDateTime() == tomorrow) {
+                              Global.showToastAlert(
+                                  context: context,
+                                  strTitle: "",
+                                  strMsg: "service provider is not available on selected date please select another date and time",
+                                  toastType: TOAST_TYPE.toastWarning);
+                            } else {
+                              setState(() {
+                                for (var element in alDatesOfMonth) {
+                                  element.isSelected = false;
+                                }
+                                mTimeModel.isSelected = true;
 
-                              widget.onSelection(mTimeModel.getDateString());
-                            });
+                                widget.onSelection(mTimeModel.getDateString());
+                              });
+                            }
+                            log(mTimeModel.getDateTime().toString());
+
                             break;
                         }
                       },

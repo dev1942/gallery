@@ -4,6 +4,11 @@ class LocaleLanguages extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'ar_AE': {
+          'Home': 'بيت',
+          'Support': 'يدعم',
+          'Sell Car': 'بيع السيارة',
+          'Notifications': 'إشعارات',
+          'Profile': 'حساب تعريفي',
           'Email': 'البريد الإلكتروني',
           'LOGIN': 'تسجيل الدخول',
           'Yes': 'نعم',
@@ -220,6 +225,11 @@ class LocaleLanguages extends Translations {
           'Car Detail Page': 'صفحة تفاصيل السيارة'
         },
         'en_US': {
+          'Home': 'Home',
+          'Support': 'Support',
+          'Sell Car': 'Sell Car',
+          'Notifications': 'Notifications',
+          'Profile': 'Profile',
           'Car Detail Page': 'Car Detail Page',
           'Send inquiry': 'Send inquiry',
           'Overview': "Overview",

@@ -2,6 +2,7 @@
 
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -14,6 +15,7 @@ import 'package:otobucks/services/repository/booking_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../widgets/image_selection_bottom_sheet.dart';
+import '../../Dashboard/Controllers/dashboard_controller.dart';
 import '../../Home/Controllers/home_screen_controller.dart';
 import '../../../global/constants.dart';
 import '../../../global/enum.dart';
@@ -21,6 +23,7 @@ import '../../../global/global.dart';
 import '../../../global/url_collection.dart';
 import '../../Chat/Models/my_rooms_model.dart';
 import '../../../services/repository/chat_repo.dart';
+import '../../Home/Views/home_page.dart';
 import '../Models/PromotionBookingModel.dart';
 import 'dart:developer' as yellowLog;
 
@@ -308,7 +311,9 @@ class MyBookingsController extends GetxController {
   }
 
   //openDispute method
-  openDispute(String bookingID) async {
+  openDispute(String bookingID,BuildContext context) async {
+    isShowLoader = true;
+    update();
     if (disputeDescriptionController.text.isNotEmpty && disputeDescriptionController.text.isNotEmpty && selectDisputeImage.isNotEmpty) {
       HashMap<String, Object> requestParams = HashMap();
       requestParams[PARAMS.PARAM_DISPUTE_TITLE] = disputeTitleController.text;
@@ -318,16 +323,54 @@ class MyBookingsController extends GetxController {
       var signInEmail = await BookingRepo().openDispute(requestParams);
       signInEmail.fold((failure) {
         Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+        Get.back();
+        Get.back();
         requestParams.clear();
       }, (mResult) {
         Logger().i("Success");
         Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
         requestParams.clear();
+        disputeTitleController.clear();
+        disputeDescriptionController.clear();
+        selectDisputeImage = "";
+        update();
+        isShowLoader = false;
+        update();
+        Get.put(HomeScreenController()).callback(PageType.home);
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomePage()), (Route<dynamic> route) => false);
+        Get.put(DashboardController()).refreshCategories();
       });
     } else if (bookingID == null) {
       Global.showToastAlert(context: Get.context!, strTitle: "Error", strMsg: "Booking not found", toastType: TOAST_TYPE.toastError);
     } else {
       Global.showToastAlert(context: Get.context!, strTitle: "Error", strMsg: "Please fill all fields", toastType: TOAST_TYPE.toastError);
     }
+  }
+
+  reseduleBooking(BuildContext context, String promotionId, String date) async {
+    isShowLoader = true;
+    update();
+
+    HashMap<String, Object> requestParams = HashMap();
+    // final prefs = await SharedPreferences.getInstance();
+    // var userId =  prefs.getString(SharedPrefKey.KEY_USER_ID);
+
+    requestParams['status'] = "accepted";
+    requestParams['date'] = date;
+
+    inspect(requestParams);
+
+    var inquiryTask = await BookingRepo().rescedulePromotions(requestParams, promotionId);
+
+    isShowLoader = false;
+    update();
+
+    inquiryTask.fold((failure) {
+      inspect(failure);
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+    }, (mResult) {
+      Get.back();
+      inspect(mResult);
+    });
   }
 }

@@ -20,7 +20,7 @@ class _BuyCarScreenState extends State<BuyCarScreen> {
   @override
   void initState() {
     super.initState();
-    controller.getCarsList();
+    controller.getCarsListavailable();
   }
 
   @override

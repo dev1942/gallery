@@ -161,7 +161,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                     //Voice Note
                     // if (widget.screenType != 'promotion') _voiceNoteSection(),
                     // Leave Note (if any)
-                    if (widget.screenType != 'promotion') _anyNoteTextFiledSection(),
+                    _anyNoteTextFiledSection(),
                     Container(
                       alignment: Alignment.center,
                       margin: const EdgeInsets.only(
