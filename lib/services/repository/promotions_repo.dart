@@ -31,6 +31,7 @@ class PromotionsRepo {
           mParamType: ParamType.simple);
       Result? mResponse;
       if (response.isNotEmpty) {
+        
         mResponse = Global.getData(response);
       } else {
         return Left(

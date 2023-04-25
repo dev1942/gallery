@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -94,7 +93,7 @@ class LogInScreen extends GetView<LoginController> {
                                     Constants.TXT_FORGOT_PASSWORD.tr,
                                     style: AppStyle.textViewStyleSmall(
                                         context: context,
-                                        color: AppColors.colorWhite,
+                                        color: AppColors.colorYellowShade,
                                         mDecoration: TextDecoration.underline,
                                         fontSizeDelta: -2,
                                         fontWeightDelta: -1),
@@ -121,7 +120,7 @@ class LogInScreen extends GetView<LoginController> {
                                         'create one'.tr,
                                         style: AppStyle.textViewStyleSmall(
                                             context: context,
-                                            color: AppColors.colorWhite,
+                                            color: AppColors.colorYellowShade,
                                             mDecoration: TextDecoration.underline,
                                             fontSizeDelta: 0,
                                             fontWeightDelta: -10),
@@ -139,13 +138,13 @@ class LogInScreen extends GetView<LoginController> {
                                   Checkbox(
                                       checkColor: AppColors.colorBlueStart,
                                       activeColor: Colors.white,
-                                      fillColor: MaterialStateProperty.all(Colors.white),
+                                      fillColor: MaterialStateProperty.all(AppColors.colorYellowShade),
                                       value: model.rememberMe,
                                       onChanged: (val) => model.changeRemember(val!)),
                                   Text(
                                     'Remember me'.tr,
                                     style: AppStyle.textViewStyleSmall(
-                                        context: context, color: AppColors.colorWhite, fontSizeDelta: 0, fontWeightDelta: -10),
+                                        context: context, color: AppColors.colorYellowShade, fontSizeDelta: 0, fontWeightDelta: -10),
                                   )
                                 ],
                               )

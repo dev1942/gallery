@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/View/CatBuyCar/Views/buy_car_page.dart';
 import 'package:otobucks/View/Dashboard/Controllers/dashboard_controller.dart';
 import 'package:otobucks/View/Dashboard/Views/dashboard_item_list.dart';
 import 'package:otobucks/View/Promotion_discount/View/banner_page_view.dart';
@@ -48,15 +49,17 @@ class DashboardFragmentState extends State<DashboardFragment> {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   children: [
-                    Container(
-                      alignment: Alignment.center,
-                      margin: const EdgeInsets.only(
-                          bottom: AppDimens.dimens_14, top: AppDimens.dimens_14, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
-                      // height: AppDimens.dimens_190,
-                      child: BannerPageView(
-                        alPromotions: controller.alPromotions,
-                      ),
-                    ),
+                    controller.alPromotions.where((element) => element.location == 'homePage').toList().length == 0
+                        ? SizedBox()
+                        : Container(
+                            alignment: Alignment.center,
+                            margin: const EdgeInsets.only(
+                                bottom: AppDimens.dimens_14, top: AppDimens.dimens_14, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
+                            // height: AppDimens.dimens_190,
+                            child: BannerPageView(
+                              alPromotions: controller.alPromotions,
+                            ),
+                          ),
                     DashboardItemList(),
                   ],
                 ),

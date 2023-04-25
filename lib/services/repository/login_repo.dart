@@ -36,6 +36,7 @@ class LoginRepo {
       if (mResponse?.responseStatus == true) {
         Map data = jsonDecode(response);
         String token = data[Constants.RES_TOKEN].toString();
+        log("Auth token :$token");
 
         Global.storeToken(token);
 

@@ -40,14 +40,18 @@ class DashboardFragmentPageTwoState extends State<DashboardFragmentPageTwo> {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 children: [
-                  Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.only(
-                        bottom: AppDimens.dimens_14, top: AppDimens.dimens_14, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
-                    child: BannerPageView(
-                      alPromotions: controller.alPromotions,
-                    ),
-                  ),
+                  controller.alPromotions.where((element) => element.location == "servicePage").toList().isNotEmpty
+                      ? Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.only(
+                              bottom: AppDimens.dimens_14, top: AppDimens.dimens_14, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
+                          child: BannerPageView(
+                            alPromotions: controller.alPromotions,
+                          ),
+                        )
+                      : SizedBox(
+                          height: 20,
+                        ),
                   const DashboardSubCategoryList(),
                 ],
               ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:otobucks/global/app_colors.dart';
 
+import '../global/app_dimens.dart';
+
 // All rights reserved by Healer
 
 class PrimaryButton extends StatelessWidget {
@@ -11,14 +13,7 @@ class PrimaryButton extends StatelessWidget {
   final dynamic keys;
   final double buttonHight;
 
-  const PrimaryButton(
-      {Key? key,
-      required this.label,
-      required this.onPress,
-      required this.color,
-      this.icon,
-      this.keys,
-      this.buttonHight = 45.0})
+  const PrimaryButton({Key? key, required this.label, required this.onPress, required this.color, this.icon, this.keys, this.buttonHight = 45.0})
       : super(key: key);
 
   @override
@@ -33,12 +28,11 @@ class PrimaryButton extends StatelessWidget {
           ),
           style: ButtonStyle(
               padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
-              elevation: MaterialStateProperty.all(2),
-              backgroundColor:
-                  MaterialStateProperty.all(color ?? AppColors.colorPrimary),
+              elevation: MaterialStateProperty.all(4),
+              backgroundColor: MaterialStateProperty.all(color ?? AppColors.colorPrimary),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                 ),
               )),
         ),

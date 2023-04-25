@@ -259,7 +259,7 @@ class _AppSplashScreenState extends State<AppSplashScreen> with SingleTickerProv
                   : Center(
                       child: _e
                           ? Image.asset(
-                              'assets/images/autofix.png',
+                              'assets/images/ic_app_icon_white.png',
                               height: 130,
                               width: 130,
                               fit: BoxFit.contain,

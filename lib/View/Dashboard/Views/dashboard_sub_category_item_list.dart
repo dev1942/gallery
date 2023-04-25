@@ -12,6 +12,7 @@ import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_images.dart';
 import 'package:otobucks/global/app_style.dart';
 import 'package:otobucks/global/constants.dart';
+import '../../CatBuyCar/Views/buy_car_page.dart';
 import '../Models/category_model.dart';
 import '../../../widgets/custom_textfield_with_icon.dart';
 import '../../../widgets/fade_in_image.dart';
@@ -45,28 +46,31 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList> with
             controller: value.scrollController,
             shrinkWrap: true,
             children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(left: AppDimens.dimens_15, bottom: AppDimens.dimens_10, right: AppDimens.dimens_15),
-                child: CustomTextFieldWithIcon(
-                  textInputAction: TextInputAction.next,
-                  enabled: true,
-                  controller: value.controllerSearch,
-                  keyboardType: TextInputType.emailAddress,
-                  hintText: Constants.STR_SEARCH_SUB_CAT.tr,
-                  inputFormatters: const [],
-                  obscureText: false,
-                  onChanged: (String value) {
-                    log("12345");
-                  },
-                  suffixIcon: InkWell(
-                    child: Image.asset(
-                      AppImages.ic_search,
-                      width: AppDimens.dimens_18,
-                    ),
-                    onTap: () {},
-                  ),
-                ),
-              ),
+              value.mCategoryModel.title == "Auto Repair"
+                  ? Container(
+                      margin: const EdgeInsets.only(left: AppDimens.dimens_15, bottom: AppDimens.dimens_10, right: AppDimens.dimens_15),
+                      child: CustomTextFieldWithIcon(
+                        textInputAction: TextInputAction.next,
+                        enabled: true,
+                        controller: value.controllerSearch,
+                        keyboardType: TextInputType.emailAddress,
+                        hintText: Constants.STR_SEARCH_SUB_CAT.tr,
+                        inputFormatters: const [],
+                        obscureText: false,
+                        onChanged: (String value) {
+                          log("12345");
+                        },
+                        suffixIcon: InkWell(
+                          child: Image.asset(
+                            AppImages.ic_search,
+                            width: AppDimens.dimens_18,
+                            color: AppColors.colorPrimary,
+                          ),
+                          onTap: () {},
+                        ),
+                      ),
+                    )
+                  : SizedBox(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(
@@ -113,13 +117,6 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList> with
               const Divider(
                 thickness: 1,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text(
-                  "Sub Categories".tr,
-                  style: AppStyle.textViewStyleLarge(context: context, color: AppColors.colorYellowShade, fontWeightDelta: 1, fontSizeDelta: 2),
-                ),
-              ),
               IndexedStack(
                   index: value.intTabPosition,
                   sizing: StackFit.loose,
@@ -146,6 +143,8 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList> with
         return const AccessoriesSubCatScreen();
       case 'Sell a car':
         return const CarSellFilters();
+      case 'Car sellers':
+        return const BuyCarScreen();
     }
     return comingSoon();
   }

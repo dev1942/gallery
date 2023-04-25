@@ -7,10 +7,11 @@ import 'package:otobucks/View/Services_All/Controllers/services_detail_screen_co
 import 'package:otobucks/global/app_colors.dart';
 import 'package:otobucks/global/app_dimens.dart';
 import 'package:otobucks/global/app_style.dart';
-import 'package:otobucks/global/extensions.dart';
 import 'package:otobucks/View/Dashboard/Models/category_model.dart';
 import 'package:otobucks/View/Services_All/Models/service_model.dart';
 import 'package:otobucks/widgets/custom_button.dart';
+
+import '../../../global/constants.dart';
 
 class PromotionDetailsScreen extends StatefulWidget {
   final PromotionsModel promotionsModel;
@@ -33,6 +34,8 @@ class PromotionDetailsScreenState extends State<PromotionDetailsScreen> {
       alVideos: [],
       currency: 'USD',
       description: '',
+      serviceTax: widget.promotionsModel.serviceTax,
+      vat: widget.promotionsModel.vat,
       id: widget.promotionsModel.id,
       mCategoryModel: CategoryModel(
           id: widget.promotionsModel.source.id, title: widget.promotionsModel.source.title.toString(), description: "", image: "", type: ""),
@@ -144,7 +147,7 @@ class PromotionDetailsScreenState extends State<PromotionDetailsScreen> {
                 const SizedBox(
                   height: 12,
                 ),
-                Text('Discription'.tr,
+                Text(Constants.TXT_DISCRIPTION.tr,
                     style: AppStyle.textViewStyleSmall(
                       context: context,
                       color: AppColors.colorBlueStart,

@@ -196,7 +196,12 @@ class ServiceDetailScreenState extends State<ServiceDetailScreen> {
                               margin: const EdgeInsetsDirectional.only(
                                 end: AppDimens.dimens_10,
                               ),
-                              child: Image.asset(AppImages.ic_round_blue_tick, width: AppDimens.dimens_16, height: AppDimens.dimens_16),
+                              child: Image.asset(
+                                AppImages.ic_round_blue_tick,
+                                width: AppDimens.dimens_16,
+                                height: AppDimens.dimens_16,
+                                color: AppColors.colorPrimary,
+                              ),
                             ),
                             Expanded(
                               child: Text(

@@ -16,18 +16,20 @@ import '../../View/Dashboard/Models/category_model.dart';
 import '../../View/Services_All/Models/service_model.dart';
 
 class ServicesRepo {
-  Future<Either<Failure, Success>> getServices(HashMap<String, Object> requestParams, {required String catId, required String subCatId}) async {
+  Future<Either<Failure, Success>> getServices(HashMap<String, Object> requestParams,
+      {required String catId, required String subCatId, String? lat, String? long}) async {
     bool connectionStatus = await ConnectivityStatus.isConnected();
     if (!connectionStatus) {
       return Left(Failure(DATA: "", MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION, STATUS: false));
     }
     try {
-      String response = await ReqListener.fetchPost(
-          strUrl: RequestBuilder.API_GET_SERVICES_SIMPLE + "?category=$catId&subcategory=$subCatId",
-          requestParams: requestParams,
-          mReqType: ReqType.get,
-          mParamType: ParamType.simple);
-      log(RequestBuilder.API_GET_SERVICES_SIMPLE + "?category=$catId&subcategory=$subCatId");
+      String url = "${RequestBuilder.API_GET_SERVICES_SIMPLE}?category=$catId&subcategory=$subCatId";
+
+      // if (lat != null) {
+      //   url = "${RequestBuilder.API_GET_SERVICES_SIMPLE}?category=$catId&subcategory=$subCatId&longitude$long&latitude=$lat";
+      // }
+      String response = await ReqListener.fetchPost(strUrl: url, requestParams: requestParams, mReqType: ReqType.get, mParamType: ParamType.simple);
+      log(url);
       Result? mResponse;
       if (response.isNotEmpty) {
         log(response);

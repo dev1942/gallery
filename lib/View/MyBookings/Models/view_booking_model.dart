@@ -12,21 +12,17 @@ class BookingModel {
   BookingModel.fromJson(Map<dynamic, dynamic> json)
       : status = json['status'] as String?,
         message = json['message'] as String?,
-        result = (json['result'] as List?)?.map((dynamic e) => Result.fromJson(e as Map<String,dynamic>)).toList();
+        result = (json['result'] as List?)?.map((dynamic e) => Result.fromJson(e as Map<String, dynamic>)).toList();
 
-  Map<dynamic, dynamic> toJson() => {
-    'status' : status,
-    'message' : message,
-    'result' : result?.map((e) => e.toJson()).toList()
-  };
+  Map<dynamic, dynamic> toJson() => {'status': status, 'message': message, 'result': result?.map((e) => e.toJson()).toList()};
 }
 
 class Result {
   final BookingDetails? bookingDetails;
   final Dispute? dispute;
   final StatusInfo? statusInfo;
-   dynamic  totalprice;
-   dynamic paymentCompleted;
+  dynamic totalprice;
+  dynamic paymentCompleted;
   final bool? disputeStatus;
   final String? status;
   final String? id;
@@ -65,45 +61,47 @@ class Result {
   });
 
   Result.fromJson(Map<String, dynamic> json)
-      : bookingDetails = (json['bookingDetails'] as Map<String,dynamic>?) != null ? BookingDetails.fromJson(json['bookingDetails'] as Map<String,dynamic>) : null,
-       dispute = (json['dispute'] as Map<String,dynamic>?) != null ? Dispute.fromJson(json['dispute'] as Map<String,dynamic>) : null,
-        statusInfo = (json['statusInfo'] as Map<String,dynamic>?) != null ? StatusInfo.fromJson(json['statusInfo'] as Map<String,dynamic>) : null,
+      : bookingDetails = (json['bookingDetails'] as Map<String, dynamic>?) != null
+            ? BookingDetails.fromJson(json['bookingDetails'] as Map<String, dynamic>)
+            : null,
+        dispute = (json['dispute'] as Map<String, dynamic>?) != null ? Dispute.fromJson(json['dispute'] as Map<String, dynamic>) : null,
+        statusInfo = (json['statusInfo'] as Map<String, dynamic>?) != null ? StatusInfo.fromJson(json['statusInfo'] as Map<String, dynamic>) : null,
         totalprice = json['totalprice'] as dynamic,
-        paymentCompleted = json['paymentCompleted']as dynamic,
+        paymentCompleted = json['paymentCompleted'] as dynamic,
         disputeStatus = json['disputeStatus'] as bool?,
         status = json['status'] as String?,
         id = json['_id'] as String?,
         rated = json['rated'] as bool?,
         deleted = json['deleted'] as bool?,
-        provider = (json['provider'] as Map<String,dynamic>?) != null ? Provider.fromJson(json['provider'] as Map<String,dynamic>) : null,
-        customer = (json['customer'] as Map<String,dynamic>?) != null ? Customer.fromJson(json['customer'] as Map<String,dynamic>) : null,
+        provider = (json['provider'] as Map<String, dynamic>?) != null ? Provider.fromJson(json['provider'] as Map<String, dynamic>) : null,
+        customer = (json['customer'] as Map<String, dynamic>?) != null ? Customer.fromJson(json['customer'] as Map<String, dynamic>) : null,
         type = json['type'] as String?,
         address = json['address'] as String?,
-        source = (json['source'] as Map<String,dynamic>?) != null ? Source.fromJson(json['source'] as Map<String,dynamic>) : null,
+        source = (json['source'] as Map<String, dynamic>?) != null ? Source.fromJson(json['source'] as Map<String, dynamic>) : null,
         createdAt = json['createdAt'] as String?,
         updatedAt = json['updatedAt'] as String?,
         v = json['__v'] as int?,
-        estimation = (json['estimation'] as Map<String,dynamic>?) != null ? Estimation.fromJson(json['estimation'] as Map<String,dynamic>) : null;
+        estimation = (json['estimation'] as Map<String, dynamic>?) != null ? Estimation.fromJson(json['estimation'] as Map<String, dynamic>) : null;
 
   Map<String, dynamic> toJson() => {
-    'bookingDetails' : bookingDetails?.toJson(),
-    'statusInfo' : statusInfo?.toJson(),
-    'totalprice' : totalprice,
-    'paymentCompleted' : paymentCompleted,
-    'disputeStatus' : disputeStatus,
-    'status' : status,
-    '_id' : id,
-    'rated' : rated,
-    'provider' : provider?.toJson(),
-    'customer' : customer?.toJson(),
-    'type' : type,
-    'address' : address,
-    'source' : source?.toJson(),
-    'createdAt' : createdAt,
-    'updatedAt' : updatedAt,
-    '__v' : v,
-    'estimation' : estimation?.toJson()
-  };
+        'bookingDetails': bookingDetails?.toJson(),
+        'statusInfo': statusInfo?.toJson(),
+        'totalprice': totalprice,
+        'paymentCompleted': paymentCompleted,
+        'disputeStatus': disputeStatus,
+        'status': status,
+        '_id': id,
+        'rated': rated,
+        'provider': provider?.toJson(),
+        'customer': customer?.toJson(),
+        'type': type,
+        'address': address,
+        'source': source?.toJson(),
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
+        '__v': v,
+        'estimation': estimation?.toJson()
+      };
 }
 
 class BookingDetails {
@@ -135,18 +133,18 @@ class BookingDetails {
         video = json['video'] as List?,
         date = json['date'] as String?,
         customerNote = json['customerNote'] as String?,
-        car = (json['car'] as Map<String,dynamic>?) != null ? Car.fromJson(json['car'] as Map<String,dynamic>) : null;
+        car = (json['car'] as Map<String, dynamic>?) != null ? Car.fromJson(json['car'] as Map<String, dynamic>) : null;
 
   Map<String, dynamic> toJson() => {
-    'time' : time,
-    'file' : file,
-    'image' : image,
-    'voiceNote' : voiceNote,
-    'video' : video,
-    'date' : date,
-    'customerNote' : customerNote,
-    'car' : car?.toJson()
-  };
+        'time': time,
+        'file': file,
+        'image': image,
+        'voiceNote': voiceNote,
+        'video': video,
+        'date': date,
+        'customerNote': customerNote,
+        'car': car?.toJson()
+      };
 }
 
 class Car {
@@ -181,15 +179,15 @@ class Car {
         carCity = json['carCity'] as String?;
 
   Map<String, dynamic> toJson() => {
-    '_id' : id,
-    'brand' : brand,
-    'carCode' : carCode,
-    'mileage' : mileage,
-    'carNumber' : carNumber,
-    'color' : color,
-    'modelYear' : modelYear,
-    'carCity' : carCity
-  };
+        '_id': id,
+        'brand': brand,
+        'carCode': carCode,
+        'mileage': mileage,
+        'carNumber': carNumber,
+        'color': color,
+        'modelYear': modelYear,
+        'carCity': carCity
+      };
 }
 
 class StatusInfo {
@@ -205,10 +203,7 @@ class StatusInfo {
       : by = json['by'] as String?,
         reason = json['reason'] as String?;
 
-  Map<String, dynamic> toJson() => {
-    'by' : by,
-    'reason' : reason
-  };
+  Map<String, dynamic> toJson() => {'by': by, 'reason': reason};
 }
 
 class Provider {
@@ -306,36 +301,36 @@ class Provider {
         id1 = json['id'] as String?;
 
   Map<String, dynamic> toJson() => {
-    'country' : country,
-    'states' : states,
-    'cities' : cities,
-    'banned' : banned,
-    'isEmailVerified' : isEmailVerified,
-    'isPhoneVerified' : isPhoneVerified,
-    'role' : role,
-    'experienceLevel' : experienceLevel,
-    'about' : about,
-    'status' : status,
-    'approvedBy' : approvedBy,
-    'firebaseToken' : firebaseToken,
-    'emergency' : emergency,
-    '_id' : id,
-    'car' : car,
-    'firstName' : firstName,
-    'lastName' : lastName,
-    'email' : email,
-    'phone' : phone,
-    'refrence' : refrence,
-    'image' : image,
-    'createdAt' : createdAt,
-    'updatedAt' : updatedAt,
-    '__v' : v,
-    'stripeId' : stripeId,
-    'coverImage' : coverImage,
-    'location' : location,
-    'cars' : cars,
-    'id' : id1
-  };
+        'country': country,
+        'states': states,
+        'cities': cities,
+        'banned': banned,
+        'isEmailVerified': isEmailVerified,
+        'isPhoneVerified': isPhoneVerified,
+        'role': role,
+        'experienceLevel': experienceLevel,
+        'about': about,
+        'status': status,
+        'approvedBy': approvedBy,
+        'firebaseToken': firebaseToken,
+        'emergency': emergency,
+        '_id': id,
+        'car': car,
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'phone': phone,
+        'refrence': refrence,
+        'image': image,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
+        '__v': v,
+        'stripeId': stripeId,
+        'coverImage': coverImage,
+        'location': location,
+        'cars': cars,
+        'id': id1
+      };
 }
 
 class Customer {
@@ -412,7 +407,7 @@ class Customer {
         status = json['status'] as String?,
         approvedBy = json['approvedBy'],
         firebaseToken = json['firebaseToken'] as String?,
-        emergency = (json['emergency'] as List?)?.map((dynamic e) => Emergency.fromJson(e as Map<String,dynamic>)).toList(),
+        emergency = (json['emergency'] as List?)?.map((dynamic e) => Emergency.fromJson(e as Map<String, dynamic>)).toList(),
         id = json['_id'] as String?,
         firstName = json['firstName'] as String?,
         phone = json['phone'] as String?,
@@ -425,40 +420,40 @@ class Customer {
         image = json['image'] as String?,
         address = json['address'] as String?,
         stripeId = json['stripeId'] as String?,
-        cars = (json['cars'] as List?)?.map((dynamic e) => Cars.fromJson(e as Map<String,dynamic>)).toList(),
+        cars = (json['cars'] as List?)?.map((dynamic e) => Cars.fromJson(e as Map<String, dynamic>)).toList(),
         location = json['location'] as List?,
         id1 = json['id'] as String?;
 
   Map<String, dynamic> toJson() => {
-    'country' : country,
-    'states' : states,
-    'cities' : cities,
-    'banned' : banned,
-    'isEmailVerified' : isEmailVerified,
-    'isPhoneVerified' : isPhoneVerified,
-    'role' : role,
-    'experienceLevel' : experienceLevel,
-    'about' : about,
-    'status' : status,
-    'approvedBy' : approvedBy,
-    'firebaseToken' : firebaseToken,
-    'emergency' : emergency?.map((e) => e.toJson()).toList(),
-    '_id' : id,
-    'firstName' : firstName,
-    'phone' : phone,
-    'countryCode' : countryCode,
-    'email' : email,
-    'lastName' : lastName,
-    'createdAt' : createdAt,
-    'updatedAt' : updatedAt,
-    '__v' : v,
-    'image' : image,
-    'address' : address,
-    'stripeId' : stripeId,
-    'cars' : cars?.map((e) => e.toJson()).toList(),
-    'location' : location,
-    'id' : id1
-  };
+        'country': country,
+        'states': states,
+        'cities': cities,
+        'banned': banned,
+        'isEmailVerified': isEmailVerified,
+        'isPhoneVerified': isPhoneVerified,
+        'role': role,
+        'experienceLevel': experienceLevel,
+        'about': about,
+        'status': status,
+        'approvedBy': approvedBy,
+        'firebaseToken': firebaseToken,
+        'emergency': emergency?.map((e) => e.toJson()).toList(),
+        '_id': id,
+        'firstName': firstName,
+        'phone': phone,
+        'countryCode': countryCode,
+        'email': email,
+        'lastName': lastName,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
+        '__v': v,
+        'image': image,
+        'address': address,
+        'stripeId': stripeId,
+        'cars': cars?.map((e) => e.toJson()).toList(),
+        'location': location,
+        'id': id1
+      };
 }
 
 class Emergency {
@@ -474,10 +469,7 @@ class Emergency {
       : emergencyName = json['emergencyName'] as String?,
         emergencyPhone = json['emergencyPhone'] as String?;
 
-  Map<String, dynamic> toJson() => {
-    'emergencyName' : emergencyName,
-    'emergencyPhone' : emergencyPhone
-  };
+  Map<String, dynamic> toJson() => {'emergencyName': emergencyName, 'emergencyPhone': emergencyPhone};
 }
 
 class Cars {
@@ -512,15 +504,15 @@ class Cars {
         carCity = json['carCity'] as String?;
 
   Map<String, dynamic> toJson() => {
-    '_id' : id,
-    'brand' : brand,
-    'carCode' : carCode,
-    'mileage' : mileage,
-    'carNumber' : carNumber,
-    'color' : color,
-    'modelYear' : modelYear,
-    'carCity' : carCity
-  };
+        '_id': id,
+        'brand': brand,
+        'carCode': carCode,
+        'mileage': mileage,
+        'carNumber': carNumber,
+        'color': color,
+        'modelYear': modelYear,
+        'carCity': carCity
+      };
 }
 
 class Source {
@@ -588,26 +580,26 @@ class Source {
         id1 = json['id'] as String?;
 
   Map<String, dynamic> toJson() => {
-    'stores' : stores,
-    'image' : image,
-    'video' : video,
-    'features' : features,
-    'deleted' : deleted,
-    'active' : active,
-    '_id' : id,
-    'category' : category,
-    'subcategory' : subcategory,
-    'title' : title,
-    'description' : description,
-    'price' : price,
-    'provider' : provider,
-    'currency' : currency,
-    'activeByAdmin' : activeByAdmin,
-    'createdAt' : createdAt,
-    'updatedAt' : updatedAt,
-    '__v' : v,
-    'id' : id1
-  };
+        'stores': stores,
+        'image': image,
+        'video': video,
+        'features': features,
+        'deleted': deleted,
+        'active': active,
+        '_id': id,
+        'category': category,
+        'subcategory': subcategory,
+        'title': title,
+        'description': description,
+        'price': price,
+        'provider': provider,
+        'currency': currency,
+        'activeByAdmin': activeByAdmin,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
+        '__v': v,
+        'id': id1
+      };
 }
 
 class Estimation {
@@ -643,7 +635,7 @@ class Estimation {
       : estimationImage = (json['estimationImage'] as List?)?.map((dynamic e) => e as String).toList(),
         isOfferCreated = json['isOfferCreated'] as bool?,
         offerStatus = json['offerStatus'] as String?,
-        items = (json['items'] as List?)?.map((dynamic e) => Items.fromJson(e as Map<String,dynamic>)).toList(),
+        items = (json['items'] as List?)?.map((dynamic e) => Items.fromJson(e as Map<String, dynamic>)).toList(),
         serviceTax = json['serviceTax'] as dynamic,
         invoiceNumber = json['invoiceNumber'] as String?,
         subTotal = json['subTotal'] as dynamic,
@@ -654,19 +646,19 @@ class Estimation {
         offerNote = json['offerNote'] as String?;
 
   Map<String, dynamic> toJson() => {
-    'estimationImage' : estimationImage,
-    'isOfferCreated' : isOfferCreated,
-    'offerStatus' : offerStatus,
-    'items' : items?.map((e) => e.toJson()).toList(),
-    'serviceTax' : serviceTax,
-    'invoiceNumber' : invoiceNumber,
-    'subTotal' : subTotal,
-    'grandTotal' : grandTotal,
-    'updatedAt' : updatedAt,
-    'createdAt' : createdAt,
-    'offerAmount' : offerAmount,
-    'offerNote' : offerNote
-  };
+        'estimationImage': estimationImage,
+        'isOfferCreated': isOfferCreated,
+        'offerStatus': offerStatus,
+        'items': items?.map((e) => e.toJson()).toList(),
+        'serviceTax': serviceTax,
+        'invoiceNumber': invoiceNumber,
+        'subTotal': subTotal,
+        'grandTotal': grandTotal,
+        'updatedAt': updatedAt,
+        'createdAt': createdAt,
+        'offerAmount': offerAmount,
+        'offerNote': offerNote
+      };
 }
 
 class Items {
@@ -694,15 +686,9 @@ class Items {
         tax = json['tax'] as dynamic,
         amount = json['amount'] as String?;
 
-  Map<String, dynamic> toJson() => {
-    'title' : title,
-    'description' : description,
-    'quantity' : quantity,
-    'price' : price,
-    'tax' : tax,
-    'amount' : amount
-  };
+  Map<String, dynamic> toJson() => {'title': title, 'description': description, 'quantity': quantity, 'price': price, 'tax': tax, 'amount': amount};
 }
+
 class Dispute {
   String? ssn;
   String? disputeStatus;
@@ -719,23 +705,23 @@ class Dispute {
   String? createdAt;
   String? updatedAt;
   int? iV;
-String ?adminRemarks;
+  String? adminRemarks;
   Dispute(
       {this.ssn,
-        this.disputeStatus,
-        this.country,
-        this.adminStatus,
-        this.deleted,
-        this.sId,
-        this.booking,
-        this.description,
-        this.title,
-        this.disputeimage,
-        this.customer,
-        this.createdBy,
-        this.createdAt,
-        this.updatedAt,
-        this.iV,
+      this.disputeStatus,
+      this.country,
+      this.adminStatus,
+      this.deleted,
+      this.sId,
+      this.booking,
+      this.description,
+      this.title,
+      this.disputeimage,
+      this.customer,
+      this.createdBy,
+      this.createdAt,
+      this.updatedAt,
+      this.iV,
       this.adminRemarks});
 
   Dispute.fromJson(Map<String, dynamic> json) {

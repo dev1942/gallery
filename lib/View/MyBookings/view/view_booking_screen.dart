@@ -127,7 +127,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
       appBar: AppViews.initAppBar(
         mContext: context,
         centerTitle: false,
-        strTitle: widget.mEstimatesModel.source!.title.toString() + "wr4wr Detail",
+        strTitle: widget.mEstimatesModel.source!.title.toString() + " Detail",
         isShowNotification: false,
         isShowSOS: false,
       ),
@@ -210,7 +210,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
 
                       _videoSection(),
                       // //Voice Note
-                      _voiceNoteSection(),
+                      // _voiceNoteSection(),
                       //Leave Note (if any)
                       _anyNoteTextFiledSection(reScheduleController.controllerNote),
                       widget.isPending && widget.isRebooked
@@ -324,7 +324,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                                             // =>
                                             //     controller.rebook(
                                             //     context, widget.mEstimatesModel),
-                                            strTitle: "Cancelled".tr),
+                                            strTitle: "Cancel".tr),
                                       ),
                                     ),
                                   ],
@@ -366,7 +366,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
         context: context,
         builder: (context) {
           return CancelBookingDialogBox(
-            isDecline: true,
+            isDecline: false,
             onTap: (String strReason) {
               if (Global.checkNull(strReason)) {
                 declineEstimation(id: widget.mEstimatesModel.id.toString(), reason: strReason);
@@ -423,10 +423,12 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppDimens.dimens_5),
                 child: NetworkImageCustom(
-                    image:
-                    widget.mEstimatesModel.source!.image!.isNotEmpty?
-
-                    widget.mEstimatesModel.source!.image!.first:"https://i.tribune.com.pk/media/images/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0.jpg", fit: BoxFit.fill, height: AppDimens.dimens_120, width: AppDimens.dimens_120),
+                    image: widget.mEstimatesModel.source!.image!.isNotEmpty
+                        ? widget.mEstimatesModel.source!.image!.first
+                        : "https://i.tribune.com.pk/media/images/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0/7UOKRCYY7NJTFHXVVO5XFZLCK41641535289-0.jpg",
+                    fit: BoxFit.fill,
+                    height: AppDimens.dimens_120,
+                    width: AppDimens.dimens_120),
               ),
             ),
             Expanded(
@@ -597,13 +599,11 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   right: AppDimens.dimens_14,
                 ),
                 child: TimeRescheduleSelector(
-                  isPending: widget.isPending,
-                  selectedDate: value.selectedDate,
-                  time: widget.mEstimatesModel.bookingDetails!.time ?? "",
-                 // mTimeModel: value.mTimeModel,
-                   onSelection: (TimeModel mtimeModel_) =>
-                       value.onSelectTime(mtimeModel_)
-                ),
+                    isPending: widget.isPending,
+                    selectedDate: value.selectedDate,
+                    time: widget.mEstimatesModel.bookingDetails!.time ?? "",
+                    // mTimeModel: value.mTimeModel,
+                    onSelection: (TimeModel mtimeModel_) => value.onSelectTime(mtimeModel_)),
               ),
 
               ///-------------------------------------carList
@@ -628,6 +628,7 @@ class ViewBookingEstimationState extends State<ViewBookingEstimation> {
                   code: widget.mEstimatesModel.bookingDetails!.car!.carCode ?? "",
                   city: widget.mEstimatesModel.bookingDetails!.car!.carCity ?? "",
                   number: widget.mEstimatesModel.bookingDetails!.car!.carNumber ?? "",
+                  registrationDate: "",
                   image: "https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
                   onEditTap: () {},
                   onDeleteTap: () {}),

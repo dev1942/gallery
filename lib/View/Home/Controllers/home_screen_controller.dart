@@ -29,6 +29,7 @@ import 'package:otobucks/services/navigation_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../AddCar/addCar_toSell.dart';
 import '../../Dashboard/Views/dashboard_fragment.dart';
 import '../../Dashboard/Views/dashboard_fragment_page_2.dart';
 import '../../Estimation/Views/estimation_screen.dart';
@@ -90,6 +91,12 @@ class HomeScreenController extends GetxController {
         strTitle = Constants.TAG_PURCHASE_PRODUCT_HISTORY;
 
         break;
+      case PageType.addcar:
+        navigationPage = const AddCarToSell();
+        indexM = 2;
+        strTitle = 'Add Car';
+
+        break;
       case PageType.aboutUs:
         navigationPage = const DashboardFragment();
         indexM = 0;
@@ -114,7 +121,7 @@ class HomeScreenController extends GetxController {
 
       case PageType.myProfile:
         navigationPage = const MyProfileFragment();
-        indexM = 3;
+        indexM = 4;
         strTitle = Constants.TXT_PROFILE;
         break;
       case PageType.estimations:
@@ -125,7 +132,7 @@ class HomeScreenController extends GetxController {
 
       case PageType.notification:
         navigationPage = const NotificationFragment();
-        indexM = 2;
+        indexM = 3;
         strTitle = Constants.STR_NOTIFICATION;
         break;
 
@@ -215,13 +222,16 @@ class HomeScreenController extends GetxController {
       case 1:
         callback(PageType.customerSupport);
         break;
+      case 2:
+        callback(PageType.addcar);
+        break;
       //callback(PageType.THANK_YOU);
       // gotoDemo();
       // break;
-      case 2:
+      case 3:
         callback(PageType.notification);
         break;
-      case 3:
+      case 4:
         callback(PageType.myProfile);
         break;
     }

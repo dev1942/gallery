@@ -148,9 +148,9 @@ class BottomBarDefault extends StatefulWidget {
     this.animated = true,
     this.duration,
     this.curve,
-    this.top = 12,
-    this.bottom = 12,
-    this.pad = 4,
+    this.top = 10,
+    this.bottom = 10,
+    this.pad = 2,
     this.enableShadow = true,
   }) : super(key: key);
 

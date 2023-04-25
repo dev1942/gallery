@@ -17,6 +17,8 @@ class PromotionsModel {
   String description;
   String previousPrice;
   String discount;
+  String vat;
+  String serviceTax;
   String priceAfterDiscount;
   String startDate;
   String endDate;
@@ -41,7 +43,9 @@ class PromotionsModel {
       required this.endDate,
       required this.country,
       required this.sourceType,
-      required this.provider});
+      required this.provider,
+      required this.serviceTax,
+      required this.vat});
 
   factory PromotionsModel.fromJson(Map<String, dynamic> json) {
     List<String> promoImg = [];
@@ -89,6 +93,8 @@ class PromotionsModel {
         endDate: json['endDate'].toString(),
         country: json['country'].toString(),
         sourceType: json['sourceType'].toString(),
+        serviceTax: json['serviceTax'].toString(),
+        vat: json['vat'].toString(),
         provider: mServiceProviderModel);
   }
 

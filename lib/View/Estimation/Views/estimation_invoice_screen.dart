@@ -671,6 +671,7 @@ class EstimationDetailsPDFScreenState extends State<EstimationDetailsPDFScreen> 
                                               builder: (context) => CheckoutScreen(
                                                     isPartialPay: true,
                                                     bookingID: allBookingsModel.id,
+                                                    serviceTax: allBookingsModel.estimation!.serviceTax.toString(),
                                                     amount: allBookingsModel.estimation!.grandTotal.toString(),
                                                     previousAmount: allBookingsModel.estimation!.subTotal.toString(),
                                                   )));
@@ -689,6 +690,7 @@ class EstimationDetailsPDFScreenState extends State<EstimationDetailsPDFScreen> 
                                               builder: (context) => CheckoutScreen(
                                                     isPartialPay: true,
                                                     bookingID: allBookingsModel.id,
+                                                    serviceTax: allBookingsModel.estimation!.serviceTax.toString(),
                                                     amount: allBookingsModel.estimation!.grandTotal.toString(),
                                                     previousAmount: allBookingsModel.estimation!.subTotal.toString(),
                                                   )));

@@ -30,8 +30,12 @@ import 'package:otobucks/widgets/time_selector.dart';
 import 'package:otobucks/widgets/voice_note_buttons.dart';
 import 'dart:io' show Platform;
 import '../../../global/Models/time_model.dart';
+import '../../../services/places_service.dart';
 import '../../Services_All/Controllers/service_screen_controller.dart';
 import '../../ThankYou/Views/thankyou_fragment.dart';
+import 'package:uuid/uuid.dart' as uuid;
+
+import '../../address_search/address_search.dart';
 
 class CreateEstimationScreen extends StatefulWidget {
   final ServiceModel mServiceModel;
@@ -67,8 +71,10 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
   getcardata() {
     if (profileController.carList.isNotEmpty) {
       for (int i = 0; i < profileController.carList.length; i++) {
-        carNamesList?.add(profileController.carList[i].brand!);
-        carNameId?.add(profileController.carList[i].id!);
+        setState(() {
+          carNamesList?.add(profileController.carList[i].brand!);
+          carNameId?.add(profileController.carList[i].id!);
+        });
       }
     }
   }
@@ -153,9 +159,9 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                     //Upload Video or Shoot a video
                     if (widget.screenType != 'promotion') _videoSection(),
                     //Voice Note
-                    if (widget.screenType != 'promotion') _voiceNoteSection(),
+                    // if (widget.screenType != 'promotion') _voiceNoteSection(),
                     // Leave Note (if any)
-                    if (widget.screenType != 'promotion') _anyNoteTextFiledSection(),
+                    _anyNoteTextFiledSection(),
                     Container(
                       alignment: Alignment.center,
                       margin: const EdgeInsets.only(
@@ -184,11 +190,13 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                               note: controller.controllerNote.text,
                                               previousAmount: controller.mServiceModel.beforePrice,
                                               discount: controller.mServiceModel.discount,
+                                              vat: controller.mServiceModel.vat,
+                                              serviceTax: controller.mServiceModel.serviceTax,
                                             )));
                               } else {
                                 if (selectedValue != null && selectedValue!.isNotEmpty) {
                                   int index = carNamesList!.indexOf(selectedValue!);
-                                  controller.createEstimationSingle(context, carNameId![index]).whenComplete(() {
+                                  controller.createEstimationSingle(context, carNameId![index]).then((value) {
                                     if (allservicesWithSameName.length > 1) {
                                       log("${allservicesWithSameName.length}");
                                       Get.defaultDialog(
@@ -236,8 +244,10 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                           textCancel: "No".tr,
                                           confirmTextColor: Colors.white,
                                           onConfirm: () {
-                                            controller.createEstimationMulti(context, carNameId![index]).whenComplete(() {
-                                              Get.off(() => ThankYouFragment(isFromPromotion: widget.screenType == "promotion" ? true : false));
+                                            controller.createEstimationMulti(context, carNameId![index]).then((value) {
+                                              if (value) {
+                                                Get.off(() => ThankYouFragment(isFromPromotion: widget.screenType == "promotion" ? true : false));
+                                              }
                                             });
                                           },
                                           onCancel: () {
@@ -245,7 +255,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                             Get.offAll(() => ThankYouFragment(isFromPromotion: widget.screenType == "promotion" ? true : false));
                                           });
                                       //end dialog
-                                    } else {
+                                    } else if (value) {
                                       Get.off(() => ThankYouFragment(isFromPromotion: widget.screenType == "promotion" ? true : false));
                                     }
                                   });
@@ -258,7 +268,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                               }
                             }
                           },
-                          strTitle: widget.screenType == 'promotion' ? 'Process To Payment' : Constants.TXT_REQUEST_ESTIMATION.tr),
+                          strTitle: widget.screenType == 'promotion' ? 'Proceed to pay'.tr : Constants.TXT_REQUEST_ESTIMATION.tr),
                     ),
                   ],
                 ),
@@ -588,6 +598,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                   child: Row(
                     children: [
                       Visibility(
+                        visible: Global.checkNull(value.pickedImage),
                         child: Container(
                           margin: const EdgeInsets.only(right: AppDimens.dimens_15),
                           height: AppDimens.dimens_100,
@@ -613,7 +624,6 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                             ],
                           ),
                         ),
-                        visible: Global.checkNull(value.pickedImage),
                       ),
                       value.pickedImage == null || value.pickedImage.isEmpty
                           ? Row(
@@ -699,11 +709,11 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                               value: snapshot.data / 100,
                             ),
                             Container(
+                              margin: const EdgeInsets.only(top: AppDimens.dimens_8),
                               child: Text(
                                 Constants.TXT_PLEASE_WAIT + ' ${snapshot.data.toStringAsFixed(0)}%',
                                 style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
                               ),
-                              margin: const EdgeInsets.only(top: AppDimens.dimens_8),
                             )
                           ],
                         ),
@@ -722,6 +732,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Visibility(
+                    visible: !value.isVideoCompressed,
                     child: Row(
                       children: [
                         Visibility(
@@ -793,7 +804,6 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                         )
                       ],
                     ),
-                    visible: !value.isVideoCompressed,
                   ),
                 ),
               ),
@@ -874,40 +884,60 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
             left: AppDimens.dimens_14,
             right: AppDimens.dimens_14,
           ),
-          child: SizedBox(
-            child: TextField(
-              onChanged: (String strvalue) {},
-              onSubmitted: (String? value) {
-                //onSubmit!(value!);
-              },
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.text,
-              style: AppStyle.textViewStyleNormalBodyText2(color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
-              controller: controller.addressNote,
-              textAlign: TextAlign.start,
-              decoration: InputDecoration(
-                prefixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
-                suffixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
-                suffixIcon: Container(
-                  margin: const EdgeInsets.only(right: AppDimens.dimens_12),
-                  alignment: Alignment.center,
-                  width: 5,
+          child: GestureDetector(
+            onTap: () async {
+              final sessionToken = uuid.Uuid().v4();
+              final Suggestion? result = await showSearch(
+                context: context,
+                delegate: AddressSearch(sessionToken),
+              );
+              // This will change the text displayed in the TextField
+              if (result != null) {
+                final placeDetails = await PlaceApiProvider(sessionToken).getPlaceDetailFromId(result.placeId);
+                // controller.mLatLng.longitude = placeDetails.latitude;
+                // txtresturantLongitudeController.text = placeDetails.longitude;
+                // txtresturantLatitudeController.text = placeDetails.latitude;
+                LatLng _mLatLng = LatLng(double.parse(placeDetails.latitude), double.parse(placeDetails.longitude));
+                controller.mLatLng = _mLatLng;
+
+                setState(() {
+                  controller.addressNote.text = result.description;
+                });
+              }
+            },
+            child: AbsorbPointer(
+              child: TextField(
+                onChanged: (String strvalue) {},
+                onSubmitted: (String? value) {
+                  //onSubmit!(value!);
+                },
+                textInputAction: TextInputAction.done,
+                keyboardType: TextInputType.text,
+                style: AppStyle.textViewStyleNormalBodyText2(color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
+                controller: controller.addressNote,
+                textAlign: TextAlign.start,
+                decoration: InputDecoration(
+                  prefixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
+                  suffixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
+                  suffixIcon: Container(
+                    margin: const EdgeInsets.only(right: AppDimens.dimens_12),
+                    alignment: Alignment.center,
+                    width: 5,
+                  ),
+                  contentPadding: const EdgeInsets.only(top: AppDimens.dimens_7, left: AppDimens.dimens_15),
+                  focusedBorder: AppViews.textFieldRoundBorder(),
+                  border: AppViews.textFieldRoundBorder(),
+                  disabledBorder: AppViews.textFieldRoundBorder(),
+                  focusedErrorBorder: AppViews.textFieldRoundBorder(),
+                  hintText: "Adress".tr,
+                  filled: true,
+                  fillColor: AppColors.colorGray2,
+                  hintStyle: AppStyle.textViewStyleNormalBodyText2(
+                      color: AppColors.colorTextFieldHint, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
                 ),
-                contentPadding: const EdgeInsets.only(top: AppDimens.dimens_7, left: AppDimens.dimens_15),
-                focusedBorder: AppViews.textFieldRoundBorder(),
-                border: AppViews.textFieldRoundBorder(),
-                disabledBorder: AppViews.textFieldRoundBorder(),
-                focusedErrorBorder: AppViews.textFieldRoundBorder(),
-                hintText: "Adress".tr,
-                filled: true,
-                fillColor: AppColors.colorGray2,
-                hintStyle: AppStyle.textViewStyleNormalBodyText2(
-                    color: AppColors.colorTextFieldHint, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
               ),
             ),
-            height: AppDimens.dimens_50,
           ),
-          decoration: AppViews.getGrayDecoration(mBorderRadius: AppDimens.dimens_5),
         )
       ],
     );
@@ -936,6 +966,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
             right: AppDimens.dimens_14,
           ),
           child: SizedBox(
+            height: AppDimens.dimens_50,
             child: TextField(
               onChanged: (String strvalue) {},
               onSubmitted: (String? value) {
@@ -966,7 +997,6 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                     color: AppColors.colorTextFieldHint, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
               ),
             ),
-            height: AppDimens.dimens_50,
           ),
           // decoration: AppViews.getBoxDecorColorVise(mBorderRadius: AppDimens.dimens_5),
         )

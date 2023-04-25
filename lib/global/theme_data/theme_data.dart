@@ -33,6 +33,7 @@ class BoosterThemeData {
       canvasColor: Colors.white,
       fontFamily: Global.poppins,
       primaryColor: AppColors.colorPrimary,
+      iconTheme: IconThemeData(color: AppColors.colorPrimary),
       primarySwatch: createMaterialColor(),
       colorScheme: getColorScheme(isDark),
       unselectedWidgetColor: colorScheme.primary,

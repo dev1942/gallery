@@ -598,7 +598,7 @@ class Global {
   }
 
   static showDeleteAccountDialog(BuildContext mContext) {
-    AppViews.showCustomAlert(
+    AppViews.showCustomAlert( 
         context: mContext,
         strTitle: Constants.STRING_DELETE_Account,
         strMessage: Constants.STRING_DELETE_Account_msg,
@@ -1104,8 +1104,8 @@ class Global {
     shareText(title: Constants.APP_NAME, text: strShareMessage, chooserTitle: "Share", linkUrl: "");
   }
 
-  static getCurrentLocation({required BuildContext context}) async {
-    //LatLng mLatLngMain = Constants.mAhmedabadLatLng;
+  static Future<LatLng> getCurrentLocation({required BuildContext context}) async {
+    log("Getting current location");
     LatLng mLatLngMain = const LatLng(0, 0);
     //
     // double? longitude =
@@ -1141,7 +1141,9 @@ class Global {
     }
 
     if (isPermissionGranted && _serviceEnabled) {
+      log("location process");
       location_selection.LocationData _locationData = await location.getLocation();
+
       mLatLngMain = LatLng(_locationData.latitude!, _locationData.longitude!);
       // prefManager.setDouble(
       //     SharedPrefKey.KEY_CURRENT_LONGITUDE, _locationData.longitude!);
@@ -1150,6 +1152,7 @@ class Global {
       //     SharedPrefKey.KEY_CURRENT_LATITUDE, _locationData.latitude!);
     }
     // }
+
     return mLatLngMain;
   }
 

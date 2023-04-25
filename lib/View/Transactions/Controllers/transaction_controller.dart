@@ -12,6 +12,7 @@ import 'package:otobucks/services/repository/transaction_repo.dart';
 
 class TransactionController extends GetxController {
   ShowData mShowData = ShowData.showLoading;
+  
 
   bool connectionStatus = false;
   bool isShowLoader = false;
@@ -32,6 +33,7 @@ class TransactionController extends GetxController {
 
   Future<void> getTransactions() async {
     transactions.clear();
+    
     mShowData = ShowData.showLoading;
     // isShowLoader = true
     update();

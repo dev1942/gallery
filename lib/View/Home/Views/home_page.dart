@@ -39,7 +39,6 @@ class _HomePageState extends State<HomePage> {
           log(message.notification!.body.toString());
           log("message.data11 ${message.data}");
           // LocalNotificationService.display(message);
-
         }
       },
     );
@@ -78,7 +77,6 @@ class _HomePageState extends State<HomePage> {
             return Scaffold(
                 key: scaffoldKey,
                 backgroundColor: AppColors.colorWhite,
-
                 appBar: AppViews.initAppBar(
                   icon: constraints.maxWidth < 600 ? null : const Icon(Icons.keyboard_arrow_left),
                   mContext: context,
@@ -112,17 +110,15 @@ class _HomePageState extends State<HomePage> {
                 bottomNavigationBar: BottomBarDefault(
                   color: AppColors.colorWhite.withOpacity(0.6),
                   items: [
-                    TabItem(
-                      icon: Icons.home,
-                    ),
+                    TabItem(icon: Icons.home, title: "Home".tr),
                     // TabItem(
                     //   icon: Icons.shopping_basket,
                     // ),
-                    TabItem(
-                      icon: Icons.chat_bubble,
-                    ),
+                    TabItem(icon: Icons.psychology_alt, title: "Support".tr),
+                    TabItem(icon: Icons.directions_car, title: "Sell Car".tr),
                     TabItem(
                         icon: Icons.notifications,
+                        title: "Notifications".tr,
                         count: GetBuilder<NotificationsController>(
                             init: NotificationsController(),
                             builder: (value) {
@@ -140,9 +136,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ));
                             })),
-                    TabItem(
-                      icon: Icons.person,
-                    ),
+                    TabItem(icon: Icons.person, title: "Profile".tr),
                   ],
                   backgroundColor: AppColors.colorBlueStart,
                   colorSelected: AppColors.colorWhite,

@@ -32,6 +32,8 @@ class CheckoutScreen extends StatefulWidget {
   final String? address;
   final String? date;
   final String? time;
+  final String? vat;
+  final String? serviceTax;
   final String? amount;
   final String? note;
   final String? previousAmount;
@@ -39,20 +41,22 @@ class CheckoutScreen extends StatefulWidget {
   final bool isPartialPay;
   final bool isFullyPay;
 
-  const CheckoutScreen({
-    Key? key,
-    this.isPartialPay = false,
-    this.isFullyPay = false,
-    this.bookingID,
-    this.promotionID,
-    this.address,
-    this.date,
-    this.time,
-    this.amount,
-    this.note,
-    this.previousAmount,
-    this.discount,
-  }) : super(key: key);
+  const CheckoutScreen(
+      {Key? key,
+      this.isPartialPay = false,
+      this.isFullyPay = false,
+      this.bookingID,
+      this.promotionID,
+      this.address,
+      this.date,
+      this.time,
+      this.amount,
+      this.note,
+      this.previousAmount,
+      this.discount,
+      this.serviceTax,
+      this.vat})
+      : super(key: key);
 
   @override
   CheckoutScreenState createState() => CheckoutScreenState();
@@ -71,6 +75,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var total = double.parse(widget.amount ?? "0") + double.parse(widget.vat ?? "0") + double.parse(widget.serviceTax ?? "0");
 
     return Scaffold(
       appBar: AppViews.initAppBar(
@@ -220,7 +225,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              "Total Amount ".tr,
+                                              "Full Amount".tr,
                                               style: const TextStyle(fontSize: 16),
                                             ),
                                             Text(
@@ -247,9 +252,18 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              "Sub Total Amount ".tr,
-                                              style: const TextStyle(fontSize: 16),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Payable Amount".tr,
+                                                  style: const TextStyle(fontSize: 16),
+                                                ),
+                                                Text(
+                                                  "(Vat and service tax included)".tr,
+                                                  style: TextStyle(fontSize: 9),
+                                                ),
+                                              ],
                                             ),
                                             Text(
                                               "AED ${(num.parse(widget.amount!) / 2)}",
@@ -272,7 +286,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
-                                                  "Total Amount ".tr,
+                                                  "Before Amount ".tr,
                                                   style: const TextStyle(fontSize: 16),
                                                 ),
                                                 Text(
@@ -319,6 +333,84 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
                                           children: [
+                                            // Row(
+                                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            //   children: [
+                                            //     Text(
+                                            //       "Before Amount ".tr,
+                                            //       style: const TextStyle(fontSize: 16),
+                                            //     ),
+                                            //     Text(
+                                            //       "AED ${widget.previousAmount ?? "0"}",
+                                            //       style: AppStyle.textViewStyleNormalSubtitle2(
+                                            //           context: context,
+                                            //           color: AppColors.colorBlueStart,
+                                            //           fontSizeDelta: 1,
+                                            //           fontWeightDelta: 1,
+                                            //           mDecoration: TextDecoration.lineThrough),
+                                            //     ),
+                                            //   ],
+                                            // ),
+                                            // Row(
+                                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            //   children: [
+                                            //     Text(
+                                            //       "Discount ".tr,
+                                            //       style: const TextStyle(fontSize: 16),
+                                            //     ),
+                                            //     Text(
+                                            //       "${widget.discount ?? "0"} %",
+                                            //       style: AppStyle.textViewStyleNormalSubtitle2(
+                                            //           context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
+                                            //     ),
+                                            //   ],
+                                            // ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "After Discount".tr,
+                                                  style: const TextStyle(fontSize: 16),
+                                                ),
+                                                Text(
+                                                  "AED ${widget.amount ?? "0"}",
+                                                  style: AppStyle.textViewStyleNormalSubtitle2(
+                                                    context: context,
+                                                    color: AppColors.colorBlueStart,
+                                                    fontSizeDelta: 1,
+                                                    fontWeightDelta: 1,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "VAT".tr,
+                                                  style: const TextStyle(fontSize: 16),
+                                                ),
+                                                Text(
+                                                  "AED ${widget.vat ?? "0"}",
+                                                  style: AppStyle.textViewStyleNormalSubtitle2(
+                                                      context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Service Tax".tr,
+                                                  style: const TextStyle(fontSize: 16),
+                                                ),
+                                                Text(
+                                                  "AED ${widget.serviceTax ?? "0"}",
+                                                  style: AppStyle.textViewStyleNormalSubtitle2(
+                                                      context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
+                                                ),
+                                              ],
+                                            ),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
@@ -327,35 +419,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                                   style: const TextStyle(fontSize: 16),
                                                 ),
                                                 Text(
-                                                  "AED ${widget.previousAmount ?? "0"}",
-                                                  style: AppStyle.textViewStyleNormalSubtitle2(
-                                                      context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text(
-                                                  "Discount ".tr,
-                                                  style: const TextStyle(fontSize: 16),
-                                                ),
-                                                Text(
-                                                  "${widget.discount ?? "0"} %",
-                                                  style: AppStyle.textViewStyleNormalSubtitle2(
-                                                      context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text(
-                                                  "Sub Total Amount ".tr,
-                                                  style: const TextStyle(fontSize: 16),
-                                                ),
-                                                Text(
-                                                  "AED ${widget.amount ?? "0"}",
+                                                  "AED ${total.toString() ?? "0"}",
                                                   style: AppStyle.textViewStyleNormalSubtitle2(
                                                       context: context, color: AppColors.colorBlueStart, fontSizeDelta: 1, fontWeightDelta: 1),
                                                 ),

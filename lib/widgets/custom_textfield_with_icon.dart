@@ -63,11 +63,7 @@ class CustomTextFieldWithIcon extends StatelessWidget {
         keyboardType: keyboardType,
         focusNode: focusNode,
         inputFormatters: inputFormatters,
-        style: AppStyle.textViewStyleNormalBodyText2(
-            color: AppColors.colorBlack,
-            fontSizeDelta: 0,
-            fontWeightDelta: 0,
-            context: context),
+        style: AppStyle.textViewStyleNormalBodyText2(color: AppColors.colorBlack, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
         controller: controller,
         obscureText: obscureText,
         textAlign: TextAlign.start,
@@ -75,14 +71,11 @@ class CustomTextFieldWithIcon extends StatelessWidget {
         onEditingComplete: onEditingComplete,
         autofillHints: autofillHints,
         decoration: InputDecoration(
-          prefixIconConstraints:
-              const BoxConstraints(minWidth: AppDimens.dimens_33),
-          suffixIconConstraints:
-              const BoxConstraints(minWidth: AppDimens.dimens_33),
+          prefixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
+          suffixIconConstraints: const BoxConstraints(minWidth: AppDimens.dimens_33),
           suffixIcon: suffixIcon != null
               ? Container(
-                  margin: const EdgeInsets.only(
-                      right: AppDimens.dimens_12, left: 12),
+                  margin: const EdgeInsets.only(right: AppDimens.dimens_12, left: 12),
                   alignment: Alignment.center,
                   child: suffixIcon,
                   width: AppDimens.dimens_23,
@@ -90,30 +83,23 @@ class CustomTextFieldWithIcon extends StatelessWidget {
               : null,
           prefixIcon: prefixIcon != null
               ? Container(
-                  margin: const EdgeInsets.only(
-                      left: AppDimens.dimens_12, right: AppDimens.dimens_12),
+                  margin: const EdgeInsets.only(left: AppDimens.dimens_12, right: AppDimens.dimens_12),
                   alignment: Alignment.center,
                   child: prefixIcon,
                   width: AppDimens.dimens_30,
                 )
               : null,
-          contentPadding: const EdgeInsets.only(
-              top: AppDimens.dimens_7,
-              left: AppDimens.dimens_15,
-              right: AppDimens.dimens_15),
+          contentPadding: const EdgeInsets.only(top: AppDimens.dimens_7, left: AppDimens.dimens_15, right: AppDimens.dimens_15),
           focusedBorder: AppViews.textFieldRoundBorder(),
-          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          enabledBorder: AppViews.textFieldRoundBorder(),
           border: AppViews.textFieldRoundBorder(),
           disabledBorder: AppViews.textFieldRoundBorder(),
           focusedErrorBorder: AppViews.textFieldRoundBorder(),
           hintText: hintText,
           filled: true,
           fillColor: AppColors.colorWhite,
-          hintStyle: AppStyle.textViewStyleNormalBodyText2(
-              color: AppColors.colorTextFieldHint,
-              fontSizeDelta: 0,
-              fontWeightDelta: 0,
-              context: context),
+          hintStyle:
+              AppStyle.textViewStyleNormalBodyText2(color: AppColors.colorTextFieldHint, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
         ),
       ),
     );

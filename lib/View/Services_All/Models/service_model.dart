@@ -13,6 +13,8 @@ class ServiceModel {
   String? beforePrice;
   String? discount;
   String currency;
+  String? vat;
+  String? serviceTax;
   int rating;
   int totalRatings;
   List<StoreModel> alStory = [];
@@ -27,6 +29,8 @@ class ServiceModel {
     required this.id,
     this.beforePrice,
     this.discount,
+    required this.serviceTax,
+    required this.vat,
     required this.title,
     required this.description,
     required this.price,
@@ -116,9 +120,7 @@ class ServiceModel {
       var provider = json['provider'];
       if (provider != null) {
         mServiceProviderModel = ServiceProviderModel.fromJson(provider);
-      }else {
-        
-      }
+      } else {}
     } catch (e) {
       log("logging" + e.toString());
     }
@@ -143,6 +145,8 @@ class ServiceModel {
         price: json['price'].toString(),
         currency: json['currency'].toString(),
         alStory: alStory,
+        serviceTax: "0",
+        vat: "0",
         alImages: alImages,
         rating: rating,
         totalRatings: totalRatings,

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   // Color Start
   static String strColorPrimary = "#185DA3";
-  static String color_blue_start = "#136FCB";
+  static String color_blue_start = "#1a1349";
   static String color_blue_end = "#185DA3";
 
   static String text_color_app = "#1C2D41";
@@ -19,8 +19,8 @@ class AppColors {
   static String color_transparent = "#00000000";
   static Color colorText = HexColor(text_color_app);
   static Color selectButton = HexColor('#170E4A86');
-  static Color colorPrimary = HexColor("#185DA3");
-  static Color colorYellowShade = Colors.yellow.shade700;
+  static Color colorPrimary = HexColor("#1a1349");
+  static Color colorYellowShade = HexColor("#ffbb00");
   static Color colorAccent = HexColor("#185DA3");
   static Color colorBlack = HexColor("#000000");
   static Color colorBlack2 = HexColor("#151515");
@@ -38,12 +38,13 @@ class AppColors {
   static Color colorGray4 = HexColor("#AAAAAA");
   static Color colorGray5 = HexColor("#9C9B9B");
   static Color colorGray6 = HexColor("#EAEAEA");
+
   static Color colorWhite = HexColor(color_white);
   static Color colorBlueStart = HexColor(color_blue_start);
   static Color colorBlueEnd = HexColor(color_blue_end);
-  static Color colorTextBlue = HexColor("#104D88");
-  static Color colorTextBlue2 = HexColor("#6688FF");
-  static Color colorBlue2 = HexColor("#0E4A86");
+  static Color colorTextBlue = HexColor("#1a1349");
+  static Color colorTextBlue2 = HexColor("#1a1349");
+  static Color colorBlue2 = HexColor("#1a1349");
   static Color shadowColor = HexColor("#616161");
   static Color grayStart = HexColor("#CECECE");
   static Color grayEnd = HexColor("#303030");
@@ -81,17 +82,17 @@ class AppColors {
   static Color dartGrey = Colors.grey.shade500;
   //..................Offers status colors.........................
   //.pending
-  static Color colorPendingText=HexColor("#d4b106");
-  static Color colorPendingBackground=HexColor("#feffe6");
-  static Color colorPendingBorder=HexColor("#fffb8f");
+  static Color colorPendingText = HexColor("#d4b106");
+  static Color colorPendingBackground = HexColor("#feffe6");
+  static Color colorPendingBorder = HexColor("#fffb8f");
   // accepted
-  static Color colorSuccessText=HexColor("#389e0d");
-  static Color colorSuccessBackground=HexColor("#f6ffed");
-  static Color colorSuccessBorder=HexColor("#b7eb8f");
+  static Color colorSuccessText = HexColor("#389e0d");
+  static Color colorSuccessBackground = HexColor("#f6ffed");
+  static Color colorSuccessBorder = HexColor("#b7eb8f");
 // Cancel
-  static Color colorCancelledText=HexColor("#cf1322");
-  static Color colorCancelledBackground=HexColor("#fff1f0");
-  static Color colorCancelledBorder=HexColor("#ffa39e");
+  static Color colorCancelledText = HexColor("#cf1322");
+  static Color colorCancelledBackground = HexColor("#fff1f0");
+  static Color colorCancelledBorder = HexColor("#ffa39e");
 
   static Color colorOrange = HexColor("#FF9700");
   static Color colorRED = HexColor("#E20001");

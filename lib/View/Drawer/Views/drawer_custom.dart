@@ -45,6 +45,7 @@ Widget drawer(BuildContext context) {
                   alignment: Alignment.center,
                   child: Image.asset(
                     AppImages.appLogo,
+                    color: AppColors.colorPrimary,
                     fit: BoxFit.fitWidth,
                   )),
             ],
@@ -68,13 +69,16 @@ Widget drawer(BuildContext context) {
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Image.asset(
-                  AppImages.icAppIconWhite,
-                  height: AppDimens.dimens_40,
-                ),
+              SizedBox(
+                width: 60,
               ),
+              // Container(
+              //   alignment: Alignment.centerLeft,
+              //   child: Image.asset(
+              //     AppImages.icAppIconWhite,
+              //     height: AppDimens.dimens_40,
+              //   ),
+              // ),
               GestureDetector(
                 onTap: () {
                   _launchLink('https://www.linkedin.com/company/otobucks/');
@@ -203,7 +207,7 @@ var alDrawerItem = [
   DrawerItem(title: "Home", icon: AppImages.ic_home_white, pageType: PageType.home),
   DrawerItem(title: Constants.TAG_MY_PROFILE, icon: AppImages.ic_drawer_my_profile, pageType: PageType.myProfile),
   //booking history deleted
-  DrawerItem(title: Constants.TAG_ESTIMATION.tr, icon: AppImages.ic_drawer_estimation, pageType: PageType.estimations),
+  DrawerItem(title: Constants.TAG_ESTIMATION, icon: AppImages.ic_drawer_estimation, pageType: PageType.estimations),
   //DrawerItem(title: Constants.TAG_PURCHASE_PRODUCT_HISTORY, icon: AppImages.ic_drawer_purchase_product, pageType: PageType.purchaseHistory),
   DrawerItem(title: Constants.TAG_NOTIFICATION, icon: AppImages.ic_drawer_notification, pageType: PageType.notification),
   // DrawerItem(

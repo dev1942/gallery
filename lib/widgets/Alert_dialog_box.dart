@@ -42,7 +42,7 @@ class LogoutOverlayState extends State<LogoutOverlay> with SingleTickerProviderS
         child: ScaleTransition(
           scale: scaleAnimation!,
           child: Container(
-              margin: const EdgeInsets.all(20.0),
+              margin: MediaQuery.of(context).viewInsets,
               padding: const EdgeInsets.all(15.0),
               height: 250.0,
               decoration: ShapeDecoration(

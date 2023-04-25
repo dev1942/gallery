@@ -23,6 +23,7 @@ class GetCarModelResult {
   String? carCity;
   String? carCode;
   String? carNumber;
+  String? registrationDate;
 
   GetCarModelResult({
     this.id,
@@ -33,6 +34,7 @@ class GetCarModelResult {
     this.carCity,
     this.carCode,
     this.carNumber,
+    this.registrationDate,
   });
   GetCarModelResult.fromJson(Map<String, dynamic> json) {
     id = json['_id']?.toString();
@@ -43,6 +45,7 @@ class GetCarModelResult {
     carCity = json['carCity']?.toString();
     carCode = json['carCode']?.toString();
     carNumber = json['carNumber']?.toString();
+    registrationDate = json['registrationDate']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

@@ -8,12 +8,15 @@ import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/global/text_styles.dart';
 import 'package:otobucks/widgets/custom_textfield_with_icon.dart';
 import 'package:otobucks/widgets/small_button.dart';
+
+import '../controllers/buy_car_controller.dart';
+
 class InquiryFormScreenCarBuy extends StatefulWidget {
-  const InquiryFormScreenCarBuy({Key? key}) : super(key: key);
+  final String carId;
+  const InquiryFormScreenCarBuy({Key? key, required this.carId}) : super(key: key);
 
   @override
-  State<InquiryFormScreenCarBuy> createState() =>
-      _InquiryFormScreenCarBuyState();
+  State<InquiryFormScreenCarBuy> createState() => _InquiryFormScreenCarBuyState();
 }
 
 class _InquiryFormScreenCarBuyState extends State<InquiryFormScreenCarBuy> {
@@ -35,9 +38,14 @@ class _InquiryFormScreenCarBuyState extends State<InquiryFormScreenCarBuy> {
   FocusNode mFocusNodePhone = FocusNode();
   FocusNode mFocusNodeInviteCode = FocusNode();
 
-  final BoxDecoration _boxDecoration = BoxDecoration(
-      borderRadius: BorderRadius.circular(5),
-      border: Border.all(color: AppColors.colorGray5));
+  final BoxDecoration _boxDecoration = BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: AppColors.colorGray5));
+  @override
+  void initState() {
+    super.initState();
+    controller.updatProductId(widget.carId);
+  }
+
+  var controller = Get.put(BuyCarController());
 
   @override
   Widget build(BuildContext context) {
@@ -45,134 +53,145 @@ class _InquiryFormScreenCarBuyState extends State<InquiryFormScreenCarBuy> {
       appBar: AppViews.initAppBar(
         mContext: context,
         centerTitle: false,
-        strTitle: 'Bank',
+        strTitle: 'Send inquiry'.tr,
         isShowNotification: true,
         isShowSOS: true,
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Container(
-            color: AppColors.colorBlueStart,
-            width: double.infinity,
-            height: AppDimens.dimens_60,
+          Column(
+            children: [
+              Container(
+                color: AppColors.colorBlueStart,
+                width: double.infinity,
+                height: AppDimens.dimens_60,
+              ),
+              Expanded(
+                child: ListView(padding: const EdgeInsets.all(20), children: [
+                  Text(
+                    'Name'.tr,
+                    style: regularText600(15),
+                  ),
+                  Container(
+                    // decoration: _boxDecoration,
+                    margin: const EdgeInsets.only(top: AppDimens.dimens_10, bottom: 10),
+                    child: CustomTextFieldWithIcon(
+                      textInputAction: TextInputAction.next,
+                      enabled: true,
+                      focusNode: mFocusNodeLastName,
+                      controller: controllerLastName,
+                      keyboardType: TextInputType.text,
+                      hintText: 'Name'.tr,
+                      inputFormatters: const [],
+                      obscureText: false,
+                      onChanged: (String value) {
+                        controller.updateName(value);
+                      },
+                      suffixIcon: Image.asset(
+                        AppImages.ic_user_sufix,
+                        width: AppDimens.dimens_15,
+                        color: AppColors.colorIconGray,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Email'.tr,
+                    style: regularText600(15),
+                  ),
+                  Container(
+                    // decoration: _boxDecoration,
+                    margin: const EdgeInsets.only(top: AppDimens.dimens_10, bottom: 10),
+                    child: CustomTextFieldWithIcon(
+                      textInputAction: TextInputAction.next,
+                      enabled: true,
+                      focusNode: mFocusNodeEmail,
+                      controller: controllerEmail,
+                      keyboardType: TextInputType.emailAddress,
+                      hintText: 'Email'.tr,
+                      inputFormatters: const [],
+                      obscureText: false,
+                      onChanged: (String value) {
+                        controller.updateEmail(value);
+                      },
+                      suffixIcon: Image.asset(
+                        AppImages.ic_email,
+                        width: AppDimens.dimens_18,
+                        color: AppColors.colorIconGray,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    "Mobile Number".tr,
+                    style: regularText600(15),
+                  ),
+                  Container(
+                    // decoration: _boxDecoration,
+                    margin: const EdgeInsets.only(top: AppDimens.dimens_10, bottom: 10),
+                    child: CustomTextFieldWithIcon(
+                      textInputAction: TextInputAction.next,
+                      enabled: true,
+                      focusNode: mFocusNodePhone,
+                      controller: controllerPhone,
+                      keyboardType: TextInputType.emailAddress,
+                      hintText: 'Mobile Number'.tr,
+                      inputFormatters: const [],
+                      obscureText: false,
+                      onChanged: (String value) {
+                        controller.updatePhoneNumber(value);
+                      },
+                      suffixIcon: Image.asset(
+                        AppImages.ic_drawer_estimation,
+                        width: AppDimens.dimens_18,
+                        color: AppColors.colorIconGray,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Leave Note (if any)'.tr,
+                    style: regularText600(15),
+                  ),
+                  Container(
+                    // decoration: _boxDecoration,
+                    margin: const EdgeInsets.only(top: AppDimens.dimens_10, bottom: 10),
+                    child: CustomTextFieldWithIcon(
+                      textInputAction: TextInputAction.next,
+                      enabled: true,
+                      focusNode: mFocusNodeInviteCode,
+                      controller: controllerInviteCode,
+                      keyboardType: TextInputType.emailAddress,
+                      hintText: 'Leave Note (if any)'.tr,
+                      inputFormatters: const [],
+                      obscureText: false,
+                      onChanged: (String value) {
+                        controller.updatenote(value);
+                      },
+                      suffixIcon: Image.asset(
+                        AppImages.ic_edit_profile_icon,
+                        width: AppDimens.dimens_18,
+                        color: AppColors.colorIconGray,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    height: 50,
+                    child: PrimaryButton(
+                      label: Text('Submit'.tr),
+                      color: null,
+                      onPress: () {
+                        controller.isValidInquiry(context);
+                      },
+                    ),
+                  ),
+                ]),
+              ),
+            ],
           ),
-          Expanded(
-            child: ListView(padding: const EdgeInsets.all(20), children: [
-              Text(
-                'Name',
-                style: regularText600(15),
-              ),
-              Container(
-                decoration: _boxDecoration,
-                margin:
-                    const EdgeInsets.only(top: AppDimens.dimens_10, bottom: 10),
-                child: CustomTextFieldWithIcon(
-                  textInputAction: TextInputAction.next,
-                  enabled: true,
-                  focusNode: mFocusNodeLastName,
-                  controller: controllerLastName,
-                  keyboardType: TextInputType.text,
-                  hintText: 'Last Name'.tr,
-                  inputFormatters: const [],
-                  obscureText: false,
-                  onChanged: (String value) {},
-                  suffixIcon: Image.asset(
-                    AppImages.ic_user_sufix,
-                    width: AppDimens.dimens_15,
-                    color: AppColors.colorIconGray,
-                  ),
-                ),
-              ),
-              Text(
-                'Email',
-                style: regularText600(15),
-              ),
-              Container(
-                decoration: _boxDecoration,
-                margin:
-                    const EdgeInsets.only(top: AppDimens.dimens_10, bottom: 10),
-                child: CustomTextFieldWithIcon(
-                  textInputAction: TextInputAction.next,
-                  enabled: true,
-                  focusNode: mFocusNodeEmail,
-                  controller: controllerEmail,
-                  keyboardType: TextInputType.emailAddress,
-                  hintText: 'Email'.tr,
-                  inputFormatters: const [],
-                  obscureText: false,
-                  onChanged: (String value) {},
-                  suffixIcon: Image.asset(
-                    AppImages.ic_email,
-                    width: AppDimens.dimens_18,
-                    color: AppColors.colorIconGray,
-                  ),
-                ),
-              ),
-              Text(
-                "Phone Number",
-                style: regularText600(15),
-              ),
-              Container(
-                decoration: _boxDecoration,
-                margin:
-                    const EdgeInsets.only(top: AppDimens.dimens_10, bottom: 10),
-                child: CustomTextFieldWithIcon(
-                  textInputAction: TextInputAction.next,
-                  enabled: true,
-                  focusNode: mFocusNodeEmail,
-                  controller: controllerEmail,
-                  keyboardType: TextInputType.emailAddress,
-                  hintText: 'Phone Number',
-                  inputFormatters: const [],
-                  obscureText: false,
-                  onChanged: (String value) {},
-                  suffixIcon: Image.asset(
-                    AppImages.ic_email,
-                    width: AppDimens.dimens_18,
-                    color: AppColors.colorIconGray,
-                  ),
-                ),
-              ),
-              Text(
-                'Note',
-                style: regularText600(15),
-              ),
-              Container(
-                decoration: _boxDecoration,
-                margin:
-                    const EdgeInsets.only(top: AppDimens.dimens_10, bottom: 10),
-                child: CustomTextFieldWithIcon(
-                  textInputAction: TextInputAction.next,
-                  enabled: true,
-                  focusNode: mFocusNodeEmail,
-                  controller: controllerEmail,
-                  keyboardType: TextInputType.emailAddress,
-                  hintText: 'Note',
-                  inputFormatters: const [],
-                  obscureText: false,
-                  onChanged: (String value) {},
-                  suffixIcon: Image.asset(
-                    AppImages.ic_email,
-                    width: AppDimens.dimens_18,
-                    color: AppColors.colorIconGray,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 50,
-                child: PrimaryButton(
-                  label: const Text('Inquiry Now'),
-                  color: null,
-                  onPress: () {
-                    Get.to(() => const RatingScreenCarBuy());
-                  },
-                ),
-              ),
-            ]),
-          ),
+          GetBuilder<BuyCarController>(
+            builder: (value) => AppViews.showLoadingWithStatus(value.isShowLoader),
+          )
         ],
       ),
     );

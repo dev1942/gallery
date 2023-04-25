@@ -40,80 +40,80 @@ class AppViews {
     List<Widget> actionsList = [];
 
     if (isShowSOS) {
-      actionsList.add(GestureDetector(
-        onTap: () async {
-          try {
-            // await LocationHelper.getCurrentLocation(mContext, (p0, p1){
-            //   log("${p0}  ${p1}");
-            // });
-            LatLng position = await Global.getCurrentLocation(context: Get.context!);
-            LatLng _mLatLng = LatLng(position.latitude!, position.longitude!);
-            List<i.Placemark> placemarks = await i.placemarkFromCoordinates(_mLatLng.latitude, _mLatLng.longitude);
-            String? currentlocation = '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
-            HashMap<String, Object> requestParams = HashMap();
-            requestParams[PARAMS.PARAM_LONGITUDE] = position.latitude;
-            requestParams[PARAMS.PARAM_LATITUDE] = position.longitude;
-            requestParams["location"] = currentlocation ?? "Unknown";
-            Logger().i("lat:${requestParams[PARAMS.PARAM_LATITUDE]}");
-            Logger().i("long:${requestParams[PARAMS.PARAM_LONGITUDE]}");
-            inspect(position);
-            if (position.latitude != 0.0 && position.longitude != 0.0) {
-              var sendEmergency = await MyProfileRepository().sendEmergency(requestParams);
-              sendEmergency.fold((failure) {
-                log(failure.MESSAGE);
-                Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
-              }, (mResult) {
-                Logger().i("Success");
-                Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
-              });
-            } else {
-              Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: "location_denied".tr, toastType: TOAST_TYPE.toastError);
-            }
-          } catch (e) {
-            Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: "location_denied".tr, toastType: TOAST_TYPE.toastError);
-          }
-          //Global.inProgressAlert(mContext);
-        },
-        child: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: SizedBox(
-            // margin: const EdgeInsetsDirectional.only(end: AppDimens.dimens_20),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset(
-                  AppImages.ic_sos,
-                  height: 29,
-                ),
-                CircularText(
-                  children: [
-                    TextItem(
-                      text: Text(
-                        "Emergency".toUpperCase(),
-                        style: const TextStyle(
-                          fontSize: 24,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      space: 19,
-                      startAngle: -90,
-                      startAngleAlignment: StartAngleAlignment.center,
-                      direction: CircularTextDirection.clockwise,
-                    ),
-                  ],
-                  radius: 70,
-                  position: CircularTextPosition.inside,
-                  // backgroundPaint: Paint()..color = Colors.grey.shade200,
-                ),
-              ],
-            ),
+      // actionsList.add(GestureDetector(
+      //   onTap: () async {
+      //     try {
+      //       // await LocationHelper.getCurrentLocation(mContext, (p0, p1){
+      //       //   log("${p0}  ${p1}");
+      //       // });
+      //       LatLng position = await Global.getCurrentLocation(context: Get.context!);
+      //       LatLng _mLatLng = LatLng(position.latitude!, position.longitude!);
+      //       List<i.Placemark> placemarks = await i.placemarkFromCoordinates(_mLatLng.latitude, _mLatLng.longitude);
+      //       String? currentlocation = '${placemarks[0].street} ${placemarks[0].subLocality} ${placemarks[0].locality} ${placemarks[0].country}';
+      //       HashMap<String, Object> requestParams = HashMap();
+      //       requestParams[PARAMS.PARAM_LONGITUDE] = position.latitude;
+      //       requestParams[PARAMS.PARAM_LATITUDE] = position.longitude;
+      //       requestParams["location"] = currentlocation ?? "Unknown";
+      //       Logger().i("lat:${requestParams[PARAMS.PARAM_LATITUDE]}");
+      //       Logger().i("long:${requestParams[PARAMS.PARAM_LONGITUDE]}");
+      //       inspect(position);
+      //       if (position.latitude != 0.0 && position.longitude != 0.0) {
+      //         var sendEmergency = await MyProfileRepository().sendEmergency(requestParams);
+      //         sendEmergency.fold((failure) {
+      //           log(failure.MESSAGE);
+      //           Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+      //         }, (mResult) {
+      //           Logger().i("Success");
+      //           Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
+      //         });
+      //       } else {
+      //         Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: "location_denied".tr, toastType: TOAST_TYPE.toastError);
+      //       }
+      //     } catch (e) {
+      //       Global.showToastAlert(context: Get.context!, strTitle: "", strMsg: "location_denied".tr, toastType: TOAST_TYPE.toastError);
+      //     }
+      //     //Global.inProgressAlert(mContext);
+      //   },
+      //   child: Padding(
+      //     padding: const EdgeInsets.only(top: 8.0),
+      //     child: SizedBox(
+      //       // margin: const EdgeInsetsDirectional.only(end: AppDimens.dimens_20),
+      //       child: Stack(
+      //         alignment: Alignment.center,
+      //         children: [
+      //           Image.asset(
+      //             AppImages.ic_sos,
+      //             height: 29,
+      //           ),
+      //           CircularText(
+      //             children: [
+      //               TextItem(
+      //                 text: Text(
+      //                   "Emergency".toUpperCase(),
+      //                   style: const TextStyle(
+      //                     fontSize: 24,
+      //                     color: Colors.white,
+      //                     fontWeight: FontWeight.bold,
+      //                   ),
+      //                 ),
+      //                 space: 19,
+      //                 startAngle: -90,
+      //                 startAngleAlignment: StartAngleAlignment.center,
+      //                 direction: CircularTextDirection.clockwise,
+      //               ),
+      //             ],
+      //             radius: 70,
+      //             position: CircularTextPosition.inside,
+      //             // backgroundPaint: Paint()..color = Colors.grey.shade200,
+      //           ),
+      //         ],
+      //       ),
 
-            height: 30,
-            width: 80,
-          ),
-        ),
-      ));
+      //       height: 30,
+      //       width: 80,
+      //     ),
+      //   ),
+      // ));
     }
 
     return AppBar(
@@ -250,7 +250,7 @@ class AppViews {
   // Show Center Loading
   static showLoading() {
     return Center(
-      child: SpinKitThreeBounce(color: AppColors.colorAccent, size: AppDimens.dimens_34),
+      child: SpinKitThreeBounce(color: AppColors.colorPrimary, size: AppDimens.dimens_34),
     );
   } // Show Footer Loading Icon
 
@@ -752,7 +752,7 @@ class AppViews {
                                         style: TextButton.styleFrom(
                                             foregroundColor: AppColors.colorAccent,
                                             disabledForegroundColor: AppColors.colorAccent,
-                                            backgroundColor: AppColors.colorAccent),
+                                            backgroundColor: AppColors.colorPrimary),
                                         onPressed: () {
                                           if (onTapLeftBtn != null) {
                                             onTapLeftBtn();
@@ -779,7 +779,7 @@ class AppViews {
                                         style: TextButton.styleFrom(
                                             foregroundColor: AppColors.colorAccent,
                                             disabledForegroundColor: AppColors.colorAccent.withOpacity(0.38),
-                                            backgroundColor: AppColors.colorAccent),
+                                            backgroundColor: AppColors.colorPrimary),
                                         onPressed: () {
                                           if (onTapRightBtn != null) {
                                             onTapRightBtn();
@@ -817,7 +817,7 @@ class AppViews {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            AppColors.colorBlueEnd,
+            AppColors.colorBlueStart,
             AppColors.colorBlueStart,
           ],
         ),
@@ -862,10 +862,10 @@ class AppViews {
 
   static textFieldRoundBorder() {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(AppDimens.dimens_5),
       borderSide: BorderSide(
         width: 1,
-        color: AppColors.colorAccent,
+        color: AppColors.colorBlueStart,
         style: BorderStyle.solid,
       ),
     );

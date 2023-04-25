@@ -29,9 +29,10 @@ class TransactionHistoryFragmentState extends State<TransactionHistoryFragment> 
 
   @override
   void initState() {
-    if (controller.transactions.isEmpty) {
-      controller.getTransactions();
-    }
+    // if (controller.transactions.isEmpty) {
+    controller.getTransactions();
+    controller.isSearching = false;
+    // }
 
     super.initState();
   }
@@ -116,34 +117,37 @@ class TransactionHistoryFragmentState extends State<TransactionHistoryFragment> 
                                         Expanded(
                                           child: SizedBox(
                                               height: 30,
-                                              child: TextFormField(
-                                                controller: value.datePickerController,
-                                                keyboardType: TextInputType.datetime,
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                ),
-                                                onChanged: (val) {
-                                                  value.isSearching = true;
-                                                  value.searchbyDate(val);
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  value.selectDate(Get.context!);
                                                 },
-                                                decoration: InputDecoration(
-                                                    suffixIcon: InkWell(
-                                                      onTap: () {
-                                                        value.selectDate(Get.context!);
-                                                      },
-                                                      child: Icon(
-                                                        Icons.calendar_month,
-                                                        size: AppDimens.dimens_18,
-                                                        color: Colors.yellow.shade700,
-                                                      ),
+                                                child: AbsorbPointer(
+                                                  child: TextFormField(
+                                                    controller: value.datePickerController,
+                                                    keyboardType: TextInputType.datetime,
+                                                    style: const TextStyle(
+                                                      fontSize: 12,
                                                     ),
-                                                    contentPadding: const EdgeInsets.all(8),
-                                                    hintText: "2023-01-13".tr,
-                                                    hintStyle: AppStyle.textViewStyleSmall(context: context, color: AppColors.lightGrey),
-                                                    enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-                                                    focusColor: Colors.yellow,
-                                                    focusedBorder: OutlineInputBorder(
-                                                        borderSide: const BorderSide(color: Colors.grey), borderRadius: BorderRadius.circular(3))),
+                                                    onChanged: (val) {
+                                                      value.isSearching = true;
+                                                      value.searchbyDate(val);
+                                                    },
+                                                    decoration: InputDecoration(
+                                                        suffixIcon: Icon(
+                                                          Icons.calendar_month,
+                                                          size: AppDimens.dimens_18,
+                                                          color: Colors.yellow.shade700,
+                                                        ),
+                                                        contentPadding: const EdgeInsets.all(8),
+                                                        hintText: "Select date".tr,
+                                                        hintStyle: AppStyle.textViewStyleSmall(context: context, color: AppColors.lightGrey),
+                                                        enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                                                        focusColor: Colors.yellow,
+                                                        focusedBorder: OutlineInputBorder(
+                                                            borderSide: const BorderSide(color: Colors.grey),
+                                                            borderRadius: BorderRadius.circular(3))),
+                                                  ),
+                                                ),
                                               )),
                                         ),
                                         addHorizontalSpace(AppDimens.dimens_8),
@@ -151,6 +155,7 @@ class TransactionHistoryFragmentState extends State<TransactionHistoryFragment> 
                                           child: SizedBox(
                                               height: 30,
                                               child: TextFormField(
+                                                controller: controller.controllerPrice,
                                                 style: const TextStyle(
                                                   fontSize: 12,
                                                 ),
@@ -172,6 +177,21 @@ class TransactionHistoryFragmentState extends State<TransactionHistoryFragment> 
                                                     focusedBorder: OutlineInputBorder(
                                                         borderSide: const BorderSide(color: Colors.grey), borderRadius: BorderRadius.circular(3))),
                                               )),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            controller.isSearching = true;
+                                            controller.datePickerController.clear();
+                                            controller.controllerPrice.clear();
+                                            //=================================
+                                            // Get.put(MyBookingsController()).isSearchingTypePromotion == false
+                                            //     ? Get.put(MyBookingsController()).searchInShop("")
+                                            //     : Get.put(MyBookingsController()).searchInShopPromotion("");
+                                            // Get.put(MyBookingsController()).datePickerController.clear();
+                                            // Get.put(MyBookingsController()).disputeTitleController;
+                                            // txtTitleController.clear();
+                                          },
+                                          icon: Icon(Icons.clear),
                                         )
                                       ],
                                     ),
@@ -245,6 +265,7 @@ class TransactionHistoryFragmentState extends State<TransactionHistoryFragment> 
                                                           mainAxisAlignment: MainAxisAlignment.start,
                                                           children: [
                                                             Container(
+                                                              margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_2),
                                                               child: Row(
                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -271,7 +292,6 @@ class TransactionHistoryFragmentState extends State<TransactionHistoryFragment> 
                                                                   ),
                                                                 ],
                                                               ),
-                                                              margin: const EdgeInsets.only(top: AppDimens.dimens_5, bottom: AppDimens.dimens_2),
                                                             ),
                                                             Container(
                                                                 margin: const EdgeInsets.only(bottom: AppDimens.dimens_5),
