@@ -311,7 +311,7 @@ class TransactionHistoryFragmentState extends State<TransactionHistoryFragment> 
                                                                       ),
                                                                     ),
                                                                     Text(
-                                                                      transaction.metadata.service == null ? '' : transaction.metadata.service!.title,
+                                                                      transaction.serviceTitle ?? "",
                                                                       maxLines: 1,
                                                                       style: AppStyle.textViewStyleNormalBodyText2(
                                                                         context: Get.context!,

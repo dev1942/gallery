@@ -146,7 +146,8 @@ class BookingRepo {
     }
     try {
       String response = await ReqListener.fetchPost(
-          strUrl: '/promotions/reschedule/$promtionID', requestParams: requestParams, mReqType: ReqType.patch, mParamType: ParamType.json);
+          strUrl: 'promotions/reschedule/$promtionID', requestParams: requestParams, mReqType: ReqType.patch, mParamType: ParamType.json);
+
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);

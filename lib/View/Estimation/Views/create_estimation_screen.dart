@@ -53,7 +53,8 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
 
   @override
   void initState() {
-    // controller.mServiceModel = widget.mServiceModel;
+    inspect(widget.mServiceModel);
+    controller.mServiceModel = widget.mServiceModel;
     controller.updateServiceModel(widget.mServiceModel);
     controller.controllerNote.clear();
 
@@ -190,7 +191,7 @@ class CreateEstimationScreenState extends State<CreateEstimationScreen> {
                                               note: controller.controllerNote.text,
                                               previousAmount: controller.mServiceModel.beforePrice,
                                               discount: controller.mServiceModel.discount,
-                                              vat: controller.mServiceModel.vat,
+                                              vat: controller.mServiceModel.vat ?? "0",
                                               serviceTax: controller.mServiceModel.serviceTax,
                                             )));
                               } else {

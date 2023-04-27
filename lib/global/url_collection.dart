@@ -3,7 +3,7 @@
 class RequestBuilder {
   static final String DEVELOPMENT_URL = "https://developmentapi-app.otobucks.com/v1/";
   static final String PRODUCTION_URL = "https://api-app.otobucks.com/v1/";
-  static final String LOCAL_URL = "https://192.168.18.36:4000/v1/";
+  static final String LOCAL_URL = "http://13.127.239.8/v1/";
   static final String LOCAL_USMAN_URL = "https://f09f-39-61-45-164.ngrok.io/v1/";
   /*-------------------------Change URl type here----------------------------*/
   static String API_BASE_URL = DEVELOPMENT_URL;

@@ -121,6 +121,7 @@ class MyBookingsController extends GetxController {
     var data = jsonDecode(response.body);
     if (response.statusCode == 200) {
       log.i("Promotion booking success");
+      inspect(data);
       return PromotionBookingHistory.fromJson(data);
     } else {
       log.e("Get promotion booking API Failed");
@@ -311,7 +312,7 @@ class MyBookingsController extends GetxController {
   }
 
   //openDispute method
-  openDispute(String bookingID,BuildContext context) async {
+  openDispute(String bookingID, BuildContext context) async {
     isShowLoader = true;
     update();
     if (disputeDescriptionController.text.isNotEmpty && disputeDescriptionController.text.isNotEmpty && selectDisputeImage.isNotEmpty) {

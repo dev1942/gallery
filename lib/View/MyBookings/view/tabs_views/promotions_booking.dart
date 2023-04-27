@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 import 'package:otobucks/global/enum.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/gradient_text.dart';
@@ -14,6 +15,7 @@ import '../../../../global/constants.dart';
 import '../../../../global/global.dart';
 import '../../Models/PromotionBookingModel.dart';
 import '../../controller/mybookings_controller.dart';
+import '../../widget/BlinkingIcon.dart';
 import '../view_promotions_screen.dart';
 import 'give_rating.dart';
 
@@ -31,13 +33,13 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
         top: false,
         bottom: false,
         child: Scaffold(
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.chat),
-            onPressed: () async {
-              await launchUrl(Uri.parse('https://wa.me/+971542457866'), mode: LaunchMode.externalApplication);
-              // Get.put(MyBookingsController()).launchWhatsappSendMessage("+971542457866", "Hi! How Are You?");
-            },
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   child: Icon(Icons.chat),
+          //   onPressed: () async {
+          //     await launchUrl(Uri.parse('https://wa.me/+971542457866'), mode: LaunchMode.externalApplication);
+          //     // Get.put(MyBookingsController()).launchWhatsappSendMessage("+971542457866", "Hi! How Are You?");
+          //   },
+          // ),
           resizeToAvoidBottomInset: true,
           backgroundColor: AppColors.getMainBgColor(),
           body: GetBuilder<MyBookingsController>(builder: (context) {
@@ -84,8 +86,11 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
                                                     context: context, color: AppColors.colorTextBlue2, fontSizeDelta: 0, fontWeightDelta: 0),
                                               )),
                                           onTap: () {
-                                            // log(data!.bookingDetails.)
-                                            Get.to(ViewPromotionDetailsScreen(status: "cancelled", mEstimatesModel: data!, isPending: false));
+                                            // log(data!.status!);
+                                            Get.to(ViewPromotionDetailsScreen(
+                                                status: data?.status ?? "",
+                                                mEstimatesModel: data!,
+                                                isPending: data.status == "inprogress" ? false : true));
                                           },
                                         ),
 
@@ -235,6 +240,16 @@ class PromotionsBookingView extends GetView<MyBookingsController> {
                                                       )),
                                                 ),
                                               ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              //.................chat icon.................
+                                              InkWell(
+                                                  onTap: () async {
+                                                    await launchUrl(Uri.parse('https://wa.me/+971542457866'), mode: LaunchMode.externalApplication);
+                                                    // Logger().i("Phone number for whats app is${data.provider?.phone}${data.provider?.firstName} ");
+                                                  },
+                                                  child: const BlinkIcon()),
                                             ],
                                           ),
                                         ],

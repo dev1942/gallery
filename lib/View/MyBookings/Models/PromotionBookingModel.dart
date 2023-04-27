@@ -7,12 +7,7 @@ class PromotionBookingHistory {
   int? totalCount;
   List<ProotionResult>? result;
 
-  PromotionBookingHistory(
-      {this.status,
-        this.message,
-        this.countOnPage,
-        this.totalCount,
-        this.result});
+  PromotionBookingHistory({this.status, this.message, this.countOnPage, this.totalCount, this.result});
 
   PromotionBookingHistory.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -55,44 +50,43 @@ class ProotionResult {
   BookingDetails? bookingDetails;
   String? createdAt;
   String? updatedAt;
+  String? acceptNote;
+  String? rescheduleNote;
 
-  ProotionResult(
-      {this.ssn,
-        this.totalprice,
-        this.status,
-        this.sId,
-        this.provider,
-        this.customer,
-        this.paymentMethod,
-        this.transactionId,
-        this.promotion,
-        this.paymentStatus,
-        this.address,
-        this.bookingDetails,
-        this.createdAt,
-        this.updatedAt});
+  ProotionResult({
+    this.ssn,
+    this.totalprice,
+    this.status,
+    this.sId,
+    this.provider,
+    this.customer,
+    this.paymentMethod,
+    this.transactionId,
+    this.promotion,
+    this.paymentStatus,
+    this.address,
+    this.bookingDetails,
+    this.createdAt,
+    this.updatedAt,
+    this.acceptNote,
+    this.rescheduleNote,
+  });
 
   ProotionResult.fromJson(Map<String, dynamic> json) {
     ssn = json['ssn'];
     totalprice = json['totalprice'];
     status = json['status'];
     sId = json['_id'];
-    provider = json['provider'] != null
-        ? Provider.fromJson(json['provider'])
-        : null;
-    customer = json['customer'] != null
-        ? Provider.fromJson(json['customer'])
-        : null;
+    provider = json['provider'] != null ? Provider.fromJson(json['provider']) : null;
+    customer = json['customer'] != null ? Provider.fromJson(json['customer']) : null;
     paymentMethod = json['paymentMethod'];
     transactionId = json['transactionId'];
-    promotion = json['promotion'] != null
-        ? Promotion.fromJson(json['promotion'])
-        : null;
+    promotion = json['promotion'] != null ? Promotion.fromJson(json['promotion']) : null;
     paymentStatus = json['paymentStatus'];
     address = json['address'];
-    bookingDetails = json['bookingDetails'] != null
-        ? BookingDetails.fromJson(json['bookingDetails'])
-        : null;
+    acceptNote = json['acceptNote'] ?? "";
+    rescheduleNote = json['rescheduleNote'] ?? "";
+    bookingDetails = json['bookingDetails'] != null ? BookingDetails.fromJson(json['bookingDetails']) : null;
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
@@ -135,15 +129,7 @@ class Provider {
   String? phone;
   String? id;
 
-  Provider(
-      {this.country,
-        this.role,
-        this.sId,
-        this.firstName,
-        this.lastName,
-        this.email,
-        this.phone,
-        this.id});
+  Provider({this.country, this.role, this.sId, this.firstName, this.lastName, this.email, this.phone, this.id});
 
   Provider.fromJson(Map<String, dynamic> json) {
     country = json['country'].cast<String>();
@@ -199,30 +185,30 @@ class Promotion {
 
   Promotion(
       {this.ssn,
-        this.promoImg,
-        this.deleted,
-        this.active,
-        this.paymentStatus,
-        this.sId,
-        this.source,
-        this.title,
-        this.description,
-        this.previousPrice,
-        this.discount,
-        this.priceAfterDiscount,
-        this.startDate,
-        this.endDate,
-        this.country,
-        this.location,
-        this.days,
-        this.sourceType,
-        this.promotionCharges,
-        this.provider,
-        this.activeByAdmin,
-        this.createdAt,
-        this.updatedAt,
-        this.iV,
-        this.id});
+      this.promoImg,
+      this.deleted,
+      this.active,
+      this.paymentStatus,
+      this.sId,
+      this.source,
+      this.title,
+      this.description,
+      this.previousPrice,
+      this.discount,
+      this.priceAfterDiscount,
+      this.startDate,
+      this.endDate,
+      this.country,
+      this.location,
+      this.days,
+      this.sourceType,
+      this.promotionCharges,
+      this.provider,
+      this.activeByAdmin,
+      this.createdAt,
+      this.updatedAt,
+      this.iV,
+      this.id});
 
   Promotion.fromJson(Map<String, dynamic> json) {
     ssn = json['ssn'];
@@ -231,8 +217,7 @@ class Promotion {
     active = json['active'];
     paymentStatus = json['paymentStatus'];
     sId = json['_id'];
-    source =
-    json['source'] != null ? Source.fromJson(json['source']) : null;
+    source = json['source'] != null ? Source.fromJson(json['source']) : null;
     title = json['title'];
     description = json['description'];
     previousPrice = json['previousPrice'];
@@ -245,9 +230,7 @@ class Promotion {
     days = json['days'];
     sourceType = json['sourceType'];
     promotionCharges = json['promotionCharges'];
-    provider = json['provider'] != null
-        ? Provider.fromJson(json['provider'])
-        : null;
+    provider = json['provider'] != null ? Provider.fromJson(json['provider']) : null;
     activeByAdmin = json['activeByAdmin'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
@@ -344,43 +327,43 @@ class PromotionProvider {
   String? whatsApp;
   String? ssn;
   List? location;
-  List ?cars;
+  List? cars;
   String? id;
 
   PromotionProvider(
       {this.country,
-        this.states,
-        this.cities,
-        this.banned,
-        this.isEmailVerified,
-        this.isPhoneVerified,
-        this.role,
-        this.secondNumber,
-        this.experienceLevel,
-        this.about,
-        this.status,
-        this.approvedBy,
-        this.firebaseToken,
-        this.emergency,
-        this.sId,
-        this.car,
-        this.firstName,
-        this.lastName,
-        this.email,
-        this.phone,
-        this.refrence,
-        this.image,
-        this.createdAt,
-        this.updatedAt,
-        this.iV,
-        this.stripeId,
-        this.coverImage,
-        this.passwordChangedAt,
-        this.whatsApp,
-        this.ssn,
-        this.location,
-        this.cars,
-        this.id});
+      this.states,
+      this.cities,
+      this.banned,
+      this.isEmailVerified,
+      this.isPhoneVerified,
+      this.role,
+      this.secondNumber,
+      this.experienceLevel,
+      this.about,
+      this.status,
+      this.approvedBy,
+      this.firebaseToken,
+      this.emergency,
+      this.sId,
+      this.car,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.phone,
+      this.refrence,
+      this.image,
+      this.createdAt,
+      this.updatedAt,
+      this.iV,
+      this.stripeId,
+      this.coverImage,
+      this.passwordChangedAt,
+      this.whatsApp,
+      this.ssn,
+      this.location,
+      this.cars,
+      this.id});
 
   PromotionProvider.fromJson(Map<String, dynamic> json) {
     country = json['country'].cast<String>();
