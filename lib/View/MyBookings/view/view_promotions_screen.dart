@@ -217,6 +217,50 @@ class ViewPromotionDetailsScreenState extends State<ViewPromotionDetailsScreen> 
                       // _voiceNoteSection(),
                       //Leave Note (if any)
                       _anyNoteTextFiledSection(reScheduleController.controllerNote),
+                      widget.mEstimatesModel.acceptNote == null || widget.mEstimatesModel.acceptNote!.isEmpty
+                          ? const SizedBox()
+                          : Container(
+                              margin: EdgeInsets.symmetric(horizontal: wd(15), vertical: wd(15)),
+                              alignment: Alignment.center,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "Acknowledge Note".tr,
+                                      style: AppStyle.textViewStyleNormalSubtitle2(
+                                          context: context, color: AppColors.colorGray, fontSizeDelta: 1, fontWeightDelta: 1),
+                                    ),
+                                  ),
+                                  Text(
+                                    widget.mEstimatesModel.acceptNote ?? "",
+                                    style: AppStyle.textViewStyleNormalSubtitle2(
+                                        context: context, color: Colors.grey, fontSizeDelta: 1, fontWeightDelta: -1),
+                                  ),
+                                ],
+                              ),
+                            ),
+                      widget.mEstimatesModel.rescheduleNote == null || widget.mEstimatesModel.rescheduleNote!.isEmpty
+                          ? SizedBox()
+                          : Container(
+                              margin: EdgeInsets.symmetric(horizontal: wd(15), vertical: wd(15)),
+                              alignment: Alignment.center,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "Reschedule Note".tr,
+                                      style: AppStyle.textViewStyleNormalSubtitle2(
+                                          context: context, color: AppColors.colorGray, fontSizeDelta: 1, fontWeightDelta: 1),
+                                    ),
+                                  ),
+                                  Text(
+                                    widget.mEstimatesModel.rescheduleNote ?? "",
+                                    style: AppStyle.textViewStyleNormalSubtitle2(
+                                        context: context, color: Colors.grey, fontSizeDelta: 1, fontWeightDelta: -1),
+                                  ),
+                                ],
+                              ),
+                            ),
                       widget.isPending && widget.isRebooked
                           ? Container(
                               alignment: Alignment.center,
@@ -334,23 +378,23 @@ class ViewPromotionDetailsScreenState extends State<ViewPromotionDetailsScreen> 
                                   ],
                                 )
                               : Container(
-                                  alignment: Alignment.center,
-                                  margin: const EdgeInsets.only(
-                                      top: AppDimens.dimens_20, bottom: AppDimens.dimens_20, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
-                                  child: CustomButton(
-                                    isGradient: true,
-                                    isRoundBorder: true,
-                                    fontColor: AppColors.colorWhite,
-                                    width: size.width,
-                                    onPressed: () {
-                                      Get.put(MyBookingsController()).reseduleBooking(context, widget.mEstimatesModel.promotion!.id!, promotiondate);
-                                    },
-                                    // =>
-                                    //     controller.rebook(
-                                    //     context, widget.mEstimatesModel),
-                                    strTitle: "Reschedule",
+                                  // alignment: Alignment.center,
+                                  // margin: const EdgeInsets.only(
+                                  //     top: AppDimens.dimens_20, bottom: AppDimens.dimens_20, left: AppDimens.dimens_10, right: AppDimens.dimens_10),
+                                  // child: CustomButton(
+                                  //   isGradient: true,
+                                  //   isRoundBorder: true,
+                                  //   fontColor: AppColors.colorWhite,
+                                  //   width: size.width,
+                                  //   onPressed: () {
+                                  //     Get.put(MyBookingsController()).reseduleBooking(context, widget.mEstimatesModel.promotion!.id!, promotiondate);
+                                  //   },
+                                  //   // =>
+                                  //   //     controller.rebook(
+                                  //   //     context, widget.mEstimatesModel),
+                                  //   strTitle: "Reschedule",
+                                  // ),
                                   ),
-                                ),
                     ],
                   ))
 

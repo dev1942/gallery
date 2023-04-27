@@ -74,6 +74,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    log("double" + widget.vat.toString());
     var size = MediaQuery.of(context).size;
     var total = double.parse(widget.amount ?? "0") + double.parse(widget.vat ?? "0") + double.parse(widget.serviceTax ?? "0");
 

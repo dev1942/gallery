@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -13,16 +14,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ReqListener {
   static Future<String> fetchPost(
-      {required String strUrl,
-      required HashMap<String, Object> requestParams,
-      required ReqType mReqType,
-      required ParamType mParamType}) async {
+      {required String strUrl, required HashMap<String, Object> requestParams, required ReqType mReqType, required ParamType mParamType}) async {
     HashMap<String, String> lHeaders = HashMap();
     final prefs = await SharedPreferences.getInstance();
     String? accesToken = prefs.getString(SharedPrefKey.KEY_ACCESS_TOKEN);
     if (accesToken != null && accesToken.isNotEmpty) {
       String accesTokenType = Constants.strTokenType;
       accesToken = accesTokenType + " " + accesToken;
+      log(accesToken);
       lHeaders[PARAMS.PARAM_AUTHORIZATION] = accesToken;
     }
     if (mParamType == ParamType.json) {
@@ -32,45 +31,31 @@ class ReqListener {
     late http.Response? response;
     switch (mReqType) {
       case ReqType.get:
-        response = await http
-            .get(Uri.parse(RequestBuilder.API_BASE_URL + strUrl),
-                headers: lHeaders)
-            .timeout(const Duration(minutes: 3));
+        response = await http.get(Uri.parse(RequestBuilder.API_BASE_URL + strUrl), headers: lHeaders).timeout(const Duration(minutes: 3));
         break;
       case ReqType.post:
         response = await http
             .post(Uri.parse(RequestBuilder.API_BASE_URL + strUrl),
-                body: mParamType == ParamType.json
-                    ? jsonEncode(requestParams)
-                    : requestParams,
-                headers: lHeaders)
+                body: mParamType == ParamType.json ? jsonEncode(requestParams) : requestParams, headers: lHeaders)
             .timeout(const Duration(minutes: 3));
         break;
       case ReqType.patch:
+        log(RequestBuilder.API_BASE_URL + strUrl);
         response = await http
             .patch(Uri.parse(RequestBuilder.API_BASE_URL + strUrl),
-                body: mParamType == ParamType.json
-                    ? jsonEncode(requestParams)
-                    : requestParams,
-                headers: lHeaders)
+                body: mParamType == ParamType.json ? jsonEncode(requestParams) : requestParams, headers: lHeaders)
             .timeout(const Duration(minutes: 3));
         break;
       case ReqType.put:
         response = await http
             .put(Uri.parse(RequestBuilder.API_BASE_URL + strUrl),
-                body: mParamType == ParamType.json
-                    ? jsonEncode(requestParams)
-                    : requestParams,
-                headers: lHeaders)
+                body: mParamType == ParamType.json ? jsonEncode(requestParams) : requestParams, headers: lHeaders)
             .timeout(const Duration(minutes: 3));
         break;
       case ReqType.delete:
         response = await http
             .delete(Uri.parse(RequestBuilder.API_BASE_URL + strUrl),
-                body: mParamType == ParamType.json
-                    ? jsonEncode(requestParams)
-                    : requestParams,
-                headers: lHeaders)
+                body: mParamType == ParamType.json ? jsonEncode(requestParams) : requestParams, headers: lHeaders)
             .timeout(const Duration(minutes: 3));
         break;
     }
@@ -82,10 +67,7 @@ class ReqListener {
   }
 
   static Future<String> fetchPostFullUrl(
-      {required String strUrl,
-      required HashMap<String, Object> requestParams,
-      required ReqType mReqType,
-      required ParamType mParamType}) async {
+      {required String strUrl, required HashMap<String, Object> requestParams, required ReqType mReqType, required ParamType mParamType}) async {
     HashMap<String, String> lHeaders = HashMap();
 
     final prefs = await SharedPreferences.getInstance();
@@ -102,32 +84,20 @@ class ReqListener {
     late http.Response? response;
     switch (mReqType) {
       case ReqType.get:
-        response = await http
-            .get(Uri.parse(strUrl), headers: lHeaders)
-            .timeout(const Duration(minutes: 3));
+        response = await http.get(Uri.parse(strUrl), headers: lHeaders).timeout(const Duration(minutes: 3));
         break;
       case ReqType.post:
         response = await http
-            .post(Uri.parse(strUrl),
-                body: mParamType == ParamType.json
-                    ? jsonEncode(requestParams)
-                    : requestParams,
-                headers: lHeaders)
+            .post(Uri.parse(strUrl), body: mParamType == ParamType.json ? jsonEncode(requestParams) : requestParams, headers: lHeaders)
             .timeout(const Duration(minutes: 3));
         break;
       case ReqType.put:
         response = await http
-            .put(Uri.parse(strUrl),
-                body: mParamType == ParamType.json
-                    ? jsonEncode(requestParams)
-                    : requestParams,
-                headers: lHeaders)
+            .put(Uri.parse(strUrl), body: mParamType == ParamType.json ? jsonEncode(requestParams) : requestParams, headers: lHeaders)
             .timeout(const Duration(minutes: 3));
         break;
       case ReqType.delete:
-        response = await http
-            .delete(Uri.parse(strUrl), headers: lHeaders)
-            .timeout(const Duration(minutes: 3));
+        response = await http.delete(Uri.parse(strUrl), headers: lHeaders).timeout(const Duration(minutes: 3));
         break;
       case ReqType.patch:
         break;
