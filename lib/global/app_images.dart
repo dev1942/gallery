@@ -51,6 +51,7 @@ class AppImages {
   static const String ic_drawer_facebook = "assets/images/ic_drawer_facebook.png";
   static const String ic_drawer_google = "assets/images/ic_drawer_google.png";
   static const String ic_drawer_insta = "assets/images/ic_drawer_insta.png";
+  static const String ic_drawer_youtube = "assets/images/youtube.png";
   static const String ic_round_blue_tick = "assets/images/ic_round_blue_tick.png";
   static const String ic_camera = "assets/images/ic_camera.png";
   static const String ic_cloud = "assets/images/ic_cloud.png";
