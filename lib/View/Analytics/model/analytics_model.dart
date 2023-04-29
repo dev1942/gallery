@@ -14,16 +14,11 @@ class AnalyticsDataModelResult {
   double? totalAmountSpent;
   int? invites;
 
-  AnalyticsDataModelResult({
-    this.serviceBookings,
-    this.promotionBookings,
-    this.totalAmountSpent,
-    this.invites
-  });
+  AnalyticsDataModelResult({this.serviceBookings, this.promotionBookings, this.totalAmountSpent, this.invites});
   AnalyticsDataModelResult.fromJson(Map<String, dynamic> json) {
     serviceBookings = json['serviceBookings']?.toInt();
     promotionBookings = json['promotionBookings']?.toInt();
-    totalAmountSpent=json['totalAmountSpent'];
+    totalAmountSpent = double.parse(json['totalAmountSpent'].toString());
     invites = json['totalInvites']?.toInt();
   }
   Map<String, dynamic> toJson() {
