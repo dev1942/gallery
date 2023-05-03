@@ -14,6 +14,8 @@ import 'package:otobucks/widgets/round_dot.dart';
 import 'package:otobucks/widgets/small_button.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
+import '../../CatBuyCar/controllers/buy_car_controller.dart';
+
 class CarSellFilters extends StatefulWidget {
   const CarSellFilters({Key? key}) : super(key: key);
 
@@ -22,10 +24,14 @@ class CarSellFilters extends StatefulWidget {
 }
 
 class _CarSellFiltersState extends State<CarSellFilters> {
-  var _values = const SfRangeValues(0, 20);
+  var _valuesPrice = const SfRangeValues(0, 20);
+  var _valuesMileage = const SfRangeValues(0, 20);
+  var filterController = Get.put(FilterScreenController());
+
 
   @override
   void initState() {
+    filterController.getFilterList();
     Future.delayed(Duration.zero, () {
       Global.inProgressAlert(Get.overlayContext!);
     });
@@ -65,7 +71,7 @@ class _CarSellFiltersState extends State<CarSellFilters> {
   _skipButtonText() => Align(
       alignment: Alignment.centerRight,
       child: TextButton(
-          onPressed: () {},
+          onPressed: () => Get.to(() => const BuyCarScreen()),
           child: Text(
             'Skip Filters',
             style: subHeadingText(13).copyWith(
@@ -143,9 +149,10 @@ class _CarSellFiltersState extends State<CarSellFilters> {
           GetBuilder<FilterScreenController>(builder: (value) {
             return SizedBox(
               height: 65,
-              child: ListView.builder(
+              child:  ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
+                  // itemCount: value.carCompanies.length,
                   itemCount: value.carCompanies.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
@@ -394,10 +401,10 @@ class _CarSellFiltersState extends State<CarSellFilters> {
           return SizedBox(
             height: 65,
             child: SfRangeSlider(
-              min: 0.0,
-              max: 100.0,
-              values: _values,
-              interval: 20,
+              min: value.priceMax,// 0.0,
+              max: value.priceMin,//100.0,
+              values: _valuesPrice,
+              interval:(value.priceMin-value.priceMax)/2,//20,//    int.tryParse(value.priceMax)/5.0,
               showTicks: false,
               showLabels: true,
              // showDividers: true,
@@ -407,13 +414,13 @@ class _CarSellFiltersState extends State<CarSellFilters> {
               inactiveColor: HexColor('#4D0E4A86'),
               activeColor: HexColor('#4D0E4A86'),
               enableTooltip: false,
-              numberFormat: i.NumberFormat("\$"),
+              numberFormat: i.NumberFormat("AED"),
               minorTicksPerInterval: 0,
              // edgeLabelPlacement: EdgeLabelPlacement.auto,
               endThumbIcon: const ThumbIcon(),
               onChanged: (SfRangeValues values) {
                 setState(() {
-                  _values = values;
+                  _valuesPrice = values;
                 });
               },
             ),
@@ -441,9 +448,9 @@ class _CarSellFiltersState extends State<CarSellFilters> {
           return SizedBox(
             height: 65,
             child: SfRangeSlider(
-              min: 0.0,
-              max: 100.0,
-              values: _values,
+              min: value.milageMin,
+              max: value.milageMax,
+              values: _valuesMileage,
               interval: 20,
               showTicks: false,
               showLabels: true,
@@ -457,7 +464,7 @@ class _CarSellFiltersState extends State<CarSellFilters> {
               endThumbIcon: const ThumbIcon(),
               onChanged: (SfRangeValues values) {
                 setState(() {
-                  _values = values;
+                  _valuesMileage = values;
                 });
               },
             ),
@@ -503,7 +510,7 @@ class _CarSellFiltersState extends State<CarSellFilters> {
                         decoration: ContainerProperties.shadowDecoration(
                                 blurRadius: 8.0, radius: 12.0)
                             .copyWith(
-                                color: value.selectedCompany ==
+                                color: value.selectedTransmission ==
                                         value.transmissionTypes[index]
                                     ? AppColors.selectButton
                                     : AppColors.colorWhite),
@@ -551,7 +558,7 @@ class _CarSellFiltersState extends State<CarSellFilters> {
                         decoration: ContainerProperties.shadowDecoration(
                                 blurRadius: 8.0, radius: 12.0)
                             .copyWith(
-                                color: value.selectedCompany ==
+                                color: value.selectedFuelType ==
                                         value.fuelType[index]
                                     ? AppColors.selectButton
                                     : AppColors.colorWhite),
@@ -573,7 +580,8 @@ class _CarSellFiltersState extends State<CarSellFilters> {
         height: 45,
         child: PrimaryButton(
           label: const Text('Apply Filters'),
-          onPress: () => Get.to(() => const BuyCarScreen()),
+          onPress: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const BuyCarScreen())),
+          // onPress: () => Get.to(() => const BuyCarScreen()),
           color: null,
         ),
       );

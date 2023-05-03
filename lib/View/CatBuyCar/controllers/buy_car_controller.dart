@@ -126,7 +126,6 @@ class BuyCarController extends GetxController {
     HashMap<String, Object> requestParams = HashMap();
     final prefs = await SharedPreferences.getInstance();
     var userId = await prefs.getString(SharedPrefKey.KEY_USER_ID);
-    ;
     requestParams['name'] = name;
     requestParams['email'] = email;
     requestParams['phone'] = phoneNumber;
@@ -163,7 +162,7 @@ class BuyCarController extends GetxController {
     HashMap<String, Object> requestParams = HashMap();
     final prefs = await SharedPreferences.getInstance();
     var userId = await prefs.getString(SharedPrefKey.KEY_USER_ID);
-    ;
+
     requestParams['brand'] = brand;
     requestParams['modelYear'] = email;
     requestParams['minPrice'] = phoneNumber;

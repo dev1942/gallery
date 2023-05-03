@@ -43,6 +43,10 @@ class DashboardController extends GetxController {
     }, (mResult) {
       alCategory = mResult.responseData as List<CategoryModel>;
       alCategory = alCategory.reversed.toList();
+      print(alCategory.length);
+      alCategory.forEach((element) {
+        print(element.title);
+      });
       mShowData.value = ShowData.showData;
       update();
     });

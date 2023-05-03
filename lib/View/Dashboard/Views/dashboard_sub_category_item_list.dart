@@ -133,18 +133,22 @@ class DashboardSubCategoryListState extends State<DashboardSubCategoryList> with
   }
 
   Widget getRespectiveTabs(String catName) {
+
+    print('catName');
+    print(catName);
     switch (catName) {
       case 'Auto Repair':
         return AutoRepairSubCatScreen(mCategoryModel: controller.mCategoryModel);
       case 'Auto Loans':
         return AutoLoansScreen(categoryModel: controller.mCategoryModel);
       // return comingSoon();
-      case 'Auto Spare Parts':
+      case 'Spare Parts ':
+        print(catName);
         return const AccessoriesSubCatScreen();
       case 'Sell a car':
-        return const CarSellFilters();
-      case 'Car sellers':
         return const BuyCarScreen();
+      case 'Car sellers':
+        return const CarSellFilters();
     }
     return comingSoon();
   }

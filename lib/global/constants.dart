@@ -291,6 +291,8 @@ class Constants {
       SYMBOL_CDOLLAR = "CA\$",
       SYMBOL_EURO = "\u20ac",
       SYMBOL_POUND = "£",
+      SYMBOL_AED = "AED",
+      SYMBOL_SAR = "SAR",
       SYMBOL_YEN = "¥",
       SYMBOL_LIRA = "₤",
       SYMBOL_PESO = "₱",

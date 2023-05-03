@@ -17,7 +17,7 @@ class AnalyticsController extends GetxController {
     totalWithdraw: '0',
     earning: '0',
     balance: "0",
-    currency: 'USD',
+    currency: 'AED',
     id: '',
     stripeWallet: '',
     user: '',

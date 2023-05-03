@@ -173,4 +173,5 @@ class BuyCarRepo {
       return Left(Failure(STATUS: false, MESSAGE: AppAlert.ALERT_SERVER_NOT_RESPONDING, DATA: ""));
     }
   }
+
 }

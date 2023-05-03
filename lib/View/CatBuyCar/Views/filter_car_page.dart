@@ -363,6 +363,8 @@ class _FilterAcarScreenState extends State<FilterAcarScreen> {
                               min: 10000,
                               max: 10000000,
                               values: values,
+
+                              labels: RangeLabels(values.start.toString(), values.end.toString()),
                               onChanged: (value) {
                                 setState(() {
                                   values = value;
@@ -370,6 +372,14 @@ class _FilterAcarScreenState extends State<FilterAcarScreen> {
                                   maxPrice = value.end.toInt().toString();
                                 });
                               }),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(minPrice),
+                              Text(maxPrice),
+                            ],
+                          ),
+
                           const SizedBox(
                             height: 10,
                           ),
