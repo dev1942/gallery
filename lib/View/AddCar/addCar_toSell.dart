@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:otobucks/View/CatBuyCar/controllers/buy_car_controller.dart';
 
 import '../../global/app_colors.dart';
 import '../../global/app_dimens.dart';
@@ -21,6 +20,7 @@ import '../../widgets/image_view.dart';
 import '../../widgets/media_button.dart';
 import '../CatBuyCar/models/CarBrandsModel.dart';
 import '../Profile/Controller/profile_screen_controller.dart';
+import '../Profile/Model/car_list_model.dart';
 import 'controller/add_car_controler.dart';
 
 enum TransmitionType { manaual, autommatic }
@@ -33,17 +33,25 @@ class AddCarToSell extends StatefulWidget {
 }
 
 class _AddCarToSellState extends State<AddCarToSell> {
-  var profileController = Get.put(ProfileScreenController());
+   var profileController = Get.put(ProfileScreenController());
   var addcarController = Get.put(AddCarController());
 
   @override
   void initState() {
     super.initState();
-    // profileController.getCarList().then((value) {
-    //   // getcardata();
-    // });
+    profileController.getCarList().then((value) {
+      addcarController.getcardata();
+    });
     addcarController.getBrandsList();
   }
+  // getcardata() {
+  //   if (profileController.carList.isNotEmpty) {
+  //     for (int i = 0; i < profileController.carList.length; i++) {
+  //       print("getcardata");
+  //       print(profileController.carList[i].toJson());
+  //     }
+  //   }
+  // }
 
   double height = AppDimens.dimens_36;
   @override
@@ -63,69 +71,83 @@ class _AddCarToSellState extends State<AddCarToSell> {
                         ),
                         ListView(
                           children: [
-                            addVerticleSpace(AppDimens.dimens_16),
-                            Container(
-                                margin: const EdgeInsets.only(
-                                  top: AppDimens.dimens_8,
+                             addVerticleSpace(AppDimens.dimens_16),
+                            Row(
+                              children: [
+                                Text("Select From Your Cars"),
+                                DropdownButton<GetCarModelResult>(
+                                  value: null,
+                                  icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                                  elevation: 16,
+                                  style: AppStyle.textViewStyleNormalBodyText2(context: context, color: AppColors.colorBlack),
+                                  underline: Container(
+                                    height: 0,
+                                  ),
+                                  onChanged: (GetCarModelResult? newValue) {
+                                  value.setMyCarDropDown(newValue);
+
+                                  },
+                                  items: addcarController.myCars.map<DropdownMenuItem<GetCarModelResult>>((GetCarModelResult value) {
+                                    return DropdownMenuItem<GetCarModelResult>(
+                                      value: value,
+                                      enabled: true,
+                                      child: Text(
+                                        "${value.brand} ${value.modelYear}",
+                                        style: AppStyle.textViewStyleNormalBodyText2(context: context, color: AppColors.colorBlack),
+                                      ),
+                                    );
+                                  }).toList(),
                                 ),
-                                child: value.listOfCarBrand.isNotEmpty
-                                    ? DropdownButtonFormField2(
-                                        buttonHeight: 45,
-                                        decoration: InputDecoration(
-                                          //Add isDense true and zero Padding.
-                                          //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                                          isDense: true,
-                                          hintStyle: AppStyle.textViewStyleNormalBodyText2(
-                                              color: AppColors.colorTextFieldHint, fontSizeDelta: -5, fontWeightDelta: -1, context: Get.context!),
-                                          fillColor: Colors.white,
-                                          focusedBorder: AppViews.textFieldRoundBorder(),
-                                          border: AppViews.textFieldRoundBorder(),
-                                          disabledBorder: AppViews.textFieldRoundBorder(),
-                                          focusedErrorBorder: AppViews.textFieldRoundBorder(),
-                                          contentPadding: EdgeInsets.zero,
-                                          filled: true,
-                                          //Add more decoration as you want here
-                                          //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                                        ),
-                                        isExpanded: true,
-                                        hint: Text(
-                                          Constants.STR_CAR_BRAND.tr,
-                                        ),
-                                        icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                                        iconSize: 30,
-                                        buttonPadding: const EdgeInsets.only(left: 20, right: 10),
-                                        dropdownDecoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        items: value.listOfCarBrand!
-                                            .map((item) => DropdownMenuItem<CarBrandDetails>(
-                                                  value: item,
-                                                  child: Text(
-                                                    item.name,
-                                                    style: AppStyle.textViewStyleSmall(context: Get.context!, color: Colors.black),
-                                                  ),
-                                                ))
-                                            .toList(),
-                                        // validator: (value) {
-                                        //   if (value == null) {
-                                        //     return 'Field can not empty';
-                                        //   }
-                                        // },
+                              ],
+                            ),
+                            addVerticleSpace(AppDimens.dimens_16),
+                           Row(children: [
+                             Expanded(
+                               child: TextField(
+                                 textInputAction: TextInputAction.next,
 
-                                        onChanged: (CarBrandDetails? newvalue) {
-                                          log(newvalue!.name.toString());
-                                          value.controllerCarBrand.text = newvalue!.name.toString();
+                                 controller: value.controllerCarBrand,
+                                 keyboardType: TextInputType.text,decoration: InputDecoration(
+                                   contentPadding: const EdgeInsets.only(top: AppDimens.dimens_7, left: AppDimens.dimens_15, right: AppDimens.dimens_15),
+                                   focusedBorder: AppViews.textFieldRoundBorder(),
+                                   enabledBorder: AppViews.textFieldRoundBorder(),
+                                   border: AppViews.textFieldRoundBorder(),
+                                   disabledBorder: AppViews.textFieldRoundBorder(),
+                                   focusedErrorBorder: AppViews.textFieldRoundBorder(),
+                                  suffixIcon:      DropdownButton<CarBrandDetails>(
+                                  value: value.carBrand ?? null,
+                                  icon:   Icon(Icons.keyboard_arrow_down_outlined),
+                                  elevation: 16,
+                                  style: AppStyle.textViewStyleNormalBodyText2(context: context, color: AppColors.colorBlack),
+                                  underline: Container(
+                                    height: 0,
+                                  ),
+                                  onChanged: (CarBrandDetails? newValue) {
+                                  value.setMyCarBrandDetails(newValue);
 
-                                          // selectedValue = value.toString();
-                                          setState(() {});
                                         },
-                                        onSaved: (newvalue) {
-                                          // selectedValue = value.toString();
-                                          setState(() {});
-                                        },
-                                      )
-                                    : const SizedBox()),
+                                     items: value.listOfCarBrand.map<DropdownMenuItem<CarBrandDetails>>((CarBrandDetails value) {
+                                      return DropdownMenuItem<CarBrandDetails>(
+                                           value: value,
+                                    enabled: true,
+                                    child: Text(
+                                 "${value.name}  ",
+                                      style: AppStyle.textViewStyleNormalBodyText2(context: context, color: AppColors.colorBlack),
+                                     ),
+                                      );
+                                       }).toList(),
+                                ),
+                                   filled: true,
+
+                                   fillColor: AppColors.colorWhite,
+                                   hintStyle:
+                                   AppStyle.textViewStyleNormalBodyText2(color: AppColors.colorTextFieldHint, fontSizeDelta: 0, fontWeightDelta: 0, context: context),
+                                 ),
+                               ),
+                             ),
+
+                           ],),
+
 
                             // CustomTextFieldWithIcon(
                             //   height: 42,

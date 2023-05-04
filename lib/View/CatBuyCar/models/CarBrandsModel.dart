@@ -28,7 +28,7 @@ class CarBrandsModel {
         message: json["message"],
         countOnPage: json["countOnPage"],
         totalCount: json["totalCount"],
-        data: List<CarBrandDetails>.from(json["data"].first.map((x) => CarBrandDetails.fromMap(x))),
+        data: List<CarBrandDetails>.from(json["result"].map((x) => CarBrandDetails.fromMap(x))),
       );
 
   // Map<String, dynamic> toMap() => {
