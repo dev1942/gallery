@@ -38,7 +38,7 @@ dependencies:
   http: ^0.13.5 #For Api call
   shared_preferences: ^2.0.6  #For Shared Prefrence
   url_launcher: ^6.0.9 #For Launch Url Or Phone number
-  connectivity_plus: ^3.0.3 #For Check Internet Connection
+  connectivity_plus: 3.0.3 #For Check Internet Connection
   package_info_plus: ^1.3.0 
   intl: ^0.17.0
 #  image_picker: ^0.7.5
@@ -52,7 +52,7 @@ dependencies:
   permission_handler: ^10.0.0
   smooth_page_indicator: ^1.0.0+2
   firebase_messaging: ^14.2.4
-  google_maps_flutter: ^2.0.3
+  google_maps_flutter: 2.0.3
   flutter_google_places: ^0.3.0
   location: ^4.1.1
   get_storage: ^2.0.3
@@ -102,7 +102,7 @@ dependencies:
   image_gallery_saver: ^1.7.1
   # flutter_background_service:
   webview_flutter: ^4.0.2
-  syncfusion_flutter_datepicker: ^20.4.52
+  syncfusion_flutter_datepicker: "20.4.44"
 
 
 

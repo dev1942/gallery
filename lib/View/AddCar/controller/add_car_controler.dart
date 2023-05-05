@@ -15,6 +15,8 @@ import '../../../global/global.dart';
 import '../../../global/url_collection.dart';
 import '../../../services/repository/buy_car_repo.dart';
 import '../../CatBuyCar/models/CarBrandsModel.dart';
+import '../../Profile/Controller/profile_screen_controller.dart';
+import '../../Profile/Model/car_list_model.dart';
 import '../addCar_toSell.dart';
 
 class AddCarController extends GetxController {
@@ -39,6 +41,7 @@ class AddCarController extends GetxController {
   List<String> keyfeatureList = [];
   List<String> badgesList = [];
 
+
   String pickedImage = "";
   String pickedVideo = "";
   bool isNew = false;
@@ -49,6 +52,45 @@ class AddCarController extends GetxController {
   bool isShowLoader = false;
 
   List<CarBrandDetails> listOfCarBrand = [];
+  CarBrandDetails? carBrand;
+  List<GetCarModelResult> myCars=[];
+  var profileController=Get.find<ProfileScreenController>();
+   GetCarModelResult? dropdownValue  ;
+
+  getcardata() {
+    if (profileController.carList.isNotEmpty) {
+      // myCars=profileController.carList;
+      // update();
+      myCars.clear();
+      for (int i = 0; i < profileController.carList.length; i++) {
+        myCars.add(profileController.carList[i]);
+      }      update();
+
+    }
+  }
+
+  setMyCarBrandDetails(CarBrandDetails? value){
+    controllerCarBrand=TextEditingController(text: value?.name);
+    update();
+
+  }
+  setMyCarDropDown(GetCarModelResult? value){
+    dropdownValue=value;
+   controllerCarModelYear=TextEditingController(text: value?.modelYear);
+    controllerCarModel=TextEditingController(text: value?.modelYear);
+    controllerColour=TextEditingController(text: value?.color);
+    update();
+   for (var element in listOfCarBrand) {
+        if(element.name.toLowerCase().toString()==
+     dropdownValue?.brand?.trim().toLowerCase().toString()){
+        controllerCarBrand=TextEditingController(text: element.name);
+     }
+   }
+    // print("getcardata");
+
+  }
+
+
   Future<void> showLoader() async {
     isShowLoader = true;
     update();
@@ -260,10 +302,7 @@ class AddCarController extends GetxController {
     }, (mResult) {
       var carBrandsModel = mResult.responseData as CarBrandsModel;
 
-      if (carBrandsModel != null) {
-        listOfCarBrand = carBrandsModel.data;
-      }
-      log(listOfCarBrand.length.toString());
+      listOfCarBrand = carBrandsModel.data;
       update();
     });
     isShowLoader = false;

@@ -25,7 +25,6 @@ class CarItem extends StatelessWidget {
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.only(bottom: 15),
-        margin: const EdgeInsets.only(bottom: 20),
         decoration: BoxDecoration(shape: BoxShape.rectangle, color: Colors.white, borderRadius: BorderRadius.circular(15), boxShadow: [
           BoxShadow(color: Colors.grey.withOpacity(0.5), offset: const Offset(0.0, 1.0), blurRadius: 16),
         ]),
@@ -46,17 +45,29 @@ class CarItem extends StatelessWidget {
                       Expanded(
                         child: Text(
                           carsForSell.title ?? "",
-                          style: regularText(14).copyWith(color: HexColor('#4E5F76'), fontWeight: FontWeight.bold),
+                          style: regularText(14).copyWith(
+                              // color: HexColor('#4E5F76'),
+                              // color: HexColor('#000000'),
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //       color: AppColors.selectButton,
+                      //       borderRadius: const BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                      //   padding: const EdgeInsets.all(6),
+                      //   child: Text(
+                      //     carsForSell.details?.newOrUsed!.toUpperCase() ?? "",
+                      //     style: regularText(12),
+                      //   ),
+                      // ),
                       Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.selectButton,
-                            borderRadius: const BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
-                        padding: const EdgeInsets.all(6),
+                        margin: EdgeInsets.only(right: 10),
+                        alignment: Alignment.centerRight,
                         child: Text(
-                          carsForSell.details?.newOrUsed!.toUpperCase() ?? "",
-                          style: regularText(12),
+                          "${carsForSell.details?.price} AED",
+                          style: regularText(16).copyWith(color: HexColor('#000000'), fontWeight: FontWeight.bold),
+
                         ),
                       ),
                     ],
@@ -68,19 +79,9 @@ class CarItem extends StatelessWidget {
                       //   style: regularText(12).copyWith(color: AppColors.lightGrey),
                       // ),
                       Text(
-                        carsForSell.details?.color!.toUpperCase() ?? "",
-                        style: regularText(12).copyWith(color: AppColors.lightGrey, decoration: TextDecoration.underline),
-                      ),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(right: 10),
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            "Model: ${carsForSell.details?.model}" ?? "",
-                            style: regularText(12).copyWith(
-                              color: AppColors.lightGrey,
-                            ),
-                          ),
+                        "Model: ${carsForSell.details?.model}" ?? "",
+                        style: regularText(12).copyWith(
+                          color: AppColors.lightGrey,
                         ),
                       ),
                       Expanded(
@@ -88,13 +89,13 @@ class CarItem extends StatelessWidget {
                           margin: EdgeInsets.only(right: 10),
                           alignment: Alignment.centerRight,
                           child: Text(
-                            "Price: ${carsForSell.details?.price} AED",
-                            style: regularText(12).copyWith(
-                              color: AppColors.lightGrey,
-                            ),
+                            carsForSell.details?.color!.toUpperCase() ?? "",
+                            style: regularText(12).copyWith(color: AppColors.lightGrey,
+                                decoration: TextDecoration.underline),
                           ),
                         ),
                       ),
+
                     ],
                   ),
                 ],

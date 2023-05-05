@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_declarations, non_constant_identifier_names
 
 class RequestBuilder {
-  static final String DEVELOPMENT_URL = "https://developmentapi-app.otobucks.com/v1/";
+  static final String DEVELOPMENT_URL = "http://13.127.239.8/v1/";
+  // static final String DEVELOPMENT_URL = "https://developmentapi-app.otobucks.com/v1/";
   static final String PRODUCTION_URL = "https://api-app.otobucks.com/v1/";
   static final String LOCAL_URL = "http://13.127.239.8/v1/";
   static final String LOCAL_USMAN_URL = "https://f09f-39-61-45-164.ngrok.io/v1/";
@@ -60,6 +61,8 @@ class RequestBuilder {
 
   // Filter cars List
   static final String API_FILTER_CARS = "products/filters";
+  // Filter List
+  static final String API_FILTER_LIST = "products/customList";
   // Filter cars List
   static final String API_CARS_BRANDS = "cars/brand";
 }

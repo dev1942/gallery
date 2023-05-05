@@ -16,12 +16,19 @@ class AccessoriesSubCatController extends GetxController {
     update();
     HashMap<String, Object> requestParams = HashMap();
     var categories = await AccessoriesRepo().getStores(requestParams);
+
+
     categories.fold((failure) {
+      print("stores.length B");
+
       Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      stores = mResult.responseData as List<AccessoriesStoreModel>;
+      stores = mResult.responseData
+      as List<AccessoriesStoreModel>;
+      print("stores.length C");
+      print(stores.length);
       if (stores.isNotEmpty) {
         mShowData = ShowData.showData;
       } else {

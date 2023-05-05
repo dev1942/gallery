@@ -13,6 +13,7 @@ class ShopItemComponent extends StatelessWidget {
   const ShopItemComponent({Key? key, required this.storeModel}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+
     return Container(
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.only(bottom: 24),
@@ -33,7 +34,7 @@ class ShopItemComponent extends StatelessWidget {
                     child: NetworkImageCustom(
                       height: 90,
                       width: 90,
-                      image: storeModel.images.isNotEmpty ? storeModel.images[0] : '',
+                      image: storeModel.images!.isNotEmpty ? storeModel.images![0]??'' : '',
                     ),
                   ),
                 ),
@@ -60,7 +61,8 @@ class ShopItemComponent extends StatelessWidget {
               ],
             ),
           ),
-          Container(
+          if(storeModel!.products!.isNotEmpty)
+            Container(
             alignment: Alignment.center,
             height: 45,
             width: double.infinity,
@@ -71,7 +73,7 @@ class ShopItemComponent extends StatelessWidget {
                 Expanded(
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: 0,
+                        itemCount: storeModel.products!.length,
                         itemBuilder: (ctx, index) {
                           return Container(
                             padding: const EdgeInsets.all(5),
@@ -79,7 +81,8 @@ class ShopItemComponent extends StatelessWidget {
                             margin: const EdgeInsets.all(4),
                             height: 50,
                             width: 50,
-                            child: Image.asset('assets/images/ic_petrol.png'),
+                            child: Image.network(storeModel.products![index].image![0]),
+                            // child: Image.asset('assets/images/ic_petrol.png'),
                           );
                         })),
                 SizedBox(
@@ -92,8 +95,8 @@ class ShopItemComponent extends StatelessWidget {
                     ),
                     onPress: () {
                       Get.to(() => ExploreAccessoriesScreen(
-                            storeId: storeModel.id,
-                            storeTitle: storeModel.name,
+                            storeId: storeModel.sId!,
+                            storeTitle: storeModel.name!,
                           ));
                     },
                     color: null,

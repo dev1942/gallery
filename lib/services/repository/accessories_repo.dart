@@ -9,7 +9,7 @@ import 'package:otobucks/global/url_collection.dart';
 import 'package:otobucks/View/CatAssesories/Models/product_model.dart';
 import 'package:otobucks/View/CatAssesories/Models/store_model.dart';
 import 'package:otobucks/services/rest_api/request_listener.dart';
-
+import 'dart:developer' as dev;
 import '../../global/Models/failure.dart';
 import '../../global/Models/result.dart';
 import '../../global/Models/success.dart';
@@ -23,7 +23,7 @@ class AccessoriesRepo {
           MESSAGE: AppAlert.ALERT_NO_INTERNET_CONNECTION,
           STATUS: false));
     }
-    try {
+      try {
       String response = await ReqListener.fetchPost(
           strUrl: RequestBuilder.API_GET_STORES,
           requestParams: requestParams,
@@ -32,6 +32,7 @@ class AccessoriesRepo {
       Result? mResponse;
       if (response.isNotEmpty) {
         mResponse = Global.getData(response);
+
       } else {
         return Left(
             Failure(DATA: "", MESSAGE: "No data found.", STATUS: false));
@@ -40,10 +41,12 @@ class AccessoriesRepo {
       if (mResponse?.responseStatus == true) {
         List<AccessoriesStoreModel> alStores = [];
         List data = mResponse?.responseData as List;
+        data=data.reversed.toList();
+        print("mResponse?.responseStatus == true");
 
         for (var dataItem in data) {
           AccessoriesStoreModel mLoanModel =
-              AccessoriesStoreModel.fromMap(dataItem);
+              AccessoriesStoreModel.fromJson(dataItem);
           alStores.add(mLoanModel);
         }
 

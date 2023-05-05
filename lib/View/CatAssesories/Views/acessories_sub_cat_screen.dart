@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:otobucks/View/Dashboard/Controllers/dashboard_controller.dart';
 import 'package:otobucks/global/app_views.dart';
 import 'package:otobucks/global/global.dart';
+import '../../../global/text_styles.dart';
 import '../Controllers/accessories_sub_cat_controller.dart';
 import '../Widgets/searched_products.dart';
 import '../Widgets/shop_item_component.dart';

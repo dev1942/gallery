@@ -9,6 +9,7 @@ import 'package:otobucks/global/text_styles.dart';
 import 'package:otobucks/widgets/custom_textfield_with_icon.dart';
 import 'package:otobucks/widgets/small_button.dart';
 
+import '../../Profile/Controller/profile_screen_controller.dart';
 import '../controllers/buy_car_controller.dart';
 
 class InquiryFormScreenCarBuy extends StatefulWidget {
@@ -37,15 +38,26 @@ class _InquiryFormScreenCarBuyState extends State<InquiryFormScreenCarBuy> {
   FocusNode mFocusNodeHowAboutUs = FocusNode();
   FocusNode mFocusNodePhone = FocusNode();
   FocusNode mFocusNodeInviteCode = FocusNode();
+  var controller = Get.put(BuyCarController());
+  var controllerUser = Get.put(ProfileScreenController());
 
   final BoxDecoration _boxDecoration = BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: AppColors.colorGray5));
   @override
   void initState() {
     super.initState();
     controller.updatProductId(widget.carId);
+    controllerUser.getProfile().then((value) {
+
+    controllerLastName=TextEditingController(text: controllerUser.mUserModel!.lastName);
+    controller.updateName(controllerUser.mUserModel!.lastName);
+    controllerEmail=TextEditingController(text: controllerUser.mUserModel!.email);
+    controller.updateEmail(controllerUser.mUserModel!.email);
+    controllerPhone=TextEditingController(text: controllerUser.mUserModel!.phone);
+    controller.updatePhoneNumber(controllerUser.mUserModel!.phone);
+      setState(() {});
+    });
   }
 
-  var controller = Get.put(BuyCarController());
 
   @override
   Widget build(BuildContext context) {

@@ -155,13 +155,16 @@ class _ExploreAccessoriesScreenState extends State<ExploreAccessoriesScreen> {
                               })),
                     );
                   }),
-                  // const SizedBox(
-                  //   height: 10,
-                  // ),
-                  // Text(
-                  //   'Popular Shopes',
-                  //   style: regularText600(ht(16)),
-                  // ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Popular Shopes',
+                    style: regularText600(ht(16)),
+                  ),SizedBox(
+                    height: 200,
+                    child: cartItem(),
+                  )
                   // ListView.builder(
                   //     physics: const NeverScrollableScrollPhysics(),
                   //     shrinkWrap: true,

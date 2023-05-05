@@ -32,7 +32,7 @@ class PromotionDetailsScreenState extends State<PromotionDetailsScreen> {
       alImages: [],
       alStory: [],
       alVideos: [],
-      currency: 'USD',
+      currency: 'AED',
       description: '',
       serviceTax: widget.promotionsModel.serviceTax,
       vat: widget.promotionsModel.vat,

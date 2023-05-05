@@ -70,13 +70,7 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
                     _pageViewDots(),
                     _carDetails(),
                     _specifications(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Price'.tr + " " + (widget.carsForSell.details?.price ?? "Nill") + " AED",
-                      style: subHeadingText(15),
-                    ),
+
                     _overview(),
                     _enquiryButton()
                   ],
@@ -210,21 +204,58 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
             Row(
               children: [
                 Expanded(
-                  child: Text(  
-                    "Model: ${widget.carsForSell.details?.model}" ?? "",
-                    style: regularText(14).copyWith(color: HexColor('#4E5F76')),
+                  child: Text(
+                    widget.carsForSell.title ?? "",
+                    style: regularText(14).copyWith(
+                      // color: HexColor('#4E5F76'),
+                      // color: HexColor('#000000'),
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text(
-                  'Seats:'.tr,
-                  style: regularText(14).copyWith(color: AppColors.colorBlueStart),
-                ),
-                Text(
-                  widget.carsForSell.details?.numberOfSeats ?? "Not Mentioned",
-                  style: regularText(14).copyWith(color: AppColors.lightGrey),
+                // Container(
+                //   decoration: BoxDecoration(
+                //       color: AppColors.selectButton,
+                //       borderRadius: const BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                //   padding: const EdgeInsets.all(6),
+                //   child: Text(
+                //     carsForSell.details?.newOrUsed!.toUpperCase() ?? "",
+                //     style: regularText(12),
+                //   ),
+                // ),
+                Container(
+                  margin: EdgeInsets.only(right: 10),
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "${widget.carsForSell.details?.price} AED",
+                    style: regularText(16).copyWith(color: HexColor('#000000'), fontWeight: FontWeight.bold),
+
+                  ),
                 ),
               ],
             ),
+            Row(
+              children: [
+                // Text(
+                //   'Color ',
+                //   style: regularText(12).copyWith(color: AppColors.lightGrey),
+                // ),
+                Text(
+                  "Model: ${widget.carsForSell.details?.model}" ?? "",
+                  style: regularText(12).copyWith(
+                    color: AppColors.lightGrey,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    alignment: Alignment.centerRight,
+
+                  ),
+                ),
+
+              ],
+            ),
+
             // Row(
             //   children: [
             //     Icon(
@@ -326,11 +357,11 @@ class CarBuyDetailScreenState extends State<CarBuyDetailScreen> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.engineering_outlined),
+                        const Icon(Icons.airline_seat_recline_extra_sharp),
                         const SizedBox(
                           width: 6,
                         ),
-                        Text(widget.carsForSell.details?.engine ?? "")
+                        Text(widget.carsForSell.details?.numberOfSeats!=""?widget.carsForSell.details?.numberOfSeats??"Not Mentioned": "Not Mentioned")
                       ],
                     ),
                   ),

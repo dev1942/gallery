@@ -25,41 +25,46 @@ class _BuyCarScreenState extends State<BuyCarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
-        child: Obx(() => AppViews.getSetData(context, controller.mShowData.value, mShowWidget(controller))));
+    return Scaffold(
+      body: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
+          child: Obx(() => AppViews.getSetData(context, controller.mShowData.value, mShowWidget(controller)))),
+    );
   }
 
   Widget mShowWidget(BuyCarController controller) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            // Text(
-            //   'Nearby You',
-            //   style: regularText(15),
-            // ),
-            const Spacer(),
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FilterAcarScreen()));
-                },
-                child: Text(
-                  'Filters'.tr,
-                ))
-          ],
-        ),
-        ListView.separated(
-            separatorBuilder: (context, index) => const Divider(),
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: controller.carsListModel == null || controller.carsListModel?.result == null ? 0 : controller.carsListModel!.result!.length,
-            itemBuilder: (context, index) {
-              return CarItem(
-                carsForSell: controller.carsListModel!.result![index],
-              );
-            })
-      ],
-    );
+    return   Column(
+        children: [
+          Row(
+            children: [
+              // Text(
+              //   'Nearby You',
+              //   style: regularText(15),
+              // ),
+              const Spacer(),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FilterAcarScreen()));
+                  },
+                  child: Text(
+                    'Filters'.tr,
+                  ))
+            ],
+          ),
+          Expanded(
+            child: ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(height: 15),
+                // physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: controller.carsListModel == null || controller.carsListModel?.result == null ? 0 : controller.carsListModel!.result!.length,
+                itemBuilder: (context, index) {
+                  return CarItem(
+                    carsForSell: controller.carsListModel!.result![index],
+                  );
+                }),
+          )
+        ],
+      )
+     ;
   }
 }

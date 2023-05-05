@@ -391,6 +391,12 @@ class Global {
         case "RUR":
           currency = Constants.SYMBOL_RUR;
           break;
+        case "AED":
+          currency = Constants.SYMBOL_AED;
+          break;
+        case "SAR":
+          currency = Constants.SYMBOL_SAR;
+          break;
 
         default:
           currency = currency;

@@ -294,7 +294,7 @@ class ViewEstimationController extends GetxController {
                       alImages: [],
                       alStory: [],
                       alVideos: [],
-                      currency: 'USD',
+                      currency: 'AED',
                       description: '',
                       serviceTax: estimatesModel.serviceTax,
                       vat: ((int.parse(estimatesModel.source!.price) / 100) * 5).toString(),

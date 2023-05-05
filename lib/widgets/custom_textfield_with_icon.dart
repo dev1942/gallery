@@ -77,8 +77,8 @@ class CustomTextFieldWithIcon extends StatelessWidget {
               ? Container(
                   margin: const EdgeInsets.only(right: AppDimens.dimens_12, left: 12),
                   alignment: Alignment.center,
-                  child: suffixIcon,
                   width: AppDimens.dimens_23,
+                  child: suffixIcon,
                 )
               : null,
           prefixIcon: prefixIcon != null
