@@ -60,7 +60,7 @@ class InviteAndEarnController extends GetxController {
       if (Global.checkNull(code)) {
         inviteLink = await DynamicLinksApi().createReferralLink(code);
         customLink =
-            "Hey! I got you something!\n\nOtobucks – AI powered customer centric car care app I'm using. Book anything from a doorstep eco-friendly car wash to a complete car service in a few simple steps with affordable pricing, free pick & drop and amazing customer care, you'll never worry about any car issues! \n $inviteLink \n Use my referral code $code at registration & get credits worth 10 Points!";
+            "Hey! I got you something!\n\nOtobucks – AI powered customer centric car care app I'm using. Book anything from a doorstep eco-friendly car wash to a complete car service in a few simple steps with affordable pricing, free pick & drop and amazing customer care, you'll never worry about any car issues! \n $inviteLink \n Use the link above to register and avail free oil change for your car!";
         loadingjoiners = ShowData.showData;
       } else {
         loadingjoiners = ShowData.showNoDataFound;
