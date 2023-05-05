@@ -2,11 +2,10 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otobucks/global/Models/FilterListModel.dart';
 import 'package:otobucks/global/enum.dart';
+import 'package:otobucks/services/repository/filter_car_repo.dart';
 
-import '../../../global/global.dart';
-import '../../../services/repository/filter_car_repo.dart';
-import '../models/FilterListModel.dart';
 
 class FilterScreenController extends GetxController {
   Rx<ShowData> mShowData = ShowData.showData.obs;
@@ -124,7 +123,8 @@ class FilterScreenController extends GetxController {
     // var categories = await FilterRepo().filterList(requestParams);
     var category = await FilterRepo().filtersList(requestParams);
 
-print("Testing List print $category");
+    print("Testing List print $category");
+
     // categories.fold((failure) {
     //   Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
     //

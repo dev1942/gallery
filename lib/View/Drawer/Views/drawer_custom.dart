@@ -70,7 +70,7 @@ Widget drawer(BuildContext context) {
             scrollDirection: Axis.horizontal,
             children: [
               SizedBox(
-                width: 60,
+                width: 20,
               ),
               // Container(
               //   alignment: Alignment.centerLeft,
@@ -84,7 +84,7 @@ Widget drawer(BuildContext context) {
                   _launchLink('https://www.linkedin.com/company/otobucks/');
                 },
                 child: Container(
-                  margin: const EdgeInsets.only(left: AppDimens.dimens_5, right: AppDimens.dimens_5),
+                  margin: const EdgeInsets.only(left: AppDimens.dimens_10, right: AppDimens.dimens_10),
                   child: Image.asset(
                     AppImages.ic_linked,
                     height: AppDimens.dimens_20,
@@ -97,7 +97,7 @@ Widget drawer(BuildContext context) {
                   _launchLink('https://www.facebook.com/otobucks/');
                 },
                 child: Container(
-                  margin: const EdgeInsets.only(left: AppDimens.dimens_5, right: AppDimens.dimens_5),
+                  margin: const EdgeInsets.only(left: AppDimens.dimens_10, right: AppDimens.dimens_10),
                   child: Image.asset(
                     AppImages.ic_drawer_facebook,
                     height: AppDimens.dimens_20,
@@ -110,7 +110,7 @@ Widget drawer(BuildContext context) {
                   _launchLink('https://twitter.com/otobucks');
                 },
                 child: Container(
-                  margin: const EdgeInsets.only(left: AppDimens.dimens_5, right: AppDimens.dimens_5),
+                  margin: const EdgeInsets.only(left: AppDimens.dimens_10, right: AppDimens.dimens_10),
                   child: Image.asset(
                     AppImages.ic_twitter,
                     color: Colors.white,
@@ -124,11 +124,25 @@ Widget drawer(BuildContext context) {
                   _launchLink('https://www.instagram.com/otobuckss/');
                 },
                 child: Container(
-                  margin: const EdgeInsets.only(left: AppDimens.dimens_5, right: AppDimens.dimens_5),
+                  margin: const EdgeInsets.only(left: AppDimens.dimens_10, right: AppDimens.dimens_10),
                   child: Image.asset(
                     AppImages.ic_drawer_insta,
                     height: AppDimens.dimens_20,
                     width: AppDimens.dimens_20,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  _launchLink('https://www.youtube.com/channel/UCjD8ctDLLrf5pOUjZ6_hfNg');
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(left: AppDimens.dimens_10, right: AppDimens.dimens_10),
+                  child: Image.asset(
+                    AppImages.ic_drawer_youtube,
+                    height: AppDimens.dimens_20,
+                    width: AppDimens.dimens_20,
+                    color: Colors.white,
                   ),
                 ),
               ),
