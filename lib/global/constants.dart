@@ -214,7 +214,7 @@ class Constants {
       TXT_INVITE_FRIENDS = "Invite Friends",
       TXT_INVITED_FRIENDS = "Invited Friends",
       TXT_SEARCH = "Search",
-      TXT_ONE_TIME_PASSWORD = "One time password",
+      TXT_VERIFICATION_CODE = "Verification Code",
       TXT_FORGOT_PASSWORD = "Forgot Password?",
       TXT_OR_LOGIN_WITH = "Or Login with",
       TXT_OR = "Or",

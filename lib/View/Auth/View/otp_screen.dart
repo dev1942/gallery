@@ -87,7 +87,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             margin: EdgeInsets.only(
                                 left: AppDimens.dimens_10, top: size.height / 8, bottom: size.height / 20, right: AppDimens.dimens_10),
                             child: Text(
-                              Constants.TXT_ONE_TIME_PASSWORD.tr,
+                              Constants.TXT_VERIFICATION_CODE.tr,
                               style: AppStyle.textViewStyleXXXLarge(
                                   context: context, color: AppColors.colorWhite, fontSizeDelta: -3, fontWeightDelta: 2),
                             )),
@@ -108,7 +108,8 @@ class _OTPScreenState extends State<OTPScreen> {
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(top: AppDimens.dimens_30),
-                                child: Image.asset(
+                                child:
+                                Image.asset(
                                   AppImages.ic_otp_icon,
                                   width: AppDimens.dimens_50,
                                   fit: BoxFit.fill,
@@ -132,6 +133,7 @@ class _OTPScreenState extends State<OTPScreen> {
                               Container(
                                 margin: const EdgeInsets.only(top: AppDimens.dimens_40),
                                 child: OtpPinField(
+
                                   otpPinFieldInputType: OtpPinFieldInputType.none,
                                   onSubmit: (text) {
                                     log(text);
@@ -148,7 +150,7 @@ class _OTPScreenState extends State<OTPScreen> {
                                   fieldWidth: otpwidth,
                                   fieldHeight: otpwidth,
                                   keyboardType: TextInputType.number,
-                                  autoFocus: false,
+                                  autoFocus: true,
                                   otpPinFieldDecoration: OtpPinFieldDecoration.defaultPinBoxDecoration,
                                 ),
                               ),
