@@ -40,8 +40,8 @@ class RegistrationScreenController extends GetxController {
   FocusNode mFocusNodePhone = FocusNode();
   FocusNode mFocusNodeInviteCode = FocusNode();
 
-  // String strCountyCode = "+971";
-  String strCountyCode = "+92";
+  String strCountyCode = "+971";
+  // String strCountyCode = "+92";
 
   String strCountyFlag = "ae";
 
