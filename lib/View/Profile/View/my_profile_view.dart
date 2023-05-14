@@ -305,33 +305,41 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                     )
                                   ],
                                 ),
+                                addVerticleSpace(10),
                                 value.isPhoneVerified &&
                                         value.oldPhoneNumebr ==
                                             value.controllerPhone.text
                                     ? Container()
-                                    : Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: SizedBox(
-                                          height: 20,
-                                          width: 300,
-                                          child: InkWell(
-                                            // color: null,
-                                            child: Text(
-                                              'Number Not Verified. Click Here To Verify '
-                                                  .tr,
-                                              style:
-                                                  AppStyle.textViewStyleSmall(
-                                                color: Colors.red,
-                                                context: context,
-                                              ),
-                                            ),
-                                            onTap: () {
+                                    : SizedBox(
+                                        height: 30,
+                                        width: 170,
+                                        child: PrimaryButton(
+                                            label:
+                                                Text('Click Here To Verify '),
+                                            onPress: () {
                                               gotoMobileOTPScreen(context,
                                                   value.controllerPhone.text);
+                                              // update();
                                             },
-                                          ),
-                                        ),
+                                            color: null),
+                                        // child: InkWell(
+                                        //   // color: null,
+                                        //   child: Text(
+                                        //     'Number Not Verified. Click Here To Verify '
+                                        //         .tr,
+                                        //     style:
+                                        //         AppStyle.textViewStyleSmall(
+                                        //       color: Colors.red,
+                                        //       context: context,
+                                        //     ),
+                                        //   ),
+                                        //   onTap: () {
+                                        //     gotoMobileOTPScreen(context,
+                                        //         value.controllerPhone.text);
+                                        //   },
+                                        // ),
                                       ),
+
                                 addVerticleSpace(AppDimens.dimens_16),
                                 //.....................Email Section..................
                                 // Container(
@@ -633,6 +641,22 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                   value.controllerNumber,
                                               keyboardType: TextInputType.text,
                                               hintText: 'Number'.tr,
+                                              inputFormatters: const [],
+                                              obscureText: false,
+                                              onChanged: (String value) {},
+                                            ),
+                                          ),
+                                          addHorizontalSpace(5),
+                                          Expanded(
+                                            child: CustomTextFieldWithIcon(
+                                              height: 42,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              enabled: true,
+                                              controller:
+                                                  value.controllercyachi,
+                                              keyboardType: TextInputType.text,
+                                              hintText: 'Cyachi'.tr,
                                               inputFormatters: const [],
                                               obscureText: false,
                                               onChanged: (String value) {},

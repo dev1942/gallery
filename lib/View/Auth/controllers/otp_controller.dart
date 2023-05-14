@@ -77,6 +77,29 @@ class OtpController extends GetxController {
       loginUserTask(context, modelOTP);
     });
   }
+  verifyOTPEmail(BuildContext context, ModelOTP modelOTP) async {
+    if (!isValid(context)) {
+      return;
+    }
+    isShowLoader = true;
+    update();
+    String strOTP = mControllerOTP.text.toString();
+    String strEmailID = modelOTP.emailId;
+    HashMap<String, Object> requestParams = HashMap();
+
+    requestParams[PARAMS.PARAM_EMAIL] = strEmailID;
+
+    var signInEmail = await OTPRepo().verifyOTPOfEmail(requestParams, strOTP);
+    isShowLoader = false;
+    update();
+
+    signInEmail.fold((failure) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: failure.MESSAGE, toastType: TOAST_TYPE.toastError);
+    }, (mResult) {
+      Global.showToastAlert(context: context, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
+      loginUserTask(context, modelOTP);
+    });
+  }
 //------------------------For Number-------------
 
   //----------------------Send Otp------Number------

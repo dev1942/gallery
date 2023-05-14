@@ -192,7 +192,7 @@ class _EmailOTPScreenState extends State<EmailOTPScreen> {
                                       // } else {
                                       //   //phone number verification
                                       //   // verifyNumberOTPTask
-                                      controller.verifyOTPTask(
+                                      controller.verifyOTPEmail(
                                           context, widget.mModelOTP);
                                       // }
                                     },

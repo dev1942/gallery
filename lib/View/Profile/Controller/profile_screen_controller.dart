@@ -34,6 +34,7 @@ class ProfileScreenController extends GetxController {
   TextEditingController controllerColour = TextEditingController();
   TextEditingController controllerCode = TextEditingController();
   TextEditingController controllerCity = TextEditingController();
+  TextEditingController controllercyachi = TextEditingController();
   TextEditingController controllerNumber = TextEditingController();
   TextEditingController controllerRegistrationDate = TextEditingController();
   DateTime selectedDateTIme = DateTime.now();
