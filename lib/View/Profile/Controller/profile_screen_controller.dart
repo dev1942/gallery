@@ -185,7 +185,8 @@ class ProfileScreenController extends GetxController {
     } else {
       isShowLoader = false;
       update();
-      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: 'Enable Location From setting!', toastType: TOAST_TYPE.toastError);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "",
+          strMsg: 'Enable Location From setting!', toastType: TOAST_TYPE.toastError);
       // mLatLng = Global.mLatLng;
     }
     update();
@@ -496,7 +497,8 @@ class ProfileScreenController extends GetxController {
       mShowData = ShowData.showNoDataFound;
       update();
     }, (mResult) {
-      Global.showToastAlert(context: Get.overlayContext!, strTitle: "", strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
+      Global.showToastAlert(context: Get.overlayContext!, strTitle: "",
+          strMsg: mResult.responseMessage, toastType: TOAST_TYPE.toastSuccess);
       clearController();
       // getCardsMine();
       getCarList();

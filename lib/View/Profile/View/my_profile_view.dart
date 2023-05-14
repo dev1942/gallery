@@ -1,8 +1,10 @@
+import 'dart:collection';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:otobucks/View/Profile/View/email_otp_view.dart';
 import 'package:otobucks/View/Profile/View/widget/my_car_list_widget.dart';
 import 'package:otobucks/View/Profile/Controller/profile_screen_controller.dart';
 import 'package:otobucks/global/app_colors.dart';
@@ -20,6 +22,8 @@ import 'package:otobucks/widgets/custom_textfield_with_icon.dart';
 import 'package:otobucks/widgets/fade_in_image.dart';
 import 'package:otobucks/widgets/image_view.dart';
 import 'package:otobucks/widgets/small_button.dart';
+import '../../../services/repository/otp_repo.dart';
+import '../../Auth/Models/model_otp.dart';
 import '../../Auth/View/otp_screen.dart';
 import '../../Auth/controllers/otp_controller.dart';
 import '../Model/car_list_model.dart';
@@ -89,28 +93,41 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                 height: AppDimens.dimens_80,
                               ),
                               Container(
-                                margin: const EdgeInsets.only(bottom: AppDimens.dimens_15),
+                                margin: const EdgeInsets.only(
+                                    bottom: AppDimens.dimens_15),
                                 alignment: Alignment.center,
                                 child: Stack(
                                   children: [
                                     Global.checkNull(value.imgProfilePic)
                                         ? ClipRRect(
-                                            borderRadius: BorderRadius.circular(AppDimens.dimens_80),
-                                            child: Global.isURL(value.imgProfilePic)
+                                            borderRadius: BorderRadius.circular(
+                                                AppDimens.dimens_80),
+                                            child: Global.isURL(
+                                                    value.imgProfilePic)
                                                 ? NetworkImageCustom(
                                                     image: value.imgProfilePic,
                                                     fit: BoxFit.fill,
-                                                    height: AppDimens.dimens_130,
+                                                    height:
+                                                        AppDimens.dimens_130,
                                                     width: AppDimens.dimens_130)
-                                                : ImageView(strImage: value.imgProfilePic, height: AppDimens.dimens_130, width: AppDimens.dimens_130),
+                                                : ImageView(
+                                                    strImage:
+                                                        value.imgProfilePic,
+                                                    height:
+                                                        AppDimens.dimens_130,
+                                                    width:
+                                                        AppDimens.dimens_130),
                                           )
                                         : ClipRRect(
-                                            borderRadius: BorderRadius.circular(AppDimens.dimens_80),
+                                            borderRadius: BorderRadius.circular(
+                                                AppDimens.dimens_80),
                                             child: Container(
                                               height: AppDimens.dimens_130,
                                               width: AppDimens.dimens_130,
-                                              padding: const EdgeInsets.all(AppDimens.dimens_16),
-                                              color: Colors.grey.withOpacity(0.7),
+                                              padding: const EdgeInsets.all(
+                                                  AppDimens.dimens_16),
+                                              color:
+                                                  Colors.grey.withOpacity(0.7),
                                               child: Image.asset(
                                                 AppImages.ic_user_sufix,
                                                 color: Colors.white,
@@ -122,10 +139,14 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                       right: 0,
                                       child: InkWell(
                                         child: CircleAvatar(
-                                          backgroundColor: AppColors.colorBlueStart,
+                                          backgroundColor:
+                                              AppColors.colorBlueStart,
                                           radius: 17,
-                                          child: Image.asset(AppImages.ic_edit_profile_icon,
-                                              width: AppDimens.dimens_15, color: AppColors.colorWhite, height: AppDimens.dimens_20),
+                                          child: Image.asset(
+                                              AppImages.ic_edit_profile_icon,
+                                              width: AppDimens.dimens_15,
+                                              color: AppColors.colorWhite,
+                                              height: AppDimens.dimens_20),
                                         ),
                                         onTap: () {
                                           value.selectProfilePic(context);
@@ -141,19 +162,28 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                           //-----------------------------------Main Column ---------------------------//
                           //.................. user name & Location...................
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 18.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  value.strFname.toUpperCase() + " " + value.strLname.toUpperCase(),
+                                  value.strFname.toUpperCase() +
+                                      " " +
+                                      value.strLname.toUpperCase(),
                                   style: AppStyle.textViewStyleLarge(
-                                      context: context, color: AppColors.colorBlack, fontSizeDelta: 3, fontWeightDelta: 0),
+                                      context: context,
+                                      color: AppColors.colorBlack,
+                                      fontSizeDelta: 3,
+                                      fontWeightDelta: 0),
                                 ),
                                 Text(
                                   value.strCountry,
-                                  style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorGray4, fontSizeDelta: -1),
+                                  style: AppStyle.textViewStyleSmall(
+                                      context: context,
+                                      color: AppColors.colorGray4,
+                                      fontSizeDelta: -1),
                                 ),
                                 addVerticleSpace(AppDimens.dimens_10),
                                 //..............................Text Field user name....................................
@@ -183,91 +213,202 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                 //............................Text filedmobile number.............................
                                 Stack(
                                   children: [
-                                    CustomTextFieldMobile(
-                                      strCountyCode: value.strCountyCode.value,
-                                      textInputAction: TextInputAction.done,
-                                      readonly: false,
-                                      suffixIcon: InkWell(
-                                        onTap: () {
-                                          showDialog<String>(
-                                              context: context,
-                                              builder: (BuildContext context) => AlertDialog(
-                                                    title: Text('Edit Number'.tr),
-                                                    content: TextField(
-                                                      controller: value.controllerPhone,
-                                                      decoration: InputDecoration(),
-                                                    ),
-                                                    actions: <Widget>[
-                                                      TextButton(
-                                                        onPressed: () => Navigator.pop(context, 'Cancel'.tr),
-                                                        child: Text('Cancel'.tr),
-                                                      ),
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          if (value.isValid(context)) {
-                                                            value.updateProfile(context);
-                                                          }
-                                                          Navigator.pop(context, 'OK');
-                                                        },
-                                                        child: Text('Submit'.tr),
-                                                      ),
-                                                    ],
-                                                  ));
-                                        },
-                                        child: value.isPhoneVerified && value.oldPhoneNumebr == value.controllerPhone.text
-                                            ? Icon(Icons.mobile_friendly,
-                                                color: value.isPhoneVerified && value.oldPhoneNumebr == value.controllerPhone.text
-                                                    ? Colors.green
-                                                    : AppColors.lightGrey)
-                                            : !value.isPhoneVerified && value.oldPhoneNumebr == value.controllerPhone.text
-                                                ? SizedBox(
-                                                    height: 30,
-                                                    width: 50,
-                                                    child: PrimaryButton(
-                                                      color: null,
-                                                      label: Text('Verify'.tr),
-                                                      onPress: () {
-                                                        gotoMobileOTPScreen(context, value.controllerPhone.text);
-                                                      },
-                                                    ),
-                                                  )
-                                                : SizedBox(),
-                                      ),
-
-                                      onchanged: (newvalue) {
-                                        log(value.isPhoneVerified.toString());
-                                        log(value.oldPhoneNumebr.toString());
-                                        log(value.controllerPhone.text.toString());
+                                    InkWell(
+                                      onTap: () {
+                                        // gotoMobileOTPScreen(context, value.controllerPhone.text);
+                                        // log('presses');
                                       },
-                                      // enabled: false,
-                                      //  enabled: true,
-                                      height: 42,
-                                      controller: value.controllerPhone,
-                                      focusNode: value.mFocusNodePhone,
+                                      child: CustomTextFieldMobile(
+                                        strCountyCode:
+                                            value.strCountyCode.value,
+                                        textInputAction: TextInputAction.done,
+                                        readonly: false,
+                                        suffixIcon: InkWell(
+                                            onTap: () {
+                                              showDialog<String>(
+                                                  context: context,
+                                                  builder: (BuildContext
+                                                          context) =>
+                                                      AlertDialog(
+                                                        title: Text(
+                                                            'Edit Number'.tr),
+                                                        content: TextField(
+                                                          controller: value
+                                                              .controllerPhone,
+                                                          decoration:
+                                                              InputDecoration(),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    context,
+                                                                    'Cancel'
+                                                                        .tr),
+                                                            child: Text(
+                                                                'Cancel'.tr),
+                                                          ),
+                                                          // TextButton(
+                                                          //   onPressed: () {
+                                                          //     gotoMobileOTPScreen(
+                                                          //         context,
+                                                          //         value
+                                                          //             .controllerPhone
+                                                          //             .text);
+                                                          //   },
+                                                          //   child: Text(
+                                                          //       'verify'.tr),
+                                                          // ),
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              if (value.isValid(
+                                                                  context)) {
+                                                                value.updateProfile(
+                                                                    context);
+                                                              }
+                                                              // Navigator.pop(context, 'OK');
+                                                            },
+                                                            child: Text(
+                                                                'Submit'.tr),
+                                                          ),
+                                                        ],
+                                                      ));
+                                            },
+                                            child: value.isPhoneVerified &&
+                                                    value.oldPhoneNumebr ==
+                                                        value.controllerPhone
+                                                            .text
+                                                ? Icon(Icons.mobile_friendly,
+                                                    color: Colors.green)
+                                                // : !value.isPhoneVerified
+                                                //     ?
+                                                : Icon(Icons.mobile_off,
+                                                    color: Colors.red)),
+
+                                        onchanged: (newvalue) {
+                                          log(value.isPhoneVerified.toString());
+                                          log(value.oldPhoneNumebr.toString());
+                                          log(value.controllerPhone.text
+                                              .toString());
+                                        },
+                                        // enabled: false,
+                                        //  enabled: true,
+                                        height: 42,
+                                        controller: value.controllerPhone,
+                                        focusNode: value.mFocusNodePhone,
+                                      ),
                                     ),
-                                    Positioned(top: 6, right: 4, child: Container())
+                                    Positioned(
+                                      top: 6,
+                                      right: 4,
+                                      child: Container(),
+                                    )
                                   ],
                                 ),
+                                value.isPhoneVerified &&
+                                        value.oldPhoneNumebr ==
+                                            value.controllerPhone.text
+                                    ? Container()
+                                    : Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: SizedBox(
+                                          height: 20,
+                                          width: 300,
+                                          child: InkWell(
+                                            // color: null,
+                                            child: Text(
+                                              'Number Not Verified. Click Here To Verify '
+                                                  .tr,
+                                              style:
+                                                  AppStyle.textViewStyleSmall(
+                                                color: Colors.red,
+                                                context: context,
+                                              ),
+                                            ),
+                                            onTap: () {
+                                              gotoMobileOTPScreen(context,
+                                                  value.controllerPhone.text);
+                                            },
+                                          ),
+                                        ),
+                                      ),
                                 addVerticleSpace(AppDimens.dimens_16),
                                 //.....................Email Section..................
-                                Container(
-                                  width: Get.width,
-                                  height: AppDimens.dimens_42,
-                                  decoration: BoxDecoration(border: Border.all(), borderRadius: BorderRadius.circular(AppDimens.dimens_10)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: AppDimens.dimens_12),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text(value.controllerEmail.text),
-                                        Icon(
-                                          Icons.mark_email_read_outlined,
-                                          size: iconSize,
-                                          color: value.isEmailVerified ? Colors.green : AppColors.lightGrey,
-                                        ),
-                                        // child: Icon(Icons),
-                                      ],
+                                // Container(
+                                //   width: Get.width,
+                                //   height: AppDimens.dimens_42,
+                                //   decoration: BoxDecoration(
+                                //       border: Border.all(),
+                                //       borderRadius: BorderRadius.circular(
+                                //           AppDimens.dimens_10)),
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.symmetric(
+                                //         horizontal: AppDimens.dimens_12),
+                                //     child: Row(
+                                //       mainAxisAlignment:
+                                //           MainAxisAlignment.spaceBetween,
+                                //       crossAxisAlignment:
+                                //           CrossAxisAlignment.center,
+                                //       children: [
+                                //         Text(value.controllerEmail.text),
+                                //         Icon(
+                                //           Icons.mark_email_read_outlined,
+                                //           size: iconSize,
+                                //           color: value.isEmailVerified
+                                //               ? Colors.green
+                                //               : AppColors.lightGrey,
+                                //         ),
+                                //         value.isEmailVerified
+                                //             // && value.oldEmail == value.controllerEmail.text
+                                //             ? Container()
+                                //             : SizedBox(
+                                //                 height: 30,
+                                //                 width: 50,
+                                //                 child: InkWell(
+                                //                   // color: null,
+                                //                   child: Text('Verify'.tr),
+                                //                   onTap: () {
+                                //                     sendOTPTask(
+                                //                         value.controllerEmail
+                                //                             .text,
+                                //                         context);
+                                //                   },
+                                //                 ),
+                                //               )
+                                //         // child: Icon(Icons),
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
+                                CustomTextFieldWithIcon(
+                                  height: 42,
+                                  textInputAction: TextInputAction.next,
+                                  //  onTap: () => model.onTapTextField(),
+                                  enabled: value.isEnableEmail,
+                                  focusNode: value.mFocusNodeEmail,
+                                  controller: value.controllerEmail,
+                                  keyboardType: TextInputType.emailAddress,
+                                  hintText: Constants.STR_EMAIL.tr,
+                                  inputFormatters: const [],
+                                  obscureText: false,
+                                  onChanged: (value) {
+                                    // value.controllerEmail = value;
+                                    // setState(() {
+                                    //   value.controllerEmail.text;
+                                    // });
+                                  },
+                                  suffixIcon: InkWell(
+                                    onTap: () {
+                                      print(value.controllerEmail.text);
+                                      gotoEmaileOTPScreen(
+                                          context, value.controllerEmail.text);
+                                    },
+                                    child: Icon(
+                                      Icons.mark_email_read_outlined,
+                                      size: iconSize,
+                                      color: value.isEmailVerified
+                                          ? Colors.green
+                                          : AppColors.lightGrey,
                                     ),
                                   ),
                                 ),
@@ -276,7 +417,10 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                 Text(
                                   Constants.STR_EMERGENCY_CONTACT_DETAIL.tr,
                                   style: AppStyle.textViewStyleLarge(
-                                      context: context, color: AppColors.colorPrimary, fontSizeDelta: 1, fontWeightDelta: 2),
+                                      context: context,
+                                      color: AppColors.colorPrimary,
+                                      fontSizeDelta: 1,
+                                      fontWeightDelta: 2),
                                 ),
                                 addVerticleSpace(AppDimens.dimens_12),
                                 CustomTextFieldWithIcon(
@@ -327,7 +471,8 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         //IsAddCarTap =! IsAddCarTap;
                                       });
                                     },
-                                    strTitle: "Add Car".tr //Constants.STR_ENTER_YOUR_CAR_DETAILS
+                                    strTitle: "Add Car"
+                                        .tr //Constants.STR_ENTER_YOUR_CAR_DETAILS
                                     ),
 
                                 /*---------------------------------Add Car Inputs File Start---------------------------------------------*/
@@ -358,9 +503,11 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         height: 42,
                                         textInputAction: TextInputAction.next,
                                         enabled: true,
-                                        controller: value.controllerCarModelYear,
+                                        controller:
+                                            value.controllerCarModelYear,
                                         keyboardType: TextInputType.text,
-                                        hintText: Constants.STR_CAR_MODEL_YEAR.tr,
+                                        hintText:
+                                            Constants.STR_CAR_MODEL_YEAR.tr,
                                         inputFormatters: const [],
                                         obscureText: false,
                                         onChanged: (String value) {},
@@ -379,9 +526,11 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                         child: AbsorbPointer(
                                           child: CustomTextFieldWithIcon(
                                               height: 42,
-                                              textInputAction: TextInputAction.next,
+                                              textInputAction:
+                                                  TextInputAction.next,
                                               enabled: true,
-                                              controller: value.controllerRegistrationDate,
+                                              controller: value
+                                                  .controllerRegistrationDate,
                                               keyboardType: TextInputType.text,
                                               hintText: 'Registration date'.tr,
                                               inputFormatters: const [],
@@ -441,12 +590,14 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                       addVerticleSpace(AppDimens.dimens_12),
                                       //..........Car plete info row..................//
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Expanded(
                                             child: CustomTextFieldWithIcon(
                                               height: 42,
-                                              textInputAction: TextInputAction.next,
+                                              textInputAction:
+                                                  TextInputAction.next,
                                               enabled: true,
                                               controller: value.controllerCode,
                                               keyboardType: TextInputType.text,
@@ -460,7 +611,8 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                           Expanded(
                                             child: CustomTextFieldWithIcon(
                                               height: 42,
-                                              textInputAction: TextInputAction.next,
+                                              textInputAction:
+                                                  TextInputAction.next,
                                               enabled: true,
                                               controller: value.controllerCity,
                                               keyboardType: TextInputType.text,
@@ -474,9 +626,11 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                           Expanded(
                                             child: CustomTextFieldWithIcon(
                                               height: 42,
-                                              textInputAction: TextInputAction.next,
+                                              textInputAction:
+                                                  TextInputAction.next,
                                               enabled: true,
-                                              controller: value.controllerNumber,
+                                              controller:
+                                                  value.controllerNumber,
                                               keyboardType: TextInputType.text,
                                               hintText: 'Number'.tr,
                                               inputFormatters: const [],
@@ -491,7 +645,8 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                       Visibility(
                                         visible: isEditidTab,
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             SizedBox(
                                               width: 130,
@@ -500,10 +655,12 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                   isRoundBorder: true,
                                                   height: height,
                                                   fontSize: -2,
-                                                  fontColor: AppColors.colorWhite,
+                                                  fontColor:
+                                                      AppColors.colorWhite,
                                                   width: size.width,
                                                   onPressed: () {
-                                                    controller.clearController();
+                                                    controller
+                                                        .clearController();
                                                     setState(() {
                                                       isEditidTab = false;
                                                     });
@@ -518,24 +675,41 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                   isRoundBorder: true,
                                                   height: height,
                                                   fontSize: -2,
-                                                  fontColor: AppColors.colorWhite,
+                                                  fontColor:
+                                                      AppColors.colorWhite,
                                                   width: size.width / 2.2,
                                                   onPressed: () {
                                                     if (value.controllerCarBrand.text.isNotEmpty &&
-                                                        value.controllerColour.text.isNotEmpty &&
-                                                        value.controllerCarModelYear.text.isNotEmpty &&
-                                                        value.controllerMileage.text.isNotEmpty &&
-                                                        value.controllerCity.text.isNotEmpty &&
-                                                        value.controllerCode.text.isNotEmpty &&
-                                                        value.controllerNumber.text.isNotEmpty) {
+                                                        value.controllerColour
+                                                            .text.isNotEmpty &&
+                                                        value
+                                                            .controllerCarModelYear
+                                                            .text
+                                                            .isNotEmpty &&
+                                                        value.controllerMileage
+                                                            .text.isNotEmpty &&
+                                                        value.controllerCity
+                                                            .text.isNotEmpty &&
+                                                        value.controllerCode
+                                                            .text.isNotEmpty &&
+                                                        value.controllerNumber
+                                                            .text.isNotEmpty) {
                                                       controller.updateCar(
-                                                        value.controllerCarBrand.text,
-                                                        value.controllerColour.text,
-                                                        value.controllerCarModelYear.text,
-                                                        value.controllerMileage.text,
-                                                        value.controllerCity.text,
-                                                        value.controllerCode.text,
-                                                        value.controllerNumber.text,
+                                                        value.controllerCarBrand
+                                                            .text,
+                                                        value.controllerColour
+                                                            .text,
+                                                        value
+                                                            .controllerCarModelYear
+                                                            .text,
+                                                        value.controllerMileage
+                                                            .text,
+                                                        value.controllerCity
+                                                            .text,
+                                                        value.controllerCode
+                                                            .text,
+                                                        value.controllerNumber
+                                                            .text,
                                                         editId!,
                                                       );
                                                       setState(() {
@@ -544,10 +718,13 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                       });
                                                     } else {
                                                       Global.showToastAlert(
-                                                          context: Get.overlayContext!,
+                                                          context: Get
+                                                              .overlayContext!,
                                                           strTitle: "",
-                                                          strMsg: "Please Fill All Fields",
-                                                          toastType: TOAST_TYPE.toastError);
+                                                          strMsg:
+                                                              "Please Fill All Fields",
+                                                          toastType: TOAST_TYPE
+                                                              .toastError);
                                                     }
                                                   },
                                                   strTitle: "Update".tr),
@@ -559,7 +736,8 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                       Visibility(
                                         visible: !isEditidTab,
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             SizedBox(
                                               width: 130,
@@ -568,10 +746,12 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                   isRoundBorder: true,
                                                   height: height,
                                                   fontSize: -2,
-                                                  fontColor: AppColors.colorWhite,
+                                                  fontColor:
+                                                      AppColors.colorWhite,
                                                   width: size.width,
                                                   onPressed: () {
-                                                    controller.clearController();
+                                                    controller
+                                                        .clearController();
                                                     setState(() {
                                                       isAddCarTap = false;
                                                     });
@@ -586,35 +766,57 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                   isRoundBorder: true,
                                                   height: height,
                                                   fontSize: -2,
-                                                  fontColor: AppColors.colorWhite,
+                                                  fontColor:
+                                                      AppColors.colorWhite,
                                                   width: size.width / 2.2,
                                                   onPressed: () {
                                                     if (value.controllerCarBrand.text.isNotEmpty &&
-                                                        value.controllerColour.text.isNotEmpty &&
-                                                        value.controllerCarModelYear.text.isNotEmpty &&
-                                                        value.controllerMileage.text.isNotEmpty &&
-                                                        value.controllerCity.text.isNotEmpty &&
-                                                        value.controllerCode.text.isNotEmpty &&
-                                                        value.controllerNumber.text.isNotEmpty) {
+                                                        value.controllerColour
+                                                            .text.isNotEmpty &&
+                                                        value
+                                                            .controllerCarModelYear
+                                                            .text
+                                                            .isNotEmpty &&
+                                                        value.controllerMileage
+                                                            .text.isNotEmpty &&
+                                                        value.controllerCity
+                                                            .text.isNotEmpty &&
+                                                        value.controllerCode
+                                                            .text.isNotEmpty &&
+                                                        value.controllerNumber
+                                                            .text.isNotEmpty) {
                                                       controller.addNewCar(
-                                                        value.controllerCarBrand.text,
-                                                        value.controllerColour.text,
-                                                        value.controllerCarModelYear.text,
-                                                        value.controllerMileage.text,
-                                                        value.controllerCity.text,
-                                                        value.controllerCode.text,
-                                                        value.controllerNumber.text,
-                                                        value.controllerRegistrationDate.text,
+                                                        value.controllerCarBrand
+                                                            .text,
+                                                        value.controllerColour
+                                                            .text,
+                                                        value
+                                                            .controllerCarModelYear
+                                                            .text,
+                                                        value.controllerMileage
+                                                            .text,
+                                                        value.controllerCity
+                                                            .text,
+                                                        value.controllerCode
+                                                            .text,
+                                                        value.controllerNumber
+                                                            .text,
+                                                        value
+                                                            .controllerRegistrationDate
+                                                            .text,
                                                       );
                                                       setState(() {
                                                         isAddCarTap = false;
                                                       });
                                                     } else {
                                                       Global.showToastAlert(
-                                                          context: Get.overlayContext!,
+                                                          context: Get
+                                                              .overlayContext!,
                                                           strTitle: "",
-                                                          strMsg: "Please Fill All Fields",
-                                                          toastType: TOAST_TYPE.toastError);
+                                                          strMsg:
+                                                              "Please Fill All Fields",
+                                                          toastType: TOAST_TYPE
+                                                              .toastError);
                                                     }
                                                   },
                                                   strTitle: Constants.SAVE.tr),
@@ -634,39 +836,63 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
 
                                 controller.carList.isNotEmpty
                                     ? ListView.builder(
-                                        physics: const NeverScrollableScrollPhysics(),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
                                         padding: const EdgeInsets.all(0),
                                         itemCount: controller.carList.length,
-                                        itemBuilder: (BuildContext contextM, index) {
-                                          GetCarModelResult? mcarlistmodel = controller.carList[index];
+                                        itemBuilder:
+                                            (BuildContext contextM, index) {
+                                          GetCarModelResult? mcarlistmodel =
+                                              controller.carList[index];
                                           return MyCarListItem(
-                                              carBrand: mcarlistmodel.brand ?? "",
-                                              modeYear: mcarlistmodel.modelYear ?? "",
+                                              carBrand:
+                                                  mcarlistmodel.brand ?? "",
+                                              modeYear:
+                                                  mcarlistmodel.modelYear ?? "",
                                               km: mcarlistmodel.mileage ?? "",
                                               color: mcarlistmodel.color ?? "",
                                               code: mcarlistmodel.carCode ?? "",
                                               city: mcarlistmodel.carCity ?? "",
-                                              number: mcarlistmodel.carNumber ?? "",
-                                              registrationDate: mcarlistmodel.registrationDate ?? "",
-                                              image: "https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
+                                              number:
+                                                  mcarlistmodel.carNumber ?? "",
+                                              registrationDate: mcarlistmodel
+                                                      .registrationDate ??
+                                                  "",
+                                              image:
+                                                  "https://s3.amazonaws.com/cdn.carbucks.com/520e5860-fab9-4d18-904f-919e7cd7667e.png",
                                               onEditTap: () {
-                                                value.controllerCarBrand.text = mcarlistmodel.brand ?? "";
-                                                value.controllerColour.text = mcarlistmodel.color ?? "";
-                                                value.controllerCarModelYear.text = mcarlistmodel.modelYear ?? "";
-                                                value.controllerMileage.text = mcarlistmodel.mileage ?? "";
-                                                value.controllerCity.text = mcarlistmodel.carCity ?? "";
-                                                value.controllerCode.text = mcarlistmodel.carCode ?? "";
-                                                value.controllerNumber.text = mcarlistmodel.carNumber ?? "";
-                                                value.controllerRegistrationDate.text = mcarlistmodel.registrationDate ?? "";
+                                                value.controllerCarBrand.text =
+                                                    mcarlistmodel.brand ?? "";
+                                                value.controllerColour.text =
+                                                    mcarlistmodel.color ?? "";
+                                                value.controllerCarModelYear
+                                                        .text =
+                                                    mcarlistmodel.modelYear ??
+                                                        "";
+                                                value.controllerMileage.text =
+                                                    mcarlistmodel.mileage ?? "";
+                                                value.controllerCity.text =
+                                                    mcarlistmodel.carCity ?? "";
+                                                value.controllerCode.text =
+                                                    mcarlistmodel.carCode ?? "";
+                                                value.controllerNumber.text =
+                                                    mcarlistmodel.carNumber ??
+                                                        "";
+                                                value.controllerRegistrationDate
+                                                    .text = mcarlistmodel
+                                                        .registrationDate ??
+                                                    "";
                                                 setState(() {
                                                   isEditidTab = true;
-                                                  editId = mcarlistmodel.id ?? "0";
+                                                  editId =
+                                                      mcarlistmodel.id ?? "0";
                                                 });
                                                 // controller.onTapCategory(mCategoryModel);
                                               },
                                               onDeleteTap: () {
-                                                controller.deletecar(mcarlistmodel.id ?? "0");
+                                                controller.deletecar(
+                                                    mcarlistmodel.id ?? "0");
                                                 // });
                                               });
                                         })
@@ -677,7 +903,8 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
 
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     !Global.checkNull(value.imgMulkia)
                                         ? InkWell(
@@ -686,26 +913,44 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                               alignment: Alignment.center,
                                               height: imgHeight,
                                               decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10), border: Border.all(color: AppColors.colorPrimary)),
-                                              padding: const EdgeInsets.all(AppDimens.dimens_5),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      color: AppColors
+                                                          .colorPrimary)),
+                                              padding: const EdgeInsets.all(
+                                                  AppDimens.dimens_5),
                                               child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
                                                 children: [
-                                                  const Icon(Icons.add_circle_outline_sharp),
+                                                  const Icon(Icons
+                                                      .add_circle_outline_sharp),
                                                   Container(
                                                     child: Text(
-                                                      Constants.STR_ADD_MULKIA.tr,
-                                                      textAlign: TextAlign.center,
-                                                      style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
+                                                      Constants
+                                                          .STR_ADD_MULKIA.tr,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: AppStyle
+                                                          .textViewStyleSmall(
+                                                              context: context,
+                                                              color: AppColors
+                                                                  .colorBlack),
                                                     ),
-                                                    margin: const EdgeInsets.only(top: AppDimens.dimens_4),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            top: AppDimens
+                                                                .dimens_4),
                                                   )
                                                 ],
                                               ),
                                             ),
                                             onTap: () {
-                                              value.selectDocs(IdType.mulkia, context);
+                                              value.selectDocs(
+                                                  IdType.mulkia, context);
                                             },
                                           )
                                         : SizedBox(
@@ -716,15 +961,25 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                               children: [
                                                 Container(
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            AppDimens.dimens_5),
                                                   ),
                                                   width: size.width / 2.39,
-                                                  child: Global.isURL(value.imgMulkia)
-                                                      ? NetworkImageCustom(height: imgHeight, width: size.width / 2.39, image: value.imgMulkia)
-                                                      : ImageView(
-                                                          strImage: value.imgMulkia,
+                                                  child: Global.isURL(
+                                                          value.imgMulkia)
+                                                      ? NetworkImageCustom(
                                                           height: imgHeight,
-                                                          width: size.width / 2.39,
+                                                          width:
+                                                              size.width / 2.39,
+                                                          image:
+                                                              value.imgMulkia)
+                                                      : ImageView(
+                                                          strImage:
+                                                              value.imgMulkia,
+                                                          height: imgHeight,
+                                                          width:
+                                                              size.width / 2.39,
                                                         ),
                                                 ),
                                                 Positioned(
@@ -732,11 +987,20 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                     top: 0,
                                                     child: InkWell(
                                                         child: Container(
-                                                          child: const Icon(Icons.close),
+                                                          child: const Icon(
+                                                              Icons.close),
                                                           decoration:
-                                                              AppViews.getColorDecor(mColor: AppColors.colorWhite.withOpacity(0.8), mBorderRadius: 5),
+                                                              AppViews.getColorDecor(
+                                                                  mColor: AppColors
+                                                                      .colorWhite
+                                                                      .withOpacity(
+                                                                          0.8),
+                                                                  mBorderRadius:
+                                                                      5),
                                                         ),
-                                                        onTap: () => value.removeImage('mulkia')))
+                                                        onTap: () =>
+                                                            value.removeImage(
+                                                                'mulkia')))
                                               ],
                                             ),
                                           ),
@@ -746,30 +1010,49 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                             child: Container(
                                               width: size.width / 2.39,
                                               decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                border: Border.all(color: AppColors.colorPrimary),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                border: Border.all(
+                                                    color:
+                                                        AppColors.colorPrimary),
                                               ),
                                               alignment: Alignment.center,
                                               height: imgHeight,
-                                              padding: const EdgeInsets.all(AppDimens.dimens_5),
+                                              padding: const EdgeInsets.all(
+                                                  AppDimens.dimens_5),
                                               child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
                                                 children: [
-                                                  const Icon(Icons.add_circle_outline_sharp),
+                                                  const Icon(Icons
+                                                      .add_circle_outline_sharp),
                                                   Container(
                                                     child: Text(
-                                                      Constants.STR_ADD_DRIVING_LICENCE.tr,
-                                                      textAlign: TextAlign.center,
-                                                      style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
+                                                      Constants
+                                                          .STR_ADD_DRIVING_LICENCE
+                                                          .tr,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: AppStyle
+                                                          .textViewStyleSmall(
+                                                              context: context,
+                                                              color: AppColors
+                                                                  .colorBlack),
                                                     ),
-                                                    margin: const EdgeInsets.only(top: AppDimens.dimens_4),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            top: AppDimens
+                                                                .dimens_4),
                                                   )
                                                 ],
                                               ),
                                             ),
                                             onTap: () {
-                                              value.selectDocs(IdType.drivingLicence, context);
+                                              value.selectDocs(
+                                                  IdType.drivingLicence,
+                                                  context);
                                             },
                                           )
                                         : SizedBox(
@@ -780,16 +1063,25 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                               children: [
                                                 Container(
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            AppDimens.dimens_5),
                                                   ),
                                                   width: size.width / 2.39,
-                                                  child: Global.isURL(value.imgDrivingLicence)
+                                                  child: Global.isURL(value
+                                                          .imgDrivingLicence)
                                                       ? NetworkImageCustom(
-                                                          height: imgHeight, width: size.width / 2.39, image: value.imgDrivingLicence)
-                                                      : ImageView(
-                                                          strImage: value.imgDrivingLicence,
                                                           height: imgHeight,
-                                                          width: size.width / 2.39,
+                                                          width:
+                                                              size.width / 2.39,
+                                                          image: value
+                                                              .imgDrivingLicence)
+                                                      : ImageView(
+                                                          strImage: value
+                                                              .imgDrivingLicence,
+                                                          height: imgHeight,
+                                                          width:
+                                                              size.width / 2.39,
                                                         ),
                                                 ),
                                                 Positioned(
@@ -797,11 +1089,20 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                     top: 0,
                                                     child: InkWell(
                                                         child: Container(
-                                                          child: const Icon(Icons.close),
+                                                          child: const Icon(
+                                                              Icons.close),
                                                           decoration:
-                                                              AppViews.getColorDecor(mColor: AppColors.colorWhite.withOpacity(0.8), mBorderRadius: 5),
+                                                              AppViews.getColorDecor(
+                                                                  mColor: AppColors
+                                                                      .colorWhite
+                                                                      .withOpacity(
+                                                                          0.8),
+                                                                  mBorderRadius:
+                                                                      5),
                                                         ),
-                                                        onTap: () => value.removeImage('driving')))
+                                                        onTap: () =>
+                                                            value.removeImage(
+                                                                'driving')))
                                               ],
                                             ),
                                           ),
@@ -810,7 +1111,8 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                 addVerticleSpace(9),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     !Global.checkNull(value.imgEmIdFront)
                                         ? InkWell(
@@ -819,26 +1121,45 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                               alignment: Alignment.center,
                                               height: imgHeight,
                                               decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10), border: Border.all(color: AppColors.colorPrimary)),
-                                              padding: const EdgeInsets.all(AppDimens.dimens_5),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      color: AppColors
+                                                          .colorPrimary)),
+                                              padding: const EdgeInsets.all(
+                                                  AppDimens.dimens_5),
                                               child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
                                                 children: [
-                                                  const Icon(Icons.add_circle_outline_sharp),
+                                                  const Icon(Icons
+                                                      .add_circle_outline_sharp),
                                                   Container(
                                                     child: Text(
-                                                      Constants.STR_ADD_EMIRATES_ID_FRONT.tr,
-                                                      textAlign: TextAlign.center,
-                                                      style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
+                                                      Constants
+                                                          .STR_ADD_EMIRATES_ID_FRONT
+                                                          .tr,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: AppStyle
+                                                          .textViewStyleSmall(
+                                                              context: context,
+                                                              color: AppColors
+                                                                  .colorBlack),
                                                     ),
-                                                    margin: const EdgeInsets.only(top: AppDimens.dimens_4),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            top: AppDimens
+                                                                .dimens_4),
                                                   )
                                                 ],
                                               ),
                                             ),
                                             onTap: () {
-                                              value.selectDocs(IdType.emIdFront, context);
+                                              value.selectDocs(
+                                                  IdType.emIdFront, context);
                                             },
                                           )
                                         : SizedBox(
@@ -849,15 +1170,25 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                               children: [
                                                 Container(
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            AppDimens.dimens_5),
                                                   ),
                                                   width: size.width / 2.39,
-                                                  child: Global.isURL(value.imgEmIdFront)
-                                                      ? NetworkImageCustom(height: imgHeight, width: size.width / 2.39, image: value.imgEmIdFront)
-                                                      : ImageView(
-                                                          strImage: value.imgEmIdFront,
+                                                  child: Global.isURL(
+                                                          value.imgEmIdFront)
+                                                      ? NetworkImageCustom(
                                                           height: imgHeight,
-                                                          width: size.width / 2.39,
+                                                          width:
+                                                              size.width / 2.39,
+                                                          image: value
+                                                              .imgEmIdFront)
+                                                      : ImageView(
+                                                          strImage: value
+                                                              .imgEmIdFront,
+                                                          height: imgHeight,
+                                                          width:
+                                                              size.width / 2.39,
                                                         ),
                                                 ),
                                                 Positioned(
@@ -865,11 +1196,20 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                     top: 0,
                                                     child: InkWell(
                                                         child: Container(
-                                                          child: const Icon(Icons.close),
+                                                          child: const Icon(
+                                                              Icons.close),
                                                           decoration:
-                                                              AppViews.getColorDecor(mColor: AppColors.colorWhite.withOpacity(0.8), mBorderRadius: 5),
+                                                              AppViews.getColorDecor(
+                                                                  mColor: AppColors
+                                                                      .colorWhite
+                                                                      .withOpacity(
+                                                                          0.8),
+                                                                  mBorderRadius:
+                                                                      5),
                                                         ),
-                                                        onTap: () => value.removeImage('emirate_front')))
+                                                        onTap: () =>
+                                                            value.removeImage(
+                                                                'emirate_front')))
                                               ],
                                             ),
                                           ),
@@ -881,29 +1221,49 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                               alignment: Alignment.center,
                                               height: imgHeight,
                                               decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10), border: Border.all(color: AppColors.colorPrimary)),
-                                              padding: const EdgeInsets.all(AppDimens.dimens_5),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      color: AppColors
+                                                          .colorPrimary)),
+                                              padding: const EdgeInsets.all(
+                                                  AppDimens.dimens_5),
                                               child: FittedBox(
                                                 fit: BoxFit.scaleDown,
                                                 child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
                                                   children: [
-                                                    const Icon(Icons.add_circle_outline_sharp),
+                                                    const Icon(Icons
+                                                        .add_circle_outline_sharp),
                                                     Container(
                                                       child: Text(
-                                                        Constants.STR_ADD_EMIRATES_ID_BACK.tr,
-                                                        textAlign: TextAlign.center,
-                                                        style: AppStyle.textViewStyleSmall(context: context, color: AppColors.colorBlack),
+                                                        Constants
+                                                            .STR_ADD_EMIRATES_ID_BACK
+                                                            .tr,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: AppStyle
+                                                            .textViewStyleSmall(
+                                                                context:
+                                                                    context,
+                                                                color: AppColors
+                                                                    .colorBlack),
                                                       ),
-                                                      margin: const EdgeInsets.only(top: AppDimens.dimens_4),
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                              top: AppDimens
+                                                                  .dimens_4),
                                                     )
                                                   ],
                                                 ),
                                               ),
                                             ),
                                             onTap: () {
-                                              value.selectDocs(IdType.emIdBack, context);
+                                              value.selectDocs(
+                                                  IdType.emIdBack, context);
                                             },
                                           )
                                         : SizedBox(
@@ -914,15 +1274,25 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                               children: [
                                                 Container(
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(AppDimens.dimens_5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            AppDimens.dimens_5),
                                                   ),
                                                   width: size.width / 2.39,
-                                                  child: Global.isURL(value.imgEmIdBack)
-                                                      ? NetworkImageCustom(height: imgHeight, width: size.width / 2.39, image: value.imgEmIdBack)
-                                                      : ImageView(
-                                                          strImage: value.imgEmIdBack,
+                                                  child: Global.isURL(
+                                                          value.imgEmIdBack)
+                                                      ? NetworkImageCustom(
                                                           height: imgHeight,
-                                                          width: size.width / 2.39,
+                                                          width:
+                                                              size.width / 2.39,
+                                                          image:
+                                                              value.imgEmIdBack)
+                                                      : ImageView(
+                                                          strImage:
+                                                              value.imgEmIdBack,
+                                                          height: imgHeight,
+                                                          width:
+                                                              size.width / 2.39,
                                                         ),
                                                 ),
                                                 Positioned(
@@ -930,11 +1300,20 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                                     top: 0,
                                                     child: InkWell(
                                                         child: Container(
-                                                          child: const Icon(Icons.close),
+                                                          child: const Icon(
+                                                              Icons.close),
                                                           decoration:
-                                                              AppViews.getColorDecor(mColor: AppColors.colorWhite.withOpacity(0.8), mBorderRadius: 5),
+                                                              AppViews.getColorDecor(
+                                                                  mColor: AppColors
+                                                                      .colorWhite
+                                                                      .withOpacity(
+                                                                          0.8),
+                                                                  mBorderRadius:
+                                                                      5),
                                                         ),
-                                                        onTap: () => value.removeImage('emirate_back')))
+                                                        onTap: () =>
+                                                            value.removeImage(
+                                                                'emirate_back')))
                                               ],
                                             ),
                                           ),
@@ -952,9 +1331,12 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                                     onPressed: () {
                                       if (value.isValid(context)) {
                                         value.updateProfile(context);
+
+                                        ///
                                       }
                                     },
-                                    strTitle: Constants.STR_UPDATE_YOUR_PROFILE.tr),
+                                    strTitle:
+                                        Constants.STR_UPDATE_YOUR_PROFILE.tr),
                                 addVerticleSpace(12),
                               ],
                             ),
@@ -962,7 +1344,9 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
                         ])),
                       )),
                 ),
-                GetBuilder<ProfileScreenController>(builder: (value) => AppViews.showLoadingWithStatus(value.isShowLoader)),
+                GetBuilder<ProfileScreenController>(
+                    builder: (value) =>
+                        AppViews.showLoadingWithStatus(value.isShowLoader)),
               ],
             )));
   }
@@ -985,6 +1369,48 @@ class MyProfileFragmentState extends State<MyProfileFragment> {
     Logger().w(phoneNumber);
     //sentOTPToNumber();
   }
+
+  void gotoEmaileOTPScreen(BuildContext context, String newEmail) async {
+    // ModelPhoneOTP mModelOTP = ModelPhoneOTP(
+    //     phoneNumber: controllerPassword.text.toString(),
+    //     otp: controllerEmail.text.toString());
+    ModelOTP modelotp = ModelOTP(emailId: newEmail, password: '');
+    final ModelOTP mModelOTP;
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => EmailOTPScreen(
+                  newEmail: newEmail,
+                  mModelOTP: modelotp,
+                  isFromRegistration: false,
+                )));
+    // sendOTPTask();
+    otpcontroller.sendOTPTask(newEmail, context);
+    Logger().w(newEmail);
+    //sentOTPToNumber();
+  }
+
+  // sendOTPTask(String strEmailID, BuildContext context) async {
+  //   HashMap<String, Object> requestParams = HashMap();
+
+  //   requestParams[PARAMS.PARAM_EMAIL] = strEmailID;
+
+  //   var signInEmail = await OTPRepo().sentOTPToEmail(requestParams);
+
+  //   signInEmail.fold((failure) {
+  //     Global.showToastAlert(
+  //         context: context,
+  //         strTitle: "",
+  //         strMsg: failure.MESSAGE,
+  //         toastType: TOAST_TYPE.toastError);
+  //   }, (mResult) {
+  //     Global.showToastAlert(
+  //         context: context,
+  //         strTitle: "",
+  //         strMsg: mResult.responseMessage,
+  //         toastType: TOAST_TYPE.toastSuccess);
+  //   });
+  // }
 
 // Future<void> _displayVerify() async {
 //   return showDialog(

@@ -32,6 +32,7 @@ class SplashScreenController extends GetxController {
     final prefManager = await SharedPreferences.getInstance();
 
     bool? isStatus = prefManager.getBool(Constants.STATUS) ?? true;
+    //change this to false(to get the login screen)
     bool? isLogin = prefManager.getBool(SharedPrefKey.KEY_IS_LOGIN) ?? false;
 
     var _duration = const Duration(milliseconds: 4200);

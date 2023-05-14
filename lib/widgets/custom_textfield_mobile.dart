@@ -48,6 +48,7 @@ class CustomTextFieldMobile extends StatefulWidget {
 
 class CustomTextFieldMobileState extends State<CustomTextFieldMobile> {
   String strCountyCode = "+971";
+  String strpkCountyCode = "+92";
   String strCountyFlag = "ae";
 
   @override
@@ -142,7 +143,8 @@ class CustomTextFieldMobileState extends State<CustomTextFieldMobile> {
                                     context: context,
                                     backgroundColor: Colors.transparent,
                                     builder: (context) {
-                                      return CustomBottomSheet(child: CountryCodeBottomSheet(
+                                      return CustomBottomSheet(
+                                        child: CountryCodeBottomSheet(
                                         onTap: (CountryCode mCountryCode) {
                                           Get.put(RegistrationScreenController()).strCountyCode = mCountryCode.dialCode;
 
